@@ -635,7 +635,13 @@ class MiniGridEnv(gym.Env):
         grid, vis_mask = self.gen_obs_grid()
 
         # Encode the partially observable view into a numpy array
+
+
+        #带观测视角
         image = grid.encode(vis_mask)
+        #不带观测视角
+        #image = grid
+
 
         # Observations are dictionaries containing:
         # - an image (partially observable view of the environment)
@@ -678,33 +684,33 @@ class MiniGridEnv(gym.Env):
             - r_vec * (self.agent_view_size // 2)
         )
 
-        # Mask of which cells to highlight
-        highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
-
-        # For each cell in the visibility mask
-        for vis_j in range(0, self.agent_view_size):
-            for vis_i in range(0, self.agent_view_size):
-                # If this cell is not visible, don't highlight it
-                if not vis_mask[vis_i, vis_j]:
-                    continue
-
-                # Compute the world coordinates of this cell
-                abs_i, abs_j = top_left - (f_vec * vis_j) + (r_vec * vis_i)
-
-                if abs_i < 0 or abs_i >= self.width:
-                    continue
-                if abs_j < 0 or abs_j >= self.height:
-                    continue
-
-                # Mark this cell to be highlighted
-                highlight_mask[abs_i, abs_j] = True
+        # # Mask of which cells to highlight
+        # highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
+        #
+        # # For each cell in the visibility mask
+        # for vis_j in range(0, self.agent_view_size):
+        #     for vis_i in range(0, self.agent_view_size):
+        #         # If this cell is not visible, don't highlight it
+        #         if not vis_mask[vis_i, vis_j]:
+        #             continue
+        #
+        #         # Compute the world coordinates of this cell
+        #         abs_i, abs_j = top_left - (f_vec * vis_j) + (r_vec * vis_i)
+        #
+        #         if abs_i < 0 or abs_i >= self.width:
+        #             continue
+        #         if abs_j < 0 or abs_j >= self.height:
+        #             continue
+        #
+        #         # Mark this cell to be highlighted
+        #         highlight_mask[abs_i, abs_j] = True
 
         # Render the whole grid
         img = self.grid.render(
             tile_size,
             self.agent_pos,
             self.agent_dir,
-            highlight_mask=highlight_mask if highlight else None,
+            # highlight_mask=highlight_mask if highlight else None,
         )
 
         return img
