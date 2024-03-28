@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/LogicRL-master.iml" filepath="$PROJECT_DIR$/.idea/LogicRL-master.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/minigrid.iml" filepath="$PROJECT_DIR$/.idea/minigrid.iml" />
+>>>>>>> 04c52fd (first commit)
+    </modules>
+  </component>
+</project>

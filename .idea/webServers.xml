@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="bccbcb5c-8d1f-4b83-b059-b5663219aec6" name="lamda1">
+        <fileTransfer rootFolder="/home/v-wangzl/local_code" accessType="SFTP" host="210.28.134.173" port="22" sshConfigId="45a82465-330c-40e6-965c-d20a7a409d4b" sshConfig="v-wangzl@210.28.134.173:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
