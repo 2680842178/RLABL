@@ -1,122 +1,122 @@
-# LogicRL
+# Torch-ac
 
-This is the code for RL agents using logic.
-![](image/LogicRL.png)
 
 ## Installation
 
+1. Clone this repository.
+
+2. Install `minigrid` environments and `torch-ac` RL algorithms:
+
+```
+pip3 install -r requirements.txt
+```
+
+**Note1:** If you want to modify `torch-ac` algorithms, you will need to rather install a cloned version, i.e.:
+```
+git clone https://github.com/lcswillems/torch-ac.git
+cd torch-ac
+pip3 install -e .
+```
+
+**Note2:** minigrid_env.py文件和envs\configworld.py文件需要更新到配置环境的Lib\site-packages\minigrid中
+
+
+## Files
+
+This package contains:
+- scripts to:
+  - train an agent \
+  in `script/train.py` ([more details](#scripts-train))
+  - visualize agent's behavior \
+  in `script/visualize.py` ([more details](#scripts-visualize))
+  - evaluate agent's performances \
+  in `script/evaluate.py` ([more details](#scripts-evaluate))
+- a default agent's model \
+in `model.py` ([more details](#model))
+- utilitarian classes and functions used by the scripts \
+in `utils`
+
+These files are suited for [`minigrid`](https://github.com/Farama-Foundation/Minigrid) environments and [`torch-ac`](https://github.com/lcswillems/torch-ac) RL algorithms. They are easy to adapt to other environments and RL algorithms by modifying:
+- `model.py`
+- `utils/format.py`
+
+<h2 id="scripts-train">scripts/train.py</h2>
+
+An example of use:
+
 ```bash
-pip install -r requirements.txt
+python3 -m scripts.train --algo ppo --env MiniGrid-DoorKey-5x5-v0 --model DoorKey --save-interval 10 --frames 80000
 ```
 
-from the nsfr folder:
+The script loads the model in `storage/DoorKey` or creates it if it doesn't exist, then trains it with the PPO algorithm on the MiniGrid DoorKey environment, and saves it every 10 updates in `storage/DoorKey`. It stops after 80 000 frames.
 
-```bash
-pip install -e . # installs in dev mode
-```
+**Note:** You can define a different storage location in the environment variable `PROJECT_STORAGE`.
 
-You also need to install QT-5 for Threefish and Loot:
+More generally, the script has 2 required arguments:
+- `--algo ALGO`: name of the RL algorithm used to train
+- `--env ENV`: name of the environment to train on
 
-```bash
-apt-get install qt5-default
-```
+and a bunch of optional arguments among which:
+- `--recurrence N`: gradient will be backpropagated over N timesteps. By default, N = 1. If N > 1, a LSTM is added to the model to have memory.
+- `--text`: a GRU is added to the model to handle text input.
+- ... (see more using `--help`)
 
-## How to use
+During training, logs are printed in your terminal (and saved in text and CSV format):
 
-**Example to play with a trained ppo agent**
+<p align="center"><img src="README-rsrc/train-terminal-logs.png"></p>
 
-```
-python3 play.py -s 0 -alg ppo -m getout -env getout  
-```  
+**Note:** `U` gives the update number, `F` the total number of frames, `FPS` the number of frames per second, `D` the total duration, `rR:μσmM` the mean, std, min and max reshaped return per episode, `F:μσmM` the mean, std, min and max number of frames per episode, `H` the entropy, `V` the value, `pL` the policy loss, `vL` the value loss and `∇` the gradient norm.
 
-The trained model can be found in folder: _models/getout_ or _models/threefish_
+During training, logs are also plotted in Tensorboard:
 
-**Example to train an logic agent for getout env using 'getout_human_assisted' rules.**
+<p><img src="README-rsrc/train-tensorboard.png"></p>
 
-```
-python3 train.py -s 0 -alg logic -m getout -env getout  -r 'getout_human_assisted'
-```
+<h2 id="scripts-visualize">scripts/visualize.py</h2>
 
-Models will be saved to folder: src/checkpoints  
-Models that use to run should be moved to folder: src/models  
-
-Description of Args
-
-* **--algorithm -alg**:
-
-The algorithm to use for playing or training, choice: _ppo_, _logic_.
-
-* **--mode -m**:
-
-Game mode to play or train with, choice: _getout_, _threefish_, _loot_.
-
-* **--environment -env**:
-
-the specific environment for playing or training,
-
-_getout_ contains key, door and one enemy.  
-_getoutplus_ has one more enemy.  
-_threefish_  contains one bigger fish and one smaller fish.  
-_threefishcolor_  contains one red fish and one green fish. agent need to avoid red fish and eat green fish.  
-_loot_  contains 2 pairs of key and door.  
-_lootcolor_  contains 2 pairs of key and door with different color than in loot.  
-_lootplus_    contains 3 pairs of key and door.
-
-* **--rules -r**:
-
-_rules_ is required when train logic agent.
-
-Logic agent require a set of data which provide the first order logic rules.
-
-e.g. '_getout_human_assisted_' indicate the rules is human-generated.
-
-So for new rules, just need to be added to the choice of argument '--rules' and dataset.
-
-dataset can be found in folder: _src/nsfr/data_
-
-'--rules' is also for some situation like using reward shaping:
-
-e.g. 'ppo_simple_policy' can be helpful when train ppo agent of getout
-
-* **--recovery -re**:
-
-The data will be saved automatically to the folder of models.
-If the training crashed, you can set '-re' to True to continue the training by input the last saved model.
-
-* **--plot -p**:
-
-If True, plot the weight as a image.  
-Image willbe saved to folder: src/image
-
-* **--log -l**:
-
-if True, the state information and rewards of this run will be saved to folder: src/logs
-(for playing only)
-
-
-
-* **--render**:
-
-If True, render the game.  
-(for playing only)
-
-**Using Beam Search to find a set of rules**
-
-![](image/beam_search.png)
-With scoring:
+An example of use:
 
 ```
-python3 beam_search.py -m getout -r getout_root -t 3 -n 8 --scoring True -d getout.json  
-``` 
+python3 -m scripts.visualize --env MiniGrid-DoorKey-5x5-v0 --model DoorKey
+```
 
-Without scoring:
+<p align="center"><img src="README-rsrc/visualize-doorkey.gif"></p>
 
-``` 
-python3 beam_search.py -m threefish -r threefishm_root -t 3 -n 8 
-``` 
+In this use case, the script displays how the model in `storage/DoorKey` behaves on the MiniGrid DoorKey environment.
 
-* **--t**:  Number of rule expansion of clause generation.
-* **--n**:  The size of the beam.
-* **--scoring**: To score the searched rules, a dataset of states information is required.
-* **-d**: The name of dataset to be used for scoring.
+More generally, the script has 2 required arguments:
+- `--env ENV`: name of the environment to act on.
+- `--model MODEL`: name of the trained model.
 
+and a bunch of optional arguments among which:
+- `--argmax`: select the action with highest probability
+- ... (see more using `--help`)
+
+<h2 id="scripts-evaluate">scripts/evaluate.py</h2>
+
+An example of use:
+
+```
+python3 -m scripts.evaluate --env MiniGrid-DoorKey-5x5-v0 --model DoorKey
+```
+
+<p align="center"><img src="README-rsrc/evaluate-terminal-logs.png"></p>
+
+In this use case, the script prints in the terminal the performance among 100 episodes of the model in `storage/DoorKey`.
+
+More generally, the script has 2 required arguments:
+- `--env ENV`: name of the environment to act on.
+- `--model MODEL`: name of the trained model.
+
+and a bunch of optional arguments among which:
+- `--episodes N`: number of episodes of evaluation. By default, N = 100.
+- ... (see more using `--help`)
+
+<h2 id="model">model.py</h2>
+
+The default model is discribed by the following schema:
+
+<p align="center"><img src="README-rsrc/model.png"></p>
+
+By default, the memory part (in red) and the langage part (in blue) are disabled. They can be enabled by setting to `True` the `use_memory` and `use_text` parameters of the model constructor.
+
+This model can be easily adapted to your needs.
