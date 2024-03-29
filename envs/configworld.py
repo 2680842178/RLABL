@@ -46,7 +46,7 @@ class ConfigWorldEnv(MiniGridEnv):
         from configparser import ConfigParser
 
         config = ConfigParser()
-        config.read('envs\\configmap.config', encoding='UTF-8')
+        config.read('configmap.config', encoding='UTF-8')
         string = config['map']['map_grid']
         lines = string.split("\n")
         map = []

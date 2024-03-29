@@ -9,6 +9,14 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="4d58b3a4-0899-4ca5-a91a-2aca5f2637dc" name="lamdasz">
+        <fileTransfer rootFolder="/home/wangzl" accessType="SFTP" host="10.48.3.127" port="22" sshConfigId="59cff249-0bad-4aaf-9504-3793ff99d9dc" sshConfig="wangzl@10.48.3.127:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" connections="6" passiveMode="true" shareSSLContext="true" isUseRsync="true" />
+          </advancedOptions>
+        </fileTransfer>
+        <option name="numberOfConnections" value="6" />
+      </webServer>
     </option>
   </component>
 </project>

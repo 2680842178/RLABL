@@ -28,11 +28,8 @@ def Img_to_State(img):
 
     img = cv2.resize(img, (300, 300))
     R, G, B = cv2.split(img)
-    R = torch.tensor(R)
-    G = torch.tensor(G)
-    B = torch.tensor(B)
 
-    return torch.stack([R,G,B],dim=0)
+    return np.stack([R,G,B])
 
 
 
@@ -117,19 +114,39 @@ if __name__ == "__main__":
     state_size = env.observation_space.shape
     action_size = env.action_space.n
     env.reset(seed=args.seed)
-    img=env.render()
+    img0=env.render()
+    plt.imsave('trace/0.jpg', img0)
+    action = random.choice(np.arange(action_size))
+    action = 2
+    env.step(action)
+    img1=env.render()
+    plt.imsave('trace/1.jpg', img1)
 
-    total_reward = 0
-    event_list=[]
-    memory=[]
-    memory.append(img)
+    img2= img1-img0
+    plt.imsave('trace/2.jpg', img2)
 
-    state=Img_to_State(img)
 
-    print(state.shape)
 
-    state_seq=[]
-    act_seq=[]
+
+
+
+
+
+
+
+
+
+
+
+    # total_reward = 0
+    # event_list=[]
+    # memory=[]
+    # memory.append(img)
+    # state=Img_to_State(img)
+    # print(state.shape)
+    # state_seq=[]
+    # act_seq=[]
+
 
 
     # for j in range(100):  # frames, in case stuck in one frame
@@ -146,20 +163,6 @@ if __name__ == "__main__":
     # print(len(memory))
     # for i in range(len(memory)):
     #     plt.imsave('trace/{i}.jpg'.format(i=i), memory[i])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
