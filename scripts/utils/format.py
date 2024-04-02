@@ -5,7 +5,7 @@ import re
 import torch
 import torch_ac
 import gymnasium as gym
-
+import cv2
 
 
 def get_obss_preprocessor(obs_space):
@@ -40,7 +40,12 @@ def get_obss_preprocessor(obs_space):
 
 def preprocess_images(images, device=None):
     # Bug of Pytorch: very slow if not first converted to numpy array
-    images = numpy.array(images)
+    X=[]
+    for i in range(len(images)):
+        x = cv2.resize(images[i], (300, 300))
+        X.append(x)
+
+    images = numpy.array(X)
     return torch.tensor(images, device=device, dtype=torch.float)
 
 

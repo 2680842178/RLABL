@@ -1,6 +1,6 @@
-train.py --algo a2c --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
 
-Namespace(algo='a2c', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
 
 Device: cuda
 
@@ -13,885 +13,395 @@ Model loaded
 
 ACModel(
   (image_conv): Sequential(
-    (0): Conv2d(3, 16, kernel_size=(2, 2), stride=(1, 1))
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
     (1): ReLU()
-    (2): MaxPool2d(kernel_size=(2, 2), stride=(2, 2), padding=0, dilation=1, ceil_mode=False)
-    (3): Conv2d(16, 32, kernel_size=(2, 2), stride=(1, 1))
-    (4): ReLU()
-    (5): Conv2d(32, 64, kernel_size=(2, 2), stride=(1, 1))
-    (6): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
   )
   (actor): Sequential(
-    (0): Linear(in_features=64, out_features=64, bias=True)
+    (0): Linear(in_features=2304, out_features=512, bias=True)
     (1): Tanh()
-    (2): Linear(in_features=64, out_features=7, bias=True)
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
   )
   (critic): Sequential(
-    (0): Linear(in_features=64, out_features=64, bias=True)
+    (0): Linear(in_features=2304, out_features=512, bias=True)
     (1): Tanh()
-    (2): Linear(in_features=64, out_features=1, bias=True)
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
   )
 )
 
 Optimizer loaded
 
-U 1 | F 000128 | FPS 0069 | D 1 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.911 | value -0.091 | policy_loss -0.070 | value_loss 0.041 | grad_norm 0.232
-U 2 | F 000256 | FPS 4572 | D 1 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.771 | value -0.779 | policy_loss -0.325 | value_loss 0.319 | grad_norm 1.971
-U 3 | F 000384 | FPS 3413 | D 1 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.592 | value -2.519 | policy_loss -0.142 | value_loss 0.244 | grad_norm 0.912
-U 4 | F 000512 | FPS 3879 | D 1 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.368 | value -2.857 | policy_loss 0.204 | value_loss 0.061 | grad_norm 1.157
-U 5 | F 000640 | FPS 4000 | D 2 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.537 | value -1.223 | policy_loss 0.108 | value_loss 0.055 | grad_norm 0.481
-U 6 | F 000768 | FPS 4490 | D 2 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.611 | value -0.415 | policy_loss 0.036 | value_loss 0.013 | grad_norm 0.145
-U 7 | F 000896 | FPS 4129 | D 2 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.513 | value -0.242 | policy_loss 0.000 | value_loss 0.002 | grad_norm 0.028
-U 8 | F 001024 | FPS 3879 | D 2 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.587 | value -0.236 | policy_loss -0.020 | value_loss 0.002 | grad_norm 0.065
-U 9 | F 001152 | FPS 4063 | D 2 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.620 | value -0.440 | policy_loss 0.037 | value_loss 0.001 | grad_norm 0.117
-U 10 | F 001280 | FPS 4267 | D 2 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.721 | value -0.144 | policy_loss 0.033 | value_loss 0.002 | grad_norm 0.080
-Status saved
-U 11 | F 001408 | FPS 4266 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.737 | value 0.028 | policy_loss -0.151 | value_loss 0.058 | grad_norm 0.342
-U 12 | F 001536 | FPS 4338 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.646 | value -0.583 | policy_loss 0.049 | value_loss 0.002 | grad_norm 0.141
-U 13 | F 001664 | FPS 4571 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.700 | value -0.326 | policy_loss -0.071 | value_loss 0.026 | grad_norm 0.157
-U 14 | F 001792 | FPS 5565 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.617 | value -0.527 | policy_loss 0.058 | value_loss 0.003 | grad_norm 0.175
-U 15 | F 001920 | FPS 4119 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.653 | value -0.206 | policy_loss 0.016 | value_loss 0.005 | grad_norm 0.061
-U 16 | F 002048 | FPS 3765 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.647 | value -0.133 | policy_loss 0.008 | value_loss 0.006 | grad_norm 0.067
-U 17 | F 002176 | FPS 4266 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.703 | value -0.178 | policy_loss 0.030 | value_loss 0.001 | grad_norm 0.071
-U 18 | F 002304 | FPS 4109 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.730 | value -0.074 | policy_loss 0.010 | value_loss 0.001 | grad_norm 0.029
-U 19 | F 002432 | FPS 5818 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.744 | value -0.049 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.027
-U 20 | F 002560 | FPS 5565 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.768 | value -0.083 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.024
-Status saved
-U 21 | F 002688 | FPS 4566 | D 2 | Reward:米考mM -0.44 0.50 -1.00 0.00 |  entropy 1.796 | value -0.105 | policy_loss 0.006 | value_loss 0.000 | grad_norm 0.017
-U 22 | F 002816 | FPS 3765 | D 2 | Reward:米考mM -0.43 0.51 -1.00 0.18 |  entropy 1.795 | value -0.075 | policy_loss 0.023 | value_loss 0.004 | grad_norm 0.062
-U 23 | F 002944 | FPS 4741 | D 2 | Reward:米考mM -0.49 0.51 -1.00 0.18 |  entropy 1.835 | value -0.035 | policy_loss -0.040 | value_loss 0.020 | grad_norm 0.092
-U 24 | F 003072 | FPS 5222 | D 2 | Reward:米考mM -0.30 0.47 -1.00 0.18 |  entropy 1.831 | value -0.143 | policy_loss 0.103 | value_loss 0.006 | grad_norm 0.202
-U 25 | F 003200 | FPS 5333 | D 2 | Reward:米考mM -0.24 0.44 -1.00 0.18 |  entropy 1.814 | value 0.155 | policy_loss -0.102 | value_loss 0.046 | grad_norm 0.228
-U 26 | F 003328 | FPS 4572 | D 2 | Reward:米考mM -0.24 0.44 -1.00 0.18 |  entropy 1.779 | value -0.081 | policy_loss -0.008 | value_loss 0.005 | grad_norm 0.044
-U 27 | F 003456 | FPS 4571 | D 2 | Reward:米考mM -0.24 0.44 -1.00 0.18 |  entropy 1.791 | value -0.116 | policy_loss 0.007 | value_loss 0.002 | grad_norm 0.041
-U 28 | F 003584 | FPS 4490 | D 2 | Reward:米考mM -0.24 0.44 -1.00 0.18 |  entropy 1.794 | value -0.093 | policy_loss -0.049 | value_loss 0.013 | grad_norm 0.103
-U 29 | F 003712 | FPS 3657 | D 2 | Reward:米考mM -0.24 0.44 -1.00 0.18 |  entropy 1.773 | value -0.206 | policy_loss 0.023 | value_loss 0.002 | grad_norm 0.068
-U 30 | F 003840 | FPS 3879 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.791 | value -0.117 | policy_loss -0.035 | value_loss 0.011 | grad_norm 0.070
-Status saved
-U 31 | F 003968 | FPS 4572 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.772 | value -0.149 | policy_loss 0.027 | value_loss 0.002 | grad_norm 0.067
-U 32 | F 004096 | FPS 4414 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.787 | value -0.052 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.027
-U 33 | F 004224 | FPS 4413 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.795 | value -0.037 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.037
-U 34 | F 004352 | FPS 4410 | D 2 | Reward:米考mM -0.31 0.46 -1.00 0.00 |  entropy 1.793 | value -0.105 | policy_loss 0.019 | value_loss 0.001 | grad_norm 0.044
-U 35 | F 004480 | FPS 4129 | D 2 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.789 | value -0.036 | policy_loss 0.012 | value_loss 0.000 | grad_norm 0.031
-U 36 | F 004608 | FPS 3764 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.793 | value 0.010 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.018
-U 37 | F 004736 | FPS 3997 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.800 | value -0.011 | policy_loss 0.001 | value_loss 0.001 | grad_norm 0.020
-U 38 | F 004864 | FPS 4414 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.809 | value -0.009 | policy_loss 0.005 | value_loss 0.000 | grad_norm 0.018
-U 39 | F 004992 | FPS 4413 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.808 | value 0.006 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.016
-U 40 | F 005120 | FPS 5951 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.814 | value -0.005 | policy_loss 0.012 | value_loss 0.000 | grad_norm 0.028
-Status saved
-U 41 | F 005248 | FPS 5565 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.816 | value 0.036 | policy_loss -0.010 | value_loss 0.000 | grad_norm 0.030
-U 42 | F 005376 | FPS 5333 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.836 | value -0.008 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.017
-U 43 | F 005504 | FPS 4062 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.844 | value -0.027 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.012
-U 44 | F 005632 | FPS 4741 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.839 | value -0.022 | policy_loss 0.014 | value_loss 0.000 | grad_norm 0.031
-U 45 | F 005760 | FPS 5120 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.849 | value 0.026 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.018
-U 46 | F 005888 | FPS 4490 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.843 | value 0.002 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.009
-U 47 | F 006016 | FPS 4267 | D 3 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.855 | value -0.009 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.013
-U 48 | F 006144 | FPS 4038 | D 3 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.856 | value -0.019 | policy_loss 0.019 | value_loss 0.001 | grad_norm 0.036
-U 49 | F 006272 | FPS 3878 | D 3 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.855 | value 0.027 | policy_loss 0.013 | value_loss 0.001 | grad_norm 0.026
-U 50 | F 006400 | FPS 3657 | D 3 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.854 | value 0.066 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.035
-Status saved
-U 51 | F 006528 | FPS 4267 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.872 | value 0.012 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.020
-U 52 | F 006656 | FPS 4571 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.870 | value -0.019 | policy_loss 0.011 | value_loss 0.001 | grad_norm 0.023
-U 53 | F 006784 | FPS 4571 | D 3 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.875 | value 0.005 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.013
-U 54 | F 006912 | FPS 4571 | D 3 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.878 | value -0.022 | policy_loss 0.012 | value_loss 0.001 | grad_norm 0.022
-U 55 | F 007040 | FPS 4571 | D 3 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.883 | value 0.007 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.011
-U 56 | F 007168 | FPS 4338 | D 3 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.888 | value -0.003 | policy_loss 0.002 | value_loss 0.000 | grad_norm 0.012
-U 57 | F 007296 | FPS 3765 | D 3 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.887 | value -0.004 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.007
-U 58 | F 007424 | FPS 4000 | D 3 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.893 | value -0.006 | policy_loss 0.011 | value_loss 0.000 | grad_norm 0.019
-U 59 | F 007552 | FPS 3996 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.891 | value 0.016 | policy_loss -0.084 | value_loss 0.029 | grad_norm 0.177
-U 60 | F 007680 | FPS 4414 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.856 | value -0.119 | policy_loss 0.017 | value_loss 0.001 | grad_norm 0.043
-Status saved
-U 61 | F 007808 | FPS 4266 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.859 | value -0.053 | policy_loss 0.010 | value_loss 0.001 | grad_norm 0.031
-U 62 | F 007936 | FPS 4490 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.855 | value -0.025 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.012
-U 63 | F 008064 | FPS 3537 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.862 | value -0.035 | policy_loss 0.013 | value_loss 0.000 | grad_norm 0.026
-U 64 | F 008192 | FPS 3037 | D 3 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.871 | value 0.002 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.017
-U 65 | F 008320 | FPS 4120 | D 3 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.864 | value -0.023 | policy_loss -0.116 | value_loss 0.038 | grad_norm 0.221
-U 66 | F 008448 | FPS 4054 | D 3 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.846 | value -0.259 | policy_loss 0.010 | value_loss 0.007 | grad_norm 0.079
-U 67 | F 008576 | FPS 4264 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.855 | value -0.209 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.026
-U 68 | F 008704 | FPS 4336 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.851 | value -0.222 | policy_loss 0.020 | value_loss 0.001 | grad_norm 0.043
-U 69 | F 008832 | FPS 4000 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.854 | value -0.162 | policy_loss 0.015 | value_loss 0.001 | grad_norm 0.032
-U 70 | F 008960 | FPS 3709 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.856 | value -0.112 | policy_loss 0.018 | value_loss 0.001 | grad_norm 0.034
-Status saved
-U 71 | F 009088 | FPS 4129 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.854 | value -0.071 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.013
-U 72 | F 009216 | FPS 4267 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.860 | value -0.092 | policy_loss 0.038 | value_loss 0.002 | grad_norm 0.067
-U 73 | F 009344 | FPS 4562 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.857 | value 0.001 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.019
-U 74 | F 009472 | FPS 4267 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.863 | value 0.021 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.014
-U 75 | F 009600 | FPS 4261 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.871 | value 0.015 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.016
-U 76 | F 009728 | FPS 4101 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.875 | value 0.003 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.013
-U 77 | F 009856 | FPS 3652 | D 4 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.867 | value -0.014 | policy_loss 0.007 | value_loss 0.000 | grad_norm 0.019
-U 78 | F 009984 | FPS 3958 | D 4 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.876 | value 0.009 | policy_loss -0.121 | value_loss 0.043 | grad_norm 0.193
-U 79 | F 010112 | FPS 4414 | D 4 | Reward:米考mM -0.17 0.40 -1.00 0.26 |  entropy 1.849 | value -0.199 | policy_loss -0.005 | value_loss 0.004 | grad_norm 0.053
-U 80 | F 010240 | FPS 4266 | D 4 | Reward:米考mM -0.17 0.40 -1.00 0.26 |  entropy 1.858 | value -0.211 | policy_loss 0.030 | value_loss 0.001 | grad_norm 0.063
-Status saved
-U 81 | F 010368 | FPS 4414 | D 4 | Reward:米考mM -0.17 0.40 -1.00 0.26 |  entropy 1.865 | value -0.123 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.017
-U 82 | F 010496 | FPS 4413 | D 4 | Reward:米考mM -0.11 0.34 -1.00 0.26 |  entropy 1.866 | value -0.110 | policy_loss 0.025 | value_loss 0.001 | grad_norm 0.044
-U 83 | F 010624 | FPS 4259 | D 4 | Reward:米考mM -0.11 0.34 -1.00 0.26 |  entropy 1.863 | value -0.048 | policy_loss 0.021 | value_loss 0.001 | grad_norm 0.033
-U 84 | F 010752 | FPS 3765 | D 4 | Reward:米考mM -0.11 0.34 -1.00 0.26 |  entropy 1.862 | value -0.014 | policy_loss -0.007 | value_loss 0.001 | grad_norm 0.028
-U 85 | F 010880 | FPS 4000 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.873 | value -0.041 | policy_loss -0.003 | value_loss 0.023 | grad_norm 0.098
-U 86 | F 011008 | FPS 4568 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.847 | value -0.036 | policy_loss 0.011 | value_loss 0.001 | grad_norm 0.032
-U 87 | F 011136 | FPS 4414 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.838 | value -0.006 | policy_loss 0.003 | value_loss 0.000 | grad_norm 0.016
-U 88 | F 011264 | FPS 4571 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.865 | value 0.004 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.009
-U 89 | F 011392 | FPS 4279 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.866 | value -0.002 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.014
-U 90 | F 011520 | FPS 5565 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.868 | value -0.024 | policy_loss 0.008 | value_loss 0.000 | grad_norm 0.013
-Status saved
-U 91 | F 011648 | FPS 4267 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.865 | value -0.007 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.010
-U 92 | F 011776 | FPS 4562 | D 4 | Reward:米考mM -0.08 0.37 -1.00 0.49 |  entropy 1.857 | value -0.013 | policy_loss 0.008 | value_loss 0.000 | grad_norm 0.017
-U 93 | F 011904 | FPS 5565 | D 4 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.863 | value 0.007 | policy_loss 0.012 | value_loss 0.001 | grad_norm 0.023
-U 94 | F 012032 | FPS 5333 | D 4 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.876 | value 0.018 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.014
-U 95 | F 012160 | FPS 4567 | D 4 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.879 | value -0.002 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.010
-U 96 | F 012288 | FPS 4267 | D 4 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.879 | value -0.010 | policy_loss 0.002 | value_loss 0.000 | grad_norm 0.008
-U 97 | F 012416 | FPS 4203 | D 4 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.886 | value -0.007 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.009
-U 98 | F 012544 | FPS 3878 | D 5 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.880 | value -0.011 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.011
-U 99 | F 012672 | FPS 3460 | D 5 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.879 | value -0.017 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.015
-U 100 | F 012800 | FPS 4414 | D 5 | Reward:米考mM -0.07 0.38 -1.00 0.49 |  entropy 1.882 | value -0.031 | policy_loss 0.005 | value_loss 0.000 | grad_norm 0.013
-Status saved
-U 101 | F 012928 | FPS 4395 | D 5 | Reward:米考mM -0.00 0.29 -1.00 0.49 |  entropy 1.887 | value -0.020 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.009
-U 102 | F 013056 | FPS 4414 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.895 | value -0.024 | policy_loss 0.005 | value_loss 0.000 | grad_norm 0.013
-U 103 | F 013184 | FPS 4414 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.900 | value -0.017 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.009
-U 104 | F 013312 | FPS 3764 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.897 | value -0.024 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.009
-U 105 | F 013440 | FPS 3460 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.895 | value -0.027 | policy_loss 0.005 | value_loss 0.000 | grad_norm 0.011
-U 106 | F 013568 | FPS 4000 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.887 | value -0.013 | policy_loss -0.058 | value_loss 0.019 | grad_norm 0.110
-U 107 | F 013696 | FPS 4650 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.860 | value -0.093 | policy_loss -0.002 | value_loss 0.002 | grad_norm 0.037
-U 108 | F 013824 | FPS 3879 | D 5 | Reward:米考mM -0.02 0.28 -1.00 0.49 |  entropy 1.862 | value -0.067 | policy_loss 0.009 | value_loss 0.000 | grad_norm 0.024
-U 109 | F 013952 | FPS 4267 | D 5 | Reward:米考mM -0.05 0.25 -1.00 0.19 |  entropy 1.865 | value -0.037 | policy_loss 0.011 | value_loss 0.000 | grad_norm 0.020
-U 110 | F 014080 | FPS 4413 | D 5 | Reward:米考mM -0.05 0.25 -1.00 0.19 |  entropy 1.879 | value -0.010 | policy_loss 0.006 | value_loss 0.000 | grad_norm 0.014
-Status saved
-U 111 | F 014208 | FPS 4000 | D 5 | Reward:米考mM -0.05 0.25 -1.00 0.19 |  entropy 1.871 | value -0.001 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.010
-U 112 | F 014336 | FPS 3765 | D 5 | Reward:米考mM -0.05 0.25 -1.00 0.19 |  entropy 1.879 | value -0.010 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.011
-U 113 | F 014464 | FPS 4195 | D 5 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.870 | value -0.024 | policy_loss 0.003 | value_loss 0.000 | grad_norm 0.012
-U 114 | F 014592 | FPS 4571 | D 5 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.875 | value -0.013 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.010
-U 115 | F 014720 | FPS 4129 | D 5 | Reward:米考mM -0.02 0.31 -1.00 0.75 |  entropy 1.877 | value -0.024 | policy_loss 0.051 | value_loss 0.020 | grad_norm 0.104
-U 116 | F 014848 | FPS 4571 | D 5 | Reward:米考mM -0.00 0.32 -1.00 0.75 |  entropy 1.903 | value 0.068 | policy_loss 0.001 | value_loss 0.002 | grad_norm 0.023
-U 117 | F 014976 | FPS 4063 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.886 | value 0.056 | policy_loss -0.199 | value_loss 0.078 | grad_norm 0.492
-U 118 | F 015104 | FPS 3657 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.832 | value -0.305 | policy_loss 0.030 | value_loss 0.017 | grad_norm 0.180
-U 119 | F 015232 | FPS 4413 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.816 | value -0.097 | policy_loss 0.017 | value_loss 0.003 | grad_norm 0.047
-U 120 | F 015360 | FPS 4259 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.830 | value -0.093 | policy_loss -0.008 | value_loss 0.002 | grad_norm 0.028
-Status saved
-U 121 | F 015488 | FPS 4405 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.827 | value -0.094 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.022
-U 122 | F 015616 | FPS 4740 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.846 | value -0.087 | policy_loss 0.008 | value_loss 0.000 | grad_norm 0.016
-U 123 | F 015744 | FPS 4409 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.841 | value -0.067 | policy_loss 0.014 | value_loss 0.000 | grad_norm 0.024
-U 124 | F 015872 | FPS 4571 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.840 | value -0.029 | policy_loss 0.007 | value_loss 0.000 | grad_norm 0.014
-U 125 | F 016000 | FPS 3657 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.855 | value -0.011 | policy_loss 0.012 | value_loss 0.001 | grad_norm 0.022
-U 126 | F 016128 | FPS 3761 | D 5 | Reward:米考mM -0.13 0.46 -1.00 0.75 |  entropy 1.843 | value 0.037 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.026
-U 127 | F 016256 | FPS 4414 | D 5 | Reward:米考mM -0.05 0.40 -1.00 0.75 |  entropy 1.857 | value -0.015 | policy_loss 0.027 | value_loss 0.002 | grad_norm 0.065
-U 128 | F 016384 | FPS 4414 | D 5 | Reward:米考mM -0.05 0.40 -1.00 0.75 |  entropy 1.863 | value 0.014 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.029
-U 129 | F 016512 | FPS 5556 | D 6 | Reward:米考mM -0.05 0.40 -1.00 0.75 |  entropy 1.870 | value -0.013 | policy_loss 0.017 | value_loss 0.001 | grad_norm 0.037
-U 130 | F 016640 | FPS 5524 | D 6 | Reward:米考mM -0.05 0.40 -1.00 0.75 |  entropy 1.870 | value 0.054 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.020
-Status saved
-U 131 | F 016768 | FPS 4414 | D 6 | Reward:米考mM -0.02 0.42 -1.00 0.75 |  entropy 1.885 | value 0.011 | policy_loss 0.043 | value_loss 0.008 | grad_norm 0.094
-U 132 | F 016896 | FPS 3820 | D 6 | Reward:米考mM -0.02 0.42 -1.00 0.75 |  entropy 1.890 | value 0.084 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.020
-U 133 | F 017024 | FPS 4741 | D 6 | Reward:米考mM -0.02 0.42 -1.00 0.75 |  entropy 1.891 | value 0.103 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.031
-U 134 | F 017152 | FPS 4571 | D 6 | Reward:米考mM -0.02 0.42 -1.00 0.75 |  entropy 1.889 | value 0.035 | policy_loss 0.003 | value_loss 0.002 | grad_norm 0.028
-U 135 | F 017280 | FPS 4337 | D 6 | Reward:米考mM -0.02 0.42 -1.00 0.75 |  entropy 1.889 | value 0.056 | policy_loss -0.038 | value_loss 0.002 | grad_norm 0.063
-U 136 | F 017408 | FPS 4571 | D 6 | Reward:米考mM -0.02 0.42 -1.00 0.75 |  entropy 1.883 | value -0.051 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.021
-U 137 | F 017536 | FPS 4129 | D 6 | Reward:米考mM -0.06 0.38 -1.00 0.45 |  entropy 1.875 | value -0.048 | policy_loss 0.016 | value_loss 0.004 | grad_norm 0.033
-U 138 | F 017664 | FPS 4000 | D 6 | Reward:米考mM -0.06 0.38 -1.00 0.45 |  entropy 1.890 | value -0.022 | policy_loss 0.000 | value_loss 0.000 | grad_norm 0.018
-U 139 | F 017792 | FPS 3555 | D 6 | Reward:米考mM 0.04 0.33 -1.00 0.66 |  entropy 1.891 | value -0.013 | policy_loss 0.012 | value_loss 0.004 | grad_norm 0.038
-U 140 | F 017920 | FPS 4000 | D 6 | Reward:米考mM 0.10 0.20 0.00 0.66 |  entropy 1.882 | value 0.003 | policy_loss 0.001 | value_loss 0.000 | grad_norm 0.017
-Status saved
-U 141 | F 018048 | FPS 4734 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.885 | value 0.006 | policy_loss 0.003 | value_loss 0.000 | grad_norm 0.016
-U 142 | F 018176 | FPS 4571 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.885 | value 0.007 | policy_loss 0.004 | value_loss 0.000 | grad_norm 0.011
-U 143 | F 018304 | FPS 4414 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.875 | value 0.020 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.012
-U 144 | F 018432 | FPS 4571 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.878 | value 0.010 | policy_loss 0.008 | value_loss 0.000 | grad_norm 0.011
-U 145 | F 018560 | FPS 3997 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.876 | value 0.028 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.008
-U 146 | F 018688 | FPS 3765 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.894 | value 0.027 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.011
-U 147 | F 018816 | FPS 3878 | D 6 | Reward:米考mM 0.11 0.20 0.00 0.66 |  entropy 1.892 | value 0.019 | policy_loss 0.003 | value_loss 0.000 | grad_norm 0.012
-U 148 | F 018944 | FPS 4405 | D 6 | Reward:米考mM 0.16 0.24 0.00 0.72 |  entropy 1.889 | value 0.027 | policy_loss 0.051 | value_loss 0.016 | grad_norm 0.084
-U 149 | F 019072 | FPS 4414 | D 6 | Reward:米考mM 0.16 0.24 0.00 0.72 |  entropy 1.892 | value 0.117 | policy_loss 0.009 | value_loss 0.002 | grad_norm 0.028
-U 150 | F 019200 | FPS 4266 | D 6 | Reward:米考mM 0.18 0.25 0.00 0.72 |  entropy 1.882 | value 0.151 | policy_loss 0.016 | value_loss 0.006 | grad_norm 0.038
-Status saved
-U 151 | F 019328 | FPS 4567 | D 6 | Reward:米考mM 0.20 0.28 0.00 0.73 |  entropy 1.891 | value 0.181 | policy_loss -0.009 | value_loss 0.008 | grad_norm 0.061
-U 152 | F 019456 | FPS 4000 | D 6 | Reward:米考mM 0.20 0.28 0.00 0.73 |  entropy 1.878 | value 0.162 | policy_loss 0.032 | value_loss 0.005 | grad_norm 0.083
-U 153 | F 019584 | FPS 3657 | D 6 | Reward:米考mM 0.29 0.32 0.00 0.87 |  entropy 1.889 | value 0.294 | policy_loss 0.034 | value_loss 0.006 | grad_norm 0.090
-U 154 | F 019712 | FPS 4063 | D 6 | Reward:米考mM 0.38 0.34 0.00 0.87 |  entropy 1.891 | value 0.508 | policy_loss -0.027 | value_loss 0.018 | grad_norm 0.159
-U 155 | F 019840 | FPS 4267 | D 6 | Reward:米考mM 0.47 0.33 0.00 0.87 |  entropy 1.811 | value 0.372 | policy_loss 0.010 | value_loss 0.014 | grad_norm 0.131
-U 156 | F 019968 | FPS 4266 | D 6 | Reward:米考mM 0.55 0.33 0.00 0.96 |  entropy 1.579 | value 0.651 | policy_loss -0.058 | value_loss 0.027 | grad_norm 0.260
-U 157 | F 020096 | FPS 4196 | D 6 | Reward:米考mM 0.63 0.30 0.00 0.96 |  entropy 1.746 | value 0.218 | policy_loss 0.010 | value_loss 0.030 | grad_norm 0.216
-U 158 | F 020224 | FPS 4129 | D 6 | Reward:米考mM 0.72 0.26 0.00 0.96 |  entropy 1.534 | value 0.462 | policy_loss -0.003 | value_loss 0.020 | grad_norm 0.109
-U 159 | F 020352 | FPS 3657 | D 7 | Reward:米考mM 0.81 0.19 0.28 0.96 |  entropy 1.493 | value 0.552 | policy_loss 0.021 | value_loss 0.028 | grad_norm 0.156
-U 160 | F 020480 | FPS 3652 | D 7 | Reward:米考mM 0.75 0.28 0.00 0.96 |  entropy 1.373 | value 0.663 | policy_loss -0.062 | value_loss 0.026 | grad_norm 0.210
-Status saved
-U 161 | F 020608 | FPS 4267 | D 7 | Reward:米考mM 0.66 0.51 -1.00 0.96 |  entropy 1.631 | value 0.263 | policy_loss -0.084 | value_loss 0.047 | grad_norm 0.251
-U 162 | F 020736 | FPS 4129 | D 7 | Reward:米考mM 0.67 0.51 -1.00 0.96 |  entropy 1.563 | value 0.137 | policy_loss 0.214 | value_loss 0.101 | grad_norm 0.760
-U 163 | F 020864 | FPS 4407 | D 7 | Reward:米考mM 0.73 0.46 -1.00 0.95 |  entropy 1.417 | value 0.813 | policy_loss -0.002 | value_loss 0.020 | grad_norm 0.193
-U 164 | F 020992 | FPS 4267 | D 7 | Reward:米考mM 0.87 0.11 0.54 0.95 |  entropy 1.489 | value 0.667 | policy_loss 0.006 | value_loss 0.010 | grad_norm 0.161
-U 165 | F 021120 | FPS 3764 | D 7 | Reward:米考mM 0.88 0.11 0.54 0.97 |  entropy 1.413 | value 0.906 | policy_loss -0.090 | value_loss 0.035 | grad_norm 0.521
-U 166 | F 021248 | FPS 3719 | D 7 | Reward:米考mM 0.89 0.10 0.54 0.97 |  entropy 1.100 | value 0.458 | policy_loss -0.012 | value_loss 0.013 | grad_norm 0.126
-U 167 | F 021376 | FPS 3657 | D 7 | Reward:米考mM 0.92 0.05 0.81 0.97 |  entropy 1.122 | value 0.486 | policy_loss 0.025 | value_loss 0.009 | grad_norm 0.207
-U 168 | F 021504 | FPS 4266 | D 7 | Reward:米考mM 0.91 0.05 0.81 0.97 |  entropy 1.563 | value 0.463 | policy_loss 0.077 | value_loss 0.025 | grad_norm 0.282
-U 169 | F 021632 | FPS 4266 | D 7 | Reward:米考mM 0.89 0.06 0.78 0.97 |  entropy 1.458 | value 0.770 | policy_loss -0.014 | value_loss 0.008 | grad_norm 0.081
-U 170 | F 021760 | FPS 4129 | D 7 | Reward:米考mM 0.90 0.06 0.78 0.96 |  entropy 1.491 | value 0.741 | policy_loss -0.051 | value_loss 0.005 | grad_norm 0.233
-Status saved
-U 171 | F 021888 | FPS 4413 | D 7 | Reward:米考mM 0.90 0.06 0.78 0.96 |  entropy 1.475 | value 0.590 | policy_loss 0.009 | value_loss 0.008 | grad_norm 0.124
-U 172 | F 022016 | FPS 3343 | D 7 | Reward:米考mM 0.84 0.22 0.00 0.95 |  entropy 1.459 | value 0.630 | policy_loss 0.003 | value_loss 0.016 | grad_norm 0.145
-U 173 | F 022144 | FPS 3460 | D 7 | Reward:米考mM 0.84 0.22 0.00 0.95 |  entropy 1.512 | value 0.586 | policy_loss 0.000 | value_loss 0.007 | grad_norm 0.128
-U 174 | F 022272 | FPS 5222 | D 7 | Reward:米考mM 0.83 0.23 0.00 0.96 |  entropy 1.520 | value 0.663 | policy_loss 0.010 | value_loss 0.005 | grad_norm 0.091
-U 175 | F 022400 | FPS 5120 | D 7 | Reward:米考mM 0.87 0.12 0.53 0.96 |  entropy 1.454 | value 0.730 | policy_loss -0.033 | value_loss 0.009 | grad_norm 0.088
-U 176 | F 022528 | FPS 4000 | D 7 | Reward:米考mM 0.90 0.10 0.53 0.97 |  entropy 1.333 | value 0.743 | policy_loss 0.026 | value_loss 0.007 | grad_norm 0.121
-U 177 | F 022656 | FPS 4121 | D 7 | Reward:米考mM 0.90 0.10 0.53 0.97 |  entropy 1.325 | value 0.844 | policy_loss -0.008 | value_loss 0.003 | grad_norm 0.088
-U 178 | F 022784 | FPS 4129 | D 7 | Reward:米考mM 0.93 0.03 0.85 0.97 |  entropy 1.376 | value 0.752 | policy_loss 0.007 | value_loss 0.004 | grad_norm 0.102
-U 179 | F 022912 | FPS 3650 | D 7 | Reward:米考mM 0.85 0.25 0.00 0.97 |  entropy 1.323 | value 0.863 | policy_loss -0.082 | value_loss 0.032 | grad_norm 0.349
-U 180 | F 023040 | FPS 4119 | D 7 | Reward:米考mM 0.82 0.27 0.00 0.97 |  entropy 1.560 | value 0.513 | policy_loss 0.027 | value_loss 0.024 | grad_norm 0.355
-Status saved
-U 181 | F 023168 | FPS 4000 | D 7 | Reward:米考mM 0.81 0.27 0.00 0.96 |  entropy 1.232 | value 0.804 | policy_loss 0.075 | value_loss 0.017 | grad_norm 0.286
-U 182 | F 023296 | FPS 4000 | D 7 | Reward:米考mM 0.92 0.03 0.86 0.96 |  entropy 1.119 | value 1.166 | policy_loss -0.099 | value_loss 0.026 | grad_norm 0.442
-U 183 | F 023424 | FPS 4262 | D 7 | Reward:米考mM 0.80 0.47 -1.00 0.96 |  entropy 1.116 | value 0.633 | policy_loss -0.124 | value_loss 0.072 | grad_norm 0.374
-U 184 | F 023552 | FPS 4000 | D 7 | Reward:米考mM 0.93 0.04 0.80 0.97 |  entropy 0.950 | value 0.649 | policy_loss 0.069 | value_loss 0.023 | grad_norm 0.423
-U 185 | F 023680 | FPS 4000 | D 7 | Reward:米考mM 0.95 0.02 0.90 0.96 |  entropy 0.854 | value 1.061 | policy_loss -0.008 | value_loss 0.023 | grad_norm 0.252
-U 186 | F 023808 | FPS 3553 | D 7 | Reward:米考mM 0.89 0.23 0.00 0.96 |  entropy 0.829 | value 0.938 | policy_loss -0.075 | value_loss 0.025 | grad_norm 0.300
-U 187 | F 023936 | FPS 3657 | D 7 | Reward:米考mM 0.95 0.01 0.92 0.96 |  entropy 0.863 | value 0.718 | policy_loss 0.060 | value_loss 0.014 | grad_norm 0.351
-U 188 | F 024064 | FPS 3878 | D 8 | Reward:米考mM 0.95 0.01 0.94 0.97 |  entropy 0.778 | value 1.077 | policy_loss -0.030 | value_loss 0.023 | grad_norm 0.447
-U 189 | F 024192 | FPS 3997 | D 8 | Reward:米考mM 0.95 0.01 0.90 0.97 |  entropy 1.091 | value 0.686 | policy_loss -0.000 | value_loss 0.022 | grad_norm 0.274
-U 190 | F 024320 | FPS 4000 | D 8 | Reward:米考mM 0.93 0.06 0.69 0.97 |  entropy 0.940 | value 0.817 | policy_loss 0.048 | value_loss 0.008 | grad_norm 0.204
-Status saved
-U 191 | F 024448 | FPS 4000 | D 8 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 0.840 | value 0.977 | policy_loss -0.028 | value_loss 0.003 | grad_norm 0.138
-U 192 | F 024576 | FPS 3506 | D 8 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 0.989 | value 0.859 | policy_loss -0.012 | value_loss 0.005 | grad_norm 0.073
-U 193 | F 024704 | FPS 3556 | D 8 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 0.998 | value 0.855 | policy_loss 0.009 | value_loss 0.005 | grad_norm 0.102
-U 194 | F 024832 | FPS 4829 | D 8 | Reward:米考mM 0.95 0.02 0.91 0.97 |  entropy 0.921 | value 0.888 | policy_loss 0.015 | value_loss 0.001 | grad_norm 0.077
-U 195 | F 024960 | FPS 4741 | D 8 | Reward:米考mM 0.95 0.01 0.93 0.97 |  entropy 0.989 | value 0.941 | policy_loss -0.021 | value_loss 0.002 | grad_norm 0.098
-U 196 | F 025088 | FPS 5120 | D 8 | Reward:米考mM 0.95 0.01 0.91 0.96 |  entropy 1.052 | value 0.862 | policy_loss -0.057 | value_loss 0.005 | grad_norm 0.118
-U 197 | F 025216 | FPS 5114 | D 8 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.028 | value 0.778 | policy_loss 0.029 | value_loss 0.004 | grad_norm 0.200
-U 198 | F 025344 | FPS 3282 | D 8 | Reward:米考mM 0.94 0.03 0.85 0.97 |  entropy 1.014 | value 0.961 | policy_loss -0.022 | value_loss 0.003 | grad_norm 0.170
-U 199 | F 025472 | FPS 3764 | D 8 | Reward:米考mM 0.94 0.03 0.85 0.97 |  entropy 1.144 | value 0.820 | policy_loss 0.003 | value_loss 0.004 | grad_norm 0.110
-U 200 | F 025600 | FPS 4121 | D 8 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 0.996 | value 0.879 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.038
-Status saved
-U 201 | F 025728 | FPS 4000 | D 8 | Reward:米考mM 0.95 0.02 0.89 0.96 |  entropy 1.032 | value 0.898 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.034
-U 202 | F 025856 | FPS 4266 | D 8 | Reward:米考mM 0.95 0.01 0.93 0.96 |  entropy 1.165 | value 0.866 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.043
-U 203 | F 025984 | FPS 3605 | D 8 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.092 | value 0.891 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.040
-U 204 | F 026112 | FPS 3459 | D 8 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.123 | value 0.853 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.027
-U 205 | F 026240 | FPS 3820 | D 8 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.131 | value 0.847 | policy_loss -0.015 | value_loss 0.002 | grad_norm 0.047
-U 206 | F 026368 | FPS 4129 | D 8 | Reward:米考mM 0.93 0.02 0.89 0.97 |  entropy 1.100 | value 0.853 | policy_loss 0.007 | value_loss 0.001 | grad_norm 0.064
-U 207 | F 026496 | FPS 4129 | D 8 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.060 | value 0.924 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.087
-U 208 | F 026624 | FPS 4129 | D 8 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.171 | value 0.836 | policy_loss -0.032 | value_loss 0.002 | grad_norm 0.095
-U 209 | F 026752 | FPS 3879 | D 8 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.070 | value 0.808 | policy_loss 0.011 | value_loss 0.002 | grad_norm 0.083
-U 210 | F 026880 | FPS 3741 | D 8 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.059 | value 0.880 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.049
-Status saved
-U 211 | F 027008 | FPS 4062 | D 8 | Reward:米考mM 0.93 0.01 0.90 0.96 |  entropy 0.977 | value 0.914 | policy_loss -0.007 | value_loss 0.001 | grad_norm 0.052
-U 212 | F 027136 | FPS 5120 | D 8 | Reward:米考mM 0.94 0.03 0.84 0.97 |  entropy 1.116 | value 0.872 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.037
-U 213 | F 027264 | FPS 4923 | D 8 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.102 | value 0.900 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.056
-U 214 | F 027392 | FPS 5328 | D 8 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.171 | value 0.852 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.033
-U 215 | F 027520 | FPS 4414 | D 8 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.182 | value 0.856 | policy_loss 0.001 | value_loss 0.000 | grad_norm 0.038
-U 216 | F 027648 | FPS 3657 | D 8 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.199 | value 0.879 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.019
-U 217 | F 027776 | FPS 3506 | D 9 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.262 | value 0.876 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.023
-U 218 | F 027904 | FPS 4000 | D 9 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.235 | value 0.856 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.020
-U 219 | F 028032 | FPS 4000 | D 9 | Reward:米考mM 0.93 0.03 0.84 0.95 |  entropy 1.276 | value 0.861 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.022
-U 220 | F 028160 | FPS 4196 | D 9 | Reward:米考mM 0.93 0.03 0.84 0.96 |  entropy 1.299 | value 0.849 | policy_loss -0.021 | value_loss 0.001 | grad_norm 0.032
-Status saved
-U 221 | F 028288 | FPS 4129 | D 9 | Reward:米考mM 0.92 0.03 0.88 0.96 |  entropy 1.267 | value 0.848 | policy_loss 0.015 | value_loss 0.001 | grad_norm 0.063
-U 222 | F 028416 | FPS 3657 | D 9 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.279 | value 0.913 | policy_loss -0.029 | value_loss 0.001 | grad_norm 0.076
-U 223 | F 028544 | FPS 3653 | D 9 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.321 | value 0.831 | policy_loss 0.006 | value_loss 0.001 | grad_norm 0.062
-U 224 | F 028672 | FPS 3879 | D 9 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.313 | value 0.875 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.064
-U 225 | F 028800 | FPS 4129 | D 9 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.289 | value 0.871 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.026
-U 226 | F 028928 | FPS 3971 | D 9 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.310 | value 0.883 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.038
-U 227 | F 029056 | FPS 3879 | D 9 | Reward:米考mM 0.93 0.03 0.86 0.96 |  entropy 1.319 | value 0.844 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.028
-U 228 | F 029184 | FPS 3324 | D 9 | Reward:米考mM 0.93 0.02 0.86 0.96 |  entropy 1.365 | value 0.865 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.025
-U 229 | F 029312 | FPS 4267 | D 9 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.405 | value 0.834 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.032
-U 230 | F 029440 | FPS 4571 | D 9 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.359 | value 0.834 | policy_loss 0.013 | value_loss 0.001 | grad_norm 0.063
-Status saved
-U 231 | F 029568 | FPS 4828 | D 9 | Reward:米考mM 0.92 0.02 0.89 0.97 |  entropy 1.328 | value 0.902 | policy_loss -0.033 | value_loss 0.001 | grad_norm 0.073
-U 232 | F 029696 | FPS 4129 | D 9 | Reward:米考mM 0.93 0.02 0.89 0.97 |  entropy 1.368 | value 0.819 | policy_loss -0.012 | value_loss 0.002 | grad_norm 0.043
-U 233 | F 029824 | FPS 4267 | D 9 | Reward:米考mM 0.93 0.02 0.87 0.97 |  entropy 1.383 | value 0.827 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.037
-U 234 | F 029952 | FPS 3552 | D 9 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.372 | value 0.852 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.028
-U 235 | F 030080 | FPS 3556 | D 9 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.329 | value 0.880 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.028
-U 236 | F 030208 | FPS 5333 | D 9 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.362 | value 0.851 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.039
-U 237 | F 030336 | FPS 5115 | D 9 | Reward:米考mM 0.93 0.05 0.75 0.96 |  entropy 1.336 | value 0.890 | policy_loss -0.035 | value_loss 0.003 | grad_norm 0.104
-U 238 | F 030464 | FPS 5333 | D 9 | Reward:米考mM 0.92 0.05 0.75 0.96 |  entropy 1.432 | value 0.784 | policy_loss -0.005 | value_loss 0.002 | grad_norm 0.057
-U 239 | F 030592 | FPS 4741 | D 9 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.391 | value 0.806 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.037
-U 240 | F 030720 | FPS 3639 | D 9 | Reward:米考mM 0.92 0.02 0.87 0.96 |  entropy 1.343 | value 0.844 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.031
-Status saved
-U 241 | F 030848 | FPS 3765 | D 9 | Reward:米考mM 0.92 0.02 0.87 0.96 |  entropy 1.365 | value 0.858 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.026
-U 242 | F 030976 | FPS 4129 | D 9 | Reward:米考mM 0.93 0.01 0.90 0.96 |  entropy 1.390 | value 0.867 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.037
-U 243 | F 031104 | FPS 3995 | D 9 | Reward:米考mM 0.92 0.03 0.81 0.96 |  entropy 1.343 | value 0.839 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.030
-U 244 | F 031232 | FPS 3879 | D 9 | Reward:米考mM 0.91 0.04 0.81 0.95 |  entropy 1.355 | value 0.837 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.034
-U 245 | F 031360 | FPS 4000 | D 9 | Reward:米考mM 0.92 0.04 0.82 0.95 |  entropy 1.403 | value 0.809 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.057
-U 246 | F 031488 | FPS 3274 | D 10 | Reward:米考mM 0.90 0.03 0.82 0.95 |  entropy 1.319 | value 0.850 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.031
-U 247 | F 031616 | FPS 3879 | D 10 | Reward:米考mM 0.91 0.02 0.88 0.94 |  entropy 1.335 | value 0.870 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.032
-U 248 | F 031744 | FPS 4129 | D 10 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.408 | value 0.843 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.034
-U 249 | F 031872 | FPS 3979 | D 10 | Reward:米考mM 0.93 0.03 0.87 0.95 |  entropy 1.343 | value 0.852 | policy_loss 0.009 | value_loss 0.001 | grad_norm 0.050
-U 250 | F 032000 | FPS 4267 | D 10 | Reward:米考mM 0.93 0.02 0.87 0.95 |  entropy 1.397 | value 0.881 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.038
-Status saved
-U 251 | F 032128 | FPS 3878 | D 10 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.371 | value 0.858 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.048
-U 252 | F 032256 | FPS 3437 | D 10 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.386 | value 0.892 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.039
-U 253 | F 032384 | FPS 3556 | D 10 | Reward:米考mM 0.93 0.03 0.84 0.96 |  entropy 1.372 | value 0.875 | policy_loss -0.034 | value_loss 0.001 | grad_norm 0.063
-U 254 | F 032512 | FPS 5109 | D 10 | Reward:米考mM 0.93 0.03 0.84 0.97 |  entropy 1.414 | value 0.794 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.044
-U 255 | F 032640 | FPS 4267 | D 10 | Reward:米考mM 0.93 0.02 0.90 0.97 |  entropy 1.312 | value 0.809 | policy_loss 0.007 | value_loss 0.001 | grad_norm 0.074
-U 256 | F 032768 | FPS 4000 | D 10 | Reward:米考mM 0.93 0.03 0.86 0.96 |  entropy 1.264 | value 0.888 | policy_loss -0.022 | value_loss 0.002 | grad_norm 0.083
-U 257 | F 032896 | FPS 4129 | D 10 | Reward:米考mM 0.92 0.04 0.79 0.96 |  entropy 1.377 | value 0.813 | policy_loss -0.028 | value_loss 0.002 | grad_norm 0.055
-U 258 | F 033024 | FPS 3657 | D 10 | Reward:米考mM 0.92 0.04 0.79 0.95 |  entropy 1.291 | value 0.793 | policy_loss 0.017 | value_loss 0.002 | grad_norm 0.103
-U 259 | F 033152 | FPS 3555 | D 10 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.234 | value 0.924 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.058
-U 260 | F 033280 | FPS 3997 | D 10 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.304 | value 0.894 | policy_loss -0.029 | value_loss 0.001 | grad_norm 0.065
-Status saved
-U 261 | F 033408 | FPS 4129 | D 10 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.317 | value 0.819 | policy_loss 0.008 | value_loss 0.002 | grad_norm 0.098
-U 262 | F 033536 | FPS 4242 | D 10 | Reward:米考mM 0.93 0.02 0.85 0.95 |  entropy 1.277 | value 0.916 | policy_loss -0.020 | value_loss 0.002 | grad_norm 0.073
-U 263 | F 033664 | FPS 3762 | D 10 | Reward:米考mM 0.92 0.03 0.85 0.95 |  entropy 1.258 | value 0.844 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.061
-U 264 | F 033792 | FPS 3478 | D 10 | Reward:米考mM 0.92 0.03 0.86 0.95 |  entropy 1.302 | value 0.917 | policy_loss -0.033 | value_loss 0.001 | grad_norm 0.088
-U 265 | F 033920 | FPS 3878 | D 10 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.309 | value 0.820 | policy_loss 0.010 | value_loss 0.002 | grad_norm 0.113
-U 266 | F 034048 | FPS 4196 | D 10 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.238 | value 0.922 | policy_loss 0.009 | value_loss 0.003 | grad_norm 0.097
-U 267 | F 034176 | FPS 4129 | D 10 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.328 | value 0.905 | policy_loss -0.028 | value_loss 0.001 | grad_norm 0.072
-U 268 | F 034304 | FPS 4129 | D 10 | Reward:米考mM 0.94 0.01 0.90 0.96 |  entropy 1.362 | value 0.839 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.028
-U 269 | F 034432 | FPS 3938 | D 10 | Reward:米考mM 0.92 0.03 0.86 0.95 |  entropy 1.337 | value 0.825 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.054
-U 270 | F 034560 | FPS 3368 | D 10 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.288 | value 0.887 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.041
-Status saved
-U 271 | F 034688 | FPS 3709 | D 10 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.370 | value 0.848 | policy_loss -0.000 | value_loss 0.001 | grad_norm 0.044
-U 272 | F 034816 | FPS 4129 | D 10 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.342 | value 0.908 | policy_loss -0.033 | value_loss 0.001 | grad_norm 0.085
-U 273 | F 034944 | FPS 4000 | D 10 | Reward:米考mM 0.92 0.02 0.87 0.96 |  entropy 1.338 | value 0.800 | policy_loss 0.012 | value_loss 0.002 | grad_norm 0.110
-U 274 | F 035072 | FPS 4129 | D 11 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.310 | value 0.918 | policy_loss -0.012 | value_loss 0.003 | grad_norm 0.093
-U 275 | F 035200 | FPS 3996 | D 11 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.353 | value 0.849 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.060
-U 276 | F 035328 | FPS 3459 | D 11 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.333 | value 0.872 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.061
-U 277 | F 035456 | FPS 4114 | D 11 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.349 | value 0.825 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.086
-U 278 | F 035584 | FPS 4414 | D 11 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.286 | value 0.918 | policy_loss -0.009 | value_loss 0.002 | grad_norm 0.096
-U 279 | F 035712 | FPS 5120 | D 11 | Reward:米考mM 0.94 0.01 0.92 0.97 |  entropy 1.354 | value 0.845 | policy_loss -0.001 | value_loss 0.002 | grad_norm 0.089
-U 280 | F 035840 | FPS 5017 | D 11 | Reward:米考mM 0.94 0.02 0.89 0.97 |  entropy 1.318 | value 0.904 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.071
-Status saved
-U 281 | F 035968 | FPS 3765 | D 11 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.381 | value 0.838 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.047
-U 282 | F 036096 | FPS 3368 | D 11 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.316 | value 0.886 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.032
-U 283 | F 036224 | FPS 3709 | D 11 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.359 | value 0.837 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.051
-U 284 | F 036352 | FPS 3765 | D 11 | Reward:米考mM 0.93 0.03 0.86 0.97 |  entropy 1.324 | value 0.903 | policy_loss -0.022 | value_loss 0.001 | grad_norm 0.084
-U 285 | F 036480 | FPS 4266 | D 11 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.394 | value 0.803 | policy_loss 0.020 | value_loss 0.003 | grad_norm 0.130
-U 286 | F 036608 | FPS 4246 | D 11 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.344 | value 0.940 | policy_loss -0.003 | value_loss 0.004 | grad_norm 0.129
-U 287 | F 036736 | FPS 3879 | D 11 | Reward:米考mM 0.93 0.03 0.87 0.96 |  entropy 1.448 | value 0.876 | policy_loss -0.038 | value_loss 0.005 | grad_norm 0.117
-U 288 | F 036864 | FPS 3657 | D 11 | Reward:米考mM 0.92 0.02 0.87 0.96 |  entropy 1.486 | value 0.785 | policy_loss -0.003 | value_loss 0.003 | grad_norm 0.068
-U 289 | F 036992 | FPS 3820 | D 11 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.362 | value 0.840 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.041
-U 290 | F 037120 | FPS 4129 | D 11 | Reward:米考mM 0.92 0.03 0.84 0.95 |  entropy 1.375 | value 0.887 | policy_loss -0.036 | value_loss 0.002 | grad_norm 0.081
-Status saved
-U 291 | F 037248 | FPS 4129 | D 11 | Reward:米考mM 0.92 0.03 0.84 0.97 |  entropy 1.354 | value 0.804 | policy_loss 0.014 | value_loss 0.002 | grad_norm 0.106
-U 292 | F 037376 | FPS 4414 | D 11 | Reward:米考mM 0.92 0.03 0.84 0.97 |  entropy 1.332 | value 0.918 | policy_loss -0.008 | value_loss 0.002 | grad_norm 0.073
-U 293 | F 037504 | FPS 3879 | D 11 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.333 | value 0.863 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.082
-U 294 | F 037632 | FPS 3654 | D 11 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.419 | value 0.931 | policy_loss -0.022 | value_loss 0.003 | grad_norm 0.148
-U 295 | F 037760 | FPS 3765 | D 11 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.431 | value 0.824 | policy_loss -0.018 | value_loss 0.003 | grad_norm 0.075
-U 296 | F 037888 | FPS 5120 | D 11 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.383 | value 0.816 | policy_loss 0.022 | value_loss 0.002 | grad_norm 0.088
-U 297 | F 038016 | FPS 5115 | D 11 | Reward:米考mM 0.92 0.03 0.84 0.96 |  entropy 1.366 | value 0.929 | policy_loss -0.027 | value_loss 0.002 | grad_norm 0.127
-U 298 | F 038144 | FPS 4923 | D 11 | Reward:米考mM 0.92 0.03 0.84 0.96 |  entropy 1.477 | value 0.790 | policy_loss 0.023 | value_loss 0.004 | grad_norm 0.123
-U 299 | F 038272 | FPS 4571 | D 11 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.417 | value 0.903 | policy_loss -0.036 | value_loss 0.003 | grad_norm 0.103
-U 300 | F 038400 | FPS 3412 | D 11 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.421 | value 0.811 | policy_loss -0.002 | value_loss 0.002 | grad_norm 0.055
-Status saved
-U 301 | F 038528 | FPS 4129 | D 11 | Reward:米考mM 0.92 0.02 0.89 0.96 |  entropy 1.443 | value 0.845 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.028
-U 302 | F 038656 | FPS 4267 | D 11 | Reward:米考mM 0.92 0.02 0.88 0.95 |  entropy 1.436 | value 0.851 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.027
-U 303 | F 038784 | FPS 4196 | D 12 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.451 | value 0.834 | policy_loss 0.010 | value_loss 0.001 | grad_norm 0.077
-U 304 | F 038912 | FPS 4000 | D 12 | Reward:米考mM 0.93 0.02 0.89 0.97 |  entropy 1.356 | value 0.915 | policy_loss -0.030 | value_loss 0.002 | grad_norm 0.121
-U 305 | F 039040 | FPS 4129 | D 12 | Reward:米考mM 0.93 0.03 0.83 0.97 |  entropy 1.435 | value 0.792 | policy_loss -0.003 | value_loss 0.002 | grad_norm 0.054
-U 306 | F 039168 | FPS 3623 | D 12 | Reward:米考mM 0.93 0.03 0.83 0.97 |  entropy 1.385 | value 0.831 | policy_loss -0.007 | value_loss 0.001 | grad_norm 0.031
-U 307 | F 039296 | FPS 3459 | D 12 | Reward:米考mM 0.92 0.03 0.86 0.96 |  entropy 1.392 | value 0.850 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.026
-U 308 | F 039424 | FPS 4000 | D 12 | Reward:米考mM 0.93 0.03 0.86 0.96 |  entropy 1.336 | value 0.838 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.065
-U 309 | F 039552 | FPS 4196 | D 12 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.246 | value 0.924 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.096
-U 310 | F 039680 | FPS 4129 | D 12 | Reward:米考mM 0.94 0.01 0.90 0.96 |  entropy 1.407 | value 0.811 | policy_loss -0.008 | value_loss 0.002 | grad_norm 0.073
-Status saved
-U 311 | F 039808 | FPS 4266 | D 12 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.330 | value 0.857 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.033
-U 312 | F 039936 | FPS 3506 | D 12 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.385 | value 0.856 | policy_loss -0.032 | value_loss 0.001 | grad_norm 0.057
-U 313 | F 040064 | FPS 3556 | D 12 | Reward:米考mM 0.92 0.03 0.82 0.94 |  entropy 1.354 | value 0.819 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.027
-U 314 | F 040192 | FPS 4413 | D 12 | Reward:米考mM 0.92 0.03 0.82 0.96 |  entropy 1.341 | value 0.831 | policy_loss 0.006 | value_loss 0.001 | grad_norm 0.072
-U 315 | F 040320 | FPS 3820 | D 12 | Reward:米考mM 0.93 0.03 0.86 0.97 |  entropy 1.227 | value 0.923 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.086
-U 316 | F 040448 | FPS 4000 | D 12 | Reward:米考mM 0.93 0.03 0.86 0.97 |  entropy 1.332 | value 0.836 | policy_loss -0.005 | value_loss 0.002 | grad_norm 0.081
-U 317 | F 040576 | FPS 3878 | D 12 | Reward:米考mM 0.92 0.05 0.75 0.96 |  entropy 1.200 | value 0.908 | policy_loss -0.012 | value_loss 0.003 | grad_norm 0.067
-U 318 | F 040704 | FPS 3555 | D 12 | Reward:米考mM 0.93 0.05 0.75 0.96 |  entropy 1.227 | value 0.863 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.053
-U 319 | F 040832 | FPS 4571 | D 12 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.332 | value 0.863 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.037
-U 320 | F 040960 | FPS 5018 | D 12 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.323 | value 0.841 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.051
-Status saved
-U 321 | F 041088 | FPS 3879 | D 12 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.306 | value 0.891 | policy_loss -0.023 | value_loss 0.001 | grad_norm 0.060
-U 322 | F 041216 | FPS 4129 | D 12 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.372 | value 0.834 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.030
-U 323 | F 041344 | FPS 4337 | D 12 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.350 | value 0.844 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.040
-U 324 | F 041472 | FPS 3368 | D 12 | Reward:米考mM 0.92 0.02 0.88 0.95 |  entropy 1.361 | value 0.885 | policy_loss -0.021 | value_loss 0.000 | grad_norm 0.039
-U 325 | F 041600 | FPS 3555 | D 12 | Reward:米考mM 0.93 0.02 0.89 0.97 |  entropy 1.333 | value 0.837 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.039
-U 326 | F 041728 | FPS 4063 | D 12 | Reward:米考mM 0.93 0.02 0.86 0.96 |  entropy 1.348 | value 0.875 | policy_loss -0.024 | value_loss 0.001 | grad_norm 0.042
-U 327 | F 041856 | FPS 4000 | D 12 | Reward:米考mM 0.93 0.02 0.86 0.96 |  entropy 1.332 | value 0.832 | policy_loss 0.012 | value_loss 0.001 | grad_norm 0.082
-U 328 | F 041984 | FPS 3939 | D 12 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.253 | value 0.952 | policy_loss -0.029 | value_loss 0.002 | grad_norm 0.104
-U 329 | F 042112 | FPS 4063 | D 12 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.327 | value 0.828 | policy_loss -0.000 | value_loss 0.003 | grad_norm 0.108
-U 330 | F 042240 | FPS 3578 | D 12 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.327 | value 0.901 | policy_loss -0.006 | value_loss 0.002 | grad_norm 0.053
-Status saved
-U 331 | F 042368 | FPS 3879 | D 13 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.295 | value 0.903 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.051
-U 332 | F 042496 | FPS 3879 | D 13 | Reward:米考mM 0.92 0.02 0.88 0.95 |  entropy 1.292 | value 0.840 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.052
-U 333 | F 042624 | FPS 3879 | D 13 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.365 | value 0.889 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.037
-U 334 | F 042752 | FPS 4124 | D 13 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.357 | value 0.875 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.022
-U 335 | F 042880 | FPS 4267 | D 13 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.396 | value 0.877 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.016
-U 336 | F 043008 | FPS 3556 | D 13 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.410 | value 0.867 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.017
-U 337 | F 043136 | FPS 3629 | D 13 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.425 | value 0.858 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.022
-U 338 | F 043264 | FPS 3879 | D 13 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.399 | value 0.883 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.023
-U 339 | F 043392 | FPS 4129 | D 13 | Reward:米考mM 0.92 0.03 0.82 0.95 |  entropy 1.382 | value 0.858 | policy_loss -0.007 | value_loss 0.001 | grad_norm 0.025
-U 340 | F 043520 | FPS 4063 | D 13 | Reward:米考mM 0.93 0.03 0.82 0.97 |  entropy 1.404 | value 0.865 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.022
-Status saved
-U 341 | F 043648 | FPS 3657 | D 13 | Reward:米考mM 0.93 0.02 0.90 0.97 |  entropy 1.380 | value 0.863 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.051
-U 342 | F 043776 | FPS 3555 | D 13 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.411 | value 0.833 | policy_loss -0.011 | value_loss 0.002 | grad_norm 0.041
-U 343 | F 043904 | FPS 4063 | D 13 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.428 | value 0.837 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.024
-U 344 | F 044032 | FPS 4129 | D 13 | Reward:米考mM 0.92 0.04 0.82 0.96 |  entropy 1.383 | value 0.877 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.050
-U 345 | F 044160 | FPS 4129 | D 13 | Reward:米考mM 0.91 0.04 0.82 0.95 |  entropy 1.418 | value 0.822 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.043
-U 346 | F 044288 | FPS 4392 | D 13 | Reward:米考mM 0.93 0.03 0.85 0.96 |  entropy 1.334 | value 0.838 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.064
-U 347 | F 044416 | FPS 4000 | D 13 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.315 | value 0.923 | policy_loss -0.004 | value_loss 0.002 | grad_norm 0.084
-U 348 | F 044544 | FPS 3555 | D 13 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.435 | value 0.855 | policy_loss -0.017 | value_loss 0.002 | grad_norm 0.058
-U 349 | F 044672 | FPS 3820 | D 13 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.347 | value 0.840 | policy_loss 0.010 | value_loss 0.001 | grad_norm 0.065
-U 350 | F 044800 | FPS 3987 | D 13 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.394 | value 0.915 | policy_loss -0.027 | value_loss 0.001 | grad_norm 0.074
-Status saved
-U 351 | F 044928 | FPS 4196 | D 13 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.398 | value 0.822 | policy_loss 0.003 | value_loss 0.002 | grad_norm 0.090
-U 352 | F 045056 | FPS 4000 | D 13 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.314 | value 0.913 | policy_loss -0.011 | value_loss 0.003 | grad_norm 0.114
-U 353 | F 045184 | FPS 4129 | D 13 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.459 | value 0.813 | policy_loss -0.020 | value_loss 0.004 | grad_norm 0.082
-U 354 | F 045312 | FPS 3552 | D 13 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.420 | value 0.802 | policy_loss 0.010 | value_loss 0.002 | grad_norm 0.122
-U 355 | F 045440 | FPS 3765 | D 13 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.256 | value 0.952 | policy_loss -0.010 | value_loss 0.005 | grad_norm 0.120
-U 356 | F 045568 | FPS 3879 | D 13 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.288 | value 0.873 | policy_loss 0.003 | value_loss 0.004 | grad_norm 0.109
-U 357 | F 045696 | FPS 3937 | D 13 | Reward:米考mM 0.94 0.03 0.84 0.96 |  entropy 1.252 | value 0.952 | policy_loss -0.019 | value_loss 0.003 | grad_norm 0.190
-U 358 | F 045824 | FPS 4000 | D 13 | Reward:米考mM 0.95 0.01 0.91 0.96 |  entropy 1.493 | value 0.743 | policy_loss 0.008 | value_loss 0.009 | grad_norm 0.152
-U 359 | F 045952 | FPS 3765 | D 13 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.355 | value 0.846 | policy_loss 0.017 | value_loss 0.002 | grad_norm 0.086
-U 360 | F 046080 | FPS 3605 | D 14 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.317 | value 0.932 | policy_loss -0.039 | value_loss 0.001 | grad_norm 0.108
-Status saved
-U 361 | F 046208 | FPS 4267 | D 14 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.409 | value 0.783 | policy_loss -0.007 | value_loss 0.002 | grad_norm 0.044
-U 362 | F 046336 | FPS 4000 | D 14 | Reward:米考mM 0.92 0.02 0.89 0.96 |  entropy 1.371 | value 0.816 | policy_loss 0.010 | value_loss 0.002 | grad_norm 0.092
-U 363 | F 046464 | FPS 4117 | D 14 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.313 | value 0.917 | policy_loss -0.014 | value_loss 0.002 | grad_norm 0.095
-U 364 | F 046592 | FPS 4129 | D 14 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.413 | value 0.850 | policy_loss -0.011 | value_loss 0.002 | grad_norm 0.053
-U 365 | F 046720 | FPS 3999 | D 14 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.367 | value 0.855 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.031
-U 366 | F 046848 | FPS 3506 | D 14 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.385 | value 0.867 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.018
-U 367 | F 046976 | FPS 3459 | D 14 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.391 | value 0.849 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.026
-U 368 | F 047104 | FPS 4106 | D 14 | Reward:米考mM 0.94 0.02 0.87 0.96 |  entropy 1.416 | value 0.856 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.025
-U 369 | F 047232 | FPS 4571 | D 14 | Reward:米考mM 0.91 0.08 0.60 0.95 |  entropy 1.439 | value 0.830 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.042
-U 370 | F 047360 | FPS 4129 | D 14 | Reward:米考mM 0.91 0.08 0.60 0.95 |  entropy 1.381 | value 0.895 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.057
-Status saved
-U 371 | F 047488 | FPS 3937 | D 14 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.451 | value 0.823 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.033
-U 372 | F 047616 | FPS 2909 | D 14 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.422 | value 0.829 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.039
-U 373 | F 047744 | FPS 3879 | D 14 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.352 | value 0.891 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.048
-U 374 | F 047872 | FPS 4062 | D 14 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.427 | value 0.817 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.031
-U 375 | F 048000 | FPS 4000 | D 14 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.415 | value 0.850 | policy_loss -0.021 | value_loss 0.002 | grad_norm 0.037
-U 376 | F 048128 | FPS 4266 | D 14 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.363 | value 0.853 | policy_loss 0.007 | value_loss 0.000 | grad_norm 0.041
-U 377 | F 048256 | FPS 3655 | D 14 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.345 | value 0.912 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.066
-U 378 | F 048384 | FPS 3282 | D 14 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.390 | value 0.831 | policy_loss 0.009 | value_loss 0.002 | grad_norm 0.097
-U 379 | F 048512 | FPS 3999 | D 14 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.347 | value 0.935 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.051
-U 380 | F 048640 | FPS 3938 | D 14 | Reward:米考mM 0.93 0.01 0.90 0.96 |  entropy 1.402 | value 0.917 | policy_loss -0.030 | value_loss 0.001 | grad_norm 0.100
-Status saved
-U 381 | F 048768 | FPS 4267 | D 14 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.533 | value 0.771 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.044
-U 382 | F 048896 | FPS 4128 | D 14 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.503 | value 0.762 | policy_loss 0.021 | value_loss 0.003 | grad_norm 0.121
-U 383 | F 049024 | FPS 3709 | D 14 | Reward:米考mM 0.92 0.02 0.89 0.96 |  entropy 1.367 | value 0.927 | policy_loss -0.013 | value_loss 0.003 | grad_norm 0.084
-U 384 | F 049152 | FPS 3200 | D 14 | Reward:米考mM 0.92 0.03 0.85 0.96 |  entropy 1.367 | value 0.860 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.040
-U 385 | F 049280 | FPS 3604 | D 14 | Reward:米考mM 0.93 0.03 0.85 0.96 |  entropy 1.449 | value 0.850 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.040
-U 386 | F 049408 | FPS 4000 | D 14 | Reward:米考mM 0.93 0.02 0.86 0.96 |  entropy 1.355 | value 0.893 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.068
-U 387 | F 049536 | FPS 3764 | D 15 | Reward:米考mM 0.92 0.03 0.85 0.95 |  entropy 1.432 | value 0.803 | policy_loss 0.002 | value_loss 0.002 | grad_norm 0.066
-U 388 | F 049664 | FPS 4257 | D 15 | Reward:米考mM 0.93 0.02 0.85 0.95 |  entropy 1.440 | value 0.874 | policy_loss -0.022 | value_loss 0.001 | grad_norm 0.054
-U 389 | F 049792 | FPS 4000 | D 15 | Reward:米考mM 0.93 0.02 0.91 0.97 |  entropy 1.488 | value 0.815 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.023
-U 390 | F 049920 | FPS 3459 | D 15 | Reward:米考mM 0.92 0.02 0.88 0.97 |  entropy 1.382 | value 0.826 | policy_loss 0.001 | value_loss 0.001 | grad_norm 0.051
-Status saved
-U 391 | F 050048 | FPS 4195 | D 15 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.406 | value 0.869 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.041
-U 392 | F 050176 | FPS 3879 | D 15 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.354 | value 0.856 | policy_loss 0.001 | value_loss 0.000 | grad_norm 0.030
-U 393 | F 050304 | FPS 4128 | D 15 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.375 | value 0.886 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.021
-U 394 | F 050432 | FPS 3937 | D 15 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.370 | value 0.896 | policy_loss -0.048 | value_loss 0.002 | grad_norm 0.093
-U 395 | F 050560 | FPS 3657 | D 15 | Reward:米考mM 0.92 0.02 0.90 0.95 |  entropy 1.370 | value 0.777 | policy_loss 0.030 | value_loss 0.003 | grad_norm 0.127
-U 396 | F 050688 | FPS 3412 | D 15 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.384 | value 0.934 | policy_loss -0.022 | value_loss 0.004 | grad_norm 0.098
-U 397 | F 050816 | FPS 2909 | D 15 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.400 | value 0.850 | policy_loss -0.006 | value_loss 0.002 | grad_norm 0.057
-U 398 | F 050944 | FPS 4129 | D 15 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.318 | value 0.872 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.048
-U 399 | F 051072 | FPS 3819 | D 15 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.334 | value 0.833 | policy_loss 0.015 | value_loss 0.001 | grad_norm 0.095
-U 400 | F 051200 | FPS 3657 | D 15 | Reward:米考mM 0.94 0.02 0.89 0.97 |  entropy 1.329 | value 0.952 | policy_loss -0.010 | value_loss 0.003 | grad_norm 0.110
-Status saved
-U 401 | F 051328 | FPS 3764 | D 15 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.438 | value 0.858 | policy_loss -0.001 | value_loss 0.002 | grad_norm 0.092
-U 402 | F 051456 | FPS 3324 | D 15 | Reward:米考mM 0.81 0.47 -1.00 0.96 |  entropy 1.431 | value 0.889 | policy_loss -0.116 | value_loss 0.049 | grad_norm 0.359
-U 403 | F 051584 | FPS 3879 | D 15 | Reward:米考mM 0.81 0.47 -1.00 0.95 |  entropy 1.381 | value 0.739 | policy_loss -0.021 | value_loss 0.007 | grad_norm 0.083
-U 404 | F 051712 | FPS 4266 | D 15 | Reward:米考mM 0.80 0.47 -1.00 0.95 |  entropy 1.336 | value 0.793 | policy_loss 0.005 | value_loss 0.003 | grad_norm 0.166
-U 405 | F 051840 | FPS 4195 | D 15 | Reward:米考mM 0.92 0.03 0.85 0.97 |  entropy 1.183 | value 0.877 | policy_loss 0.001 | value_loss 0.002 | grad_norm 0.056
-U 406 | F 051968 | FPS 3867 | D 15 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.236 | value 0.920 | policy_loss -0.040 | value_loss 0.003 | grad_norm 0.119
-U 407 | F 052096 | FPS 4922 | D 15 | Reward:米考mM 0.93 0.04 0.78 0.96 |  entropy 1.236 | value 0.782 | policy_loss 0.015 | value_loss 0.005 | grad_norm 0.149
-U 408 | F 052224 | FPS 3555 | D 15 | Reward:米考mM 0.93 0.04 0.78 0.97 |  entropy 1.125 | value 0.976 | policy_loss -0.039 | value_loss 0.006 | grad_norm 0.226
-U 409 | F 052352 | FPS 4266 | D 15 | Reward:米考mM 0.94 0.02 0.89 0.97 |  entropy 1.231 | value 0.699 | policy_loss -0.001 | value_loss 0.009 | grad_norm 0.147
-U 410 | F 052480 | FPS 5018 | D 15 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.101 | value 0.815 | policy_loss 0.011 | value_loss 0.003 | grad_norm 0.087
-Status saved
-U 411 | F 052608 | FPS 3879 | D 15 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.059 | value 0.936 | policy_loss -0.016 | value_loss 0.002 | grad_norm 0.129
-U 412 | F 052736 | FPS 4000 | D 15 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.227 | value 0.781 | policy_loss 0.007 | value_loss 0.004 | grad_norm 0.114
-U 413 | F 052864 | FPS 3936 | D 15 | Reward:米考mM 0.94 0.01 0.92 0.97 |  entropy 1.109 | value 0.897 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.064
-U 414 | F 052992 | FPS 3368 | D 15 | Reward:米考mM 0.82 0.47 -1.00 0.96 |  entropy 1.181 | value 0.899 | policy_loss -0.135 | value_loss 0.051 | grad_norm 0.372
-U 415 | F 053120 | FPS 3878 | D 16 | Reward:米考mM 0.82 0.47 -1.00 0.96 |  entropy 1.398 | value 0.757 | policy_loss -0.020 | value_loss 0.011 | grad_norm 0.182
-U 416 | F 053248 | FPS 3820 | D 16 | Reward:米考mM 0.93 0.01 0.90 0.96 |  entropy 1.206 | value 0.814 | policy_loss 0.028 | value_loss 0.002 | grad_norm 0.134
-U 417 | F 053376 | FPS 4405 | D 16 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.036 | value 1.006 | policy_loss -0.037 | value_loss 0.006 | grad_norm 0.204
-U 418 | F 053504 | FPS 4266 | D 16 | Reward:米考mM 0.94 0.02 0.88 0.97 |  entropy 1.284 | value 0.778 | policy_loss -0.007 | value_loss 0.006 | grad_norm 0.135
-U 419 | F 053632 | FPS 4063 | D 16 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.095 | value 0.816 | policy_loss 0.021 | value_loss 0.004 | grad_norm 0.141
-U 420 | F 053760 | FPS 3459 | D 16 | Reward:米考mM 0.93 0.02 0.91 0.97 |  entropy 1.094 | value 0.976 | policy_loss -0.025 | value_loss 0.004 | grad_norm 0.095
-Status saved
-U 421 | F 053888 | FPS 3505 | D 16 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.034 | value 0.903 | policy_loss -0.017 | value_loss 0.002 | grad_norm 0.080
-U 422 | F 054016 | FPS 4129 | D 16 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.127 | value 0.862 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.070
-U 423 | F 054144 | FPS 4267 | D 16 | Reward:米考mM 0.95 0.01 0.93 0.97 |  entropy 1.209 | value 0.947 | policy_loss -0.032 | value_loss 0.001 | grad_norm 0.107
-U 424 | F 054272 | FPS 4128 | D 16 | Reward:米考mM 0.94 0.02 0.89 0.97 |  entropy 1.155 | value 0.815 | policy_loss 0.009 | value_loss 0.002 | grad_norm 0.083
-U 425 | F 054400 | FPS 4062 | D 16 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.192 | value 0.873 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.049
-U 426 | F 054528 | FPS 3760 | D 16 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.173 | value 0.918 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.043
-U 427 | F 054656 | FPS 3324 | D 16 | Reward:米考mM 0.94 0.02 0.88 0.95 |  entropy 1.183 | value 0.875 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.029
-U 428 | F 054784 | FPS 4000 | D 16 | Reward:米考mM 0.95 0.01 0.92 0.97 |  entropy 1.174 | value 0.875 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.028
-U 429 | F 054912 | FPS 4129 | D 16 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.156 | value 0.904 | policy_loss -0.030 | value_loss 0.001 | grad_norm 0.072
-U 430 | F 055040 | FPS 4062 | D 16 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.202 | value 0.829 | policy_loss 0.006 | value_loss 0.002 | grad_norm 0.104
-Status saved
-U 431 | F 055168 | FPS 3879 | D 16 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.076 | value 0.940 | policy_loss -0.010 | value_loss 0.003 | grad_norm 0.112
-U 432 | F 055296 | FPS 3657 | D 16 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.151 | value 0.855 | policy_loss -0.013 | value_loss 0.003 | grad_norm 0.080
-U 433 | F 055424 | FPS 3710 | D 16 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.210 | value 0.856 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.052
-U 434 | F 055552 | FPS 3879 | D 16 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.248 | value 0.874 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.040
-U 435 | F 055680 | FPS 3999 | D 16 | Reward:米考mM 0.95 0.01 0.92 0.96 |  entropy 1.286 | value 0.878 | policy_loss 0.001 | value_loss 0.000 | grad_norm 0.031
-U 436 | F 055808 | FPS 4062 | D 16 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.257 | value 0.910 | policy_loss -0.021 | value_loss 0.001 | grad_norm 0.062
-U 437 | F 055936 | FPS 4266 | D 16 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.321 | value 0.837 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.039
-U 438 | F 056064 | FPS 3459 | D 16 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.276 | value 0.866 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.029
-U 439 | F 056192 | FPS 3937 | D 16 | Reward:米考mM 0.94 0.01 0.93 0.97 |  entropy 1.288 | value 0.888 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.022
-U 440 | F 056320 | FPS 4000 | D 16 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.308 | value 0.867 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.027
-Status saved
-U 441 | F 056448 | FPS 4062 | D 16 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.298 | value 0.894 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.035
-U 442 | F 056576 | FPS 4267 | D 16 | Reward:米考mM 0.95 0.01 0.91 0.96 |  entropy 1.344 | value 0.872 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.029
-U 443 | F 056704 | FPS 3879 | D 16 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.342 | value 0.861 | policy_loss -0.016 | value_loss 0.000 | grad_norm 0.022
-U 444 | F 056832 | FPS 3604 | D 17 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.318 | value 0.839 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.044
-U 445 | F 056960 | FPS 4055 | D 17 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.311 | value 0.893 | policy_loss -0.023 | value_loss 0.001 | grad_norm 0.042
-U 446 | F 057088 | FPS 5120 | D 17 | Reward:米考mM 0.92 0.03 0.86 0.96 |  entropy 1.296 | value 0.849 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.017
-U 447 | F 057216 | FPS 5017 | D 17 | Reward:米考mM 0.92 0.03 0.86 0.96 |  entropy 1.338 | value 0.845 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.030
-U 448 | F 057344 | FPS 5119 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.345 | value 0.828 | policy_loss 0.011 | value_loss 0.001 | grad_norm 0.068
-U 449 | F 057472 | FPS 4923 | D 17 | Reward:米考mM 0.93 0.03 0.87 0.96 |  entropy 1.275 | value 0.922 | policy_loss -0.026 | value_loss 0.002 | grad_norm 0.097
-U 450 | F 057600 | FPS 3159 | D 17 | Reward:米考mM 0.93 0.03 0.87 0.96 |  entropy 1.392 | value 0.806 | policy_loss -0.012 | value_loss 0.002 | grad_norm 0.057
-Status saved
-U 451 | F 057728 | FPS 3765 | D 17 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.286 | value 0.834 | policy_loss 0.017 | value_loss 0.001 | grad_norm 0.082
-U 452 | F 057856 | FPS 4000 | D 17 | Reward:米考mM 0.93 0.02 0.88 0.97 |  entropy 1.272 | value 0.932 | policy_loss -0.010 | value_loss 0.002 | grad_norm 0.061
-U 453 | F 057984 | FPS 4195 | D 17 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.346 | value 0.880 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.055
-U 454 | F 058112 | FPS 4129 | D 17 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.347 | value 0.842 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.036
-U 455 | F 058240 | FPS 4129 | D 17 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.329 | value 0.887 | policy_loss -0.020 | value_loss 0.000 | grad_norm 0.033
-U 456 | F 058368 | FPS 3604 | D 17 | Reward:米考mM 0.93 0.03 0.85 0.97 |  entropy 1.350 | value 0.842 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.023
-U 457 | F 058496 | FPS 3657 | D 17 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.325 | value 0.857 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.037
-U 458 | F 058624 | FPS 4266 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.97 |  entropy 1.322 | value 0.901 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.029
-U 459 | F 058752 | FPS 4196 | D 17 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.372 | value 0.864 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.017
-U 460 | F 058880 | FPS 4129 | D 17 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.378 | value 0.871 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.025
-Status saved
-U 461 | F 059008 | FPS 4413 | D 17 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.399 | value 0.866 | policy_loss -0.017 | value_loss 0.000 | grad_norm 0.021
-U 462 | F 059136 | FPS 3819 | D 17 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.353 | value 0.860 | policy_loss -0.000 | value_loss 0.001 | grad_norm 0.040
-U 463 | F 059264 | FPS 3555 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.300 | value 0.898 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.052
-U 464 | F 059392 | FPS 3999 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.377 | value 0.858 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.033
-U 465 | F 059520 | FPS 4195 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.404 | value 0.828 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.032
-U 466 | F 059648 | FPS 4267 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.349 | value 0.878 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.032
-U 467 | F 059776 | FPS 4266 | D 17 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.368 | value 0.891 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.037
-U 468 | F 059904 | FPS 3820 | D 17 | Reward:米考mM 0.93 0.02 0.87 0.95 |  entropy 1.370 | value 0.859 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.026
-U 469 | F 060032 | FPS 3460 | D 17 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.339 | value 0.842 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.010
-U 470 | F 060160 | FPS 4128 | D 17 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.332 | value 0.838 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.041
-Status saved
-U 471 | F 060288 | FPS 4128 | D 17 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.324 | value 0.885 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.041
-U 472 | F 060416 | FPS 4129 | D 17 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.341 | value 0.839 | policy_loss 0.009 | value_loss 0.001 | grad_norm 0.077
-U 473 | F 060544 | FPS 4128 | D 18 | Reward:米考mM 0.94 0.01 0.90 0.95 |  entropy 1.300 | value 0.926 | policy_loss -0.011 | value_loss 0.002 | grad_norm 0.088
-U 474 | F 060672 | FPS 3605 | D 18 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.413 | value 0.854 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.048
-U 475 | F 060800 | FPS 3657 | D 18 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.385 | value 0.842 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.045
-U 476 | F 060928 | FPS 5221 | D 18 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.407 | value 0.875 | policy_loss -0.024 | value_loss 0.001 | grad_norm 0.056
-U 477 | F 061056 | FPS 5119 | D 18 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.357 | value 0.838 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.064
-U 478 | F 061184 | FPS 4923 | D 18 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.290 | value 0.910 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.045
-U 479 | F 061312 | FPS 4266 | D 18 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.347 | value 0.875 | policy_loss -0.007 | value_loss 0.001 | grad_norm 0.023
-U 480 | F 061440 | FPS 3657 | D 18 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.372 | value 0.869 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.023
-Status saved
-U 481 | F 061568 | FPS 4414 | D 18 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.376 | value 0.851 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.041
-U 482 | F 061696 | FPS 5222 | D 18 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.390 | value 0.872 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.017
-U 483 | F 061824 | FPS 5120 | D 18 | Reward:米考mM 0.94 0.02 0.89 0.95 |  entropy 1.409 | value 0.874 | policy_loss -0.017 | value_loss 0.000 | grad_norm 0.025
-U 484 | F 061952 | FPS 5121 | D 18 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.398 | value 0.859 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.015
-U 485 | F 062080 | FPS 5211 | D 18 | Reward:米考mM 0.92 0.02 0.88 0.95 |  entropy 1.377 | value 0.869 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.022
-U 486 | F 062208 | FPS 3282 | D 18 | Reward:米考mM 0.92 0.02 0.88 0.95 |  entropy 1.400 | value 0.854 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.026
-U 487 | F 062336 | FPS 3656 | D 18 | Reward:米考mM 0.92 0.01 0.90 0.95 |  entropy 1.355 | value 0.840 | policy_loss 0.007 | value_loss 0.001 | grad_norm 0.052
-U 488 | F 062464 | FPS 3937 | D 18 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.349 | value 0.892 | policy_loss -0.021 | value_loss 0.001 | grad_norm 0.056
-U 489 | F 062592 | FPS 4000 | D 18 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.374 | value 0.850 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.053
-U 490 | F 062720 | FPS 4000 | D 18 | Reward:米考mM 0.92 0.01 0.90 0.95 |  entropy 1.356 | value 0.800 | policy_loss 0.020 | value_loss 0.002 | grad_norm 0.095
-Status saved
-U 491 | F 062848 | FPS 4337 | D 18 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.326 | value 0.930 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.060
-U 492 | F 062976 | FPS 3555 | D 18 | Reward:米考mM 0.93 0.02 0.91 0.95 |  entropy 1.375 | value 0.879 | policy_loss -0.018 | value_loss 0.000 | grad_norm 0.048
-U 493 | F 063104 | FPS 3657 | D 18 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.401 | value 0.817 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.070
-U 494 | F 063232 | FPS 4062 | D 18 | Reward:米考mM 0.92 0.02 0.88 0.95 |  entropy 1.389 | value 0.910 | policy_loss -0.026 | value_loss 0.001 | grad_norm 0.069
-U 495 | F 063360 | FPS 4000 | D 18 | Reward:米考mM 0.93 0.03 0.88 0.97 |  entropy 1.341 | value 0.826 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.065
-U 496 | F 063488 | FPS 4000 | D 18 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.314 | value 0.902 | policy_loss -0.023 | value_loss 0.001 | grad_norm 0.072
-U 497 | F 063616 | FPS 4062 | D 18 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.348 | value 0.817 | policy_loss 0.018 | value_loss 0.002 | grad_norm 0.118
-U 498 | F 063744 | FPS 3282 | D 18 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.303 | value 0.951 | policy_loss -0.022 | value_loss 0.004 | grad_norm 0.103
-U 499 | F 063872 | FPS 4338 | D 18 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.287 | value 0.862 | policy_loss -0.008 | value_loss 0.002 | grad_norm 0.077
-U 500 | F 064000 | FPS 5333 | D 18 | Reward:米考mM 0.93 0.02 0.91 0.95 |  entropy 1.378 | value 0.851 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.038
-Status saved
-U 501 | F 064128 | FPS 5120 | D 18 | Reward:米考mM 0.93 0.02 0.91 0.95 |  entropy 1.397 | value 0.871 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.040
-U 502 | F 064256 | FPS 4922 | D 19 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.357 | value 0.865 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.040
-U 503 | F 064384 | FPS 4266 | D 19 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.421 | value 0.813 | policy_loss 0.001 | value_loss 0.001 | grad_norm 0.041
-U 504 | F 064512 | FPS 3765 | D 19 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.323 | value 0.881 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.022
-U 505 | F 064640 | FPS 3605 | D 19 | Reward:米考mM 0.93 0.03 0.85 0.96 |  entropy 1.348 | value 0.881 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.029
-U 506 | F 064768 | FPS 5120 | D 19 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.356 | value 0.864 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.021
-U 507 | F 064896 | FPS 4266 | D 19 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.333 | value 0.858 | policy_loss 0.001 | value_loss 0.000 | grad_norm 0.034
-U 508 | F 065024 | FPS 5223 | D 19 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.316 | value 0.907 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.056
-U 509 | F 065152 | FPS 4741 | D 19 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.414 | value 0.838 | policy_loss 0.006 | value_loss 0.001 | grad_norm 0.043
-U 510 | F 065280 | FPS 3657 | D 19 | Reward:米考mM 0.93 0.01 0.92 0.96 |  entropy 1.382 | value 0.900 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.035
-Status saved
-U 511 | F 065408 | FPS 3813 | D 19 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.430 | value 0.852 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.036
-U 512 | F 065536 | FPS 3879 | D 19 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.390 | value 0.891 | policy_loss -0.010 | value_loss 0.000 | grad_norm 0.034
-U 513 | F 065664 | FPS 4129 | D 19 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.451 | value 0.858 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.022
-U 514 | F 065792 | FPS 3937 | D 19 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.448 | value 0.838 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.018
-U 515 | F 065920 | FPS 4266 | D 19 | Reward:米考mM 0.92 0.02 0.88 0.94 |  entropy 1.430 | value 0.833 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.029
-U 516 | F 066048 | FPS 3879 | D 19 | Reward:米考mM 0.92 0.02 0.88 0.94 |  entropy 1.436 | value 0.865 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.024
-U 517 | F 066176 | FPS 3709 | D 19 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.407 | value 0.867 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.037
-U 518 | F 066304 | FPS 3556 | D 19 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.450 | value 0.810 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.064
-U 519 | F 066432 | FPS 4413 | D 19 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.408 | value 0.893 | policy_loss -0.029 | value_loss 0.002 | grad_norm 0.074
-U 520 | F 066560 | FPS 4062 | D 19 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.379 | value 0.840 | policy_loss -0.021 | value_loss 0.002 | grad_norm 0.051
-Status saved
-U 521 | F 066688 | FPS 4129 | D 19 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.403 | value 0.807 | policy_loss 0.001 | value_loss 0.002 | grad_norm 0.062
-U 522 | F 066816 | FPS 4128 | D 19 | Reward:米考mM 0.92 0.03 0.85 0.96 |  entropy 1.359 | value 0.881 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.035
-U 523 | F 066944 | FPS 3819 | D 19 | Reward:米考mM 0.92 0.03 0.85 0.95 |  entropy 1.411 | value 0.838 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.034
-U 524 | F 067072 | FPS 3647 | D 19 | Reward:米考mM 0.92 0.03 0.85 0.95 |  entropy 1.353 | value 0.887 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.036
-U 525 | F 067200 | FPS 3999 | D 19 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.369 | value 0.830 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.048
-U 526 | F 067328 | FPS 4196 | D 19 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.298 | value 0.894 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.048
-U 527 | F 067456 | FPS 4129 | D 19 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.341 | value 0.841 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.079
-U 528 | F 067584 | FPS 4128 | D 19 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.223 | value 0.947 | policy_loss -0.030 | value_loss 0.003 | grad_norm 0.115
-U 529 | F 067712 | FPS 3709 | D 19 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.257 | value 0.833 | policy_loss -0.037 | value_loss 0.006 | grad_norm 0.137
-U 530 | F 067840 | FPS 3765 | D 19 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.269 | value 0.745 | policy_loss 0.036 | value_loss 0.009 | grad_norm 0.163
-Status saved
-U 531 | F 067968 | FPS 4923 | D 20 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.141 | value 0.954 | policy_loss -0.014 | value_loss 0.005 | grad_norm 0.139
-U 532 | F 068096 | FPS 4267 | D 20 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.299 | value 0.805 | policy_loss -0.010 | value_loss 0.004 | grad_norm 0.083
-U 533 | F 068224 | FPS 4129 | D 20 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.318 | value 0.810 | policy_loss 0.003 | value_loss 0.002 | grad_norm 0.062
-U 534 | F 068352 | FPS 4128 | D 20 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.276 | value 0.891 | policy_loss -0.021 | value_loss 0.001 | grad_norm 0.074
-U 535 | F 068480 | FPS 3605 | D 20 | Reward:米考mM 0.93 0.01 0.91 0.97 |  entropy 1.342 | value 0.815 | policy_loss 0.016 | value_loss 0.002 | grad_norm 0.128
-U 536 | F 068608 | FPS 3765 | D 20 | Reward:米考mM 0.93 0.02 0.91 0.97 |  entropy 1.144 | value 0.978 | policy_loss -0.030 | value_loss 0.006 | grad_norm 0.194
-U 537 | F 068736 | FPS 5223 | D 20 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.289 | value 0.762 | policy_loss -0.034 | value_loss 0.010 | grad_norm 0.143
-U 538 | F 068864 | FPS 4571 | D 20 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.148 | value 0.779 | policy_loss 0.041 | value_loss 0.005 | grad_norm 0.191
-U 539 | F 068992 | FPS 4266 | D 20 | Reward:米考mM 0.94 0.02 0.88 0.97 |  entropy 1.192 | value 0.990 | policy_loss -0.025 | value_loss 0.008 | grad_norm 0.207
-U 540 | F 069120 | FPS 4338 | D 20 | Reward:米考mM 0.95 0.01 0.93 0.97 |  entropy 1.381 | value 0.809 | policy_loss 0.009 | value_loss 0.005 | grad_norm 0.078
-Status saved
-U 541 | F 069248 | FPS 3879 | D 20 | Reward:米考mM 0.94 0.02 0.89 0.97 |  entropy 1.456 | value 0.834 | policy_loss -0.007 | value_loss 0.002 | grad_norm 0.068
-U 542 | F 069376 | FPS 3556 | D 20 | Reward:米考mM 0.92 0.03 0.85 0.95 |  entropy 1.459 | value 0.797 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.090
-U 543 | F 069504 | FPS 4062 | D 20 | Reward:米考mM 0.92 0.03 0.85 0.95 |  entropy 1.218 | value 0.853 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.061
-U 544 | F 069632 | FPS 4000 | D 20 | Reward:米考mM 0.93 0.03 0.87 0.97 |  entropy 1.165 | value 0.919 | policy_loss -0.027 | value_loss 0.001 | grad_norm 0.078
-U 545 | F 069760 | FPS 4121 | D 20 | Reward:米考mM 0.93 0.02 0.87 0.97 |  entropy 1.326 | value 0.816 | policy_loss 0.001 | value_loss 0.001 | grad_norm 0.046
-U 546 | F 069888 | FPS 4062 | D 20 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.322 | value 0.855 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.031
-U 547 | F 070016 | FPS 3459 | D 20 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.261 | value 0.889 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.027
-U 548 | F 070144 | FPS 4000 | D 20 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.296 | value 0.869 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.019
-U 549 | F 070272 | FPS 4196 | D 20 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.307 | value 0.888 | policy_loss -0.012 | value_loss 0.000 | grad_norm 0.021
-U 550 | F 070400 | FPS 3765 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.250 | value 0.873 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.018
-Status saved
-U 551 | F 070528 | FPS 4129 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.328 | value 0.864 | policy_loss -0.010 | value_loss 0.000 | grad_norm 0.014
-U 552 | F 070656 | FPS 4195 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.228 | value 0.878 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.013
-U 553 | F 070784 | FPS 3657 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.282 | value 0.869 | policy_loss 0.004 | value_loss 0.000 | grad_norm 0.042
-U 554 | F 070912 | FPS 3502 | D 20 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.296 | value 0.923 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.055
-U 555 | F 071040 | FPS 3937 | D 20 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.287 | value 0.871 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.039
-U 556 | F 071168 | FPS 4000 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.323 | value 0.863 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.023
-U 557 | F 071296 | FPS 4128 | D 20 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.323 | value 0.874 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.018
-U 558 | F 071424 | FPS 4063 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.369 | value 0.889 | policy_loss -0.034 | value_loss 0.001 | grad_norm 0.079
-U 559 | F 071552 | FPS 3556 | D 20 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.286 | value 0.810 | policy_loss -0.001 | value_loss 0.002 | grad_norm 0.065
-U 560 | F 071680 | FPS 3819 | D 21 | Reward:米考mM 0.94 0.02 0.87 0.96 |  entropy 1.228 | value 0.887 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.046
-Status saved
-U 561 | F 071808 | FPS 4413 | D 21 | Reward:米考mM 0.94 0.02 0.87 0.96 |  entropy 1.286 | value 0.836 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.052
-U 562 | F 071936 | FPS 4251 | D 21 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.188 | value 0.906 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.077
-U 563 | F 072064 | FPS 3938 | D 21 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.297 | value 0.849 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.067
-U 564 | F 072192 | FPS 4129 | D 21 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.298 | value 0.896 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.046
-U 565 | F 072320 | FPS 3657 | D 21 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.336 | value 0.880 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.032
-U 566 | F 072448 | FPS 3083 | D 21 | Reward:米考mM 0.93 0.02 0.90 0.97 |  entropy 1.287 | value 0.867 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.020
-U 567 | F 072576 | FPS 4000 | D 21 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.323 | value 0.871 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.029
-U 568 | F 072704 | FPS 4129 | D 21 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.326 | value 0.887 | policy_loss -0.021 | value_loss 0.001 | grad_norm 0.064
-U 569 | F 072832 | FPS 4063 | D 21 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.418 | value 0.792 | policy_loss 0.001 | value_loss 0.002 | grad_norm 0.065
-U 570 | F 072960 | FPS 4000 | D 21 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.384 | value 0.852 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.036
-Status saved
-U 571 | F 073088 | FPS 3764 | D 21 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.365 | value 0.888 | policy_loss -0.033 | value_loss 0.001 | grad_norm 0.073
-U 572 | F 073216 | FPS 3453 | D 21 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.388 | value 0.794 | policy_loss 0.007 | value_loss 0.002 | grad_norm 0.046
-U 573 | F 073344 | FPS 3556 | D 21 | Reward:米考mM 0.92 0.01 0.89 0.95 |  entropy 1.360 | value 0.848 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.021
-U 574 | F 073472 | FPS 3878 | D 21 | Reward:米考mM 0.89 0.15 0.31 0.95 |  entropy 1.371 | value 0.829 | policy_loss -0.020 | value_loss 0.006 | grad_norm 0.125
-U 575 | F 073600 | FPS 3999 | D 21 | Reward:米考mM 0.89 0.15 0.31 0.95 |  entropy 1.341 | value 0.837 | policy_loss 0.010 | value_loss 0.002 | grad_norm 0.081
-U 576 | F 073728 | FPS 4129 | D 21 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.265 | value 0.936 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.083
-U 577 | F 073856 | FPS 4266 | D 21 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.413 | value 0.840 | policy_loss -0.019 | value_loss 0.001 | grad_norm 0.040
-U 578 | F 073984 | FPS 3506 | D 21 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.374 | value 0.816 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.060
-U 579 | F 074112 | FPS 4000 | D 21 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.319 | value 0.899 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.039
-U 580 | F 074240 | FPS 4652 | D 21 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.345 | value 0.855 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.038
-Status saved
-U 581 | F 074368 | FPS 4571 | D 21 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.300 | value 0.881 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.027
-U 582 | F 074496 | FPS 4129 | D 21 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.283 | value 0.863 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.023
-U 583 | F 074624 | FPS 4267 | D 21 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.310 | value 0.879 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.024
-U 584 | F 074752 | FPS 3664 | D 21 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.360 | value 0.899 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.023
-U 585 | F 074880 | FPS 3657 | D 21 | Reward:米考mM 0.94 0.02 0.91 0.96 |  entropy 1.349 | value 0.891 | policy_loss -0.019 | value_loss 0.000 | grad_norm 0.040
-U 586 | F 075008 | FPS 4489 | D 21 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.440 | value 0.823 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.021
-U 587 | F 075136 | FPS 4923 | D 21 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.337 | value 0.832 | policy_loss 0.015 | value_loss 0.001 | grad_norm 0.074
-U 588 | F 075264 | FPS 5120 | D 21 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.354 | value 0.933 | policy_loss -0.034 | value_loss 0.002 | grad_norm 0.102
-U 589 | F 075392 | FPS 5018 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.353 | value 0.806 | policy_loss 0.024 | value_loss 0.003 | grad_norm 0.140
-U 590 | F 075520 | FPS 4923 | D 22 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.343 | value 0.968 | policy_loss -0.017 | value_loss 0.003 | grad_norm 0.128
-Status saved
-U 591 | F 075648 | FPS 3556 | D 22 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.400 | value 0.855 | policy_loss 0.001 | value_loss 0.001 | grad_norm 0.038
-U 592 | F 075776 | FPS 3937 | D 22 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.443 | value 0.860 | policy_loss 0.011 | value_loss 0.001 | grad_norm 0.057
-U 593 | F 075904 | FPS 3879 | D 22 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.404 | value 0.922 | policy_loss -0.032 | value_loss 0.001 | grad_norm 0.107
-U 594 | F 076032 | FPS 4129 | D 22 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.562 | value 0.772 | policy_loss 0.005 | value_loss 0.004 | grad_norm 0.099
-U 595 | F 076160 | FPS 4196 | D 22 | Reward:米考mM 0.92 0.04 0.77 0.95 |  entropy 1.390 | value 0.860 | policy_loss 0.012 | value_loss 0.001 | grad_norm 0.053
-U 596 | F 076288 | FPS 4000 | D 22 | Reward:米考mM 0.91 0.04 0.77 0.95 |  entropy 1.406 | value 0.902 | policy_loss -0.025 | value_loss 0.001 | grad_norm 0.058
-U 597 | F 076416 | FPS 3765 | D 22 | Reward:米考mM 0.93 0.03 0.86 0.95 |  entropy 1.448 | value 0.823 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.050
-U 598 | F 076544 | FPS 3604 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.418 | value 0.862 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.028
-U 599 | F 076672 | FPS 4129 | D 22 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.378 | value 0.871 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.011
-U 600 | F 076800 | FPS 4266 | D 22 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.403 | value 0.852 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.015
-Status saved
-U 601 | F 076928 | FPS 3937 | D 22 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.420 | value 0.850 | policy_loss 0.006 | value_loss 0.001 | grad_norm 0.059
-U 602 | F 077056 | FPS 4129 | D 22 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.407 | value 0.919 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.063
-U 603 | F 077184 | FPS 3549 | D 22 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.415 | value 0.872 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.035
-U 604 | F 077312 | FPS 3506 | D 22 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.476 | value 0.841 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.025
-U 605 | F 077440 | FPS 4267 | D 22 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.433 | value 0.872 | policy_loss -0.012 | value_loss 0.001 | grad_norm 0.032
-U 606 | F 077568 | FPS 4129 | D 22 | Reward:米考mM 0.92 0.02 0.90 0.96 |  entropy 1.373 | value 0.859 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.020
-U 607 | F 077696 | FPS 3937 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.432 | value 0.852 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.019
-U 608 | F 077824 | FPS 3879 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.396 | value 0.885 | policy_loss -0.025 | value_loss 0.001 | grad_norm 0.047
-U 609 | F 077952 | FPS 3556 | D 22 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.393 | value 0.824 | policy_loss 0.000 | value_loss 0.000 | grad_norm 0.029
-U 610 | F 078080 | FPS 3765 | D 22 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.386 | value 0.852 | policy_loss -0.022 | value_loss 0.001 | grad_norm 0.028
-Status saved
-U 611 | F 078208 | FPS 4923 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.419 | value 0.831 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.025
-U 612 | F 078336 | FPS 4653 | D 22 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.354 | value 0.861 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.026
-U 613 | F 078464 | FPS 4414 | D 22 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.339 | value 0.846 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.019
-U 614 | F 078592 | FPS 4129 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.329 | value 0.852 | policy_loss -0.007 | value_loss 0.001 | grad_norm 0.041
-U 615 | F 078720 | FPS 3878 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.385 | value 0.858 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.027
-U 616 | F 078848 | FPS 3657 | D 22 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.322 | value 0.865 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.025
-U 617 | F 078976 | FPS 4741 | D 22 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.317 | value 0.885 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.033
-U 618 | F 079104 | FPS 5223 | D 23 | Reward:米考mM 0.94 0.02 0.91 0.97 |  entropy 1.323 | value 0.849 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.058
-U 619 | F 079232 | FPS 4924 | D 23 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.304 | value 0.919 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.050
-U 620 | F 079360 | FPS 4129 | D 23 | Reward:米考mM 0.93 0.03 0.83 0.96 |  entropy 1.308 | value 0.880 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.037
-Status saved
-U 621 | F 079488 | FPS 4061 | D 23 | Reward:米考mM 0.93 0.03 0.83 0.96 |  entropy 1.342 | value 0.847 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.040
-U 622 | F 079616 | FPS 3556 | D 23 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.311 | value 0.901 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.056
-U 623 | F 079744 | FPS 4001 | D 23 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.367 | value 0.838 | policy_loss 0.005 | value_loss 0.002 | grad_norm 0.072
-U 624 | F 079872 | FPS 4195 | D 23 | Reward:米考mM 0.94 0.01 0.92 0.95 |  entropy 1.379 | value 0.896 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.050
-U 625 | F 080000 | FPS 4000 | D 23 | Reward:米考mM 0.93 0.01 0.92 0.95 |  entropy 1.394 | value 0.871 | policy_loss -0.026 | value_loss 0.001 | grad_norm 0.041
-U 626 | F 080128 | FPS 4741 | D 23 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.422 | value 0.815 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.040
-U 627 | F 080256 | FPS 3605 | D 23 | Reward:米考mM 0.92 0.02 0.86 0.95 |  entropy 1.387 | value 0.840 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.022
-U 628 | F 080384 | FPS 3765 | D 23 | Reward:米考mM 0.92 0.02 0.86 0.95 |  entropy 1.396 | value 0.876 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.020
-U 629 | F 080512 | FPS 4266 | D 23 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.420 | value 0.854 | policy_loss -0.010 | value_loss 0.000 | grad_norm 0.014
-U 630 | F 080640 | FPS 3937 | D 23 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.395 | value 0.860 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.028
-Status saved
-U 631 | F 080768 | FPS 4000 | D 23 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.422 | value 0.879 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.042
-U 632 | F 080896 | FPS 3879 | D 23 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.432 | value 0.883 | policy_loss -0.020 | value_loss 0.000 | grad_norm 0.043
-U 633 | F 081024 | FPS 3506 | D 23 | Reward:米考mM 0.92 0.01 0.90 0.95 |  entropy 1.526 | value 0.795 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.013
-U 634 | F 081152 | FPS 3765 | D 23 | Reward:米考mM 0.92 0.01 0.90 0.96 |  entropy 1.462 | value 0.813 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.031
-U 635 | F 081280 | FPS 4129 | D 23 | Reward:米考mM 0.92 0.02 0.87 0.96 |  entropy 1.398 | value 0.848 | policy_loss -0.026 | value_loss 0.001 | grad_norm 0.050
-U 636 | F 081408 | FPS 3820 | D 23 | Reward:米考mM 0.92 0.03 0.86 0.96 |  entropy 1.418 | value 0.787 | policy_loss 0.024 | value_loss 0.002 | grad_norm 0.090
-U 637 | F 081536 | FPS 4129 | D 23 | Reward:米考mM 0.93 0.02 0.87 0.97 |  entropy 1.318 | value 0.939 | policy_loss -0.046 | value_loss 0.003 | grad_norm 0.159
-U 638 | F 081664 | FPS 4266 | D 23 | Reward:米考mM 0.93 0.02 0.87 0.97 |  entropy 1.446 | value 0.725 | policy_loss -0.006 | value_loss 0.005 | grad_norm 0.095
-U 639 | F 081792 | FPS 2691 | D 23 | Reward:米考mM 0.92 0.01 0.90 0.94 |  entropy 1.459 | value 0.718 | policy_loss 0.051 | value_loss 0.008 | grad_norm 0.194
-U 640 | F 081920 | FPS 3765 | D 23 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.389 | value 0.957 | policy_loss -0.048 | value_loss 0.006 | grad_norm 0.151
-Status saved
-U 641 | F 082048 | FPS 3937 | D 23 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.379 | value 0.799 | policy_loss -0.011 | value_loss 0.003 | grad_norm 0.067
-U 642 | F 082176 | FPS 4000 | D 23 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.338 | value 0.795 | policy_loss 0.002 | value_loss 0.002 | grad_norm 0.046
-U 643 | F 082304 | FPS 4129 | D 23 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.368 | value 0.830 | policy_loss -0.010 | value_loss 0.002 | grad_norm 0.048
-U 644 | F 082432 | FPS 3604 | D 23 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.277 | value 0.882 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.030
-U 645 | F 082560 | FPS 3200 | D 23 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.305 | value 0.905 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.035
-U 646 | F 082688 | FPS 4062 | D 24 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.314 | value 0.888 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.021
-U 647 | F 082816 | FPS 4000 | D 24 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.393 | value 0.862 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.027
-U 648 | F 082944 | FPS 4129 | D 24 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.375 | value 0.897 | policy_loss -0.017 | value_loss 0.000 | grad_norm 0.035
-U 649 | F 083072 | FPS 4266 | D 24 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.389 | value 0.853 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.024
-U 650 | F 083200 | FPS 4266 | D 24 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.410 | value 0.831 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.023
-Status saved
-U 651 | F 083328 | FPS 3460 | D 24 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.393 | value 0.844 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.026
-U 652 | F 083456 | FPS 3819 | D 24 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.374 | value 0.880 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.026
-U 653 | F 083584 | FPS 4129 | D 24 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.386 | value 0.876 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.037
-U 654 | F 083712 | FPS 4000 | D 24 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.415 | value 0.855 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.030
-U 655 | F 083840 | FPS 4195 | D 24 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.395 | value 0.817 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.038
-U 656 | F 083968 | FPS 4000 | D 24 | Reward:米考mM 0.91 0.02 0.86 0.95 |  entropy 1.410 | value 0.870 | policy_loss -0.027 | value_loss 0.001 | grad_norm 0.044
-U 657 | F 084096 | FPS 3368 | D 24 | Reward:米考mM 0.92 0.02 0.86 0.95 |  entropy 1.402 | value 0.804 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.038
-U 658 | F 084224 | FPS 3820 | D 24 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.326 | value 0.868 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.025
-U 659 | F 084352 | FPS 4129 | D 24 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.380 | value 0.851 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.046
-U 660 | F 084480 | FPS 3999 | D 24 | Reward:米考mM 0.94 0.01 0.90 0.96 |  entropy 1.369 | value 0.907 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.049
-Status saved
-U 661 | F 084608 | FPS 4062 | D 24 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.400 | value 0.848 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.038
-U 662 | F 084736 | FPS 3655 | D 24 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.370 | value 0.847 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.031
-U 663 | F 084864 | FPS 3412 | D 24 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.360 | value 0.870 | policy_loss -0.017 | value_loss 0.000 | grad_norm 0.028
-U 664 | F 084992 | FPS 4000 | D 24 | Reward:米考mM 0.92 0.02 0.89 0.95 |  entropy 1.376 | value 0.827 | policy_loss 0.004 | value_loss 0.001 | grad_norm 0.047
-U 665 | F 085120 | FPS 4414 | D 24 | Reward:米考mM 0.93 0.02 0.90 0.95 |  entropy 1.389 | value 0.880 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.040
-U 666 | F 085248 | FPS 5220 | D 24 | Reward:米考mM 0.93 0.02 0.87 0.95 |  entropy 1.336 | value 0.881 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.032
-U 667 | F 085376 | FPS 5120 | D 24 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.389 | value 0.830 | policy_loss -0.010 | value_loss 0.000 | grad_norm 0.015
-U 668 | F 085504 | FPS 5120 | D 24 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.396 | value 0.825 | policy_loss 0.007 | value_loss 0.001 | grad_norm 0.068
-U 669 | F 085632 | FPS 3505 | D 24 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.295 | value 0.927 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.049
-U 670 | F 085760 | FPS 3459 | D 24 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.344 | value 0.876 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.034
-Status saved
-U 671 | F 085888 | FPS 4129 | D 24 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.386 | value 0.893 | policy_loss -0.010 | value_loss 0.000 | grad_norm 0.030
-U 672 | F 086016 | FPS 4061 | D 24 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.398 | value 0.871 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.030
-U 673 | F 086144 | FPS 4267 | D 24 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.467 | value 0.834 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.033
-U 674 | F 086272 | FPS 3765 | D 25 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.433 | value 0.811 | policy_loss 0.016 | value_loss 0.001 | grad_norm 0.070
-U 675 | F 086400 | FPS 3323 | D 25 | Reward:米考mM 0.92 0.02 0.88 0.96 |  entropy 1.403 | value 0.909 | policy_loss -0.038 | value_loss 0.002 | grad_norm 0.099
-U 676 | F 086528 | FPS 3765 | D 25 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.391 | value 0.790 | policy_loss 0.020 | value_loss 0.005 | grad_norm 0.158
-U 677 | F 086656 | FPS 4129 | D 25 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.183 | value 0.981 | policy_loss -0.019 | value_loss 0.006 | grad_norm 0.143
-U 678 | F 086784 | FPS 3937 | D 25 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.301 | value 0.847 | policy_loss -0.011 | value_loss 0.003 | grad_norm 0.077
-U 679 | F 086912 | FPS 3657 | D 25 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.364 | value 0.811 | policy_loss 0.003 | value_loss 0.002 | grad_norm 0.070
-U 680 | F 087040 | FPS 3992 | D 25 | Reward:米考mM 0.93 0.01 0.90 0.96 |  entropy 1.377 | value 0.888 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.033
-Status saved
-U 681 | F 087168 | FPS 2909 | D 25 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.338 | value 0.862 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.023
-U 682 | F 087296 | FPS 4000 | D 25 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.335 | value 0.898 | policy_loss -0.025 | value_loss 0.001 | grad_norm 0.050
-U 683 | F 087424 | FPS 4062 | D 25 | Reward:米考mM 0.93 0.03 0.82 0.96 |  entropy 1.336 | value 0.832 | policy_loss -0.015 | value_loss 0.001 | grad_norm 0.025
-U 684 | F 087552 | FPS 4129 | D 25 | Reward:米考mM 0.92 0.03 0.82 0.96 |  entropy 1.313 | value 0.837 | policy_loss 0.007 | value_loss 0.001 | grad_norm 0.051
-U 685 | F 087680 | FPS 4129 | D 25 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.304 | value 0.907 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.035
-U 686 | F 087808 | FPS 3936 | D 25 | Reward:米考mM 0.93 0.02 0.86 0.95 |  entropy 1.331 | value 0.881 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.021
-U 687 | F 087936 | FPS 3556 | D 25 | Reward:米考mM 0.94 0.02 0.90 0.95 |  entropy 1.357 | value 0.884 | policy_loss -0.012 | value_loss 0.000 | grad_norm 0.019
-U 688 | F 088064 | FPS 3657 | D 25 | Reward:米考mM 0.94 0.01 0.92 0.95 |  entropy 1.410 | value 0.852 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.019
-U 689 | F 088192 | FPS 4195 | D 25 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.400 | value 0.867 | policy_loss -0.005 | value_loss 0.001 | grad_norm 0.018
-U 690 | F 088320 | FPS 4000 | D 25 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.404 | value 0.883 | policy_loss -0.032 | value_loss 0.001 | grad_norm 0.052
-Status saved
-U 691 | F 088448 | FPS 4128 | D 25 | Reward:米考mM 0.92 0.02 0.89 0.96 |  entropy 1.344 | value 0.830 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.056
-U 692 | F 088576 | FPS 4338 | D 25 | Reward:米考mM 0.92 0.02 0.89 0.96 |  entropy 1.369 | value 0.901 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.025
-U 693 | F 088704 | FPS 3048 | D 25 | Reward:米考mM 0.93 0.03 0.84 0.96 |  entropy 1.326 | value 0.897 | policy_loss -0.030 | value_loss 0.001 | grad_norm 0.075
-U 694 | F 088832 | FPS 3083 | D 25 | Reward:米考mM 0.92 0.03 0.84 0.96 |  entropy 1.411 | value 0.775 | policy_loss 0.002 | value_loss 0.003 | grad_norm 0.071
-U 695 | F 088960 | FPS 3765 | D 25 | Reward:米考mM 0.81 0.47 -1.00 0.96 |  entropy 1.315 | value 0.864 | policy_loss -0.102 | value_loss 0.026 | grad_norm 0.212
-U 696 | F 089088 | FPS 4000 | D 25 | Reward:米考mM 0.82 0.47 -1.00 0.95 |  entropy 1.364 | value 0.853 | policy_loss 0.003 | value_loss 0.003 | grad_norm 0.085
-U 697 | F 089216 | FPS 4337 | D 25 | Reward:米考mM 0.94 0.01 0.89 0.95 |  entropy 1.318 | value 0.942 | policy_loss -0.034 | value_loss 0.003 | grad_norm 0.131
-U 698 | F 089344 | FPS 3879 | D 25 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.501 | value 0.775 | policy_loss 0.019 | value_loss 0.002 | grad_norm 0.094
-U 699 | F 089472 | FPS 3879 | D 25 | Reward:米考mM 0.92 0.02 0.87 0.95 |  entropy 1.360 | value 0.868 | policy_loss -0.025 | value_loss 0.001 | grad_norm 0.059
-U 700 | F 089600 | FPS 3275 | D 25 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.334 | value 0.787 | policy_loss 0.010 | value_loss 0.002 | grad_norm 0.079
-Status saved
-U 701 | F 089728 | FPS 4129 | D 25 | Reward:米考mM 0.92 0.07 0.66 0.96 |  entropy 1.343 | value 0.851 | policy_loss 0.008 | value_loss 0.002 | grad_norm 0.074
-U 702 | F 089856 | FPS 3999 | D 26 | Reward:米考mM 0.91 0.07 0.66 0.96 |  entropy 1.201 | value 0.964 | policy_loss -0.067 | value_loss 0.004 | grad_norm 0.187
-U 703 | F 089984 | FPS 3937 | D 26 | Reward:米考mM 0.93 0.03 0.86 0.95 |  entropy 1.246 | value 0.712 | policy_loss 0.049 | value_loss 0.010 | grad_norm 0.252
-U 704 | F 090112 | FPS 4000 | D 26 | Reward:米考mM 0.94 0.02 0.86 0.97 |  entropy 0.972 | value 1.025 | policy_loss -0.023 | value_loss 0.009 | grad_norm 0.235
-U 705 | F 090240 | FPS 3999 | D 26 | Reward:米考mM 0.95 0.01 0.92 0.97 |  entropy 1.342 | value 0.798 | policy_loss -0.002 | value_loss 0.007 | grad_norm 0.128
-U 706 | F 090368 | FPS 3506 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.127 | value 0.844 | policy_loss 0.009 | value_loss 0.001 | grad_norm 0.069
-U 707 | F 090496 | FPS 4267 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.147 | value 0.924 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.061
-U 708 | F 090624 | FPS 5016 | D 26 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.285 | value 0.849 | policy_loss 0.008 | value_loss 0.001 | grad_norm 0.065
-U 709 | F 090752 | FPS 3459 | D 26 | Reward:米考mM 0.94 0.01 0.90 0.96 |  entropy 1.194 | value 0.931 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.073
-U 710 | F 090880 | FPS 4000 | D 26 | Reward:米考mM 0.94 0.01 0.93 0.96 |  entropy 1.301 | value 0.856 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.024
-Status saved
-U 711 | F 091008 | FPS 3709 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.268 | value 0.861 | policy_loss 0.001 | value_loss 0.001 | grad_norm 0.039
-U 712 | F 091136 | FPS 3368 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.294 | value 0.896 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.031
-U 713 | F 091264 | FPS 3878 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.315 | value 0.865 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.021
-U 714 | F 091392 | FPS 4061 | D 26 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.334 | value 0.888 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.039
-U 715 | F 091520 | FPS 4129 | D 26 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.334 | value 0.849 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.072
-U 716 | F 091648 | FPS 4000 | D 26 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.272 | value 0.925 | policy_loss -0.018 | value_loss 0.001 | grad_norm 0.071
-U 717 | F 091776 | FPS 4062 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.347 | value 0.854 | policy_loss -0.002 | value_loss 0.001 | grad_norm 0.049
-U 718 | F 091904 | FPS 3044 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.229 | value 0.893 | policy_loss -0.022 | value_loss 0.002 | grad_norm 0.061
-U 719 | F 092032 | FPS 3819 | D 26 | Reward:米考mM 0.93 0.01 0.90 0.95 |  entropy 1.319 | value 0.844 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.045
-U 720 | F 092160 | FPS 3879 | D 26 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.304 | value 0.859 | policy_loss -0.003 | value_loss 0.001 | grad_norm 0.037
-Status saved
-U 721 | F 092288 | FPS 3879 | D 26 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.339 | value 0.872 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.029
-U 722 | F 092416 | FPS 4063 | D 26 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.360 | value 0.868 | policy_loss -0.014 | value_loss 0.001 | grad_norm 0.021
-U 723 | F 092544 | FPS 4000 | D 26 | Reward:米考mM 0.93 0.02 0.87 0.95 |  entropy 1.353 | value 0.853 | policy_loss -0.025 | value_loss 0.001 | grad_norm 0.037
-U 724 | F 092672 | FPS 3281 | D 26 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.325 | value 0.828 | policy_loss 0.002 | value_loss 0.001 | grad_norm 0.045
-U 725 | F 092800 | FPS 3938 | D 26 | Reward:米考mM 0.93 0.03 0.82 0.96 |  entropy 1.327 | value 0.860 | policy_loss -0.001 | value_loss 0.001 | grad_norm 0.025
-U 726 | F 092928 | FPS 3657 | D 26 | Reward:米考mM 0.92 0.04 0.82 0.96 |  entropy 1.311 | value 0.893 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.039
-U 727 | F 093056 | FPS 4265 | D 26 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.349 | value 0.842 | policy_loss 0.013 | value_loss 0.001 | grad_norm 0.083
-U 728 | F 093184 | FPS 4062 | D 26 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.249 | value 0.944 | policy_loss -0.029 | value_loss 0.002 | grad_norm 0.101
-U 729 | F 093312 | FPS 3878 | D 26 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.367 | value 0.827 | policy_loss -0.004 | value_loss 0.002 | grad_norm 0.058
-U 730 | F 093440 | FPS 3412 | D 27 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.369 | value 0.857 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.026
-Status saved
-U 731 | F 093568 | FPS 4129 | D 27 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.304 | value 0.883 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.015
-U 732 | F 093696 | FPS 5120 | D 27 | Reward:米考mM 0.93 0.02 0.89 0.95 |  entropy 1.422 | value 0.856 | policy_loss -0.016 | value_loss 0.000 | grad_norm 0.023
-U 733 | F 093824 | FPS 4828 | D 27 | Reward:米考mM 0.93 0.01 0.91 0.95 |  entropy 1.326 | value 0.862 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.022
-U 734 | F 093952 | FPS 4129 | D 27 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.401 | value 0.871 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.016
-U 735 | F 094080 | FPS 4000 | D 27 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.324 | value 0.868 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.019
-U 736 | F 094208 | FPS 3604 | D 27 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.323 | value 0.868 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.026
-U 737 | F 094336 | FPS 3200 | D 27 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.396 | value 0.861 | policy_loss -0.006 | value_loss 0.001 | grad_norm 0.022
-U 738 | F 094464 | FPS 4172 | D 27 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.390 | value 0.866 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.016
-U 739 | F 094592 | FPS 4195 | D 27 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.405 | value 0.874 | policy_loss 0.001 | value_loss 0.000 | grad_norm 0.024
-U 740 | F 094720 | FPS 4129 | D 27 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.384 | value 0.909 | policy_loss -0.018 | value_loss 0.000 | grad_norm 0.051
-Status saved
-U 741 | F 094848 | FPS 3878 | D 27 | Reward:米考mM 0.93 0.02 0.91 0.96 |  entropy 1.425 | value 0.845 | policy_loss 0.009 | value_loss 0.001 | grad_norm 0.076
-U 742 | F 094976 | FPS 3413 | D 27 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.348 | value 0.927 | policy_loss -0.023 | value_loss 0.001 | grad_norm 0.075
-U 743 | F 095104 | FPS 3765 | D 27 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.425 | value 0.846 | policy_loss 0.003 | value_loss 0.001 | grad_norm 0.058
-U 744 | F 095232 | FPS 4128 | D 27 | Reward:米考mM 0.94 0.02 0.89 0.96 |  entropy 1.373 | value 0.903 | policy_loss -0.022 | value_loss 0.001 | grad_norm 0.067
-U 745 | F 095360 | FPS 4062 | D 27 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.398 | value 0.826 | policy_loss -0.013 | value_loss 0.001 | grad_norm 0.056
-U 746 | F 095488 | FPS 3879 | D 27 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.332 | value 0.854 | policy_loss 0.009 | value_loss 0.002 | grad_norm 0.070
-U 747 | F 095616 | FPS 3999 | D 27 | Reward:米考mM 0.92 0.03 0.83 0.95 |  entropy 1.264 | value 0.919 | policy_loss -0.052 | value_loss 0.003 | grad_norm 0.113
-U 748 | F 095744 | FPS 3047 | D 27 | Reward:米考mM 0.92 0.03 0.83 0.96 |  entropy 1.303 | value 0.766 | policy_loss 0.027 | value_loss 0.004 | grad_norm 0.131
-U 749 | F 095872 | FPS 3879 | D 27 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.212 | value 0.932 | policy_loss -0.044 | value_loss 0.002 | grad_norm 0.113
-U 750 | F 096000 | FPS 3820 | D 27 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.147 | value 0.819 | policy_loss 0.016 | value_loss 0.003 | grad_norm 0.107
-Status saved
-U 751 | F 096128 | FPS 3657 | D 27 | Reward:米考mM 0.94 0.02 0.90 0.97 |  entropy 1.216 | value 0.911 | policy_loss -0.041 | value_loss 0.003 | grad_norm 0.096
-U 752 | F 096256 | FPS 4129 | D 27 | Reward:米考mM 0.94 0.01 0.91 0.97 |  entropy 1.234 | value 0.818 | policy_loss 0.014 | value_loss 0.002 | grad_norm 0.082
-U 753 | F 096384 | FPS 3819 | D 27 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.202 | value 0.903 | policy_loss -0.009 | value_loss 0.001 | grad_norm 0.044
-U 754 | F 096512 | FPS 3368 | D 27 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.309 | value 0.865 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.034
-U 755 | F 096640 | FPS 3999 | D 27 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.261 | value 0.876 | policy_loss 0.000 | value_loss 0.001 | grad_norm 0.031
-U 756 | F 096768 | FPS 4122 | D 27 | Reward:米考mM 0.94 0.01 0.91 0.95 |  entropy 1.289 | value 0.890 | policy_loss -0.008 | value_loss 0.000 | grad_norm 0.025
-U 757 | F 096896 | FPS 4129 | D 27 | Reward:米考mM 0.94 0.01 0.90 0.96 |  entropy 1.388 | value 0.872 | policy_loss -0.016 | value_loss 0.001 | grad_norm 0.023
-U 758 | F 097024 | FPS 3999 | D 28 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.382 | value 0.852 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.023
-U 759 | F 097152 | FPS 3878 | D 28 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.321 | value 0.878 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.013
-U 760 | F 097280 | FPS 3460 | D 28 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.392 | value 0.875 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.012
-Status saved
-U 761 | F 097408 | FPS 3604 | D 28 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.367 | value 0.880 | policy_loss -0.011 | value_loss 0.000 | grad_norm 0.015
-U 762 | F 097536 | FPS 4000 | D 28 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.403 | value 0.864 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.017
-U 763 | F 097664 | FPS 4267 | D 28 | Reward:米考mM 0.93 0.02 0.90 0.96 |  entropy 1.389 | value 0.864 | policy_loss 0.006 | value_loss 0.001 | grad_norm 0.042
-U 764 | F 097792 | FPS 4111 | D 28 | Reward:米考mM 0.93 0.02 0.87 0.95 |  entropy 1.357 | value 0.913 | policy_loss -0.034 | value_loss 0.001 | grad_norm 0.078
-U 765 | F 097920 | FPS 4000 | D 28 | Reward:米考mM 0.93 0.02 0.87 0.96 |  entropy 1.331 | value 0.833 | policy_loss -0.000 | value_loss 0.001 | grad_norm 0.050
-U 766 | F 098048 | FPS 3657 | D 28 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.341 | value 0.862 | policy_loss -0.017 | value_loss 0.001 | grad_norm 0.029
-U 767 | F 098176 | FPS 3604 | D 28 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.356 | value 0.841 | policy_loss 0.003 | value_loss 0.002 | grad_norm 0.083
-U 768 | F 098304 | FPS 4129 | D 28 | Reward:米考mM 0.94 0.02 0.90 0.96 |  entropy 1.255 | value 0.929 | policy_loss -0.025 | value_loss 0.001 | grad_norm 0.066
-U 769 | F 098432 | FPS 3878 | D 28 | Reward:米考mM 0.94 0.02 0.86 0.96 |  entropy 1.365 | value 0.848 | policy_loss -0.020 | value_loss 0.001 | grad_norm 0.046
-U 770 | F 098560 | FPS 3936 | D 28 | Reward:米考mM 0.92 0.03 0.84 0.96 |  entropy 1.313 | value 0.851 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.047
-Status saved
-U 771 | F 098688 | FPS 4000 | D 28 | Reward:米考mM 0.93 0.03 0.84 0.96 |  entropy 1.329 | value 0.866 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.025
-U 772 | F 098816 | FPS 3657 | D 28 | Reward:米考mM 0.94 0.02 0.88 0.96 |  entropy 1.338 | value 0.878 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.023
-U 773 | F 098944 | FPS 3764 | D 28 | Reward:米考mM 0.93 0.02 0.88 0.96 |  entropy 1.339 | value 0.871 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.015
-U 774 | F 099072 | FPS 4267 | D 28 | Reward:米考mM 0.93 0.01 0.91 0.94 |  entropy 1.337 | value 0.875 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.017
-U 775 | F 099200 | FPS 3878 | D 28 | Reward:米考mM 0.93 0.01 0.91 0.96 |  entropy 1.372 | value 0.852 | policy_loss -0.008 | value_loss 0.001 | grad_norm 0.023
-U 776 | F 099328 | FPS 4055 | D 28 | Reward:米考mM 0.94 0.01 0.91 0.96 |  entropy 1.450 | value 0.838 | policy_loss -0.004 | value_loss 0.001 | grad_norm 0.045
-U 777 | F 099456 | FPS 4000 | D 28 | Reward:米考mM 0.94 0.01 0.92 0.96 |  entropy 1.363 | value 0.896 | policy_loss -0.026 | value_loss 0.002 | grad_norm 0.072
-U 778 | F 099584 | FPS 3010 | D 28 | Reward:米考mM 0.93 0.02 0.89 0.96 |  entropy 1.321 | value 0.871 | policy_loss -0.026 | value_loss 0.001 | grad_norm 0.054
-U 779 | F 099712 | FPS 3765 | D 28 | Reward:米考mM 0.92 0.03 0.82 0.95 |  entropy 1.326 | value 0.806 | policy_loss 0.005 | value_loss 0.001 | grad_norm 0.052
-U 780 | F 099840 | FPS 4000 | D 28 | Reward:米考mM 0.91 0.03 0.82 0.94 |  entropy 1.347 | value 0.864 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.025
-Status saved
-U 781 | F 099968 | FPS 4062 | D 28 | Reward:米考mM 0.93 0.02 0.88 0.95 |  entropy 1.320 | value 0.891 | policy_loss -0.010 | value_loss 0.001 | grad_norm 0.033
-U 782 | F 100096 | FPS 4129 | D 28 | Reward:米考mM 0.93 0.02 0.86 0.95 |  entropy 1.369 | value 0.860 | policy_loss -0.011 | value_loss 0.001 | grad_norm 0.035
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 002048 | FPS 0220 | D 9 | Reward:米考mM -1.00 0.00 -1.00 -1.00 |  entropy 1.650 | value -0.122 | policy_loss 0.213 | value_loss 0.090 | grad_norm 0.801
+U 2 | F 004096 | FPS 0754 | D 12 | Reward:米考mM -0.69 0.46 -1.00 0.00 |  entropy 1.682 | value -0.198 | policy_loss -0.010 | value_loss 0.015 | grad_norm 0.081
+U 3 | F 006144 | FPS 0776 | D 14 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.753 | value -0.162 | policy_loss -0.033 | value_loss 0.004 | grad_norm 0.060
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 002048 | FPS 0203 | D 10 | Reward:米考mM -1.00 0.00 -1.00 -1.00 |  entropy 1.650 | value -0.122 | policy_loss 0.213 | value_loss 0.090 | grad_norm 0.801
+U 2 | F 004096 | FPS 0774 | D 12 | Reward:米考mM -0.69 0.46 -1.00 0.00 |  entropy 1.682 | value -0.198 | policy_loss -0.010 | value_loss 0.015 | grad_norm 0.081
+U 3 | F 006144 | FPS 0783 | D 15 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.753 | value -0.162 | policy_loss -0.033 | value_loss 0.004 | grad_norm 0.060
+U 4 | F 008192 | FPS 0788 | D 17 | Reward:米考mM -0.29 0.46 -1.00 0.00 |  entropy 1.782 | value -0.150 | policy_loss -0.016 | value_loss 0.013 | grad_norm 0.094
+U 5 | F 010240 | FPS 0783 | D 20 | Reward:米考mM -0.38 0.48 -1.00 0.00 |  entropy 1.756 | value -0.157 | policy_loss 0.009 | value_loss 0.018 | grad_norm 0.087
+U 6 | F 012288 | FPS 0771 | D 23 | Reward:米考mM -0.50 0.50 -1.00 0.00 |  entropy 1.790 | value -0.152 | policy_loss 0.013 | value_loss 0.020 | grad_norm 0.136
+U 7 | F 014336 | FPS 0789 | D 25 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.798 | value -0.151 | policy_loss -0.032 | value_loss 0.004 | grad_norm 0.053
+U 8 | F 016384 | FPS 0789 | D 28 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.794 | value -0.125 | policy_loss -0.022 | value_loss 0.004 | grad_norm 0.047
+U 9 | F 018432 | FPS 0791 | D 31 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.793 | value -0.107 | policy_loss -0.030 | value_loss 0.001 | grad_norm 0.046
+U 10 | F 020480 | FPS 0787 | D 33 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.768 | value -0.095 | policy_loss -0.020 | value_loss 0.004 | grad_norm 0.087
+Status saved
+U 11 | F 022528 | FPS 0770 | D 36 | Reward:米考mM -0.25 0.43 -1.00 0.00 |  entropy 1.760 | value -0.093 | policy_loss 0.004 | value_loss 0.011 | grad_norm 0.152
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 11 | F 022528 | FPS 0268 | D 7 | Reward:米考mM -0.19 0.39 -1.00 0.00 |  entropy 1.787 | value -0.094 | policy_loss 0.005 | value_loss 0.009 | grad_norm 0.089
+U 12 | F 024576 | FPS 0778 | D 10 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.790 | value -0.060 | policy_loss -0.019 | value_loss 0.000 | grad_norm 0.032
+U 13 | F 026624 | FPS 0725 | D 13 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.767 | value -0.053 | policy_loss -0.007 | value_loss 0.004 | grad_norm 0.055
+U 14 | F 028672 | FPS 0761 | D 15 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.792 | value -0.035 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.018
+U 15 | F 030720 | FPS 0726 | D 18 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.787 | value -0.026 | policy_loss -0.006 | value_loss 0.002 | grad_norm 0.050
+U 16 | F 032768 | FPS 0745 | D 21 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.791 | value -0.027 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.016
+U 17 | F 034816 | FPS 0773 | D 24 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.795 | value -0.021 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.004
+U 18 | F 036864 | FPS 0738 | D 26 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.776 | value -0.019 | policy_loss -0.002 | value_loss 0.003 | grad_norm 0.044
+U 19 | F 038912 | FPS 0776 | D 29 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.018 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.013
+U 20 | F 040960 | FPS 0784 | D 32 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.014 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.006
+Status saved
+U 21 | F 043008 | FPS 0753 | D 34 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.012 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.007
+U 22 | F 045056 | FPS 0764 | D 37 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.009 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.006
+U 23 | F 047104 | FPS 0785 | D 40 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.795 | value -0.008 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.002
+U 24 | F 049152 | FPS 0761 | D 42 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.795 | value -0.007 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 21 | F 043008 | FPS 0295 | D 6 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.013 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+U 22 | F 045056 | FPS 0790 | D 9 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.010 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.006
+U 23 | F 047104 | FPS 0767 | D 12 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.795 | value -0.008 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.005
+U 24 | F 049152 | FPS 0759 | D 14 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.795 | value -0.007 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.002
+U 25 | F 051200 | FPS 0719 | D 17 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.795 | value -0.005 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.004
+U 26 | F 053248 | FPS 0695 | D 20 | Reward:米考mM -0.18 0.38 -1.00 0.00 |  entropy 1.760 | value -0.026 | policy_loss 0.020 | value_loss 0.012 | grad_norm 0.072
+U 27 | F 055296 | FPS 0759 | D 23 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.793 | value -0.020 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.013
+U 28 | F 057344 | FPS 0746 | D 26 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.014 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.006
+U 29 | F 059392 | FPS 0760 | D 28 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.010 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.005
+U 30 | F 061440 | FPS 0760 | D 31 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.008 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+Status saved
+U 31 | F 063488 | FPS 0772 | D 34 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.006 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.004
+U 32 | F 065536 | FPS 0762 | D 36 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.004 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+U 33 | F 067584 | FPS 0780 | D 39 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.003 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 34 | F 069632 | FPS 0771 | D 42 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.002 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 35 | F 071680 | FPS 0696 | D 45 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.754 | value -0.012 | policy_loss 0.010 | value_loss 0.007 | grad_norm 0.076
+U 36 | F 073728 | FPS 0775 | D 47 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.022 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.023
+U 37 | F 075776 | FPS 0793 | D 50 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.015 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.012
+U 38 | F 077824 | FPS 0774 | D 53 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.012 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.008
+U 39 | F 079872 | FPS 0727 | D 55 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.777 | value -0.016 | policy_loss 0.006 | value_loss 0.004 | grad_norm 0.072
+U 40 | F 081920 | FPS 0748 | D 58 | Reward:米考mM -0.12 0.33 -1.00 0.00 |  entropy 1.790 | value -0.013 | policy_loss -0.000 | value_loss 0.002 | grad_norm 0.024
+Status saved
+U 41 | F 083968 | FPS 0802 | D 61 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.007 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.005
+U 42 | F 086016 | FPS 0752 | D 63 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.006 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 43 | F 088064 | FPS 0785 | D 66 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.005 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.004
+U 44 | F 090112 | FPS 0780 | D 69 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.002
+U 45 | F 092160 | FPS 0777 | D 71 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 46 | F 094208 | FPS 0804 | D 74 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.003 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 47 | F 096256 | FPS 0792 | D 76 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.002 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 48 | F 098304 | FPS 0761 | D 79 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.002 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.001
+U 49 | F 100352 | FPS 0786 | D 82 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.002 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.001
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 41 | F 083968 | FPS 0304 | D 6 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.008 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.004
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model Model1 --save-interval 10 --frames 100000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='Model1', seed=1, log_interval=1, save_interval=10, procs=16, frames=100000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 41 | F 083968 | FPS 0294 | D 6 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.008 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.004
+U 42 | F 086016 | FPS 0791 | D 9 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.007 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.002
+U 43 | F 088064 | FPS 0746 | D 12 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.005 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+U 44 | F 090112 | FPS 0766 | D 14 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.005 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 45 | F 092160 | FPS 0761 | D 17 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 46 | F 094208 | FPS 0731 | D 20 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.784 | value -0.008 | policy_loss 0.005 | value_loss 0.004 | grad_norm 0.084
+U 47 | F 096256 | FPS 0779 | D 23 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.792 | value 0.001 | policy_loss 0.000 | value_loss 0.000 | grad_norm 0.002
+U 48 | F 098304 | FPS 0788 | D 25 | Reward:米考mM -0.06 0.24 -1.00 0.00 |  entropy 1.792 | value 0.001 | policy_loss 0.000 | value_loss 0.000 | grad_norm 0.000
+U 49 | F 100352 | FPS 0781 | D 28 | Reward:米考mM 0.00 0.00 0.00 0.00 |  entropy 1.792 | value 0.001 | policy_loss 0.000 | value_loss 0.000 | grad_norm 0.000

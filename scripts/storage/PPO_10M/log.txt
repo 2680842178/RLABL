@@ -1,0 +1,174 @@
+/home/v-wangzl/local_code/RLABL/scripts/train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model PPO_10M --save-interval 10 --frames 10000000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='PPO_10M', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+/home/v-wangzl/local_code/RLABL/scripts/train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model PPO_10M --save-interval 10 --frames 10000000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='PPO_10M', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+/home/v-wangzl/local_code/RLABL/scripts/train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model PPO_10M --save-interval 10 --frames 10000000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='PPO_10M', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 002048 | FPS 0205 | D 10 | Reward:μσmM -0.53 0.82 -1.00 0.94 |  entropy 1.713 | value -0.030 | policy_loss 0.111 | value_loss 0.118 | grad_norm 0.466
+U 2 | F 004096 | FPS 0283 | D 17 | Reward:μσmM -0.64 0.73 -1.00 0.98 |  entropy 1.703 | value -0.201 | policy_loss 0.118 | value_loss 0.149 | grad_norm 0.285
+U 3 | F 006144 | FPS 0373 | D 22 | Reward:μσmM -0.63 0.74 -1.00 0.96 |  entropy 1.709 | value -0.248 | policy_loss 0.051 | value_loss 0.104 | grad_norm 0.217
+U 4 | F 008192 | FPS 0360 | D 28 | Reward:μσmM -0.38 0.88 -1.00 0.96 |  entropy 1.738 | value -0.250 | policy_loss -0.007 | value_loss 0.115 | grad_norm 0.255
+U 5 | F 010240 | FPS 0385 | D 33 | Reward:μσmM -0.46 0.84 -1.00 0.96 |  entropy 1.727 | value -0.200 | policy_loss -0.018 | value_loss 0.134 | grad_norm 0.261
+U 6 | F 012288 | FPS 0412 | D 38 | Reward:μσmM -0.69 0.68 -1.00 0.95 |  entropy 1.756 | value -0.293 | policy_loss 0.070 | value_loss 0.116 | grad_norm 0.386
+U 7 | F 014336 | FPS 0419 | D 43 | Reward:μσmM -0.64 0.73 -1.00 0.98 |  entropy 1.741 | value -0.320 | policy_loss 0.015 | value_loss 0.086 | grad_norm 0.218
+U 8 | F 016384 | FPS 0442 | D 48 | Reward:μσmM -0.23 0.88 -1.00 0.97 |  entropy 1.753 | value -0.252 | policy_loss -0.059 | value_loss 0.075 | grad_norm 0.201
+U 9 | F 018432 | FPS 0419 | D 53 | Reward:μσmM -0.50 0.81 -1.00 0.95 |  entropy 1.756 | value -0.225 | policy_loss -0.003 | value_loss 0.100 | grad_norm 0.261
+U 10 | F 020480 | FPS 0447 | D 57 | Reward:μσmM -0.56 0.76 -1.00 0.93 |  entropy 1.737 | value -0.230 | policy_loss 0.017 | value_loss 0.088 | grad_norm 0.285
+Status saved
+U 11 | F 022528 | FPS 0434 | D 62 | Reward:μσmM -0.57 0.75 -1.00 0.91 |  entropy 1.750 | value -0.265 | policy_loss -0.005 | value_loss 0.087 | grad_norm 0.213
+U 12 | F 024576 | FPS 0500 | D 66 | Reward:μσmM -0.70 0.63 -1.00 0.83 |  entropy 1.716 | value -0.298 | policy_loss 0.023 | value_loss 0.063 | grad_norm 0.187
+U 13 | F 026624 | FPS 0506 | D 70 | Reward:μσmM -0.37 0.82 -1.00 0.84 |  entropy 1.702 | value -0.285 | policy_loss -0.045 | value_loss 0.044 | grad_norm 0.184
+U 14 | F 028672 | FPS 0501 | D 74 | Reward:μσmM -0.79 0.55 -1.00 0.83 |  entropy 1.693 | value -0.281 | policy_loss 0.018 | value_loss 0.037 | grad_norm 0.220
+U 15 | F 030720 | FPS 0482 | D 78 | Reward:μσmM -0.68 0.57 -1.00 0.66 |  entropy 1.665 | value -0.285 | policy_loss -0.002 | value_loss 0.030 | grad_norm 0.124
+U 16 | F 032768 | FPS 0494 | D 83 | Reward:μσmM -0.72 0.54 -1.00 0.58 |  entropy 1.707 | value -0.291 | policy_loss 0.000 | value_loss 0.031 | grad_norm 0.124
+U 17 | F 034816 | FPS 0497 | D 87 | Reward:μσmM -0.64 0.54 -1.00 0.27 |  entropy 1.734 | value -0.286 | policy_loss -0.008 | value_loss 0.023 | grad_norm 0.112
+U 18 | F 036864 | FPS 0511 | D 91 | Reward:μσmM -0.56 0.57 -1.00 0.45 |  entropy 1.726 | value -0.280 | policy_loss -0.004 | value_loss 0.021 | grad_norm 0.083
+U 19 | F 038912 | FPS 0497 | D 95 | Reward:μσmM -0.62 0.59 -1.00 0.62 |  entropy 1.743 | value -0.253 | policy_loss -0.032 | value_loss 0.019 | grad_norm 0.150
+U 20 | F 040960 | FPS 0515 | D 99 | Reward:μσmM -0.43 0.60 -1.00 0.62 |  entropy 1.755 | value -0.205 | policy_loss -0.031 | value_loss 0.007 | grad_norm 0.076
+Status saved
+U 21 | F 043008 | FPS 0479 | D 103 | Reward:μσmM -0.54 0.52 -1.00 0.33 |  entropy 1.749 | value -0.222 | policy_loss 0.005 | value_loss 0.022 | grad_norm 0.133
+U 22 | F 045056 | FPS 0486 | D 107 | Reward:μσmM -0.60 0.52 -1.00 0.33 |  entropy 1.749 | value -0.192 | policy_loss -0.022 | value_loss 0.007 | grad_norm 0.070
+U 23 | F 047104 | FPS 0497 | D 112 | Reward:μσmM -0.50 0.50 -1.00 0.00 |  entropy 1.787 | value -0.164 | policy_loss -0.031 | value_loss 0.004 | grad_norm 0.050
+U 24 | F 049152 | FPS 0480 | D 116 | Reward:μσmM -0.25 0.43 -1.00 0.00 |  entropy 1.772 | value -0.150 | policy_loss -0.019 | value_loss 0.008 | grad_norm 0.085
+U 25 | F 051200 | FPS 0482 | D 120 | Reward:μσmM -0.31 0.46 -1.00 0.00 |  entropy 1.777 | value -0.144 | policy_loss -0.019 | value_loss 0.005 | grad_norm 0.052
+U 26 | F 053248 | FPS 0512 | D 124 | Reward:μσmM -0.35 0.51 -1.00 0.39 |  entropy 1.780 | value -0.142 | policy_loss -0.003 | value_loss 0.013 | grad_norm 0.100
+U 27 | F 055296 | FPS 0510 | D 128 | Reward:μσmM -0.38 0.48 -1.00 0.00 |  entropy 1.779 | value -0.133 | policy_loss -0.013 | value_loss 0.007 | grad_norm 0.055
+U 28 | F 057344 | FPS 0516 | D 132 | Reward:μσmM -0.31 0.46 -1.00 0.00 |  entropy 1.780 | value -0.124 | policy_loss -0.015 | value_loss 0.004 | grad_norm 0.044
+U 29 | F 059392 | FPS 0501 | D 136 | Reward:μσmM -0.19 0.39 -1.00 0.00 |  entropy 1.788 | value -0.104 | policy_loss -0.027 | value_loss 0.000 | grad_norm 0.038
+U 30 | F 061440 | FPS 0517 | D 140 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.795 | value -0.087 | policy_loss -0.020 | value_loss 0.000 | grad_norm 0.044
+Status saved
+U 31 | F 063488 | FPS 0501 | D 144 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.797 | value -0.081 | policy_loss -0.008 | value_loss 0.006 | grad_norm 0.067
+U 32 | F 065536 | FPS 0513 | D 148 | Reward:μσmM -0.19 0.39 -1.00 0.00 |  entropy 1.790 | value -0.083 | policy_loss -0.011 | value_loss 0.004 | grad_norm 0.054
+U 33 | F 067584 | FPS 0502 | D 152 | Reward:μσmM -0.19 0.39 -1.00 0.00 |  entropy 1.777 | value -0.078 | policy_loss -0.008 | value_loss 0.004 | grad_norm 0.071
+U 34 | F 069632 | FPS 0513 | D 156 | Reward:μσmM -0.19 0.39 -1.00 0.00 |  entropy 1.778 | value -0.074 | policy_loss -0.007 | value_loss 0.004 | grad_norm 0.040
+U 35 | F 071680 | FPS 0515 | D 160 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.790 | value -0.059 | policy_loss -0.013 | value_loss 0.000 | grad_norm 0.021
+U 36 | F 073728 | FPS 0514 | D 164 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.786 | value -0.054 | policy_loss -0.003 | value_loss 0.004 | grad_norm 0.044
+U 37 | F 075776 | FPS 0510 | D 168 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.788 | value -0.045 | policy_loss -0.002 | value_loss 0.004 | grad_norm 0.040
+U 38 | F 077824 | FPS 0487 | D 173 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.793 | value -0.041 | policy_loss -0.009 | value_loss 0.000 | grad_norm 0.015
+U 39 | F 079872 | FPS 0492 | D 177 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.796 | value -0.033 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.007
+U 40 | F 081920 | FPS 0497 | D 181 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.796 | value -0.026 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.011
+Status saved
+U 41 | F 083968 | FPS 0501 | D 185 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.796 | value -0.020 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.006
+U 42 | F 086016 | FPS 0516 | D 189 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.786 | value -0.023 | policy_loss 0.004 | value_loss 0.004 | grad_norm 0.062
+U 43 | F 088064 | FPS 0512 | D 193 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.780 | value -0.030 | policy_loss 0.002 | value_loss 0.004 | grad_norm 0.054
+U 44 | F 090112 | FPS 0516 | D 197 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.781 | value -0.035 | policy_loss 0.001 | value_loss 0.004 | grad_norm 0.078
+U 45 | F 092160 | FPS 0513 | D 201 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.792 | value -0.036 | policy_loss -0.007 | value_loss 0.000 | grad_norm 0.011
+U 46 | F 094208 | FPS 0512 | D 205 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.794 | value -0.028 | policy_loss -0.006 | value_loss 0.000 | grad_norm 0.007
+U 47 | F 096256 | FPS 0494 | D 209 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.022 | policy_loss -0.005 | value_loss 0.000 | grad_norm 0.009
+U 48 | F 098304 | FPS 0516 | D 213 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.018 | policy_loss -0.004 | value_loss 0.000 | grad_norm 0.007
+U 49 | F 100352 | FPS 0512 | D 217 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.015 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.003
+U 50 | F 102400 | FPS 0506 | D 221 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.012 | policy_loss -0.003 | value_loss 0.000 | grad_norm 0.004
+Status saved
+U 51 | F 104448 | FPS 0495 | D 225 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.010 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+U 52 | F 106496 | FPS 0521 | D 229 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.008 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.002
+U 53 | F 108544 | FPS 0506 | D 233 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.007 | policy_loss -0.002 | value_loss 0.000 | grad_norm 0.003
+U 54 | F 110592 | FPS 0484 | D 237 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.006 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.003
+U 55 | F 112640 | FPS 0509 | D 241 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.005 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.002
+U 56 | F 114688 | FPS 0477 | D 246 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 57 | F 116736 | FPS 0502 | D 250 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 58 | F 118784 | FPS 0514 | D 254 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.794 | value -0.003 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 59 | F 120832 | FPS 0519 | D 258 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.771 | value -0.011 | policy_loss 0.007 | value_loss 0.004 | grad_norm 0.053
+U 60 | F 122880 | FPS 0517 | D 262 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.783 | value -0.011 | policy_loss 0.007 | value_loss 0.004 | grad_norm 0.040
+Status saved
+U 61 | F 124928 | FPS 0496 | D 266 | Reward:μσmM -0.12 0.33 -1.00 0.00 |  entropy 1.792 | value -0.005 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.003
+U 62 | F 126976 | FPS 0516 | D 270 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.793 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 63 | F 129024 | FPS 0514 | D 274 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.003 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 64 | F 131072 | FPS 0513 | D 278 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.003 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.001
+U 65 | F 133120 | FPS 0516 | D 282 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.002 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.001
+U 66 | F 135168 | FPS 0517 | D 286 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.002 | policy_loss -0.000 | value_loss 0.000 | grad_norm 0.001
+U 67 | F 137216 | FPS 0508 | D 290 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.793 | value -0.002 | policy_loss 0.000 | value_loss 0.000 | grad_norm 0.027
+U 68 | F 139264 | FPS 0500 | D 294 | Reward:μσmM -0.06 0.24 -1.00 0.00 |  entropy 1.793 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.002
+U 69 | F 141312 | FPS 0488 | D 298 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 1.793 | value -0.004 | policy_loss -0.001 | value_loss 0.000 | grad_norm 0.002
+/home/v-wangzl/local_code/RLABL/scripts/train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model PPO_10M --save-interval 10 --frames 10000000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='PPO_10M', seed=1, log_interval=1, save_interval=10, procs=16, frames=10000000, epochs=4, batch_size=256, frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, mem=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 61 | F 124928 | FPS 0363 | D 5 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 0.000 | value 3951.126 | policy_loss 438.805 | value_loss 2212310.520 | grad_norm 40001702.944
+U 62 | F 126976 | FPS 0476 | D 9 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 0.000 | value 2347.149 | policy_loss 337.270 | value_loss 447215.589 | grad_norm 9462566.447
+U 63 | F 129024 | FPS 0466 | D 14 | Reward:μσmM 0.00 0.00 0.00 0.00 |  entropy 0.000 | value 2072.382 | policy_loss 581.401 | value_loss 547326.102 | grad_norm 2706357.661

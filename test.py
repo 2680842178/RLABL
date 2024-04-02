@@ -96,11 +96,7 @@ if __name__ == "__main__":
 
     env: MiniGridEnv = gym.make(
         args.env_id,
-        tile_size=args.tile_size,
         render_mode="rgb_array",
-        agent_pov=args.agent_view,
-        agent_view_size=args.agent_view_size,
-        screen_size=args.screen_size,
     )
 
 
@@ -113,13 +109,14 @@ if __name__ == "__main__":
 
     state_size = env.observation_space.shape
     action_size = env.action_space.n
-    env.reset(seed=args.seed)
-    img0=env.render()
+    obs0,_=env.reset(seed=args.seed)
+    img0=obs0['image']
     plt.imsave('trace/0.jpg', img0)
     action = random.choice(np.arange(action_size))
     action = 2
-    env.step(action)
-    img1=env.render()
+    obs1, reward, terminated, truncated, _ = env.step(action)
+    print(img0.shape)
+    img1=obs1['image']
     plt.imsave('trace/1.jpg', img1)
 
     img2= img1-img0

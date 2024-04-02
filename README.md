@@ -1,3 +1,14 @@
+# Minigrid
+
+
+## Installation
+
+```
+cd Minigrid-master
+pip3 install -r requirements.txt
+pip install .
+```
+
 # Torch-ac
 
 
@@ -5,21 +16,12 @@
 
 1. Clone this repository.
 
-2. Install `minigrid` environments and `torch-ac` RL algorithms:
+2. Install  `torch-ac` RL algorithms:
 
 ```
-pip3 install -r requirements.txt
-```
-
-**Note1:** If you want to modify `torch-ac` algorithms, you will need to rather install a cloned version, i.e.:
-```
-git clone https://github.com/lcswillems/torch-ac.git
 cd torch-ac
 pip3 install -e .
 ```
-
-**Note2:** minigrid_env.py文件和envs\configworld.py文件需要更新到配置环境的Lib\site-packages\minigrid中
-
 
 ## Files
 
@@ -63,13 +65,11 @@ and a bunch of optional arguments among which:
 
 During training, logs are printed in your terminal (and saved in text and CSV format):
 
-<p align="center"><img src="README-rsrc/train-terminal-logs.png"></p>
 
 **Note:** `U` gives the update number, `F` the total number of frames, `FPS` the number of frames per second, `D` the total duration, `rR:μσmM` the mean, std, min and max reshaped return per episode, `F:μσmM` the mean, std, min and max number of frames per episode, `H` the entropy, `V` the value, `pL` the policy loss, `vL` the value loss and `∇` the gradient norm.
 
 During training, logs are also plotted in Tensorboard:
 
-<p><img src="README-rsrc/train-tensorboard.png"></p>
 
 <h2 id="scripts-visualize">scripts/visualize.py</h2>
 
@@ -78,8 +78,6 @@ An example of use:
 ```
 python3 -m scripts.visualize --env MiniGrid-DoorKey-5x5-v0 --model DoorKey
 ```
-
-<p align="center"><img src="README-rsrc/visualize-doorkey.gif"></p>
 
 In this use case, the script displays how the model in `storage/DoorKey` behaves on the MiniGrid DoorKey environment.
 
@@ -99,7 +97,7 @@ An example of use:
 python3 -m scripts.evaluate --env MiniGrid-DoorKey-5x5-v0 --model DoorKey
 ```
 
-<p align="center"><img src="README-rsrc/evaluate-terminal-logs.png"></p>
+
 
 In this use case, the script prints in the terminal the performance among 100 episodes of the model in `storage/DoorKey`.
 
@@ -114,8 +112,6 @@ and a bunch of optional arguments among which:
 <h2 id="model">model.py</h2>
 
 The default model is discribed by the following schema:
-
-<p align="center"><img src="README-rsrc/model.png"></p>
 
 By default, the memory part (in red) and the langage part (in blue) are disabled. They can be enabled by setting to `True` the `use_memory` and `use_text` parameters of the model constructor.
 

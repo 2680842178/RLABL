@@ -25,18 +25,19 @@ class ACModel(nn.Module, torch_ac.RecurrentACModel):
 
         # Define image embedding
         self.image_conv = nn.Sequential(
-            nn.Conv2d(3, 16, (2, 2)),
+            nn.Conv2d(3, 32, kernel_size=12, stride=6),
             nn.ReLU(),
-            nn.MaxPool2d((2, 2)),
-            nn.Conv2d(16, 32, (2, 2)),
+            nn.Conv2d(32, 64, kernel_size=9, stride=4),
             nn.ReLU(),
-            nn.Conv2d(32, 64, (2, 2)),
+            nn.Conv2d(64, 128, kernel_size=3, stride=2),
+            nn.ReLU(),
+            nn.Conv2d(128, 256, kernel_size=3, stride=1),
             nn.ReLU()
         )
-        n = obs_space["image"][0]
-        m = obs_space["image"][1]
-        self.image_embedding_size = ((n-1)//2-2)*((m-1)//2-2)*64
-
+        # n = obs_space["image"][0]
+        # m = obs_space["image"][1]
+        # self.image_embedding_size = ((n-1)//2-2)*((m-1)//2-2)*128
+        self.image_embedding_size = 256 * 3 * 3
         # Define memory
         if self.use_memory:
             self.memory_rnn = nn.LSTMCell(self.image_embedding_size, self.semi_memory_size)
@@ -55,14 +56,18 @@ class ACModel(nn.Module, torch_ac.RecurrentACModel):
 
         # Define actor's model
         self.actor = nn.Sequential(
-            nn.Linear(self.embedding_size, 64),
+            nn.Linear(self.embedding_size, 512),
+            nn.Tanh(),
+            nn.Linear(512, 64),
             nn.Tanh(),
             nn.Linear(64, action_space.n)
         )
 
         # Define critic's model
         self.critic = nn.Sequential(
-            nn.Linear(self.embedding_size, 64),
+            nn.Linear(self.embedding_size, 512),
+            nn.Tanh(),
+            nn.Linear(512, 64),
             nn.Tanh(),
             nn.Linear(64, 1)
         )
