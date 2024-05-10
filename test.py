@@ -121,6 +121,7 @@ if __name__ == "__main__":
 
     img2= img1-img0
     plt.imsave('trace/2.jpg', img2)
+    print(0|1)
 
 
 
@@ -194,6 +195,7 @@ if __name__ == "__main__":
 #
 #     plt.figure(figsize=(10, 10))
 #     plt.imshow(image)
+
 #     show_anns(masks)
 #     plt.axis('off')
 #     plt.show()

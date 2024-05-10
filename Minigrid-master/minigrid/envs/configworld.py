@@ -3,7 +3,7 @@ from __future__ import annotations
 from minigrid.core.constants import COLOR_NAMES
 from minigrid.core.grid import Grid
 from minigrid.core.mission import MissionSpace
-from minigrid.core.world_object import Door, Goal, Key, Wall
+from minigrid.core.world_object import Door, Goal, Key, Wall,Box
 from minigrid.minigrid_env import MiniGridEnv
 from minigrid.core.world_object import Goal, Lava
 
@@ -85,7 +85,8 @@ class ConfigWorldEnv(MiniGridEnv):
                 if(map[i][j]== 'E'):
                     self.grid.vert_wall(j,i,1, Lava)
 
-
+                if(map[i][j]== 'B'):
+                    self.grid.set(j,i, Box("blue",Key("blue")))
         # Generate the mission string
         self.mission = (
             "get the key from the room, "

@@ -1,8 +1,8 @@
 import torch
 
-import RLABL.scripts.utils as utils
+import scripts.utils as utils
 from .other import device
-from RLABL.scripts.model import ACModel
+from scripts.model import ACModel
 
 
 class Agent:

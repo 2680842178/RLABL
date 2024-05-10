@@ -15,13 +15,13 @@ def init_params(m):
             m.bias.data.fill_(0)
 
 
-class ACModel(nn.Module, torch_ac.RecurrentACModel):
-    def __init__(self, obs_space, action_space, use_memory=False, use_text=False):
+class ACModel(nn.Module, torch_ac.ACModel):
+    def __init__(self, obs_space, action_space,use_memory=False, use_text=False):
         super().__init__()
 
         # Decide which components are enabled
         self.use_text = use_text
-        self.use_memory = use_memory
+        self.use_memory=use_memory
 
         # Define image embedding
         self.image_conv = nn.Sequential(
@@ -83,18 +83,13 @@ class ACModel(nn.Module, torch_ac.RecurrentACModel):
     def semi_memory_size(self):
         return self.image_embedding_size
 
-    def forward(self, obs, memory):
+    def forward(self, obs):
         x = obs.image.transpose(1, 3).transpose(2, 3)
         x = self.image_conv(x)
         x = x.reshape(x.shape[0], -1)
 
-        if self.use_memory:
-            hidden = (memory[:, :self.semi_memory_size], memory[:, self.semi_memory_size:])
-            hidden = self.memory_rnn(x, hidden)
-            embedding = hidden[0]
-            memory = torch.cat(hidden, dim=1)
-        else:
-            embedding = x
+
+        embedding = x
 
         if self.use_text:
             embed_text = self._get_embed_text(obs.text)
@@ -106,7 +101,7 @@ class ACModel(nn.Module, torch_ac.RecurrentACModel):
         x = self.critic(embedding)
         value = x.squeeze(1)
 
-        return dist, value, memory
+        return dist, value
 
     def _get_embed_text(self, text):
         _, hidden = self.text_rnn(self.word_embedding(text))

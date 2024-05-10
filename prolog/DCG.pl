@@ -25,7 +25,12 @@ constrain(Ls, [Num|Index1]) :-
     elements_at_diff_position(Num,Ls),
     constrain(Ls, Index1).
 
+
+
+
+
 f1(1) --> [1].
+
 f1(Y) --> [1],f1(X).
 
 f2(Y) --> [2],f1(X).
@@ -51,3 +56,4 @@ fun1(N,C,Ls):-
     phrase(f4(N),Ls1),
     reverse_list(Ls1,Ls),
     constrain(Ls,C).
+

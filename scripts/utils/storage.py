@@ -4,7 +4,7 @@ import torch
 import logging
 import sys
 
-import RLABL.scripts.utils as utils
+import scripts.utils as utils
 from .other import device
 
 

@@ -30,6 +30,7 @@ def get_obss_preprocessor(obs_space):
                 "text": preprocess_texts([obs["mission"] for obs in obss], vocab, device=device)
             })
 
+
         preprocess_obss.vocab = vocab
 
     else:
@@ -47,6 +48,7 @@ def preprocess_images(images, device=None):
 
     images = numpy.array(X)
     return torch.tensor(images, device=device, dtype=torch.float)
+
 
 
 def preprocess_texts(texts, vocab, device=None):

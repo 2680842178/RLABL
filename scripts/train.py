@@ -10,6 +10,8 @@ from utils import device
 from model import ACModel
 
 
+# def reshape_reward(obs_=None, action_, reward_, done_):
+#     return
 
 # Parse arguments
 
@@ -28,10 +30,11 @@ parser.add_argument("--log-interval", type=int, default=1,
                     help="number of updates between two logs (default: 1)")
 parser.add_argument("--save-interval", type=int, default=10,
                     help="number of updates between two saves (default: 10, 0 means no saving)")
-parser.add_argument("--procs", type=int, default=16,
+parser.add_argument("--procs", type=int, default=1,
                     help="number of processes (default: 16)")
 parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
+
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -66,8 +69,6 @@ parser.add_argument("--text", action="store_true", default=False,
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    args.mem = args.recurrence > 1
-
     # Set run dir
 
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
@@ -99,7 +100,9 @@ if __name__ == "__main__":
 
     envs = []
     for i in range(args.procs):
-        envs.append(utils.make_env(args.env, args.seed + 10000 * i))
+        env=utils.make_env(args.env, args.seed + 10000 * i)
+        env.reset()
+        envs.append(env)
     txt_logger.info("Environments loaded\n")
 
     # Load training status
@@ -119,7 +122,7 @@ if __name__ == "__main__":
 
     # Load model
 
-    acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text)
+    acmodel = ACModel(obs_space, envs[0].action_space, args.text)
     if "model_state" in status:
         acmodel.load_state_dict(status["model_state"])
     acmodel.to(device)
@@ -127,7 +130,6 @@ if __name__ == "__main__":
     txt_logger.info("{}\n".format(acmodel))
 
     # Load algo
-
     if args.algo == "a2c":
         algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
@@ -152,8 +154,16 @@ if __name__ == "__main__":
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
+
+        #ini_agent
         exps, logs1 = algo.collect_experiences()
+        #exp分段
+
+
+        #每个algo更新
+
         logs2 = algo.update_parameters(exps)
+
         logs = {**logs1, **logs2}
         update_end_time = time.time()
 
