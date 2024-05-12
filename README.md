@@ -8,6 +8,8 @@ cd Minigrid-master
 pip3 install -r requirements.txt
 pip install .
 ```
+or 
+python setup.py install
 
 # Torch-ac
 
