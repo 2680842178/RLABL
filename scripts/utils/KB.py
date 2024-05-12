@@ -140,8 +140,8 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
         exps.log_prob=[]
         exps_list.append(exps)
 
-    print(state_trace)
-    print([int(i.item()) for i in mask_trace])
+    # print(state_trace)
+    # print([int(i.item()) for i in mask_trace])
     start_index=0
     for i in range(len(state_trace)-1):
         if state_trace[i]!=state_trace[i+1]:
@@ -176,7 +176,7 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
             exps_list[i].advantage = torch.tensor(exps_list[i].advantage, device=device)
             exps_list[i].log_prob = torch.tensor(exps_list[i].log_prob, device=device)
             exps_list[i].returnn = exps_list[i].value + exps_list[i].advantage
-    print([int(i.item()) for i in reward_trace])
+    # print([int(i.item()) for i in reward_trace])
     log_reshaped_return=[0]
     log_done_counter=0
     log_episode_reshaped_return=torch.zeros(1, device=device)
