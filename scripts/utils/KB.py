@@ -17,6 +17,11 @@ G.add_edge(1, 4)
 G.add_edge(2, 3)
 G.add_edge(2, 4)
 
+
+
+def get_state(env):
+    return env.Current_state()
+
 def get_fsm():
     return G
 
@@ -58,21 +63,26 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
     log_num_frames=[0]
     episode_reward_return = torch.zeros(1, device=device)
     log_episode_num_frames = torch.zeros(1, device=device)
-
+    current_state=stateNN(env)
     for i in range(num_frames_per_proc):
         mask_trace.append(mask)
         preprocessed_obs = preprocess_obss([obs], device=device)
         obs_trace.append(obs)
-        current_state=stateNN(preprocessed_obs).item()
+        # current_state=stateNN(preprocessed_obs).item()
+
         state_trace.append(current_state)
         agent=acmodels[Choose_agent(current_state)]
         with torch.no_grad():
             dist, value = agent.acmodel(preprocessed_obs)
         action = dist.sample()
         next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
+        next_state = stateNN(env)
+        if terminated or truncated:
+            env.reset()
         done = terminated|truncated
         mask = 1 - torch.tensor(done, device=device, dtype=torch.float)
         obs=next_obs
+        current_state=next_state
 
         episode_reward_return += torch.tensor(reward, device=device, dtype=torch.float)
         log_episode_num_frames += torch.tensor(1, device=device)
@@ -130,14 +140,15 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
         exps.log_prob=[]
         exps_list.append(exps)
 
-
+    print(state_trace)
+    print([int(i.item()) for i in mask_trace])
     start_index=0
     for i in range(len(state_trace)-1):
         if state_trace[i]!=state_trace[i+1]:
             id=state_trace[start_index]
             # mental reward
-            if reward_trace[i]==0:
-                reward_trace[i]=torch.tensor(1, device=device,dtype=torch.float)
+            if reward_trace[i]==0 and state_trace[i]!=3 and state_trace[i]!=4:
+                reward_trace[i]=torch.tensor(3, device=device,dtype=torch.float)
             if id!=3 and id!=4:
                 exps_list[id].obs.extend(obs_trace[start_index:i+1])
                 exps_list[id].action.extend(action_trace[start_index:i+1])
@@ -146,6 +157,14 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
                 exps_list[id].advantage.extend(advantage_trace[start_index:i+1])
                 exps_list[id].log_prob.extend(log_prob_trace[start_index:i+1])
             start_index=i+1
+    if start_index<len(state_trace)-1:
+        id = state_trace[start_index]
+        exps_list[id].obs.extend(obs_trace[start_index:])
+        exps_list[id].action.extend(action_trace[start_index:])
+        exps_list[id].reward.extend(reward_trace[start_index:])
+        exps_list[id].value.extend(value_trace[start_index:])
+        exps_list[id].advantage.extend(advantage_trace[start_index:])
+        exps_list[id].log_prob.extend(log_prob_trace[start_index:])
 
     for i in range(agent_num):
         exp_len=len(exps_list[i].obs)
@@ -157,13 +176,13 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
             exps_list[i].advantage = torch.tensor(exps_list[i].advantage, device=device)
             exps_list[i].log_prob = torch.tensor(exps_list[i].log_prob, device=device)
             exps_list[i].returnn = exps_list[i].value + exps_list[i].advantage
-
+    print([int(i.item()) for i in reward_trace])
     log_reshaped_return=[0]
     log_done_counter=0
     log_episode_reshaped_return=torch.zeros(1, device=device)
     for i in range(len(reward_trace)):
         log_episode_reshaped_return+=reward_trace[i]
-        if mask_trace[i].item() == 0:
+        if mask_trace[i].item() == 0 or i==len(reward_trace)-1:
             log_done_counter += 1
             log_reshaped_return.append(log_episode_reshaped_return.item())
         log_episode_reshaped_return *= mask_trace[i]
@@ -175,7 +194,7 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
     # print(log_reshaped_return[-keep2:])
     # print(action_trace)
     # print([i.item() for i in mask_trace])
-    # print(state_trace)
+
     image_trace = preprocess_obss(obs_trace, device=device).image
     statenn_exps={
                 "img": image_trace,

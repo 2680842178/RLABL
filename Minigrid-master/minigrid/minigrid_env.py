@@ -117,7 +117,7 @@ class MiniGridEnv(gym.Env):
         self.tile_size = tile_size
         self.agent_pov = agent_pov
         self.map=map
-
+        self.current_state = 0
     def reset(
         self,
         *,
@@ -155,7 +155,7 @@ class MiniGridEnv(gym.Env):
 
         # Return first observation
         obs = self.gen_obs()
-
+        self.current_state = 0
         return obs, {}
 
     def hash(self, size=16):
@@ -547,9 +547,11 @@ class MiniGridEnv(gym.Env):
             if fwd_cell is not None and fwd_cell.type == "goal":
                 terminated = True
                 reward = self._reward()
+                self.current_state = 3
             if fwd_cell is not None and fwd_cell.type == "lava":
                 terminated = True
                 reward = -1
+                self.current_state = 4
 
         # Pick up an object
         elif action == self.actions.pickup:
@@ -559,6 +561,8 @@ class MiniGridEnv(gym.Env):
                     self.carrying.cur_pos = np.array([-1, -1])
                     self.grid.set(fwd_pos[0], fwd_pos[1], None)
                     self.grid.set(0, 0, fwd_cell)
+                    if self.current_state == 0:
+                        self.current_state = 1
 
         # Drop an object
         elif action == self.actions.drop:
@@ -572,6 +576,9 @@ class MiniGridEnv(gym.Env):
         elif action == self.actions.toggle:
             if fwd_cell:
                 fwd_cell.toggle(self, fwd_pos)
+                if fwd_cell.toggle(self, fwd_pos):
+                    if self.current_state == 1:
+                        self.current_state = 2
 
         # Done action (not used by default)
         elif action == self.actions.done:
@@ -789,3 +796,7 @@ class MiniGridEnv(gym.Env):
     def close(self):
         if self.window:
             pygame.quit()
+
+    def Current_state(self):
+        return self.current_state
+
