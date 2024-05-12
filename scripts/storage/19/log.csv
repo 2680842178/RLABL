@@ -1,0 +1,26 @@
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+1,256,80.50595568663537,3,6.0,0.0,6.0,6.0,"['-0.074', '-0.010', '0.016']","['8.309', '4.024', '9.460']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+2,512,225.04064364524396,4,6.0,0.0,6.0,6.0,"['2.767', '2.420', '-0.470']","['10.620', '7.989', '0.046']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+3,768,262.7241611419749,5,3.0,0.0,3.0,3.0,"['0.666', '-0.179', 'None']","['0.405', '0.002', 'None']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+4,1024,259.6996782239043,6,3.0,0.0,3.0,3.0,"['-0.065', '-0.150', 'None']","['0.003', '0.011', 'None']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+5,1280,255.37506445370843,7,3.0,0.0,3.0,3.0,"['0.010', '-0.128', 'None']","['0.000', '0.002', 'None']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+6,1536,265.7776134213828,8,3.0,0.0,3.0,3.0,"['nan', '-0.093', 'None']","['nan', '0.009', 'None']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+7,1792,155.11170063235494,9,3.0,0.0,3.0,3.0,"['-0.251', '-0.067', 'None']","['0.004', '0.001', 'None']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+8,2048,261.3582025721007,10,3.0,0.0,3.0,3.0,"['-0.069', '-0.048', 'None']","['0.026', '0.002', 'None']",0.0,0.0,0,0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+9,2304,235.65739729538967,11,4.896973609924316,1.8969736099243164,3.0,6.793947219848633,"['0.014', '-0.082', '-3.293']","['0.001', '0.012', '6.696']",0.7939473390579224,0.0,0.7939473390579224,0.7939473390579224
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
+10,2560,253.23657653144733,12,3.0,0.0,3.0,3.0,"['-0.041', '-0.012', 'None']","['0.001', '0.001', 'None']",0.0,0.0,0,0
+11,2816,261.94907305306015,14,3.0,0.0,3.0,3.0,"['-0.026', '-0.007', 'None']","['0.001', '0.000', 'None']",0.0,0.0,0,0
+12,3072,196.78031489121975,15,3.0,0.0,3.0,3.0,"['0.006', '-0.006', 'None']","['0.000', '0.000', 'None']",0.0,0.0,0,0
+13,3328,262.2448387746753,16,3.0,0.0,3.0,3.0,"['-0.005', '-0.003', 'None']","['0.000', '0.000', 'None']",0.0,0.0,0,0
+14,3584,257.09241031087885,17,3.0,0.0,3.0,3.0,"['-0.002', '-0.003', 'None']","['0.000', '0.000', 'None']",0.0,0.0,0,0
+15,3840,254.07242426572807,18,3.0,0.0,3.0,3.0,"['-0.002', '-0.002', 'None']","['0.000', '0.000', 'None']",0.0,0.0,0,0
+16,4096,252.13339325876467,19,4.882763147354126,1.882763147354126,3.0,6.765526294708252,"['-0.002', '-0.015', '-2.607']","['0.000', '0.001', '4.577']",0.765526294708252,0.0,0.765526294708252,0.765526294708252

@@ -75,6 +75,9 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
         with torch.no_grad():
             dist, value = agent.acmodel(preprocessed_obs)
         action = dist.sample()
+        while action.item()==4:
+            action = dist.sample()
+
         next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
         next_state = stateNN(env)
         if terminated or truncated:

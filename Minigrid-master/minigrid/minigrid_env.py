@@ -575,8 +575,8 @@ class MiniGridEnv(gym.Env):
         # Toggle/activate an object
         elif action == self.actions.toggle:
             if fwd_cell:
-                fwd_cell.toggle(self, fwd_pos)
-                if fwd_cell.toggle(self, fwd_pos):
+                flag=fwd_cell.toggle(self, fwd_pos)
+                if flag:
                     if self.current_state == 1:
                         self.current_state = 2
 

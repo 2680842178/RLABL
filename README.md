@@ -7,6 +7,11 @@
 cd Minigrid-master
 pip3 install -r requirements.txt
 pip install .
+or
+cd Minigrid-master
+pip3 install -r requirements.txt
+python setup.py build
+python setup.py install
 ```
 or 
 python setup.py install

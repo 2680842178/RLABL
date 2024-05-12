@@ -1,0 +1,63 @@
+D:\Code\lamda1_serve\RLABL\scripts\multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model 19 --save-interval 10 --frames 600000
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='19', seed=1, log_interval=1, save_interval=10, procs=1, frames=600000, epochs=4, batch_size=256, frames_per_proc=256, discount=0.99, lr=0.001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): Tanh()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): Tanh()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 1 | F 000256 | FPS 0081 | D 3 | Reward:米考mM 6.00 0.00 6.00 6.00 | policy_loss ['-0.074', '-0.010', '0.016'] | value_loss ['8.309', '4.024', '9.460'] 
+U 2 | F 000512 | FPS 0225 | D 4 | Reward:米考mM 6.00 0.00 6.00 6.00 | policy_loss ['2.767', '2.420', '-0.470'] | value_loss ['10.620', '7.989', '0.046'] 
+U 3 | F 000768 | FPS 0263 | D 5 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['0.666', '-0.179', 'None'] | value_loss ['0.405', '0.002', 'None'] 
+U 4 | F 001024 | FPS 0260 | D 6 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.065', '-0.150', 'None'] | value_loss ['0.003', '0.011', 'None'] 
+U 5 | F 001280 | FPS 0255 | D 7 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['0.010', '-0.128', 'None'] | value_loss ['0.000', '0.002', 'None'] 
+U 6 | F 001536 | FPS 0266 | D 8 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['nan', '-0.093', 'None'] | value_loss ['nan', '0.009', 'None'] 
+U 7 | F 001792 | FPS 0155 | D 9 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.251', '-0.067', 'None'] | value_loss ['0.004', '0.001', 'None'] 
+U 8 | F 002048 | FPS 0261 | D 10 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.069', '-0.048', 'None'] | value_loss ['0.026', '0.002', 'None'] 
+U 9 | F 002304 | FPS 0236 | D 11 | Reward:米考mM 4.90 1.90 3.00 6.79 | policy_loss ['0.014', '-0.082', '-3.293'] | value_loss ['0.001', '0.012', '6.696'] 
+U 10 | F 002560 | FPS 0253 | D 12 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.041', '-0.012', 'None'] | value_loss ['0.001', '0.001', 'None'] 
+Status saved
+U 11 | F 002816 | FPS 0262 | D 14 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.026', '-0.007', 'None'] | value_loss ['0.001', '0.000', 'None'] 
+U 12 | F 003072 | FPS 0197 | D 15 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['0.006', '-0.006', 'None'] | value_loss ['0.000', '0.000', 'None'] 
+U 13 | F 003328 | FPS 0262 | D 16 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.005', '-0.003', 'None'] | value_loss ['0.000', '0.000', 'None'] 
+U 14 | F 003584 | FPS 0257 | D 17 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.002', '-0.003', 'None'] | value_loss ['0.000', '0.000', 'None'] 
+U 15 | F 003840 | FPS 0254 | D 18 | Reward:米考mM 3.00 0.00 3.00 3.00 | policy_loss ['-0.002', '-0.002', 'None'] | value_loss ['0.000', '0.000', 'None'] 
+U 16 | F 004096 | FPS 0252 | D 19 | Reward:米考mM 4.88 1.88 3.00 6.77 | policy_loss ['-0.002', '-0.015', '-2.607'] | value_loss ['0.000', '0.001', '4.577'] 
