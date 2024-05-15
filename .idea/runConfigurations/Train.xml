@@ -15,7 +15,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/train.py" />
-    <option name="PARAMETERS" value="--algo ppo --env MiniGrid-ConfigWorld-v0 --model 9 --save-interval 10 --frames 80000" />
+    <option name="PARAMETERS" value="--algo ppo --env MiniGrid-ConfigWorld-v0 --model 1 --save-interval 10 --frames 80000" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

@@ -5,6 +5,7 @@ from torch_ac.utils import DictList, ParallelEnv
 from torch.distributions.categorical import Categorical
 from StateNN.cnn import *
 import numpy
+import random
 
 G = nx.DiGraph()
 # 添加对应的边和点
@@ -43,7 +44,7 @@ def Choose_agent(FSM_id):
         return 2
 
 
-def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_proc, discount, gae_lambda, preprocess_obss):
+def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_proc, discount, gae_lambda, preprocess_obss,epsilon):
 
     agent_num=len(acmodels)
     obs=env.gen_obs()
@@ -75,8 +76,11 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
         with torch.no_grad():
             dist, value = agent.acmodel(preprocessed_obs)
         action = dist.sample()
-        while action.item()==4:
-            action = dist.sample()
+
+        # if random.random() < epsilon:
+        #     action=torch.tensor(random.choice(numpy.arange(env.action_space.n)),device=device)
+        # else:
+        #     action = dist.sample()
 
         next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
         next_state = stateNN(env)
@@ -102,23 +106,12 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
         reward_trace.append(torch.tensor(reward, device=device,dtype=torch.float))
         log_prob_trace.append(dist.log_prob(action))
 
-
     keep1 = max(done_counter,1)
     log1 = {
         "return_per_episode": log_return[-keep1:],
         "num_frames_per_episode": log_num_frames[-keep1:],
         "num_frames": num_frames_per_proc
     }
-    next_value=value_trace[-1]
-    advantage_trace=[0]*len(action_trace)
-    for i in reversed(range(num_frames_per_proc)):
-        next_mask = mask_trace[i + 1] if i < num_frames_per_proc - 1 else mask
-        next_value = value_trace[i + 1] if i < num_frames_per_proc - 1 else next_value
-        next_advantage = advantage_trace[i + 1] if i < num_frames_per_proc - 1 else 0
-
-        delta = reward_trace[i] + discount * next_value * next_mask - value_trace[i]
-        advantage_trace[i] = delta + discount * gae_lambda * next_advantage * next_mask
-
 
     # # ABL修正state_trace
     # trace_list=[]
@@ -129,6 +122,23 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
     #         start_index=t+1
     # for m in range(len(trace_list)):
     #     trace_list[m] = abl_trace(trace_list[m])
+
+    for i in range(len(state_trace) - 1):
+        if state_trace[i] != state_trace[i + 1]:
+            # mental reward
+            if reward_trace[i] == 0 and state_trace[i] != 3 and state_trace[i] != 4:
+                reward_trace[i] = torch.tensor(3, device=device, dtype=torch.float)
+
+    next_value=value_trace[-1]
+    advantage_trace=[0]*len(action_trace)
+    for i in reversed(range(num_frames_per_proc)):
+        next_mask = mask_trace[i + 1] if i < num_frames_per_proc - 1 else mask
+        next_value = value_trace[i + 1] if i < num_frames_per_proc - 1 else next_value
+        next_advantage = advantage_trace[i + 1] if i < num_frames_per_proc - 1 else 0
+
+        delta = reward_trace[i] + discount * next_value * next_mask - value_trace[i]
+        advantage_trace[i] = delta + discount * gae_lambda * next_advantage * next_mask
+
 
     # print(state_trace)
     exps_list=[]
@@ -150,8 +160,6 @@ def Mutiagent_collect_experiences(env, acmodels,stateNN,device,num_frames_per_pr
         if state_trace[i]!=state_trace[i+1]:
             id=state_trace[start_index]
             # mental reward
-            if reward_trace[i]==0 and state_trace[i]!=3 and state_trace[i]!=4:
-                reward_trace[i]=torch.tensor(3, device=device,dtype=torch.float)
             if id!=3 and id!=4:
                 exps_list[id].obs.extend(obs_trace[start_index:i+1])
                 exps_list[id].action.extend(action_trace[start_index:i+1])

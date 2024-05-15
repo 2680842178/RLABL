@@ -57,18 +57,18 @@ class ACModel(nn.Module, torch_ac.ACModel):
         # Define actor's model
         self.actor = nn.Sequential(
             nn.Linear(self.embedding_size, 512),
-            nn.Tanh(),
+            nn.ReLU(),
             nn.Linear(512, 64),
-            nn.Tanh(),
+            nn.ReLU(),
             nn.Linear(64, action_space.n)
         )
 
         # Define critic's model
         self.critic = nn.Sequential(
             nn.Linear(self.embedding_size, 512),
-            nn.Tanh(),
+            nn.ReLU(),
             nn.Linear(512, 64),
-            nn.Tanh(),
+            nn.ReLU(),
             nn.Linear(64, 1)
         )
 
