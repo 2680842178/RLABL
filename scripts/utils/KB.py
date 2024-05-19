@@ -3,6 +3,8 @@ import torch
 from torch_ac.format import default_preprocess_obss
 from torch_ac.utils import DictList, ParallelEnv
 from torch.distributions.categorical import Categorical
+import sys
+sys.path.append("..")
 from StateNN.cnn import *
 import numpy
 import random

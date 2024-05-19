@@ -37,15 +37,15 @@ parser.add_argument("--frames", type=int, default=10**7,
 
 
 # Parameters for main algorithm
-parser.add_argument("--epochs", type=int, default=4,
+parser.add_argument("--epochs", type=int, default=32,
                     help="number of epochs for PPO (default: 4)")
-parser.add_argument("--batch-size", type=int, default=256,
+parser.add_argument("--batch-size", type=int, default=128,
                     help="batch size for PPO (default: 256)")
-parser.add_argument("--frames-per-proc", type=int, default=None,
+parser.add_argument("--frames-per-proc", type=int, default=256,
                     help="number of frames per process before update (default: 5 for A2C and 128 for PPO)")
 parser.add_argument("--discount", type=float, default=0.99,
                     help="discount factor (default: 0.99)")
-parser.add_argument("--lr", type=float, default=0.001,
+parser.add_argument("--lr", type=float, default=0.0001,
                     help="learning rate (default: 0.001)")
 parser.add_argument("--gae-lambda", type=float, default=0.95,
                     help="lambda coefficient in GAE formula (default: 0.95, 1 means no gae)")

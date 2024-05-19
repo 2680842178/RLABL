@@ -1,8 +1,8 @@
 import torch
 
-import scripts.utils as utils
+import utils as utils
 from .other import device
-from scripts.model import ACModel
+from model import ACModel
 
 
 class Agent:

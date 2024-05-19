@@ -21,7 +21,7 @@ parser.add_argument("--pause", type=float, default=0.1,
                     help="pause duration between two consequent actions of the agent (default: 0.1)")
 parser.add_argument("--gif", type=str, default=None,
                     help="store output as gif with the given filename")
-parser.add_argument("--episodes", type=int, default=1000000,
+parser.add_argument("--episodes", type=int, default=3,
                     help="number of episodes to visualize")
 parser.add_argument("--memory", action="store_true", default=False,
                     help="add a LSTM to the model")
@@ -64,8 +64,8 @@ for i in range(agent_num):
 print("Agent loaded\n")
 
 # Run the agent
-
-if args.gif:
+gif=False
+if gif:
     from array2gif import write_gif
 
     frames = []
@@ -78,7 +78,7 @@ for episode in range(args.episodes):
 
     while True:
         env.render()
-        if args.gif:
+        if gif:
             frames.append(numpy.moveaxis(env.get_frame(), 2, 0))
 
         preprocessed_obs = preprocess_obss([obs], device=device)
@@ -97,7 +97,7 @@ for episode in range(args.episodes):
         if done:
             break
 
-if args.gif:
+if gif:
     print("Saving gif... ", end="")
-    write_gif(numpy.array(frames), args.gif+".gif", fps=1/args.pause)
+    write_gif(numpy.array(frames), ".gif", fps=1/args.pause)
     print("Done.")

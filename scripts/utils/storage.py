@@ -4,7 +4,7 @@ import torch
 import logging
 import sys
 
-import scripts.utils as utils
+import utils as utils
 from .other import device
 
 
