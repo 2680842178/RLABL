@@ -8,9 +8,7 @@ import sys
 
 from utils import *
 from utils import device
-from model import ACModel
-from StateNN.cnn import stateNN
-
+from model import ACModel,CNN
 # def reshape_reward(obs_=None, action_, reward_, done_):
 #     return
 
@@ -35,7 +33,8 @@ parser.add_argument("--procs", type=int, default=1,
                     help="number of processes (default: 16)")
 parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
-
+parser.add_argument("--StateNN", default=None,
+                    help="name of the StateNN")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=32,
@@ -77,6 +76,9 @@ if __name__ == "__main__":
 
     model_name = args.model or default_model_name
     model_dir = utils.get_model_dir(model_name)
+
+    StateNN_model_name = args.StateNN or model_name
+    StateNN_model_dir = utils.get_StateNN_model_dir(StateNN_model_name)
 
     # Load loggers and Tensorboard writer
 
@@ -132,6 +134,11 @@ if __name__ == "__main__":
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodels[0]))
 
+    StateNN = CNN(5)
+    if os.path.exists(StateNN_model_dir):
+        t=torch.load(StateNN_model_dir)
+        StateNN.load_state_dict(t)
+    StateNN.to(device)
 
     algos=[]
 
@@ -164,16 +171,21 @@ if __name__ == "__main__":
         # Update model parameters
         update_start_time = time.time()
         envs[0].reset()
-        #ini_agent
-        epsilon=0.3*(1-num_frames/args.frames)
-        exps_list, logs1,statenn_exps = Mutiagent_collect_experiences(envs[0], algos,get_state,device,args.frames_per_proc,args.discount, args.gae_lambda, preprocess_obss,epsilon)
-        # #每个algo更新
+
+        #采集数据
+        exps_list, logs1,statenn_exps = Mutiagent_collect_experiences(envs[0], algos,StateNN,device,args.frames_per_proc,args.discount, args.gae_lambda, preprocess_obss)
+
+        #每个algo更新
         logs2_list=[None]*agent_num
         for i in range(agent_num):
             if len(exps_list[i].obs):
                 logs2=algos[i].update_parameters(exps_list[i])
                 logs2_list[i]=logs2
 
+        #更新StateNN
+        StateNN.train()
+        StateNN.to(device)
+        loss_log=StateNN.train_cnn(statenn_exps["img"], statenn_exps["label"])
 
         entropy_list=[None]*agent_num
         value_list=[None]*agent_num
@@ -194,21 +206,12 @@ if __name__ == "__main__":
             "value": value_list,
             "policy_loss": policy_loss_list,
             "value_loss": value_loss_list,
-            "grad_norm": grad_norm_list
+            "grad_norm": grad_norm_list,
+            "State_NN_loss": loss_log
         }
         logs = {**logs1, **logs2}
 
-        # logs_list=[0]*agent_num
-        # for i in range(agent_num):
-        #     if len(exps_list[i].obs):
-        #         logs={**logs1, **logs2_list[i]}
-        #         logs_list[i]=logs
-        #
-        # for i in range(agent_num):
-        #     if len(exps_list[i].obs):
-        #         logs=logs_list[i]
         update_end_time = time.time()
-
 
         num_frames += logs["num_frames"]
         update += 1
@@ -233,9 +236,10 @@ if __name__ == "__main__":
             header += ["policy_loss", "value_loss"]
             data += [ ['{:.3f}'.format(item) if item is not None else 'None' for item in logs["policy_loss"]],
                       ['{:.3f}'.format(item) if item is not None else 'None' for item in logs["value_loss"]] ]
-
+            header += ["State_NN_loss"]
+            data += [loss_log]
             txt_logger.info(
-                "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | policy_loss {} | value_loss {} "
+                "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | policy_loss {} | value_loss {}| State_NN_loss {:.6f}"
                 .format(*data))
 
 
@@ -259,4 +263,5 @@ if __name__ == "__main__":
             # if hasattr(preprocess_obss, "vocab"):
             #     status["vocab"] = preprocess_obss.vocab.vocab
             utils.save_status(status, model_dir)
+            torch.save(StateNN.state_dict(), StateNN_model_dir)
             txt_logger.info("Status saved")
