@@ -29,6 +29,13 @@ def register_minigrid_envs():
         entry_point="minigrid.envs:ConfigWorldEnv",
     )
 
+    # configworld
+    # ----------------------------------------
+    register(
+        id="MiniGrid-ConfigWorld-v0-havekey",
+        entry_point="minigrid.envs:ConfigWorldEnvHavingKey",
+    )
+
     # BlockedUnlockPickup
     # ----------------------------------------
     register(

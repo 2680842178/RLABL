@@ -1,0 +1,186 @@
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model 6 --save-interval 10 --frames 1000000 --StateNN 6
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='6', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='6', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 1 | F 000256 | FPS 0024 | D 10 | Reward:μσmM 1.29 1.16 -1.00 2.00 | policy_loss ['None', '-2.222', '0.457'] | value_loss ['None', '5.312', '0.280']| State_NN_loss 0.132253
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model 6 --save-interval 10 --frames 1000000 --StateNN 6
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='6', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='6', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model 6 --save-interval 10 --frames 1000000 --StateNN 6
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='6', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='6', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 1 | F 000256 | FPS 0025 | D 10 | Reward:μσmM 1.29 1.16 -1.00 2.00 | policy_loss ['None', '-2.328', '0.453'] | value_loss ['None', '5.616', '0.280']| State_NN_loss 0.153502
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0 --model 6 --save-interval 10 --frames 1000000 --StateNN 6
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0', model='6', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='6', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+

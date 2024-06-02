@@ -48,11 +48,13 @@ def Choose_agent(FSM_id):
 
 def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_proc, discount, gae_lambda, preprocess_obss):
 
-    def pre_obs(model,obs):
+    def obs_To_state(model,pre_obs,obs):
+        pre_image_data=preprocess_obss([pre_obs], device=device)
         image_data=preprocess_obss([obs], device=device)
-        input_tensor = image_data.image[0]
+        input_tensor = image_data.image[0]-pre_image_data.image[0]
         input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
         output = model(input_batch)
+        # print(output)
         with torch.no_grad():
             _, predicted = torch.max(output, 1)
         return predicted.item()
@@ -69,6 +71,7 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     StateNN.eval()
     agent_num=len(acmodels)
     obs=env.gen_obs()
+    pre_obs=obs
 
     mask_trace=[]
     obs_trace=[]
@@ -87,7 +90,7 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     log_episode_num_frames = torch.zeros(1, device=device)
 
     # current_state=stateNN(env)
-    current_state=pre_obs(StateNN,obs)
+    current_state=obs_To_state(StateNN,pre_obs,obs)
 
     for i in range(num_frames_per_proc):
         mask_trace.append(mask)
@@ -103,7 +106,11 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
         next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
 
         # next_state=stateNN(preprocess_obss([next_obs], device=device)).item()
-        next_state = pre_obs(StateNN,next_obs)
+        t=obs_To_state(StateNN, obs, next_obs)
+        if t==0:
+            next_state=current_state
+        else:
+            next_state = t
 
         if terminated or truncated:
             env.reset()
@@ -138,10 +145,10 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     # random_list = random.sample(range(len(state_trace)), 20)
     # for i in random_list:
     #     state_trace[i] = 2
-    # print("before abl", state_trace)
+    print("before abl", state_trace)
 
     # ABL修正state_trace
-    state_list = [1, 2, 3] # 课程路径
+    state_list = [2, 3] # 课程路径
     trace_list=[]
     obs_trace_list=[]
     end_list=[]
@@ -156,6 +163,7 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
             else:
                 end_list.append(4)
     last_trace = state_trace[start_index:]
+    last_obs_trace_list = obs_trace[start_index:]
     for i in range(len(last_trace)):
         last_trace[i] = 2
     # def testStateNN(obs):
@@ -164,10 +172,11 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
         return pre_obs_softmax(StateNN, obs)
     for m in range(len(trace_list)):
         _, trace_list[m] = abl_trace(trace_list[m], state_list, end_list[m], obs_trace_list[m], get_prob)
+    # last_trace = abl_trace(last_trace, [0, 1], 1, last_obs_trace_list, get_prob)
     ### abl over
     ### abl
-    # after_abl_list = trace_list + [last_trace]
-    # print("after abl:", after_abl_list)
+    after_abl_list = trace_list + [last_trace]
+    print("after abl:", after_abl_list)
 
     state_trace = []
     for m in range(len(trace_list)):
@@ -258,6 +267,16 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     # print([i.item() for i in mask_trace])
 
     image_trace = preprocess_obss(obs_trace, device=device).image
+
+    for i in range(len(image_trace)-1, 0, -1):
+        image_trace[i]=image_trace[i]-image_trace[i-1]
+    image_trace[0] = image_trace[0] - image_trace[0]
+
+    for i in range(len(state_trace)-1, 0, -1):
+        if state_trace[i]==state_trace[i-1]:
+            state_trace[i]=0
+
+    # print("state_trace:", state_trace)
     statenn_exps={
                 "img": image_trace,
                 "label": state_trace,

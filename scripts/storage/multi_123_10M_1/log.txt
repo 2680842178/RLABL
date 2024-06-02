@@ -1,0 +1,1662 @@
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 1 | F 000256 | FPS 0072 | D 3 | Reward:μσmM 1.20 1.25 -1.00 2.00 | policy_loss ['None', '-1.173', '0.413'] | value_loss ['None', '4.242', '0.229']| State_NN_loss 0.329157
+U 2 | F 000512 | FPS 0084 | D 6 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.026', '0.143'] | value_loss ['None', '5.414', '0.056']| State_NN_loss 0.128007
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 1 | F 000256 | FPS 0072 | D 3 | Reward:μσmM 1.20 1.25 -1.00 2.00 | policy_loss ['None', '-1.215', '0.414'] | value_loss ['None', '4.122', '0.230']| State_NN_loss 0.329157
+U 2 | F 000512 | FPS 0086 | D 6 | Reward:μσmM 1.67 0.75 0.00 2.00 | policy_loss ['None', '-3.320', '0.284'] | value_loss ['None', '6.649', '0.092']| State_NN_loss 0.192437
+U 3 | F 000768 | FPS 0086 | D 9 | Reward:μσmM 1.71 0.70 0.00 2.00 | policy_loss ['None', '-3.375', '0.254'] | value_loss ['None', '6.948', '0.078']| State_NN_loss 0.222233
+U 4 | F 001024 | FPS 0084 | D 12 | Reward:μσmM 1.00 1.26 -1.00 2.00 | policy_loss ['None', '-2.642', '0.079'] | value_loss ['None', '6.117', '0.019']| State_NN_loss 0.176746
+U 5 | F 001280 | FPS 0097 | D 15 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.048'] | value_loss ['None', 'nan', '0.002']| State_NN_loss 0.051267
+U 6 | F 001536 | FPS 0088 | D 18 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.533', '-0.025'] | value_loss ['None', '7.540', '0.013']| State_NN_loss 0.127786
+U 7 | F 001792 | FPS 0099 | D 20 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.082'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000023
+U 8 | F 002048 | FPS 0086 | D 23 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.644', '-0.022'] | value_loss ['None', '8.045', '0.013']| State_NN_loss 0.091694
+U 9 | F 002304 | FPS 0096 | D 26 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.039'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051463
+U 10 | F 002560 | FPS 0088 | D 29 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.258', '0.019'] | value_loss ['None', '6.407', '0.011']| State_NN_loss 0.128490
+Status saved
+U 11 | F 002816 | FPS 0088 | D 32 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.608', '-0.008'] | value_loss ['None', '7.878', '0.003']| State_NN_loss 0.091539
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 11 | F 002816 | FPS 0075 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.050'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051397
+U 12 | F 003072 | FPS 0097 | D 6 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.070'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 13 | F 003328 | FPS 0099 | D 8 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.053'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 11 | F 002816 | FPS 0076 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.050'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051397
+U 12 | F 003072 | FPS 0100 | D 5 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.066'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 13 | F 003328 | FPS 0077 | D 9 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.010'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051525
+U 14 | F 003584 | FPS 0100 | D 11 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.047'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 15 | F 003840 | FPS 0085 | D 14 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.005'] | value_loss ['None', 'nan', '0.004']| State_NN_loss 0.051306
+U 16 | F 004096 | FPS 0100 | D 17 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.051'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 17 | F 004352 | FPS 0100 | D 19 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 18 | F 004608 | FPS 0100 | D 22 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 19 | F 004864 | FPS 0100 | D 25 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 20 | F 005120 | FPS 0092 | D 27 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.025'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051615
+Status saved
+U 21 | F 005376 | FPS 0091 | D 31 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051416
+U 22 | F 005632 | FPS 0093 | D 34 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.017'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051374
+U 23 | F 005888 | FPS 0086 | D 37 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.603', '0.063'] | value_loss ['None', '7.856', '0.019']| State_NN_loss 0.091557
+U 24 | F 006144 | FPS 0098 | D 39 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.009'] | value_loss ['None', 'nan', '0.003']| State_NN_loss 0.051630
+U 25 | F 006400 | FPS 0100 | D 42 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 26 | F 006656 | FPS 0092 | D 45 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.024'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051304
+U 27 | F 006912 | FPS 0089 | D 47 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.011'] | value_loss ['None', 'nan', '0.004']| State_NN_loss 0.051321
+U 28 | F 007168 | FPS 0099 | D 50 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 29 | F 007424 | FPS 0093 | D 53 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.013'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051316
+U 30 | F 007680 | FPS 0085 | D 56 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.016'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051280
+Status saved
+U 31 | F 007936 | FPS 0099 | D 59 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 32 | F 008192 | FPS 0099 | D 61 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 33 | F 008448 | FPS 0086 | D 64 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.613', '0.062'] | value_loss ['None', '7.903', '0.010']| State_NN_loss 0.091813
+U 34 | F 008704 | FPS 0100 | D 67 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.045'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 35 | F 008960 | FPS 0099 | D 69 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 36 | F 009216 | FPS 0099 | D 72 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 37 | F 009472 | FPS 0100 | D 75 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 38 | F 009728 | FPS 0099 | D 77 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 39 | F 009984 | FPS 0094 | D 80 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.032'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051311
+U 40 | F 010240 | FPS 0099 | D 82 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 41 | F 010496 | FPS 0098 | D 85 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000000
+U 42 | F 010752 | FPS 0099 | D 88 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 43 | F 011008 | FPS 0094 | D 91 | Reward:μσmM 0.33 1.25 -1.00 2.00 | policy_loss ['None', '0.707', '-0.015'] | value_loss ['None', '0.464', '0.004']| State_NN_loss 0.109650
+U 44 | F 011264 | FPS 0094 | D 94 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.023'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051373
+U 45 | F 011520 | FPS 0106 | D 96 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 46 | F 011776 | FPS 0107 | D 98 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 47 | F 012032 | FPS 0086 | D 101 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.617', '0.085'] | value_loss ['None', '7.919', '0.024']| State_NN_loss 0.091799
+U 48 | F 012288 | FPS 0100 | D 104 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000015
+U 49 | F 012544 | FPS 0091 | D 107 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.022'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051334
+U 50 | F 012800 | FPS 0095 | D 109 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.613', '0.082'] | value_loss ['None', '7.900', '0.026']| State_NN_loss 0.091478
+Status saved
+U 51 | F 013056 | FPS 0105 | D 112 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 52 | F 013312 | FPS 0100 | D 115 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 53 | F 013568 | FPS 0099 | D 117 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 54 | F 013824 | FPS 0099 | D 120 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 55 | F 014080 | FPS 0099 | D 123 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 56 | F 014336 | FPS 0099 | D 125 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 57 | F 014592 | FPS 0088 | D 128 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.019']| State_NN_loss 0.051265
+U 58 | F 014848 | FPS 0099 | D 131 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 59 | F 015104 | FPS 0088 | D 134 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.035'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051514
+U 60 | F 015360 | FPS 0099 | D 136 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 61 | F 015616 | FPS 0099 | D 139 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 62 | F 015872 | FPS 0083 | D 142 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.607', '0.091'] | value_loss ['None', '7.872', '0.025']| State_NN_loss 0.091692
+U 63 | F 016128 | FPS 0099 | D 145 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 64 | F 016384 | FPS 0094 | D 148 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051307
+U 65 | F 016640 | FPS 0099 | D 150 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 66 | F 016896 | FPS 0104 | D 153 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 67 | F 017152 | FPS 0106 | D 155 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 68 | F 017408 | FPS 0100 | D 158 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 69 | F 017664 | FPS 0099 | D 160 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 70 | F 017920 | FPS 0087 | D 163 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.042'] | value_loss ['None', 'nan', '0.020']| State_NN_loss 0.051296
+Status saved
+U 71 | F 018176 | FPS 0101 | D 166 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.003'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 72 | F 018432 | FPS 0089 | D 169 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.591', '0.076'] | value_loss ['None', '7.799', '0.033']| State_NN_loss 0.091695
+U 73 | F 018688 | FPS 0087 | D 172 | Reward:μσmM 0.33 0.47 0.00 1.00 | policy_loss ['None', 'nan', '0.020'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.072144
+U 74 | F 018944 | FPS 0106 | D 174 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000012
+U 75 | F 019200 | FPS 0095 | D 177 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 76 | F 019456 | FPS 0083 | D 180 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.601', '0.114'] | value_loss ['None', '7.843', '0.047']| State_NN_loss 0.128156
+U 77 | F 019712 | FPS 0103 | D 183 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000022
+U 78 | F 019968 | FPS 0100 | D 185 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 79 | F 020224 | FPS 0088 | D 188 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.017'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051477
+U 80 | F 020480 | FPS 0087 | D 191 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.011'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051382
+Status saved
+U 81 | F 020736 | FPS 0094 | D 194 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 82 | F 020992 | FPS 0089 | D 197 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.588', '0.072'] | value_loss ['None', '7.784', '0.029']| State_NN_loss 0.091730
+U 83 | F 021248 | FPS 0101 | D 200 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 84 | F 021504 | FPS 0106 | D 202 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 85 | F 021760 | FPS 0090 | D 205 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.027'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051284
+U 86 | F 022016 | FPS 0099 | D 208 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 87 | F 022272 | FPS 0099 | D 210 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 88 | F 022528 | FPS 0100 | D 213 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 89 | F 022784 | FPS 0099 | D 215 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 90 | F 023040 | FPS 0100 | D 218 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 91 | F 023296 | FPS 0087 | D 221 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051669
+U 92 | F 023552 | FPS 0087 | D 224 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.623', '0.089'] | value_loss ['None', '7.947', '0.023']| State_NN_loss 0.091516
+U 93 | F 023808 | FPS 0102 | D 227 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 94 | F 024064 | FPS 0099 | D 229 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.024'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051442
+U 95 | F 024320 | FPS 0099 | D 232 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 96 | F 024576 | FPS 0084 | D 235 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.622', '0.079'] | value_loss ['None', '7.941', '0.023']| State_NN_loss 0.091542
+U 97 | F 024832 | FPS 0088 | D 238 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.509', '0.046'] | value_loss ['None', '7.419', '0.034']| State_NN_loss 0.091611
+U 98 | F 025088 | FPS 0097 | D 240 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.031'] | value_loss ['None', 'nan', '0.004']| State_NN_loss 0.051297
+U 99 | F 025344 | FPS 0106 | D 243 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000008
+U 100 | F 025600 | FPS 0087 | D 246 | Reward:μσmM 0.75 1.30 -1.00 2.00 | policy_loss ['None', '-0.771', '0.054'] | value_loss ['None', '3.351', '0.016']| State_NN_loss 0.144362
+Status saved
+U 101 | F 025856 | FPS 0100 | D 249 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000025
+U 102 | F 026112 | FPS 0105 | D 251 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.002']| State_NN_loss 0.000000
+U 103 | F 026368 | FPS 0100 | D 254 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 104 | F 026624 | FPS 0100 | D 256 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 105 | F 026880 | FPS 0105 | D 259 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 106 | F 027136 | FPS 0106 | D 261 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 107 | F 027392 | FPS 0085 | D 264 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.492', '0.083'] | value_loss ['None', '7.344', '0.031']| State_NN_loss 0.091579
+U 108 | F 027648 | FPS 0106 | D 267 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 109 | F 027904 | FPS 0102 | D 269 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 110 | F 028160 | FPS 0084 | D 272 | Reward:μσmM 0.75 1.30 -1.00 2.00 | policy_loss ['None', '-3.580', '0.077'] | value_loss ['None', '8.221', '0.028']| State_NN_loss 0.127674
+Status saved
+U 111 | F 028416 | FPS 0083 | D 276 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.573', '0.078'] | value_loss ['None', '7.713', '0.022']| State_NN_loss 0.091944
+U 112 | F 028672 | FPS 0090 | D 279 | Reward:μσmM 1.00 0.89 0.00 2.00 | policy_loss ['None', '-3.292', '0.040'] | value_loss ['None', '6.519', '0.027']| State_NN_loss 0.144541
+U 113 | F 028928 | FPS 0099 | D 281 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.054'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000027
+U 114 | F 029184 | FPS 0085 | D 284 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.000'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051350
+U 115 | F 029440 | FPS 0099 | D 287 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 116 | F 029696 | FPS 0099 | D 289 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 117 | F 029952 | FPS 0099 | D 292 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 118 | F 030208 | FPS 0097 | D 295 | Reward:μσmM -0.67 0.94 -2.00 0.00 | policy_loss ['None', 'nan', '-0.015'] | value_loss ['None', 'nan', '0.000']| State_NN_loss 0.071636
+U 119 | F 030464 | FPS 0099 | D 297 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000010
+U 120 | F 030720 | FPS 0099 | D 300 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 121 | F 030976 | FPS 0088 | D 303 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.316', '0.081'] | value_loss ['None', '6.570', '0.033']| State_NN_loss 0.091649
+U 122 | F 031232 | FPS 0100 | D 306 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 123 | F 031488 | FPS 0100 | D 308 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 124 | F 031744 | FPS 0101 | D 311 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.009'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 125 | F 032000 | FPS 0099 | D 313 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.009'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 126 | F 032256 | FPS 0085 | D 316 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.294', '0.085'] | value_loss ['None', '6.476', '0.034']| State_NN_loss 0.091685
+U 127 | F 032512 | FPS 0100 | D 319 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 128 | F 032768 | FPS 0105 | D 321 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 129 | F 033024 | FPS 0093 | D 324 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051358
+U 130 | F 033280 | FPS 0086 | D 327 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.450', '0.082'] | value_loss ['None', '7.153', '0.027']| State_NN_loss 0.091947
+Status saved
+U 131 | F 033536 | FPS 0099 | D 330 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.048'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000016
+U 132 | F 033792 | FPS 0099 | D 333 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 133 | F 034048 | FPS 0092 | D 336 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.334', '0.058'] | value_loss ['None', '6.647', '0.023']| State_NN_loss 0.092223
+U 134 | F 034304 | FPS 0099 | D 338 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000014
+U 135 | F 034560 | FPS 0099 | D 341 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 136 | F 034816 | FPS 0099 | D 343 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 137 | F 035072 | FPS 0092 | D 346 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.039'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051329
+U 138 | F 035328 | FPS 0090 | D 349 | Reward:μσmM 0.00 0.82 -1.00 1.00 | policy_loss ['None', 'nan', '0.098'] | value_loss ['None', 'nan', '0.043']| State_NN_loss 0.071626
+U 139 | F 035584 | FPS 0085 | D 352 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.007', '0.037'] | value_loss ['None', '5.690', '0.021']| State_NN_loss 0.091627
+U 140 | F 035840 | FPS 0093 | D 355 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.002'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051400
+Status saved
+U 141 | F 036096 | FPS 0086 | D 358 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.011'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051330
+U 142 | F 036352 | FPS 0099 | D 361 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 143 | F 036608 | FPS 0094 | D 364 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.012'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051397
+U 144 | F 036864 | FPS 0099 | D 366 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 145 | F 037120 | FPS 0099 | D 369 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 146 | F 037376 | FPS 0099 | D 372 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 147 | F 037632 | FPS 0099 | D 374 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 148 | F 037888 | FPS 0099 | D 377 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 149 | F 038144 | FPS 0099 | D 379 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 150 | F 038400 | FPS 0099 | D 382 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 151 | F 038656 | FPS 0082 | D 386 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.323', '0.111'] | value_loss ['None', '6.601', '0.043']| State_NN_loss 0.128089
+U 152 | F 038912 | FPS 0098 | D 388 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000022
+U 153 | F 039168 | FPS 0098 | D 391 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 154 | F 039424 | FPS 0098 | D 393 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 155 | F 039680 | FPS 0098 | D 396 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 156 | F 039936 | FPS 0098 | D 399 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 157 | F 040192 | FPS 0084 | D 402 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.041'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051393
+U 158 | F 040448 | FPS 0096 | D 404 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.026'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051488
+U 159 | F 040704 | FPS 0083 | D 407 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.699', '0.102'] | value_loss ['None', '8.314', '0.044']| State_NN_loss 0.128025
+U 160 | F 040960 | FPS 0089 | D 410 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.610', '0.056'] | value_loss ['None', '7.886', '0.023']| State_NN_loss 0.091823
+Status saved
+U 161 | F 041216 | FPS 0090 | D 413 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.008'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051351
+U 162 | F 041472 | FPS 0104 | D 416 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 163 | F 041728 | FPS 0106 | D 418 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 164 | F 041984 | FPS 0106 | D 421 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.044'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 165 | F 042240 | FPS 0101 | D 423 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 166 | F 042496 | FPS 0100 | D 426 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 167 | F 042752 | FPS 0106 | D 428 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 168 | F 043008 | FPS 0104 | D 431 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 169 | F 043264 | FPS 0106 | D 433 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 170 | F 043520 | FPS 0101 | D 436 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 171 | F 043776 | FPS 0101 | D 439 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 172 | F 044032 | FPS 0088 | D 441 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.573', '0.142'] | value_loss ['None', '7.715', '0.049']| State_NN_loss 0.127574
+U 173 | F 044288 | FPS 0101 | D 444 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000022
+U 174 | F 044544 | FPS 0085 | D 447 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.020'] | value_loss ['None', 'nan', '0.021']| State_NN_loss 0.051235
+U 175 | F 044800 | FPS 0091 | D 450 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.650', '0.052'] | value_loss ['None', '8.077', '0.026']| State_NN_loss 0.092337
+U 176 | F 045056 | FPS 0097 | D 452 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000013
+U 177 | F 045312 | FPS 0102 | D 455 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 178 | F 045568 | FPS 0106 | D 457 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 179 | F 045824 | FPS 0099 | D 460 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 180 | F 046080 | FPS 0097 | D 463 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.030'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051293
+Status saved
+U 181 | F 046336 | FPS 0086 | D 466 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.575', '0.083'] | value_loss ['None', '7.722', '0.018']| State_NN_loss 0.091582
+U 182 | F 046592 | FPS 0088 | D 469 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.023'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051530
+U 183 | F 046848 | FPS 0099 | D 471 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 184 | F 047104 | FPS 0106 | D 474 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 185 | F 047360 | FPS 0092 | D 477 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.018'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.052009
+U 186 | F 047616 | FPS 0099 | D 479 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.054'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000006
+U 187 | F 047872 | FPS 0106 | D 482 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 188 | F 048128 | FPS 0092 | D 484 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051422
+U 189 | F 048384 | FPS 0102 | D 487 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 190 | F 048640 | FPS 0089 | D 490 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.637', '0.081'] | value_loss ['None', '8.012', '0.026']| State_NN_loss 0.091604
+Status saved
+U 191 | F 048896 | FPS 0102 | D 493 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051326
+U 192 | F 049152 | FPS 0090 | D 496 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.024'] | value_loss ['None', 'nan', '0.021']| State_NN_loss 0.051299
+U 193 | F 049408 | FPS 0091 | D 498 | Reward:μσmM 1.17 0.90 0.00 2.00 | policy_loss ['None', '-3.211', '0.055'] | value_loss ['None', '6.183', '0.031']| State_NN_loss 0.177335
+U 194 | F 049664 | FPS 0106 | D 501 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.051'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000035
+U 195 | F 049920 | FPS 0091 | D 504 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.007'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051383
+U 196 | F 050176 | FPS 0106 | D 506 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 197 | F 050432 | FPS 0102 | D 509 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.003'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051453
+U 198 | F 050688 | FPS 0106 | D 511 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 199 | F 050944 | FPS 0106 | D 513 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 200 | F 051200 | FPS 0106 | D 516 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 201 | F 051456 | FPS 0085 | D 519 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.025'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051254
+U 202 | F 051712 | FPS 0094 | D 522 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.004'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051384
+U 203 | F 051968 | FPS 0095 | D 525 | Reward:μσmM 0.33 0.47 0.00 1.00 | policy_loss ['None', 'nan', '-0.014'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.071556
+U 204 | F 052224 | FPS 0099 | D 527 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.073'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000011
+U 205 | F 052480 | FPS 0099 | D 530 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 206 | F 052736 | FPS 0099 | D 532 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 207 | F 052992 | FPS 0099 | D 535 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 208 | F 053248 | FPS 0092 | D 538 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 209 | F 053504 | FPS 0099 | D 540 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 210 | F 053760 | FPS 0085 | D 543 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-2.733', '0.078'] | value_loss ['None', '7.682', '0.031']| State_NN_loss 0.091577
+Status saved
+U 211 | F 054016 | FPS 0098 | D 546 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 212 | F 054272 | FPS 0085 | D 549 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051487
+U 213 | F 054528 | FPS 0087 | D 552 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.018'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051377
+U 214 | F 054784 | FPS 0092 | D 555 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 215 | F 055040 | FPS 0088 | D 558 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.013'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051382
+U 216 | F 055296 | FPS 0100 | D 561 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.040'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 217 | F 055552 | FPS 0096 | D 563 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', '0.645', '-0.032'] | value_loss ['None', '0.368', '0.000']| State_NN_loss 0.071396
+U 218 | F 055808 | FPS 0091 | D 566 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.016'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051298
+U 219 | F 056064 | FPS 0099 | D 569 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 220 | F 056320 | FPS 0099 | D 571 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 221 | F 056576 | FPS 0098 | D 574 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 222 | F 056832 | FPS 0099 | D 577 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 223 | F 057088 | FPS 0099 | D 579 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 224 | F 057344 | FPS 0099 | D 582 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 225 | F 057600 | FPS 0084 | D 585 | Reward:μσmM 0.33 1.25 -1.00 2.00 | policy_loss ['None', '-1.461', '0.032'] | value_loss ['None', '4.549', '0.011']| State_NN_loss 0.109952
+U 226 | F 057856 | FPS 0086 | D 588 | Reward:μσmM 1.67 0.75 0.00 2.00 | policy_loss ['None', '-3.267', '0.191'] | value_loss ['None', '6.369', '0.073']| State_NN_loss 0.193146
+U 227 | F 058112 | FPS 0099 | D 591 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000043
+U 228 | F 058368 | FPS 0085 | D 594 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.667', '0.036'] | value_loss ['None', '8.155', '0.019']| State_NN_loss 0.091530
+U 229 | F 058624 | FPS 0085 | D 597 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.005'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051407
+U 230 | F 058880 | FPS 0099 | D 599 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 231 | F 059136 | FPS 0096 | D 602 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 232 | F 059392 | FPS 0099 | D 605 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 233 | F 059648 | FPS 0098 | D 608 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 234 | F 059904 | FPS 0099 | D 610 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 235 | F 060160 | FPS 0099 | D 613 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 236 | F 060416 | FPS 0099 | D 615 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 237 | F 060672 | FPS 0091 | D 618 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051366
+U 238 | F 060928 | FPS 0089 | D 621 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.008'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051667
+U 239 | F 061184 | FPS 0092 | D 624 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.012'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051424
+U 240 | F 061440 | FPS 0084 | D 627 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.024'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051393
+Status saved
+U 241 | F 061696 | FPS 0098 | D 630 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 242 | F 061952 | FPS 0099 | D 632 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 243 | F 062208 | FPS 0099 | D 635 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 244 | F 062464 | FPS 0099 | D 637 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 245 | F 062720 | FPS 0086 | D 640 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.540', '0.078'] | value_loss ['None', '7.561', '0.028']| State_NN_loss 0.091870
+U 246 | F 062976 | FPS 0085 | D 643 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.031'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051664
+U 247 | F 063232 | FPS 0099 | D 646 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 248 | F 063488 | FPS 0099 | D 649 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 249 | F 063744 | FPS 0084 | D 652 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.608', '0.074'] | value_loss ['None', '7.879', '0.021']| State_NN_loss 0.091470
+U 250 | F 064000 | FPS 0099 | D 654 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+Status saved
+U 251 | F 064256 | FPS 0099 | D 657 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 252 | F 064512 | FPS 0099 | D 660 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 253 | F 064768 | FPS 0102 | D 662 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 254 | F 065024 | FPS 0086 | D 665 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051647
+U 255 | F 065280 | FPS 0093 | D 668 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.019'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051317
+U 256 | F 065536 | FPS 0084 | D 671 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.010'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051360
+U 257 | F 065792 | FPS 0096 | D 674 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.018'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051307
+U 258 | F 066048 | FPS 0099 | D 676 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 259 | F 066304 | FPS 0099 | D 679 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 260 | F 066560 | FPS 0099 | D 682 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 261 | F 066816 | FPS 0099 | D 684 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 262 | F 067072 | FPS 0099 | D 687 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 263 | F 067328 | FPS 0099 | D 690 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 264 | F 067584 | FPS 0099 | D 692 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 265 | F 067840 | FPS 0100 | D 695 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 266 | F 068096 | FPS 0088 | D 698 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.044'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051587
+U 267 | F 068352 | FPS 0100 | D 700 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 268 | F 068608 | FPS 0085 | D 703 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.694', '0.087'] | value_loss ['None', '8.285', '0.028']| State_NN_loss 0.091556
+U 269 | F 068864 | FPS 0099 | D 706 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 270 | F 069120 | FPS 0097 | D 708 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.025'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051391
+Status saved
+U 271 | F 069376 | FPS 0088 | D 712 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051746
+U 272 | F 069632 | FPS 0083 | D 715 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.627', '0.076'] | value_loss ['None', '7.967', '0.025']| State_NN_loss 0.091704
+U 273 | F 069888 | FPS 0099 | D 717 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000016
+U 274 | F 070144 | FPS 0099 | D 720 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 275 | F 070400 | FPS 0099 | D 723 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 276 | F 070656 | FPS 0093 | D 725 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.023']| State_NN_loss 0.051287
+U 277 | F 070912 | FPS 0099 | D 728 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 278 | F 071168 | FPS 0088 | D 731 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.035'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051753
+U 279 | F 071424 | FPS 0101 | D 733 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 280 | F 071680 | FPS 0098 | D 736 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.007']| State_NN_loss 0.000000
+Status saved
+U 281 | F 071936 | FPS 0077 | D 740 | Reward:μσmM 0.75 1.30 -1.00 2.00 | policy_loss ['None', '-0.741', '0.081'] | value_loss ['None', '2.974', '0.023']| State_NN_loss 0.144362
+U 282 | F 072192 | FPS 0099 | D 742 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000026
+U 283 | F 072448 | FPS 0086 | D 745 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-2.808', '0.041'] | value_loss ['None', '4.579', '0.022']| State_NN_loss 0.091461
+U 284 | F 072704 | FPS 0100 | D 748 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.040'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000016
+U 285 | F 072960 | FPS 0106 | D 750 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 286 | F 073216 | FPS 0098 | D 753 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.012'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051427
+U 287 | F 073472 | FPS 0101 | D 755 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.055'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000008
+U 288 | F 073728 | FPS 0108 | D 758 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 289 | F 073984 | FPS 0093 | D 760 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.649', '0.060'] | value_loss ['None', '8.072', '0.021']| State_NN_loss 0.091657
+U 290 | F 074240 | FPS 0099 | D 763 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+Status saved
+U 291 | F 074496 | FPS 0098 | D 766 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 292 | F 074752 | FPS 0099 | D 769 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 293 | F 075008 | FPS 0099 | D 771 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 294 | F 075264 | FPS 0090 | D 774 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.029'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051293
+U 295 | F 075520 | FPS 0086 | D 777 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.390', '0.072'] | value_loss ['None', '6.889', '0.025']| State_NN_loss 0.091465
+U 296 | F 075776 | FPS 0095 | D 780 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 297 | F 076032 | FPS 0099 | D 782 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 298 | F 076288 | FPS 0096 | D 785 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.026'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051477
+U 299 | F 076544 | FPS 0100 | D 788 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 300 | F 076800 | FPS 0099 | D 790 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 301 | F 077056 | FPS 0098 | D 793 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 302 | F 077312 | FPS 0099 | D 796 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 303 | F 077568 | FPS 0088 | D 799 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.022']| State_NN_loss 0.051493
+U 304 | F 077824 | FPS 0099 | D 801 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 305 | F 078080 | FPS 0099 | D 804 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 306 | F 078336 | FPS 0099 | D 806 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 307 | F 078592 | FPS 0099 | D 809 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 308 | F 078848 | FPS 0099 | D 812 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 309 | F 079104 | FPS 0099 | D 814 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.011'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 310 | F 079360 | FPS 0099 | D 817 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.011'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 311 | F 079616 | FPS 0098 | D 820 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.008'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 312 | F 079872 | FPS 0083 | D 823 | Reward:μσmM 0.33 1.25 -1.00 2.00 | policy_loss ['None', '-1.449', '0.044'] | value_loss ['None', '4.558', '0.014']| State_NN_loss 0.110160
+U 313 | F 080128 | FPS 0099 | D 826 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000018
+U 314 | F 080384 | FPS 0084 | D 829 | Reward:μσmM 1.17 0.90 0.00 2.00 | policy_loss ['None', '-3.133', '0.103'] | value_loss ['None', '5.891', '0.050']| State_NN_loss 0.176756
+U 315 | F 080640 | FPS 0092 | D 831 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000033
+U 316 | F 080896 | FPS 0085 | D 834 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051286
+U 317 | F 081152 | FPS 0096 | D 837 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051537
+U 318 | F 081408 | FPS 0090 | D 840 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.004'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051279
+U 319 | F 081664 | FPS 0100 | D 843 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 320 | F 081920 | FPS 0099 | D 845 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 321 | F 082176 | FPS 0098 | D 848 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 322 | F 082432 | FPS 0099 | D 851 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 323 | F 082688 | FPS 0099 | D 853 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 324 | F 082944 | FPS 0099 | D 856 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 325 | F 083200 | FPS 0099 | D 858 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 326 | F 083456 | FPS 0099 | D 861 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 327 | F 083712 | FPS 0094 | D 864 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-2.934', '0.026'] | value_loss ['None', '5.038', '0.021']| State_NN_loss 0.091634
+U 328 | F 083968 | FPS 0099 | D 866 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.048'] | value_loss ['None', 'None', '0.004']| State_NN_loss 0.000014
+U 329 | F 084224 | FPS 0091 | D 869 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.010'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051439
+U 330 | F 084480 | FPS 0098 | D 872 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 331 | F 084736 | FPS 0086 | D 875 | Reward:μσmM 0.33 0.47 0.00 1.00 | policy_loss ['None', 'nan', '0.015'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.071365
+U 332 | F 084992 | FPS 0097 | D 878 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000011
+U 333 | F 085248 | FPS 0099 | D 880 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 334 | F 085504 | FPS 0099 | D 883 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 335 | F 085760 | FPS 0099 | D 886 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.011'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 336 | F 086016 | FPS 0099 | D 888 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 337 | F 086272 | FPS 0086 | D 891 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051334
+U 338 | F 086528 | FPS 0084 | D 894 | Reward:μσmM 1.60 0.80 0.00 2.00 | policy_loss ['None', '-3.502', '0.175'] | value_loss ['None', '7.402', '0.055']| State_NN_loss 0.160989
+U 339 | F 086784 | FPS 0087 | D 897 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.008'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051262
+U 340 | F 087040 | FPS 0099 | D 900 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 341 | F 087296 | FPS 0098 | D 903 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 342 | F 087552 | FPS 0096 | D 905 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051307
+U 343 | F 087808 | FPS 0099 | D 908 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 344 | F 088064 | FPS 0097 | D 911 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.022'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051414
+U 345 | F 088320 | FPS 0099 | D 913 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.055'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 346 | F 088576 | FPS 0099 | D 916 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 347 | F 088832 | FPS 0092 | D 919 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.019'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051264
+U 348 | F 089088 | FPS 0099 | D 921 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 349 | F 089344 | FPS 0099 | D 924 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 350 | F 089600 | FPS 0099 | D 926 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 351 | F 089856 | FPS 0099 | D 929 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 352 | F 090112 | FPS 0106 | D 932 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 353 | F 090368 | FPS 0098 | D 934 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051323
+U 354 | F 090624 | FPS 0100 | D 937 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 355 | F 090880 | FPS 0096 | D 940 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.012'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051387
+U 356 | F 091136 | FPS 0099 | D 942 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.044'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 357 | F 091392 | FPS 0099 | D 945 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 358 | F 091648 | FPS 0103 | D 947 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 359 | F 091904 | FPS 0096 | D 950 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.029'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051348
+U 360 | F 092160 | FPS 0106 | D 952 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 361 | F 092416 | FPS 0096 | D 955 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051363
+U 362 | F 092672 | FPS 0106 | D 958 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 363 | F 092928 | FPS 0106 | D 960 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 364 | F 093184 | FPS 0083 | D 963 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.573', '0.082'] | value_loss ['None', '7.712', '0.025']| State_NN_loss 0.091988
+U 365 | F 093440 | FPS 0096 | D 966 | Reward:μσmM 0.33 1.25 -1.00 2.00 | policy_loss ['None', '-1.485', '0.032'] | value_loss ['None', '4.229', '0.016']| State_NN_loss 0.109634
+U 366 | F 093696 | FPS 0106 | D 968 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000020
+U 367 | F 093952 | FPS 0106 | D 971 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 368 | F 094208 | FPS 0106 | D 973 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 369 | F 094464 | FPS 0106 | D 976 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 370 | F 094720 | FPS 0106 | D 978 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 371 | F 094976 | FPS 0090 | D 982 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-2.673', '0.047'] | value_loss ['None', '4.111', '0.020']| State_NN_loss 0.091805
+U 372 | F 095232 | FPS 0105 | D 984 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 373 | F 095488 | FPS 0089 | D 987 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.030'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051378
+U 374 | F 095744 | FPS 0106 | D 990 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 375 | F 096000 | FPS 0098 | D 992 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.264', '0.084'] | value_loss ['None', '6.385', '0.049']| State_NN_loss 0.127699
+U 376 | F 096256 | FPS 0102 | D 995 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', '0.534', '-0.034'] | value_loss ['None', '0.218', '0.000']| State_NN_loss 0.071434
+U 377 | F 096512 | FPS 0097 | D 998 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000011
+U 378 | F 096768 | FPS 0104 | D 1000 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 379 | F 097024 | FPS 0094 | D 1003 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.033'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051378
+U 380 | F 097280 | FPS 0096 | D 1005 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.003'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051325
+Status saved
+U 381 | F 097536 | FPS 0083 | D 1009 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.548', '0.053'] | value_loss ['None', '7.822', '0.022']| State_NN_loss 0.091631
+U 382 | F 097792 | FPS 0101 | D 1012 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.042'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 383 | F 098048 | FPS 0099 | D 1014 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 384 | F 098304 | FPS 0100 | D 1017 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.043'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 385 | F 098560 | FPS 0084 | D 1020 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.019'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051312
+U 386 | F 098816 | FPS 0099 | D 1022 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 387 | F 099072 | FPS 0101 | D 1025 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 388 | F 099328 | FPS 0099 | D 1027 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 389 | F 099584 | FPS 0096 | D 1030 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.013'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051301
+U 390 | F 099840 | FPS 0099 | D 1033 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 391 | F 100096 | FPS 0086 | D 1037 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.029'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051345
+U 392 | F 100352 | FPS 0099 | D 1039 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 393 | F 100608 | FPS 0099 | D 1042 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 394 | F 100864 | FPS 0088 | D 1045 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.037'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051569
+U 395 | F 101120 | FPS 0084 | D 1048 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051467
+U 396 | F 101376 | FPS 0094 | D 1050 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051389
+U 397 | F 101632 | FPS 0095 | D 1053 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.003'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051371
+U 398 | F 101888 | FPS 0099 | D 1056 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000008
+U 399 | F 102144 | FPS 0087 | D 1059 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051307
+U 400 | F 102400 | FPS 0099 | D 1061 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.004'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000008
+Status saved
+U 401 | F 102656 | FPS 0084 | D 1065 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.636', '0.145'] | value_loss ['None', '8.011', '0.036']| State_NN_loss 0.127828
+U 402 | F 102912 | FPS 0086 | D 1068 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.014'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051298
+U 403 | F 103168 | FPS 0099 | D 1070 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 404 | F 103424 | FPS 0099 | D 1073 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 405 | F 103680 | FPS 0099 | D 1075 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 406 | F 103936 | FPS 0083 | D 1078 | Reward:μσmM 0.33 1.25 -1.00 2.00 | policy_loss ['None', '-1.471', '0.036'] | value_loss ['None', '4.170', '0.019']| State_NN_loss 0.109923
+U 407 | F 104192 | FPS 0086 | D 1081 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.039'] | value_loss ['None', 'nan', '0.017']| State_NN_loss 0.051534
+U 408 | F 104448 | FPS 0099 | D 1084 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 409 | F 104704 | FPS 0095 | D 1087 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.025'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051277
+U 410 | F 104960 | FPS 0089 | D 1090 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.014'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051325
+Status saved
+U 411 | F 105216 | FPS 0096 | D 1093 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.030'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051254
+U 412 | F 105472 | FPS 0099 | D 1095 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 413 | F 105728 | FPS 0099 | D 1098 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 414 | F 105984 | FPS 0089 | D 1101 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.615', '0.040'] | value_loss ['None', '7.912', '0.019']| State_NN_loss 0.091491
+U 415 | F 106240 | FPS 0099 | D 1103 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000015
+U 416 | F 106496 | FPS 0099 | D 1106 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 417 | F 106752 | FPS 0092 | D 1109 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 418 | F 107008 | FPS 0099 | D 1111 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 419 | F 107264 | FPS 0086 | D 1114 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.006'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051395
+U 420 | F 107520 | FPS 0090 | D 1117 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.020'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051608
+Status saved
+U 421 | F 107776 | FPS 0098 | D 1120 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 422 | F 108032 | FPS 0099 | D 1123 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 423 | F 108288 | FPS 0099 | D 1125 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 424 | F 108544 | FPS 0099 | D 1128 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 425 | F 108800 | FPS 0099 | D 1130 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000000
+U 426 | F 109056 | FPS 0099 | D 1133 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 427 | F 109312 | FPS 0084 | D 1136 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.033'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051611
+U 428 | F 109568 | FPS 0100 | D 1139 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 429 | F 109824 | FPS 0084 | D 1142 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.476', '0.035'] | value_loss ['None', '7.272', '0.027']| State_NN_loss 0.091561
+U 430 | F 110080 | FPS 0099 | D 1144 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+Status saved
+U 431 | F 110336 | FPS 0089 | D 1148 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.035'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051247
+U 432 | F 110592 | FPS 0100 | D 1150 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.004'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051294
+U 433 | F 110848 | FPS 0095 | D 1153 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.015'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051333
+U 434 | F 111104 | FPS 0106 | D 1155 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 435 | F 111360 | FPS 0106 | D 1158 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 436 | F 111616 | FPS 0102 | D 1160 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 437 | F 111872 | FPS 0100 | D 1163 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.032'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051391
+U 438 | F 112128 | FPS 0106 | D 1165 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 439 | F 112384 | FPS 0085 | D 1168 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.029'] | value_loss ['None', 'nan', '0.021']| State_NN_loss 0.051235
+U 440 | F 112640 | FPS 0104 | D 1171 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 441 | F 112896 | FPS 0099 | D 1174 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 442 | F 113152 | FPS 0106 | D 1176 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 443 | F 113408 | FPS 0106 | D 1179 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 444 | F 113664 | FPS 0099 | D 1181 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 445 | F 113920 | FPS 0099 | D 1184 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 446 | F 114176 | FPS 0099 | D 1186 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 447 | F 114432 | FPS 0092 | D 1189 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.047'] | value_loss ['None', 'nan', '0.023']| State_NN_loss 0.051238
+U 448 | F 114688 | FPS 0090 | D 1192 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.037'] | value_loss ['None', 'nan', '0.022']| State_NN_loss 0.051844
+U 449 | F 114944 | FPS 0106 | D 1194 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 450 | F 115200 | FPS 0106 | D 1197 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 451 | F 115456 | FPS 0090 | D 1200 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.032'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051416
+U 452 | F 115712 | FPS 0092 | D 1203 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.030'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051576
+U 453 | F 115968 | FPS 0086 | D 1206 | Reward:μσmM 1.60 0.80 0.00 2.00 | policy_loss ['None', '-3.403', '0.138'] | value_loss ['None', '6.963', '0.047']| State_NN_loss 0.160871
+U 454 | F 116224 | FPS 0088 | D 1209 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.670', '0.035'] | value_loss ['None', '8.171', '0.016']| State_NN_loss 0.091645
+U 455 | F 116480 | FPS 0106 | D 1211 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 456 | F 116736 | FPS 0106 | D 1214 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.040'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 457 | F 116992 | FPS 0099 | D 1216 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.044'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000000
+U 458 | F 117248 | FPS 0099 | D 1219 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.040'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 459 | F 117504 | FPS 0106 | D 1221 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 460 | F 117760 | FPS 0100 | D 1224 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 461 | F 118016 | FPS 0105 | D 1227 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 462 | F 118272 | FPS 0106 | D 1229 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 463 | F 118528 | FPS 0100 | D 1232 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 464 | F 118784 | FPS 0099 | D 1234 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 465 | F 119040 | FPS 0099 | D 1237 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 466 | F 119296 | FPS 0099 | D 1239 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 467 | F 119552 | FPS 0099 | D 1242 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.011'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 468 | F 119808 | FPS 0106 | D 1244 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 469 | F 120064 | FPS 0106 | D 1247 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.009'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 470 | F 120320 | FPS 0088 | D 1250 | Reward:μσmM 0.50 1.50 -1.00 2.00 | policy_loss ['None', 'nan', '0.071'] | value_loss ['None', 'nan', '0.025']| State_NN_loss 0.051467
+Status saved
+U 471 | F 120576 | FPS 0100 | D 1253 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.002']| State_NN_loss 0.000007
+U 472 | F 120832 | FPS 0094 | D 1255 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.022'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051355
+U 473 | F 121088 | FPS 0106 | D 1258 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 474 | F 121344 | FPS 0106 | D 1260 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 475 | F 121600 | FPS 0106 | D 1263 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 476 | F 121856 | FPS 0106 | D 1265 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 477 | F 122112 | FPS 0106 | D 1268 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.049'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000000
+U 478 | F 122368 | FPS 0101 | D 1270 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 479 | F 122624 | FPS 0106 | D 1272 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 480 | F 122880 | FPS 0095 | D 1275 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.041'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051284
+Status saved
+U 481 | F 123136 | FPS 0091 | D 1278 | Reward:μσmM 0.33 0.47 0.00 1.00 | policy_loss ['None', 'nan', '0.005'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.071674
+U 482 | F 123392 | FPS 0105 | D 1281 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000011
+U 483 | F 123648 | FPS 0092 | D 1284 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.019'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051537
+U 484 | F 123904 | FPS 0106 | D 1286 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 485 | F 124160 | FPS 0101 | D 1289 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 486 | F 124416 | FPS 0104 | D 1291 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 487 | F 124672 | FPS 0099 | D 1294 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 488 | F 124928 | FPS 0101 | D 1296 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 489 | F 125184 | FPS 0100 | D 1299 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 490 | F 125440 | FPS 0098 | D 1301 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.029'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051490
+Status saved
+U 491 | F 125696 | FPS 0093 | D 1305 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051372
+U 492 | F 125952 | FPS 0087 | D 1308 | Reward:μσmM 0.40 1.36 -1.00 2.00 | policy_loss ['None', '-1.968', '0.052'] | value_loss ['None', '4.580', '0.026']| State_NN_loss 0.160987
+U 493 | F 126208 | FPS 0095 | D 1310 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.023'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051416
+U 494 | F 126464 | FPS 0085 | D 1313 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.033', '0.024'] | value_loss ['None', '5.417', '0.019']| State_NN_loss 0.091926
+U 495 | F 126720 | FPS 0094 | D 1316 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.015'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051353
+U 496 | F 126976 | FPS 0094 | D 1319 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.019'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051308
+U 497 | F 127232 | FPS 0099 | D 1321 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 498 | F 127488 | FPS 0096 | D 1324 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 499 | F 127744 | FPS 0092 | D 1327 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051497
+U 500 | F 128000 | FPS 0099 | D 1329 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 501 | F 128256 | FPS 0099 | D 1332 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 502 | F 128512 | FPS 0092 | D 1335 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.026'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051425
+U 503 | F 128768 | FPS 0086 | D 1338 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.020']| State_NN_loss 0.051339
+U 504 | F 129024 | FPS 0099 | D 1341 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 505 | F 129280 | FPS 0099 | D 1343 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 506 | F 129536 | FPS 0099 | D 1346 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 507 | F 129792 | FPS 0099 | D 1348 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 508 | F 130048 | FPS 0099 | D 1351 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 509 | F 130304 | FPS 0101 | D 1354 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 510 | F 130560 | FPS 0106 | D 1356 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 511 | F 130816 | FPS 0092 | D 1359 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051588
+U 512 | F 131072 | FPS 0095 | D 1362 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051544
+U 513 | F 131328 | FPS 0097 | D 1365 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 514 | F 131584 | FPS 0090 | D 1367 | Reward:μσmM 1.60 0.80 0.00 2.00 | policy_loss ['None', '-3.274', '0.143'] | value_loss ['None', '6.428', '0.059']| State_NN_loss 0.160979
+U 515 | F 131840 | FPS 0086 | D 1370 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.010'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051607
+U 516 | F 132096 | FPS 0084 | D 1373 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.015'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051416
+U 517 | F 132352 | FPS 0093 | D 1376 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.015'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051368
+U 518 | F 132608 | FPS 0099 | D 1379 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.047'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 519 | F 132864 | FPS 0099 | D 1381 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 520 | F 133120 | FPS 0098 | D 1384 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 521 | F 133376 | FPS 0090 | D 1387 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.016'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051756
+U 522 | F 133632 | FPS 0099 | D 1390 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.043'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 523 | F 133888 | FPS 0092 | D 1393 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.023'] | value_loss ['None', 'nan', '0.017']| State_NN_loss 0.051575
+U 524 | F 134144 | FPS 0096 | D 1395 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.008'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051364
+U 525 | F 134400 | FPS 0099 | D 1398 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 526 | F 134656 | FPS 0099 | D 1400 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 527 | F 134912 | FPS 0099 | D 1403 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 528 | F 135168 | FPS 0100 | D 1406 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 529 | F 135424 | FPS 0101 | D 1408 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 530 | F 135680 | FPS 0096 | D 1411 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.012'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051475
+Status saved
+U 531 | F 135936 | FPS 0096 | D 1414 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 532 | F 136192 | FPS 0091 | D 1417 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.111', '0.057'] | value_loss ['None', '6.848', '0.020']| State_NN_loss 0.091564
+U 533 | F 136448 | FPS 0098 | D 1420 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 534 | F 136704 | FPS 0099 | D 1422 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 535 | F 136960 | FPS 0084 | D 1425 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.029'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051291
+U 536 | F 137216 | FPS 0099 | D 1428 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 537 | F 137472 | FPS 0099 | D 1430 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 538 | F 137728 | FPS 0099 | D 1433 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 539 | F 137984 | FPS 0099 | D 1436 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 540 | F 138240 | FPS 0099 | D 1438 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 541 | F 138496 | FPS 0098 | D 1441 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 542 | F 138752 | FPS 0088 | D 1444 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051313
+U 543 | F 139008 | FPS 0088 | D 1447 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.038'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051374
+U 544 | F 139264 | FPS 0099 | D 1449 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 545 | F 139520 | FPS 0101 | D 1452 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 546 | F 139776 | FPS 0088 | D 1455 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.041'] | value_loss ['None', 'nan', '0.019']| State_NN_loss 0.051330
+U 547 | F 140032 | FPS 0094 | D 1458 | Reward:μσmM 0.75 0.83 0.00 2.00 | policy_loss ['None', '-3.137', '0.035'] | value_loss ['None', '5.829', '0.025']| State_NN_loss 0.109781
+U 548 | F 140288 | FPS 0099 | D 1460 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000017
+U 549 | F 140544 | FPS 0099 | D 1463 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 550 | F 140800 | FPS 0099 | D 1465 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 551 | F 141056 | FPS 0098 | D 1468 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 552 | F 141312 | FPS 0084 | D 1471 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051436
+U 553 | F 141568 | FPS 0096 | D 1474 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.033'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051480
+U 554 | F 141824 | FPS 0095 | D 1477 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051473
+U 555 | F 142080 | FPS 0089 | D 1480 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.017'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051556
+U 556 | F 142336 | FPS 0105 | D 1482 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.055'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 557 | F 142592 | FPS 0099 | D 1485 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 558 | F 142848 | FPS 0099 | D 1487 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 559 | F 143104 | FPS 0102 | D 1490 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.046'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 560 | F 143360 | FPS 0085 | D 1493 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.637', '0.071'] | value_loss ['None', '8.016', '0.024']| State_NN_loss 0.091620
+Status saved
+U 561 | F 143616 | FPS 0083 | D 1496 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.009'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051855
+U 562 | F 143872 | FPS 0098 | D 1499 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000008
+U 563 | F 144128 | FPS 0098 | D 1501 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 564 | F 144384 | FPS 0105 | D 1504 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 565 | F 144640 | FPS 0095 | D 1507 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.006'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051266
+U 566 | F 144896 | FPS 0099 | D 1509 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.063'] | value_loss ['None', 'None', '0.002']| State_NN_loss 0.000008
+U 567 | F 145152 | FPS 0082 | D 1512 | Reward:μσmM 1.00 0.89 0.00 2.00 | policy_loss ['None', '-3.579', '0.074'] | value_loss ['None', '7.752', '0.031']| State_NN_loss 0.144677
+U 568 | F 145408 | FPS 0083 | D 1515 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.332', '0.013'] | value_loss ['None', '7.121', '0.016']| State_NN_loss 0.091667
+U 569 | F 145664 | FPS 0106 | D 1518 | Reward:μσmM -1.00 0.00 -1.00 -1.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.006']| State_NN_loss 0.000015
+U 570 | F 145920 | FPS 0099 | D 1520 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.077'] | value_loss ['None', 'None', '0.002']| State_NN_loss 0.000000
+Status saved
+U 571 | F 146176 | FPS 0098 | D 1523 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.053'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 572 | F 146432 | FPS 0099 | D 1526 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.053'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 573 | F 146688 | FPS 0099 | D 1529 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.049'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 574 | F 146944 | FPS 0106 | D 1531 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 575 | F 147200 | FPS 0100 | D 1534 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 576 | F 147456 | FPS 0099 | D 1536 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 577 | F 147712 | FPS 0106 | D 1539 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 578 | F 147968 | FPS 0106 | D 1541 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 579 | F 148224 | FPS 0104 | D 1544 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 580 | F 148480 | FPS 0104 | D 1546 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 581 | F 148736 | FPS 0104 | D 1549 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 582 | F 148992 | FPS 0103 | D 1551 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 583 | F 149248 | FPS 0099 | D 1554 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 584 | F 149504 | FPS 0084 | D 1557 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.399', '0.088'] | value_loss ['None', '7.863', '0.025']| State_NN_loss 0.092036
+U 585 | F 149760 | FPS 0099 | D 1559 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 586 | F 150016 | FPS 0085 | D 1562 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.026'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051302
+U 587 | F 150272 | FPS 0094 | D 1565 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.019']| State_NN_loss 0.051318
+U 588 | F 150528 | FPS 0098 | D 1568 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.025'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051390
+U 589 | F 150784 | FPS 0101 | D 1570 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 590 | F 151040 | FPS 0100 | D 1573 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 591 | F 151296 | FPS 0101 | D 1576 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 592 | F 151552 | FPS 0099 | D 1578 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 593 | F 151808 | FPS 0083 | D 1581 | Reward:μσmM 1.60 0.80 0.00 2.00 | policy_loss ['None', '-3.488', '0.183'] | value_loss ['None', '7.341', '0.056']| State_NN_loss 0.161783
+U 594 | F 152064 | FPS 0087 | D 1584 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.015'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051314
+U 595 | F 152320 | FPS 0086 | D 1587 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.619', '0.057'] | value_loss ['None', '7.928', '0.021']| State_NN_loss 0.091653
+U 596 | F 152576 | FPS 0082 | D 1591 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.291', '0.068'] | value_loss ['None', '6.497', '0.036']| State_NN_loss 0.127680
+U 597 | F 152832 | FPS 0084 | D 1594 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.005'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051383
+U 598 | F 153088 | FPS 0090 | D 1596 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.013'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051537
+U 599 | F 153344 | FPS 0094 | D 1599 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.002'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051424
+U 600 | F 153600 | FPS 0085 | D 1602 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.001'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051442
+Status saved
+U 601 | F 153856 | FPS 0105 | D 1605 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.048'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 602 | F 154112 | FPS 0099 | D 1608 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 603 | F 154368 | FPS 0105 | D 1610 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 604 | F 154624 | FPS 0099 | D 1613 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 605 | F 154880 | FPS 0092 | D 1616 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.031'] | value_loss ['None', 'nan', '0.019']| State_NN_loss 0.051306
+U 606 | F 155136 | FPS 0102 | D 1618 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 607 | F 155392 | FPS 0099 | D 1621 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 608 | F 155648 | FPS 0106 | D 1623 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 609 | F 155904 | FPS 0097 | D 1626 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.012'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051299
+U 610 | F 156160 | FPS 0101 | D 1628 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 611 | F 156416 | FPS 0105 | D 1631 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 612 | F 156672 | FPS 0091 | D 1634 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.031'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051779
+U 613 | F 156928 | FPS 0099 | D 1636 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 614 | F 157184 | FPS 0086 | D 1639 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051447
+U 615 | F 157440 | FPS 0092 | D 1642 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.020'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051375
+U 616 | F 157696 | FPS 0098 | D 1645 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 617 | F 157952 | FPS 0099 | D 1647 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 618 | F 158208 | FPS 0099 | D 1650 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 619 | F 158464 | FPS 0098 | D 1653 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 620 | F 158720 | FPS 0099 | D 1655 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 621 | F 158976 | FPS 0098 | D 1658 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 622 | F 159232 | FPS 0085 | D 1661 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.453', '0.134'] | value_loss ['None', '7.280', '0.049']| State_NN_loss 0.127644
+U 623 | F 159488 | FPS 0095 | D 1664 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.022'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051280
+U 624 | F 159744 | FPS 0098 | D 1667 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.043'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 625 | F 160000 | FPS 0099 | D 1669 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.039'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 626 | F 160256 | FPS 0099 | D 1672 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 627 | F 160512 | FPS 0097 | D 1674 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.022'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051285
+U 628 | F 160768 | FPS 0099 | D 1677 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 629 | F 161024 | FPS 0096 | D 1680 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051507
+U 630 | F 161280 | FPS 0093 | D 1682 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.022'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051296
+Status saved
+U 631 | F 161536 | FPS 0098 | D 1685 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 632 | F 161792 | FPS 0106 | D 1688 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 633 | F 162048 | FPS 0099 | D 1690 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 634 | F 162304 | FPS 0100 | D 1693 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 635 | F 162560 | FPS 0099 | D 1695 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 636 | F 162816 | FPS 0099 | D 1698 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 637 | F 163072 | FPS 0099 | D 1701 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 638 | F 163328 | FPS 0099 | D 1703 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 639 | F 163584 | FPS 0089 | D 1706 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.037'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051280
+U 640 | F 163840 | FPS 0085 | D 1709 | Reward:μσmM 0.50 1.50 -1.00 2.00 | policy_loss ['None', 'nan', '0.079'] | value_loss ['None', 'nan', '0.021']| State_NN_loss 0.051556
+Status saved
+U 641 | F 164096 | FPS 0098 | D 1712 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 642 | F 164352 | FPS 0099 | D 1715 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 643 | F 164608 | FPS 0099 | D 1717 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 644 | F 164864 | FPS 0099 | D 1720 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 645 | F 165120 | FPS 0099 | D 1723 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 646 | F 165376 | FPS 0086 | D 1726 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.038'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051386
+U 647 | F 165632 | FPS 0099 | D 1728 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 648 | F 165888 | FPS 0100 | D 1731 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 649 | F 166144 | FPS 0100 | D 1733 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 650 | F 166400 | FPS 0082 | D 1736 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.603', '0.083'] | value_loss ['None', '7.854', '0.025']| State_NN_loss 0.091967
+Status saved
+U 651 | F 166656 | FPS 0098 | D 1739 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000016
+U 652 | F 166912 | FPS 0099 | D 1742 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 653 | F 167168 | FPS 0083 | D 1745 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.606', '0.071'] | value_loss ['None', '7.869', '0.031']| State_NN_loss 0.092053
+U 654 | F 167424 | FPS 0095 | D 1748 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.010'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051281
+U 655 | F 167680 | FPS 0106 | D 1750 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 656 | F 167936 | FPS 0099 | D 1753 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 657 | F 168192 | FPS 0096 | D 1755 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.001'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051497
+U 658 | F 168448 | FPS 0099 | D 1758 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 659 | F 168704 | FPS 0098 | D 1761 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.012'] | value_loss ['None', 'nan', '0.005']| State_NN_loss 0.051485
+U 660 | F 168960 | FPS 0099 | D 1763 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+Status saved
+U 661 | F 169216 | FPS 0089 | D 1766 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.034'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051376
+U 662 | F 169472 | FPS 0086 | D 1769 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.530', '0.043'] | value_loss ['None', '7.515', '0.025']| State_NN_loss 0.091757
+U 663 | F 169728 | FPS 0099 | D 1772 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000013
+U 664 | F 169984 | FPS 0105 | D 1774 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000000
+U 665 | F 170240 | FPS 0106 | D 1777 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 666 | F 170496 | FPS 0106 | D 1779 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 667 | F 170752 | FPS 0106 | D 1782 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 668 | F 171008 | FPS 0106 | D 1784 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 669 | F 171264 | FPS 0088 | D 1787 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.040'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051763
+U 670 | F 171520 | FPS 0089 | D 1790 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+Status saved
+U 671 | F 171776 | FPS 0095 | D 1793 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051512
+U 672 | F 172032 | FPS 0099 | D 1796 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 673 | F 172288 | FPS 0099 | D 1798 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.047'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 674 | F 172544 | FPS 0106 | D 1801 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 675 | F 172800 | FPS 0099 | D 1803 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 676 | F 173056 | FPS 0099 | D 1806 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 677 | F 173312 | FPS 0106 | D 1808 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 678 | F 173568 | FPS 0090 | D 1811 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.035'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051870
+U 679 | F 173824 | FPS 0099 | D 1814 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 680 | F 174080 | FPS 0084 | D 1817 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.033'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051655
+Status saved
+U 681 | F 174336 | FPS 0098 | D 1820 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 682 | F 174592 | FPS 0099 | D 1822 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 683 | F 174848 | FPS 0106 | D 1825 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 684 | F 175104 | FPS 0100 | D 1827 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.031'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051464
+U 685 | F 175360 | FPS 0096 | D 1830 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.005'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051590
+U 686 | F 175616 | FPS 0099 | D 1833 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 687 | F 175872 | FPS 0089 | D 1836 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.010'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051298
+U 688 | F 176128 | FPS 0097 | D 1838 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 689 | F 176384 | FPS 0099 | D 1841 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 690 | F 176640 | FPS 0087 | D 1844 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.022'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051416
+Status saved
+U 691 | F 176896 | FPS 0102 | D 1847 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 692 | F 177152 | FPS 0099 | D 1850 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 693 | F 177408 | FPS 0099 | D 1852 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 694 | F 177664 | FPS 0083 | D 1855 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051559
+U 695 | F 177920 | FPS 0099 | D 1858 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 696 | F 178176 | FPS 0099 | D 1860 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 697 | F 178432 | FPS 0085 | D 1863 | Reward:μσmM 1.00 0.89 0.00 2.00 | policy_loss ['None', '-3.493', '0.091'] | value_loss ['None', '7.402', '0.039']| State_NN_loss 0.144486
+U 698 | F 178688 | FPS 0099 | D 1866 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000025
+U 699 | F 178944 | FPS 0099 | D 1869 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 700 | F 179200 | FPS 0099 | D 1871 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 701 | F 179456 | FPS 0089 | D 1875 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.039'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051322
+U 702 | F 179712 | FPS 0102 | D 1877 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 703 | F 179968 | FPS 0094 | D 1880 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.045'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051435
+U 704 | F 180224 | FPS 0106 | D 1882 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 705 | F 180480 | FPS 0099 | D 1885 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 706 | F 180736 | FPS 0099 | D 1887 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 707 | F 180992 | FPS 0096 | D 1890 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.006'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051388
+U 708 | F 181248 | FPS 0102 | D 1893 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 709 | F 181504 | FPS 0104 | D 1895 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 710 | F 181760 | FPS 0094 | D 1898 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.043'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051371
+Status saved
+U 711 | F 182016 | FPS 0088 | D 1901 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.030'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051432
+U 712 | F 182272 | FPS 0106 | D 1903 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 713 | F 182528 | FPS 0106 | D 1906 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 714 | F 182784 | FPS 0106 | D 1908 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 715 | F 183040 | FPS 0103 | D 1911 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.011'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 716 | F 183296 | FPS 0099 | D 1913 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.010'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 717 | F 183552 | FPS 0084 | D 1916 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051665
+U 718 | F 183808 | FPS 0089 | D 1919 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-2.806', '0.059'] | value_loss ['None', '4.572', '0.033']| State_NN_loss 0.091809
+U 719 | F 184064 | FPS 0090 | D 1922 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.033'] | value_loss ['None', 'nan', '0.020']| State_NN_loss 0.051300
+U 720 | F 184320 | FPS 0094 | D 1925 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.022']| State_NN_loss 0.051371
+Status saved
+U 721 | F 184576 | FPS 0091 | D 1929 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.023'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051439
+U 722 | F 184832 | FPS 0099 | D 1932 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 723 | F 185088 | FPS 0099 | D 1934 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 724 | F 185344 | FPS 0085 | D 1937 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.607', '0.076'] | value_loss ['None', '7.875', '0.020']| State_NN_loss 0.091564
+U 725 | F 185600 | FPS 0099 | D 1940 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000014
+U 726 | F 185856 | FPS 0089 | D 1943 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.021'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051432
+U 727 | F 186112 | FPS 0106 | D 1945 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 728 | F 186368 | FPS 0105 | D 1947 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 729 | F 186624 | FPS 0103 | D 1950 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 730 | F 186880 | FPS 0099 | D 1953 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 731 | F 187136 | FPS 0104 | D 1955 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 732 | F 187392 | FPS 0095 | D 1958 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.028'] | value_loss ['None', 'nan', '0.016']| State_NN_loss 0.051403
+U 733 | F 187648 | FPS 0099 | D 1961 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 734 | F 187904 | FPS 0099 | D 1963 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 735 | F 188160 | FPS 0091 | D 1966 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.631', '0.070'] | value_loss ['None', '7.986', '0.027']| State_NN_loss 0.091710
+U 736 | F 188416 | FPS 0083 | D 1969 | Reward:μσmM 0.75 0.83 0.00 2.00 | policy_loss ['None', '-3.636', '0.054'] | value_loss ['None', '8.011', '0.023']| State_NN_loss 0.109859
+U 737 | F 188672 | FPS 0099 | D 1972 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.047'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000018
+U 738 | F 188928 | FPS 0099 | D 1974 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 739 | F 189184 | FPS 0099 | D 1977 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 740 | F 189440 | FPS 0099 | D 1980 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 741 | F 189696 | FPS 0098 | D 1983 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 742 | F 189952 | FPS 0091 | D 1986 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.036'] | value_loss ['None', 'nan', '0.020']| State_NN_loss 0.051340
+U 743 | F 190208 | FPS 0085 | D 1989 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.023'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051365
+U 744 | F 190464 | FPS 0103 | D 1991 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 745 | F 190720 | FPS 0099 | D 1994 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.040'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 746 | F 190976 | FPS 0089 | D 1997 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.016'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051304
+U 747 | F 191232 | FPS 0086 | D 2000 | Reward:μσmM 0.67 1.37 -1.00 2.00 | policy_loss ['None', '-1.556', '0.049'] | value_loss ['None', '4.002', '0.025']| State_NN_loss 0.208740
+U 748 | F 191488 | FPS 0106 | D 2002 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.041'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000036
+U 749 | F 191744 | FPS 0099 | D 2005 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 750 | F 192000 | FPS 0099 | D 2007 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 751 | F 192256 | FPS 0098 | D 2010 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 752 | F 192512 | FPS 0099 | D 2013 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 753 | F 192768 | FPS 0099 | D 2016 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 754 | F 193024 | FPS 0099 | D 2018 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 755 | F 193280 | FPS 0085 | D 2021 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.623', '0.090'] | value_loss ['None', '7.947', '0.042']| State_NN_loss 0.091760
+U 756 | F 193536 | FPS 0083 | D 2024 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.422', '0.062'] | value_loss ['None', '7.031', '0.026']| State_NN_loss 0.091478
+U 757 | F 193792 | FPS 0099 | D 2027 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.048'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 758 | F 194048 | FPS 0099 | D 2029 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 759 | F 194304 | FPS 0082 | D 2033 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.467', '0.032'] | value_loss ['None', '8.091', '0.016']| State_NN_loss 0.091514
+U 760 | F 194560 | FPS 0087 | D 2035 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.010'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051393
+Status saved
+U 761 | F 194816 | FPS 0099 | D 2039 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 762 | F 195072 | FPS 0099 | D 2041 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 763 | F 195328 | FPS 0099 | D 2044 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 764 | F 195584 | FPS 0087 | D 2047 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.022'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051342
+U 765 | F 195840 | FPS 0084 | D 2050 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.026'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051705
+U 766 | F 196096 | FPS 0099 | D 2052 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 767 | F 196352 | FPS 0099 | D 2055 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 768 | F 196608 | FPS 0085 | D 2058 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.038'] | value_loss ['None', 'nan', '0.022']| State_NN_loss 0.051373
+U 769 | F 196864 | FPS 0083 | D 2061 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.504', '0.061'] | value_loss ['None', '7.400', '0.026']| State_NN_loss 0.092092
+U 770 | F 197120 | FPS 0083 | D 2064 | Reward:μσmM 0.40 1.36 -1.00 2.00 | policy_loss ['None', '-0.371', '0.037'] | value_loss ['None', '1.917', '0.017']| State_NN_loss 0.176759
+Status saved
+U 771 | F 197376 | FPS 0100 | D 2067 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.055'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000033
+U 772 | F 197632 | FPS 0105 | D 2070 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.050'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 773 | F 197888 | FPS 0106 | D 2072 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 774 | F 198144 | FPS 0106 | D 2074 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.032'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 775 | F 198400 | FPS 0101 | D 2077 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 776 | F 198656 | FPS 0106 | D 2079 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 777 | F 198912 | FPS 0106 | D 2082 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 778 | F 199168 | FPS 0106 | D 2084 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 779 | F 199424 | FPS 0102 | D 2087 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 780 | F 199680 | FPS 0106 | D 2089 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.016'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 781 | F 199936 | FPS 0105 | D 2092 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 782 | F 200192 | FPS 0106 | D 2094 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 783 | F 200448 | FPS 0089 | D 2097 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.030'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051333
+U 784 | F 200704 | FPS 0099 | D 2100 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.016'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051390
+U 785 | F 200960 | FPS 0106 | D 2102 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.028'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 786 | F 201216 | FPS 0106 | D 2105 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 787 | F 201472 | FPS 0100 | D 2107 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 788 | F 201728 | FPS 0099 | D 2110 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 789 | F 201984 | FPS 0091 | D 2113 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.035'] | value_loss ['None', 'nan', '0.011']| State_NN_loss 0.051391
+U 790 | F 202240 | FPS 0096 | D 2115 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+Status saved
+U 791 | F 202496 | FPS 0098 | D 2118 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 792 | F 202752 | FPS 0086 | D 2121 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.493', '0.117'] | value_loss ['None', '7.373', '0.040']| State_NN_loss 0.127741
+U 793 | F 203008 | FPS 0093 | D 2124 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.013']| State_NN_loss 0.051702
+U 794 | F 203264 | FPS 0100 | D 2127 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.035'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 795 | F 203520 | FPS 0096 | D 2129 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '-0.022'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051260
+U 796 | F 203776 | FPS 0099 | D 2132 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.048'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 797 | F 204032 | FPS 0099 | D 2135 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.046'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 798 | F 204288 | FPS 0099 | D 2137 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.034'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 799 | F 204544 | FPS 0099 | D 2140 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 800 | F 204800 | FPS 0099 | D 2142 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 801 | F 205056 | FPS 0098 | D 2145 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.023'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 802 | F 205312 | FPS 0099 | D 2148 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 803 | F 205568 | FPS 0099 | D 2150 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.013'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 804 | F 205824 | FPS 0106 | D 2153 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 805 | F 206080 | FPS 0102 | D 2155 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.024'] | value_loss ['None', 'nan', '0.010']| State_NN_loss 0.051466
+U 806 | F 206336 | FPS 0102 | D 2158 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.047'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000007
+U 807 | F 206592 | FPS 0106 | D 2160 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.030'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 808 | F 206848 | FPS 0100 | D 2163 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.012'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 809 | F 207104 | FPS 0106 | D 2165 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 810 | F 207360 | FPS 0106 | D 2168 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 811 | F 207616 | FPS 0090 | D 2171 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.035'] | value_loss ['None', 'nan', '0.012']| State_NN_loss 0.051282
+U 812 | F 207872 | FPS 0086 | D 2174 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.017'] | value_loss ['None', 'nan', '0.008']| State_NN_loss 0.051502
+U 813 | F 208128 | FPS 0083 | D 2177 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.583', '0.079'] | value_loss ['None', '7.761', '0.020']| State_NN_loss 0.091828
+U 814 | F 208384 | FPS 0083 | D 2180 | Reward:μσmM 0.75 1.30 -1.00 2.00 | policy_loss ['None', '-1.398', '0.059'] | value_loss ['None', '4.022', '0.020']| State_NN_loss 0.127664
+U 815 | F 208640 | FPS 0094 | D 2183 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.199', '0.019'] | value_loss ['None', '6.081', '0.014']| State_NN_loss 0.091812
+U 816 | F 208896 | FPS 0106 | D 2185 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.053'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 817 | F 209152 | FPS 0098 | D 2188 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.006'] | value_loss ['None', 'nan', '0.009']| State_NN_loss 0.051493
+U 818 | F 209408 | FPS 0099 | D 2191 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.042'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 819 | F 209664 | FPS 0106 | D 2193 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 820 | F 209920 | FPS 0101 | D 2195 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 821 | F 210176 | FPS 0105 | D 2198 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 822 | F 210432 | FPS 0106 | D 2201 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.021'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 823 | F 210688 | FPS 0102 | D 2203 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 824 | F 210944 | FPS 0100 | D 2206 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.018'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 825 | F 211200 | FPS 0106 | D 2208 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.015'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 826 | F 211456 | FPS 0106 | D 2211 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.001']| State_NN_loss 0.000000
+U 827 | F 211712 | FPS 0088 | D 2214 | Reward:μσmM 1.50 0.87 0.00 2.00 | policy_loss ['None', '-3.593', '0.142'] | value_loss ['None', '7.807', '0.042']| State_NN_loss 0.127850
+U 828 | F 211968 | FPS 0090 | D 2216 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.573', '0.069'] | value_loss ['None', '7.713', '0.017']| State_NN_loss 0.091536
+U 829 | F 212224 | FPS 0106 | D 2219 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.042'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 830 | F 212480 | FPS 0106 | D 2221 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.027'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 831 | F 212736 | FPS 0105 | D 2224 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.025'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 832 | F 212992 | FPS 0102 | D 2227 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.011'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051404
+U 833 | F 213248 | FPS 0101 | D 2229 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.045'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 834 | F 213504 | FPS 0104 | D 2232 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 835 | F 213760 | FPS 0098 | D 2234 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.027'] | value_loss ['None', 'nan', '0.015']| State_NN_loss 0.051295
+U 836 | F 214016 | FPS 0106 | D 2237 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 837 | F 214272 | FPS 0106 | D 2239 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 838 | F 214528 | FPS 0106 | D 2241 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 839 | F 214784 | FPS 0104 | D 2244 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.029'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 840 | F 215040 | FPS 0106 | D 2246 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.017'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+Status saved
+U 841 | F 215296 | FPS 0105 | D 2249 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.019'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 842 | F 215552 | FPS 0106 | D 2252 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.014'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 843 | F 215808 | FPS 0090 | D 2254 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.031'] | value_loss ['None', 'nan', '0.014']| State_NN_loss 0.051393
+U 844 | F 216064 | FPS 0083 | D 2257 | Reward:μσmM 1.60 0.80 0.00 2.00 | policy_loss ['None', '-3.307', '0.134'] | value_loss ['None', '6.573', '0.045']| State_NN_loss 0.161870
+U 845 | F 216320 | FPS 0084 | D 2261 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.709', '0.042'] | value_loss ['None', '8.357', '0.019']| State_NN_loss 0.091602
+U 846 | F 216576 | FPS 0084 | D 2264 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.565', '0.052'] | value_loss ['None', '7.678', '0.014']| State_NN_loss 0.091641
+U 847 | F 216832 | FPS 0106 | D 2266 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.070'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 848 | F 217088 | FPS 0106 | D 2268 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.057'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 849 | F 217344 | FPS 0100 | D 2271 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.048'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 850 | F 217600 | FPS 0094 | D 2274 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.008'] | value_loss ['None', 'nan', '0.007']| State_NN_loss 0.051331
+Status saved
+U 851 | F 217856 | FPS 0105 | D 2277 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.037'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 852 | F 218112 | FPS 0086 | D 2280 | Reward:μσmM 1.33 0.94 0.00 2.00 | policy_loss ['None', '-3.604', '0.051'] | value_loss ['None', '7.860', '0.016']| State_NN_loss 0.091822
+U 853 | F 218368 | FPS 0106 | D 2282 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.036'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000015
+U 854 | F 218624 | FPS 0106 | D 2284 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 855 | F 218880 | FPS 0099 | D 2287 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 856 | F 219136 | FPS 0094 | D 2290 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.024'] | value_loss ['None', 'nan', '0.020']| State_NN_loss 0.051275
+U 857 | F 219392 | FPS 0106 | D 2292 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000008
+U 858 | F 219648 | FPS 0105 | D 2295 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.031'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0073 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051321
+U 852 | F 218112 | FPS 0100 | D 6 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.046'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0029 | D 8 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051321
+U 852 | F 218112 | FPS 0095 | D 11 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.046'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 853 | F 218368 | FPS 0077 | D 14 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.019'] | value_loss ['None', 'nan', '0.018']| State_NN_loss 0.051409
+U 854 | F 218624 | FPS 0096 | D 17 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 855 | F 218880 | FPS 0098 | D 20 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.022'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 856 | F 219136 | FPS 0098 | D 22 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.024'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN multi_23_10M_1_statenn
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='multi_23_10M_1_statenn', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0067 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051321
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN test_80.pth
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='test_80.pth', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0037 | D 6 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051389
+U 852 | F 218112 | FPS 0081 | D 10 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.046'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN test_80.pth
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='test_80.pth', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0065 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051389
+U 852 | F 218112 | FPS 0090 | D 6 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.049'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 853 | F 218368 | FPS 0091 | D 9 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 854 | F 218624 | FPS 0076 | D 13 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.026'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 855 | F 218880 | FPS 0092 | D 15 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.033'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+U 856 | F 219136 | FPS 0083 | D 18 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', '0.649', '-0.022'] | value_loss ['None', '0.374', '0.000']| State_NN_loss 0.071600
+U 857 | F 219392 | FPS 0095 | D 21 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.020'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN test_80
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='test_80', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0069 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051389
+U 852 | F 218112 | FPS 0084 | D 6 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.049'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007
+U 853 | F 218368 | FPS 0085 | D 9 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.038'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000000
+/home/rlsa/abl/RLABL1/scripts/multi_train.py --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --model multi_123_10M_1 --save-interval 10 --frames 1000000 --StateNN test_80
+
+Namespace(algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='multi_123_10M_1', seed=1, log_interval=1, save_interval=10, procs=1, frames=1000000, StateNN='test_80', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0001, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+Optimizer loaded
+
+Optimizer loaded
+
+U 851 | F 217856 | FPS 0066 | D 3 | Reward:μσmM 1.00 1.00 0.00 2.00 | policy_loss ['None', 'nan', '0.009'] | value_loss ['None', 'nan', '0.006']| State_NN_loss 0.051389
+U 852 | F 218112 | FPS 0083 | D 6 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '-0.049'] | value_loss ['None', 'None', '0.000']| State_NN_loss 0.000007

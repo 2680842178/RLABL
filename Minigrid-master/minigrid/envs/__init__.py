@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-from minigrid.envs.configworld import ConfigWorldEnv
+from minigrid.envs.configworld import ConfigWorldEnv, ConfigWorldEnvHavingKey
 from minigrid.envs.blockedunlockpickup import BlockedUnlockPickupEnv
 from minigrid.envs.crossing import CrossingEnv
 from minigrid.envs.distshift import DistShiftEnv

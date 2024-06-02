@@ -129,6 +129,9 @@ class MiniGridEnv(gym.Env):
         # Reinitialize episode-specific variables
         self.agent_pos = (-1, -1)
         self.agent_dir = -1
+        
+        # Item picked up, being carried, initially nothing
+        self.carrying = None
 
         # Generate a new random grid at the start of each episode
         self._gen_grid(self.width, self.height)
@@ -144,8 +147,6 @@ class MiniGridEnv(gym.Env):
         start_cell = self.grid.get(*self.agent_pos)
         assert start_cell is None or start_cell.can_overlap()
 
-        # Item picked up, being carried, initially nothing
-        self.carrying = None
 
         # Step count since episode start
         self.step_count = 0
