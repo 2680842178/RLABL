@@ -137,7 +137,7 @@ if __name__ == "__main__":
     StateNN = CNN(5)
     if os.path.exists(StateNN_model_dir):
         t=torch.load(StateNN_model_dir)
-        StateNN.load_state_dict(t)
+        StateNN.load_state_dict(t.state_dict())
     StateNN.to(device)
 
     algos=[]

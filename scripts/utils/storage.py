@@ -28,7 +28,7 @@ def get_StateNN_storage_dir():
     return "StateNN"
 
 def get_StateNN_model_dir(model_name):
-    return os.path.join(get_StateNN_storage_dir(), model_name+".pt")
+    return os.path.join(get_StateNN_storage_dir(), model_name+".pth")
 
 def get_status_path(model_dir):
     return os.path.join(model_dir, "status.pt")

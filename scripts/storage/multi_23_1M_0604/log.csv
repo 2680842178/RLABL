@@ -1,0 +1,6 @@
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,State_NN_loss,return_mean,return_std,return_min,return_max
+1,256,67.32629426733637,3,-0.5,0.5,-1.0,0.0,"['None', 'None', '0.120']","['None', 'None', '0.027']",0.07018754514865577,-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,State_NN_loss,return_mean,return_std,return_min,return_max
+2,512,77.67475172645432,7,-0.5,0.5,-1.0,0.0,"['None', 'None', '0.085']","['None', 'None', '0.024']",0.07147561851888895,-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,State_NN_loss,return_mean,return_std,return_min,return_max
+3,768,75.92623993355352,10,-0.6666666666666666,0.4714045207910317,-1.0,0.0,"['None', 'None', '0.106']","['None', 'None', '0.039']",0.10397204291075468,-1.0,0.0,-1.0,-1.0

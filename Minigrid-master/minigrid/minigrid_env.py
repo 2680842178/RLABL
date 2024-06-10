@@ -549,6 +549,7 @@ class MiniGridEnv(gym.Env):
                 terminated = True
                 reward = self._reward()
                 self.current_state = 3
+                fwd_cell.color = "red"
             if fwd_cell is not None and fwd_cell.type == "lava":
                 terminated = True
                 reward = -1

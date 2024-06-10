@@ -8,6 +8,9 @@ sys.path.append("..")
 import numpy
 import random
 from .abl_trace import abl_trace
+import matplotlib.pyplot as plt
+from torchvision.utils import save_image
+
 
 G = nx.DiGraph()
 # 添加对应的边和点
@@ -82,6 +85,7 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     log_prob_trace=[]
 
     mask=torch.ones(1, device=device)
+    done=0
 
     done_counter=0
     log_return=[0]
@@ -90,35 +94,52 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     log_episode_num_frames = torch.zeros(1, device=device)
 
     # current_state=stateNN(env)
-    current_state=obs_To_state(StateNN,pre_obs,obs)
+    # current_state=obs_To_state(StateNN,pre_obs,obs)
+    env_ini_state=2
+    current_state=env_ini_state
+    state_ini_flag=False
 
     for i in range(num_frames_per_proc):
-        mask_trace.append(mask)
-        preprocessed_obs = preprocess_obss([obs], device=device)
-        obs_trace.append(obs)
 
-        state_trace.append(current_state)
+        preprocessed_obs = preprocess_obss([obs], device=device)
+
+        t=obs_To_state(StateNN, pre_obs, obs)
+        if t==0:
+            current_state=current_state
+        else:
+            current_state = t
+        if state_ini_flag:
+            current_state=env_ini_state
+            state_ini_flag=False
         agent=acmodels[Choose_agent(current_state)]
+
         with torch.no_grad():
             dist, value = agent.acmodel(preprocessed_obs)
         action = dist.sample()
 
-        next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
-
-        # next_state=stateNN(preprocess_obss([next_obs], device=device)).item()
-        t=obs_To_state(StateNN, obs, next_obs)
-        if t==0:
-            next_state=current_state
-        else:
-            next_state = t
-
-        if terminated or truncated:
+        if done:
             env.reset()
+            next_obs=env.gen_obs()
+            reward=0
+            terminated=0
+            truncated=0
+            state_ini_flag=True
+        else:
+            next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
 
+        state_trace.append(current_state)
+        mask_trace.append(mask)
+        obs_trace.append(obs)
+        action_trace.append(action)
+        value_trace.append(value)
+        reward_trace.append(torch.tensor(reward, device=device,dtype=torch.float))
+        log_prob_trace.append(dist.log_prob(action))
+
+#####################################################
         done = terminated|truncated
         mask = 1 - torch.tensor(done, device=device, dtype=torch.float)
+        pre_obs=obs
         obs=next_obs
-        current_state=next_state
 
         episode_reward_return += torch.tensor(reward, device=device, dtype=torch.float)
         log_episode_num_frames += torch.tensor(1, device=device)
@@ -131,10 +152,7 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
         episode_reward_return *= mask
         log_episode_num_frames *= mask
 
-        action_trace.append(action)
-        value_trace.append(value)
-        reward_trace.append(torch.tensor(reward, device=device,dtype=torch.float))
-        log_prob_trace.append(dist.log_prob(action))
+
 
     keep1 = max(done_counter,1)
     log1 = {
@@ -148,7 +166,7 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     print("before abl", state_trace)
 
     # ABL修正state_trace
-    state_list = [2, 3] # 课程路径
+    state_list = [1, 2, 3] # 课程路径
     trace_list=[]
     obs_trace_list=[]
     end_list=[]
@@ -269,7 +287,10 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     image_trace = preprocess_obss(obs_trace, device=device).image
 
     for i in range(len(image_trace)-1, 0, -1):
-        image_trace[i]=image_trace[i]-image_trace[i-1]
+        if mask_trace[i-1].item() == 0:
+            image_trace[i] = image_trace[i] - image_trace[i]
+        else:
+            image_trace[i]=image_trace[i]-image_trace[i-1]
     image_trace[0] = image_trace[0] - image_trace[0]
 
     for i in range(len(state_trace)-1, 0, -1):
@@ -281,6 +302,13 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
                 "img": image_trace,
                 "label": state_trace,
             }
+    for i in range(len(state_trace)):
+        if state_trace[i] == 3:
+            img=image_trace[i].cpu().numpy().astype(numpy.uint8)
+            plt.imsave('trace/{i}.jpg'.format(i=3), img)
+        if state_trace[i] == 4:
+            img = image_trace[i].cpu().numpy().astype(numpy.uint8)
+            plt.imsave('trace/{i}.jpg'.format(i=4), img)
     return exps_list, {**log1, **log2}, statenn_exps
 
 

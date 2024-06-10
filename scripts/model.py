@@ -135,7 +135,7 @@ class CNN(nn.Module):
         x = self.fc_layers(x)
         return x
 
-    def train_cnn(self, images, labels, num_epochs=100, batch_size=32, learning_rate=0.001):
+    def train_cnn(self, images, labels, num_epochs=10, batch_size=32, learning_rate=0.001):
         # Convert lists to PyTorch tensors
         images_tensor = torch.stack([torch.Tensor(img) for img in images])
         images_tensor = images_tensor.permute(0, 3, 1, 2)
