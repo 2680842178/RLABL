@@ -122,9 +122,20 @@ if __name__ == "__main__":
     if "vocab" in status:
         preprocess_obss.vocab.load_vocab(status["vocab"])
     txt_logger.info("Observations preprocessor loaded")
-    agent_num=3
-    acmodels=[]
+
+
     # Load model
+    agent_num=3
+
+    StateNN = CNN(5)
+    if os.path.exists(StateNN_model_dir):
+        print(StateNN_model_dir)
+        t=torch.load(StateNN_model_dir)
+        StateNN.load_state_dict(t)
+        # .state_dict()
+    StateNN.to(device)
+
+    acmodels=[]
     for i in range(agent_num):
         acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         if "model_state" in status:
@@ -134,14 +145,7 @@ if __name__ == "__main__":
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodels[0]))
 
-    StateNN = CNN(5)
-    if os.path.exists(StateNN_model_dir):
-        t=torch.load(StateNN_model_dir)
-        StateNN.load_state_dict(t.state_dict())
-    StateNN.to(device)
-
     algos=[]
-
     for i in range(agent_num):
         # Load algo
         if args.algo == "a2c":
@@ -171,17 +175,14 @@ if __name__ == "__main__":
         # Update model parameters
         update_start_time = time.time()
         envs[0].reset()
-
         #采集数据
         exps_list, logs1,statenn_exps = Mutiagent_collect_experiences(envs[0], algos,StateNN,device,args.frames_per_proc,args.discount, args.gae_lambda, preprocess_obss)
-
         #每个algo更新
         logs2_list=[None]*agent_num
         for i in range(agent_num):
             if len(exps_list[i].obs):
                 logs2=algos[i].update_parameters(exps_list[i])
                 logs2_list[i]=logs2
-
         #更新StateNN
         StateNN.train()
         StateNN.to(device)

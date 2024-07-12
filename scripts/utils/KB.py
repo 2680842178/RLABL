@@ -12,29 +12,10 @@ import matplotlib.pyplot as plt
 from torchvision.utils import save_image
 
 
-G = nx.DiGraph()
-# 添加对应的边和点
-for i in range(5):
-    G.add_node(i, desc='v' + str(i))  # 结点名称不能为str,desc为标签即结点名称
-G.add_edge(0 , 1)  # 添加边， 参数name为边权值
-G.add_edge(0, 4)
-G.add_edge(1, 2)
-G.add_edge(1, 4)
-G.add_edge(2, 3)
-G.add_edge(2, 4)
-
-
 
 def get_state(env):
     return env.Current_state()
 
-def get_fsm():
-    return G
-
-
-# def abl_trace(input_trace,output_trace):
-
-#     return G
 
 def Choose_agent(FSM_id):
     if FSM_id == 0:
@@ -48,31 +29,52 @@ def Choose_agent(FSM_id):
     if FSM_id == 4:
         return 2
 
+def Candidate_state(state):
+    if state == 0:
+        return [0,1,4]
+    if state == 1:
+        return [1,2,4]
+    if state == 2:
+        return [2,3,4]
+    else:
+        return []
 
-def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_proc, discount, gae_lambda, preprocess_obss):
+def sample_from_selected_dimensions(logits, selected_dims):
+    # 创建一个与logits形状相同的mask，其值全部初始化为一个非常小的负数
+    mask = torch.full_like(logits, fill_value=-float('Inf'))
+    # 将选定维度的mask值设置为0，这样softmax后它们的概率不会变成0
+    mask[:, selected_dims] = 0
+    # 应用mask并执行softmax
+    masked_logits = logits + mask
+    probabilities = torch.softmax(masked_logits, dim=1)
+    # 根据概率分布进行采样
+    samples = torch.multinomial(probabilities, num_samples=1)
+    return samples
 
-    def obs_To_state(model,pre_obs,obs):
-        pre_image_data=preprocess_obss([pre_obs], device=device)
-        image_data=preprocess_obss([obs], device=device)
-        input_tensor = image_data.image[0]-pre_image_data.image[0]
-        input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
-        output = model(input_batch)
-        # print(output)
-        with torch.no_grad():
-            _, predicted = torch.max(output, 1)
-        return predicted.item()
-    
-    def pre_obs_softmax(model, obs):
-        image_data=preprocess_obss([obs], device=device)
-        input_tensor = image_data.image[0]
-        input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
-        output = model(input_batch)
-        prob = torch.nn.functional.softmax(output, dim=1).cpu().detach().numpy()[0]
-        # print("prob", prob)
-        return prob
+def obs_To_state(model,pre_obs,obs):
+    pre_image_data=preprocess_obss([pre_obs], device=device)
+    image_data=preprocess_obss([obs], device=device)
+    input_tensor = image_data.image[0]-pre_image_data.image[0]
+    input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
+    output = model(input_batch)
+    # print(output)
+    with torch.no_grad():
+        _, predicted = torch.max(output, 1)
+    return predicted.item(),output
+
+def Mutiagent_collect_experiences(env, algos,StateNN,device,num_frames_per_proc, discount, gae_lambda, preprocess_obss):
+
+    # def pre_obs_softmax(model, obs):
+    #     image_data=preprocess_obss([obs], device=device)
+    #     input_tensor = image_data.image[0]
+    #     input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
+    #     output = model(input_batch)
+    #     prob = torch.nn.functional.softmax(output, dim=1).cpu().detach().numpy()[0]
+    #     # print("prob", prob)
+    #     return prob
 
     StateNN.eval()
-    agent_num=len(acmodels)
+    agent_num=len(algos)
     obs=env.gen_obs()
     pre_obs=obs
 
@@ -93,25 +95,30 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
     episode_reward_return = torch.zeros(1, device=device)
     log_episode_num_frames = torch.zeros(1, device=device)
 
-    # current_state=stateNN(env)
-    # current_state=obs_To_state(StateNN,pre_obs,obs)
-    env_ini_state=2
+
+    env_ini_state=1
     current_state=env_ini_state
     state_ini_flag=False
 
-    for i in range(num_frames_per_proc):
+    for _ in range(num_frames_per_proc):
 
         preprocessed_obs = preprocess_obss([obs], device=device)
 
-        t=obs_To_state(StateNN, pre_obs, obs)
+        t,prob_dist=obs_To_state(StateNN, pre_obs, obs)
+
         if t==0:
             current_state=current_state
         else:
+            candidate_list=Candidate(current_state)
+            t=sample_from_selected_dimensions(prob_dist,candidate_list)
             current_state = t
+
+
+
         if state_ini_flag:
             current_state=env_ini_state
             state_ini_flag=False
-        agent=acmodels[Choose_agent(current_state)]
+        agent=algos[Choose_agent(current_state)]
 
         with torch.no_grad():
             dist, value = agent.acmodel(preprocessed_obs)
@@ -160,47 +167,55 @@ def Mutiagent_collect_experiences(env, acmodels,StateNN,device,num_frames_per_pr
         "num_frames_per_episode": log_num_frames[-keep1:],
         "num_frames": num_frames_per_proc
     }
-    # random_list = random.sample(range(len(state_trace)), 20)
-    # for i in random_list:
-    #     state_trace[i] = 2
-    print("before abl", state_trace)
 
-    # ABL修正state_trace
-    state_list = [1, 2, 3] # 课程路径
-    trace_list=[]
-    obs_trace_list=[]
-    end_list=[]
-    start_index=0
-    for t in range(len(state_trace)):
-        if(mask_trace[t]==0):
-            trace_list.append(state_trace[start_index:t+1])
-            obs_trace_list.append(obs_trace[start_index:t+1])
-            start_index=t+1
-            if reward_trace[t - 1] > 0:
-                end_list.append(3)
-            else:
-                end_list.append(4)
-    last_trace = state_trace[start_index:]
-    last_obs_trace_list = obs_trace[start_index:]
-    for i in range(len(last_trace)):
-        last_trace[i] = 2
-    # def testStateNN(obs):
-    #     return [1, 1, 1, 1, 1, 1]
-    def get_prob(obs):
-        return pre_obs_softmax(StateNN, obs)
-    for m in range(len(trace_list)):
-        _, trace_list[m] = abl_trace(trace_list[m], state_list, end_list[m], obs_trace_list[m], get_prob)
-    # last_trace = abl_trace(last_trace, [0, 1], 1, last_obs_trace_list, get_prob)
-    ### abl over
-    ### abl
-    after_abl_list = trace_list + [last_trace]
-    print("after abl:", after_abl_list)
 
-    state_trace = []
-    for m in range(len(trace_list)):
-        state_trace.extend(trace_list[m])
-    state_trace.extend(last_trace)
-    ###
+    ############################################################
+    # print("before abl", state_trace)
+    #
+    # # ABL修正state_trace
+    # state_list = [1, 2, 3] # 课程路径
+    # trace_list=[]
+    # obs_trace_list=[]
+    # end_list=[]
+    # start_index=0
+    # for t in range(len(state_trace)):
+    #     if(mask_trace[t]==0):
+    #         trace_list.append(state_trace[start_index:t+1])
+    #         obs_trace_list.append(obs_trace[start_index:t+1])
+    #         start_index=t+1
+    #         if reward_trace[t - 1] > 0:
+    #             end_list.append(3)
+    #         else:
+    #             end_list.append(4)
+    # last_trace = state_trace[start_index:]
+    # last_obs_trace_list = obs_trace[start_index:]
+    # # for i in range(len(last_trace)):
+    # #     last_trace[i] = 2
+    # # def testStateNN(obs):
+    # #     return [1, 1, 1, 1, 1, 1]
+    # def get_prob(obs):
+    #     return pre_obs_softmax(StateNN, obs)
+    # for m in range(len(trace_list)):
+    #     _, trace_list[m] = abl_trace(trace_list[m], state_list, end_list[m], obs_trace_list[m], get_prob)
+    # if len(last_trace) > 0:
+    #     last_state_list = []
+    #     for i in state_list:
+    #         if i <= last_trace[-1]:
+    #             last_state_list.append(i)
+    #
+    #     _, last_trace = abl_trace(last_trace, last_state_list, last_trace[-1], last_obs_trace_list, get_prob)
+    #
+    # # last_trace = abl_trace(last_trace, [0, 1], 1, last_obs_trace_list, get_prob)
+    # ### abl over
+    # ### abl
+    # after_abl_list = trace_list + [last_trace]
+    # print("after abl:", after_abl_list)
+    #
+    # state_trace = []
+    # for m in range(len(trace_list)):
+    #     state_trace.extend(trace_list[m])
+    # state_trace.extend(last_trace)
+    #################################################################
 
     for i in range(len(state_trace) - 1):
         if state_trace[i] != state_trace[i + 1]:

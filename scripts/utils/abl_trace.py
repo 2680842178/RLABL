@@ -3,6 +3,9 @@ def abl_trace(trace: list, state_trace: list, end: int, obs_trace: list, StateNN
     min_split = [] # 初始化最小不符合条件的分割情况为空
     max_probability = 0.0
     
+    if len(state_trace) == 1:
+        return 0, trace
+    
     if len(state_trace) >= 4:
         for i in range(1, len(trace) - 2):
             for j in range(i, len(trace) - 1):
