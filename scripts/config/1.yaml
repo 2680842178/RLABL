@@ -1,0 +1,12 @@
+graph:  
+  nodes:
+    - 0
+    - 1
+    - 2
+  # 0 == die, 1 == reward. 
+  edges:
+    - from: 2
+      to: 1
+    - from: 2
+      to: 0
+  start_node: 2

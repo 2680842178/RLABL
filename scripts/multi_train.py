@@ -174,7 +174,7 @@ if __name__ == "__main__":
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
-        envs[0].reset()
+        envs[1].reset()
         #采集数据
         exps_list, logs1,statenn_exps = Mutiagent_collect_experiences(envs[0], algos,StateNN,device,args.frames_per_proc,args.discount, args.gae_lambda, preprocess_obss)
         #每个algo更新
