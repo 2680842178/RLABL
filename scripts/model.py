@@ -3,6 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions.categorical import Categorical
 import torch_ac
+from torch import Tensor
+from torch.distributions.normal import Normal
+import math
 
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
@@ -17,12 +20,12 @@ def init_params(m):
 
 
 class ACModel(nn.Module, torch_ac.ACModel):
-    def __init__(self, obs_space, action_space,use_memory=False, use_text=False):
+    def __init__(self, obs_space, action_space, use_memory=False, use_text=False):
         super().__init__()
 
         # Decide which components are enabled
         self.use_text = use_text
-        self.use_memory=use_memory
+        self.use_memory = use_memory
 
         # Define image embedding
         self.image_conv = nn.Sequential(
@@ -78,7 +81,7 @@ class ACModel(nn.Module, torch_ac.ACModel):
 
     @property
     def memory_size(self):
-        return 2*self.semi_memory_size
+        return 2 * self.semi_memory_size
 
     @property
     def semi_memory_size(self):
@@ -88,7 +91,6 @@ class ACModel(nn.Module, torch_ac.ACModel):
         x = obs.image.transpose(1, 3).transpose(2, 3)
         x = self.image_conv(x)
         x = x.reshape(x.shape[0], -1)
-
 
         embedding = x
 
@@ -107,6 +109,23 @@ class ACModel(nn.Module, torch_ac.ACModel):
     def _get_embed_text(self, text):
         _, hidden = self.text_rnn(self.word_embedding(text))
         return hidden[-1]
+
+
+class QNet(ACModel):
+    def forward(self, obs):
+        x = obs.image.transpose(1, 3).transpose(2, 3)
+        x = self.image_conv(x)
+        x = x.reshape(x.shape[0], -1)
+
+        embedding = x
+
+        if self.use_text:
+            embed_text = self._get_embed_text(obs.text)
+            embedding = torch.cat((embedding, embed_text), dim=1)
+
+        x = self.actor(embedding)
+
+        return x
 
 class CNN(nn.Module):
     def __init__(self, num_classes):
