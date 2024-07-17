@@ -3,7 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/torch-ac" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/trace/lamda1_serve/RLABL" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/trace/lamda1_serve/RLABL1" vcs="Git" />
   </component>
 </project>
