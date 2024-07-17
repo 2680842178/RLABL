@@ -62,7 +62,14 @@ def obs_To_state(model,pre_obs,obs):
         _, predicted = torch.max(output, 1)
     return predicted.item(),output
 
-def Mutiagent_collect_experiences(env, algos,StateNN,device,num_frames_per_proc, discount, gae_lambda, preprocess_obss):
+def Mutiagent_collect_experiences(env, 
+                                G: nx.DiGraph,
+                                init_state: int,
+                                device,
+                                num_frames_per_proc,
+                                discount, 
+                                gae_lambda, 
+                                preprocess_obss):
 
     # def pre_obs_softmax(model, obs):
     #     image_data=preprocess_obss([obs], device=device)
@@ -72,9 +79,8 @@ def Mutiagent_collect_experiences(env, algos,StateNN,device,num_frames_per_proc,
     #     prob = torch.nn.functional.softmax(output, dim=1).cpu().detach().numpy()[0]
     #     # print("prob", prob)
     #     return prob
-
-    StateNN.eval()
-    agent_num=len(algos)
+    current_state = init_state 
+    agent_num = len(G.nodes) - 2
     obs=env.gen_obs()
     pre_obs=obs
 

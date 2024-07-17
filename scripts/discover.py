@@ -15,6 +15,8 @@ from model import ACModel,CNN
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
                     help="the task config to use, including the graph(knowledge)")
+parser.add_argument("--discover", required=True,
+                    help="if this task need to discover new state")
 parser.add_argument("--algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
 parser.add_argument("--env", required=True,
@@ -66,6 +68,8 @@ parser.add_argument("--text", action="store_true", default=False,
 
 
 G = nx.DiGraph()
+args = parser.parse_args()
+test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
 
 class stateNode():
     def __init__(self, 
@@ -92,105 +96,95 @@ def obs_To_mutation(pre_obs, obs):
     input_tensor = image_data.image[0]-pre_image_data.image[0]
     input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
     return input_batch
+
+def train(env, status, num_frames: int = 0):
+    num_frames = status["num_frames"]
+    update = status["update"]
+    start_time = time.time()
     
-def main():
-    args = parser.parse_args()
-    test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
+    while num_frames < args.frames:
+        update_start_time = time.time()
+        env.reset()
+        exps_list, logs1, statenn_exps = Mutiagent_collect_experiences()
+
+def test(env, 
+            start_node: int, 
+            episodes: int = 1,
+            max_steps_per_episode: int = 256) -> Tuple[int, Env]:
+    mutation_buffer = []
+    for (node, stateNode) in G.nodes(data=True):
+        if stateNode.agent is not None:
+            mutation_buffer.append({node, stateNode.mutation})
     
-    def test(env, 
-             G: nx.DiGraph, 
-             start_node: int, 
-             episodes: int = 1,
-             max_steps_per_episode: int = 256) -> Tuple[int, Env]:
-        mutation_buffer = []
-        for (node, stateNode) in G.nodes(data=True):
-            if stateNode.agent is not None:
-                mutation_buffer.append({node, stateNode.mutation})
-        
-        log_done_counter = 0
-        log_episode_return = torch.zeros(args.procs, device=device)
-        log_episode_num_frames = torch.zeros(args.procs, device=device) 
-        
-        current_state = start_node
-        obss = env.reset()
-        pre_obss = obss
-        stop_env = env
-        stop_obss = obss
+    log_done_counter = 0
+    log_episode_return = torch.zeros(args.procs, device=device)
+    log_episode_num_frames = torch.zeros(args.procs, device=device) 
     
-        for _ in range(episodes):
-            step_count = 0
-            while step_count < max_steps_per_episode:
-                mutation = obs_To_mutation([pre_obss], [obss]) 
-                for node_num, node_mutation in mutation_buffer:
-                    if contrast(node_mutation, mutation):
-                        current_state = node_num
-                        stop_env = env
-                        stop_obss = obss
-                        break
-                actions = G.nodes[current_state]['agent'].get_actions(obss)
-                obss, rewards, terminateds, truncateds, _ = env.step(actions)
-                if rewards > 0:
-                    print("successful test.")
-                
-                step_count += 1
-                dones = tuple(a | b for a, b in zip(terminateds, truncateds))
-                G.nodes[current_state]['agent'].analyze_feedbacks(rewards, dones)
-                
-                log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
-                log_episode_num_frames += torch.ones(args.procs, device=device)
-                
-                for i, done in enumerate(dones):
-                    if done: 
-                        log_done_counter += 1
-                        test_logs["return_per_episode"].append(log_episode_return[i].item())
-                        test_logs["num_frames_per_episode"].append(log_episode_num_frames[i].item())
-        return_per_episode = utils.synthesize(test_logs["return_per_episode"])
-        if return_per_episode["mean"] > 0:
-            print("successful test!")
-            return 0, None
-        else:
-            print("unsuccessful test, last state: ", current_state)
-            return current_state, stop_env, stop_obss
-        
-    def random_discover(env,
-                        start_obss, 
-                        G: nx.DiGraph, 
-                        start_node: int, 
-                        initial_state: bool = True,
-                        steps: int = 2e8):
-        known_mutation_buffer = []
-        self_mutation_buffer = []
-        for (node, stateNode) in G.nodes(data=True):
-            if stateNode.agent is not None:
-                known_mutation_buffer.append({node, stateNode.mutation})
-        pre_obss = start_obss   
-        obss = start_obss
-        for _ in steps:
-            action = env.action_space.sample()  
-            pre_obss = obss
-            obss, rewards, terminateds, truncateds, _ = env.step(action)
-            
-            mutation = obs_To_mutation([pre_obss], [obss])
-            ##### find the new state and its next state.
-            if anomaly_detection(mutation) > 0.5:
-                self_mutation_buffer.append({mutation, anomaly_detection(mutation)})
-            for node_num, node_mutation in known_mutation_buffer:
+    current_state = start_node
+    obss = env.reset()
+    pre_obss = obss
+    stop_env = env
+    stop_obss = obss
+
+    for _ in range(episodes):
+        step_count = 0
+        while step_count < max_steps_per_episode:
+            mutation = obs_To_mutation([pre_obss], [obss]) 
+            for node_num, node_mutation in mutation_buffer:
                 if contrast(node_mutation, mutation):
-                    G.add_node(len(G.nodes), stateNode(len(G.nodes), mutation))
-                    if initial_state:
-                        if self_mutation_buffer is not None:
-                            G.nodes[start_node]['mutation'] = self_mutation_buffer[0]
-                        else:
-                            G.add_edge(start_node, node_num)
-                    else:
-                        for successor in G.successors(start_node):
-                            if successor.node_num != 0:
-                                G.remove_edge(start_node, successor)
-                        G.add_edge(start_node, len(G.nodes) - 1)
-                        G.add_edge(len(G.nodes) - 1, node_num)
-                    break 
+                    current_state = node_num
+                    stop_env = env
+                    stop_obss = obss
+                    break
+            actions = G.nodes[current_state]['agent'].get_actions(obss)
+            obss, rewards, terminateds, truncateds, _ = env.step(actions)
             if rewards > 0:
-                G.add_node(len(G.nodes), stateNode(len(G.nodes), mutation)) 
+                print("successful test.")
+            
+            step_count += 1
+            dones = tuple(a | b for a, b in zip(terminateds, truncateds))
+            G.nodes[current_state]['agent'].analyze_feedbacks(rewards, dones)
+            
+            log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
+            log_episode_num_frames += torch.ones(args.procs, device=device)
+            
+            for i, done in enumerate(dones):
+                if done: 
+                    log_done_counter += 1
+                    test_logs["return_per_episode"].append(log_episode_return[i].item())
+                    test_logs["num_frames_per_episode"].append(log_episode_num_frames[i].item())
+    return_per_episode = utils.synthesize(test_logs["return_per_episode"])
+    if return_per_episode["mean"] > 0:
+        print("successful test!")
+        return 0, None
+    else:
+        print("unsuccessful test, last state: ", current_state)
+        return current_state, stop_env, stop_obss
+
+def random_discover(env,
+                    start_obss, 
+                    start_node: int, 
+                    initial_state: bool = True,
+                    steps: int = 2e8):
+    known_mutation_buffer = []
+    self_mutation_buffer = []
+    for (node, stateNode) in G.nodes(data=True):
+        if stateNode.agent is not None:
+            known_mutation_buffer.append({node, stateNode.mutation})
+    pre_obss = start_obss   
+    obss = start_obss
+    for _ in steps:
+        action = env.action_space.sample()  
+        pre_obss = obss
+        obss, rewards, terminateds, truncateds, _ = env.step(action)
+        
+        mutation = obs_To_mutation([pre_obss], [obss])
+        ##### find the new state and its next state.
+        if anomaly_detection(mutation) > 0.5:
+            self_mutation_buffer.append({mutation, anomaly_detection(mutation)})
+        for node_num, node_mutation in known_mutation_buffer:
+            if contrast(node_mutation, mutation):
+                G.add_node(len(G.nodes), stateNode(len(G.nodes), mutation))
                 if initial_state:
                     if self_mutation_buffer is not None:
                         G.nodes[start_node]['mutation'] = self_mutation_buffer[0]
@@ -202,11 +196,26 @@ def main():
                             G.remove_edge(start_node, successor)
                     G.add_edge(start_node, len(G.nodes) - 1)
                     G.add_edge(len(G.nodes) - 1, node_num)
-            
-        # return stop state, stop env
-
+                break 
+        if rewards > 0:
+            G.add_node(len(G.nodes), stateNode(len(G.nodes), mutation)) 
+            if initial_state:
+                G.add_edge(start_node, node_num)
+            else:
+                for successor in G.successors(start_node):
+                    if successor.node_num != 0:
+                        G.remove_edge(start_node, successor)
+                G.add_edge(start_node, len(G.nodes) - 1)
+                G.add_edge(len(G.nodes) - 1, 1)
+                break
+        if terminateds:
+            G.add_node(len(G.nodes), stateNode(len(G.nodes), mutation))
+            G.add_edge(len(G.nodes) - 1, 0)
+        
+    return None
     # return stop state, stop env
     
+def main():
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
     default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
 
@@ -296,13 +305,12 @@ def main():
         G.add_edge(edge["from"], edge["to"])
     start_node = task_config['start_node'] 
     
-    # init the env
-    # init the agents
-    
-    # get the last state (test)
-    stop_state, stop_env, stop_obss = test(envs[0], G, start_node, 1, 128)
-    
-    
+    if args.discover:
+        stop_state, stop_env, stop_obss = test(envs[0], G, start_node, 1, 128)
+        random_discover(stop_env, stop_obss, stop_state)
+        train()    
+    else:
+        train()
     
     
     # random discover, save the changes.
