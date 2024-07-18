@@ -10,3 +10,6 @@ graph:
     - from: 2
       to: 0
   start_node: 2
+
+initial_image: ./initial_images/1.png
+agent_num: 1

@@ -1,4 +1,0 @@
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,State_NN_loss,return_mean,return_std,return_min,return_max
-1,256,24.005055240440154,10,1.2857142857142858,1.1605769149479943,-1.0,2.0,"['None', '-2.222', '0.457']","['None', '5.312', '0.280']",0.13225277769379318,-1.0,0.0,-1.0,-1.0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,State_NN_loss,return_mean,return_std,return_min,return_max
-1,256,25.02994581042488,10,1.2857142857142858,1.1605769149479943,-1.0,2.0,"['None', '-2.328', '0.453']","['None', '5.616', '0.280']",0.15350212063640356,-1.0,0.0,-1.0,-1.0
