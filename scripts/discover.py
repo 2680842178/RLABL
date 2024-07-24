@@ -474,7 +474,7 @@ def main():
             loss_list = [None] * (agent_num + 2)
             q_value_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(agent_num):
+            for i in range(agent_num + 2):
                 if len(exps_list[i].obs):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
