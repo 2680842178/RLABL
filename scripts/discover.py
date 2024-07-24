@@ -11,9 +11,10 @@ from PIL import Image
 import cv2
 from sklearn.metrics.pairwise import cosine_similarity
 
+from scripts import utils
 from utils import *
 from utils import device
-from model import ACModel, CNN
+from model import ACModel, CNN, QNet
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -68,6 +69,10 @@ parser.add_argument("--recurrence", type=int, default=1,
                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
+parser.add_argument("--buffer-size", type=int, default=10000,
+                    help="buffer size for dqn")
+parser.add_argument("--target-update", type=int, default=10,
+                    help="frequency to update target net")
 
 
 G = nx.DiGraph()
@@ -242,7 +247,7 @@ def main():
         G.add_edge(edge["from"], edge["to"])
     start_node = task_config['graph']['start_node'] 
     nx.draw(G, with_labels=True)
-    plt.show()
+    # plt.show()
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
     default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
 
@@ -302,7 +307,10 @@ def main():
     agent_num = task_config['agent_num']
     acmodels=[]
     for i in range(agent_num):
-        acmodel = ACModel(obs_space, envs[0].action_space, args.text)
+        if args.algo == "a2c" or args.algo == "ppo":
+            acmodel = ACModel(obs_space, envs[0].action_space, args.text)
+        elif args.algo == "dqn":
+            acmodel = QNet(obs_space, envs[0].action_space, args.text)
         if "model_state" in status:
             acmodel.load_state_dict(status["model_state"][i])
         acmodel.to(device)
@@ -399,7 +407,7 @@ def main():
         #yaml.dump(new_yaml, open(new_yaml_name, 'w'))
         
     nx.draw(G, with_labels=True)
-    plt.show()
+    # plt.show()
     
     # train the model.
     num_frames = status["num_frames"]
@@ -426,15 +434,13 @@ def main():
                                                                        preprocess_obss=preprocess_obss)
         elif args.algo == "dqn":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0], 
-                                                                           algos=algo, 
+                                                                           algos=algos,
                                                                            contrast=contrast, 
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
                                                                            anomalyNN=AnomalyNN,
-                                                                       num_frames_per_proc=args.frames_per_proc, 
-                                                                       discount=args.discount,
-                                                                       gae_lambda=args.gae_lambda, 
+                                                                       num_frames_per_proc=args.frames_per_proc,
                                                                        preprocess_obss=preprocess_obss,
                                                                        epsilon=epsilon)
         # #每个algo更新

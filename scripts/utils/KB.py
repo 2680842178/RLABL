@@ -364,6 +364,7 @@ def Mutiagent_collect_experiences_q(env,
     action_trace=[]
     q_value_trace=[]
     reward_trace=[]
+    next_obs_trace = []
 
     mask=torch.ones(1, device=device)
     done=0
@@ -391,7 +392,8 @@ def Mutiagent_collect_experiences_q(env,
         #     candidate_list=Candidate(current_state)
         #     t=sample_from_selected_dimensions(prob_dist,candidate_list)
         #     current_state = t
-        current_state = obs_To_state(current_state, 
+        current_state = obs_To_state(current_state,
+                                     preprocess_obss,
                                      anomalyNN, 
                                      contrast, 
                                      G, 
@@ -403,14 +405,14 @@ def Mutiagent_collect_experiences_q(env,
         if state_ini_flag:
             current_state=env_ini_state
             state_ini_flag=False
-        agent = G.nodes[current_state]['agent']
+        agent = G.nodes[current_state]['state'].agent
 
         with torch.no_grad():
             q_values = agent.acmodel(preprocessed_obs)
         if random.random() < epsilon:
             action = torch.tensor([random.choice(range(env.action_space.n))], device=device)
         else:
-            action = q_values.argmax(dim=1) 
+            action = q_values.argmax(dim=1)
 
         if done:
             if reward > 0:
@@ -432,6 +434,7 @@ def Mutiagent_collect_experiences_q(env,
         action_trace.append(action)
         q_value_trace.append(q_values)
         reward_trace.append(torch.tensor(reward, device=device,dtype=torch.float))
+        next_obs_trace.append(next_obs)
 
 #####################################################
         done = terminated|truncated
@@ -465,12 +468,6 @@ def Mutiagent_collect_experiences_q(env,
             if reward_trace[i] == 0 and state_trace[i] != 0 and state_trace[i] != 1:
                 reward_trace[i] = torch.tensor(3, device=device, dtype=torch.float)
 
-    advantage_trace=[0]*len(action_trace)
-    for i in reversed(range(num_frames_per_proc)):
-        next_mask = mask_trace[i + 1] if i < num_frames_per_proc - 1 else mask
-        next_q_value = q_value_trace[i + 1] if i < num_frames_per_proc - 1 else q_value_trace[i]
-        next_advantage = advantage_trace[i + 1] if i < num_frames_per_proc - 1 else 0
-
     # print("After abl", state_trace)
     exps_list=[]
 
@@ -479,9 +476,8 @@ def Mutiagent_collect_experiences_q(env,
         exps.obs=[]
         exps.action=[]
         exps.reward=[]
-        exps.value=[]
-        exps.advantage=[]
-        exps.log_prob=[]
+        exps.mask = []
+        exps.obs_ = []
         exps_list.append(exps)
 
     # print(state_trace)
@@ -496,6 +492,7 @@ def Mutiagent_collect_experiences_q(env,
                 exps_list[id].action.extend(action_trace[start_index:i+1])
                 exps_list[id].reward.extend(reward_trace[start_index:i+1])
                 exps_list[id].mask.extend(mask_trace[start_index:i + 1])
+                exps_list[id].obs_.extend(next_obs_trace[start_index:i + 1])
             start_index=i+1
     if start_index<len(state_trace)-2:
         id = state_trace[start_index]
@@ -503,6 +500,7 @@ def Mutiagent_collect_experiences_q(env,
         exps_list[id].action.extend(action_trace[start_index:])
         exps_list[id].reward.extend(reward_trace[start_index:])
         exps_list[id].mask.extend(mask_trace[start_index:])
+        exps_list[id].obs_.extend(next_obs_trace[start_index:])
 
     for i in range(agent_num):
         exp_len=len(exps_list[i].obs)
@@ -511,6 +509,7 @@ def Mutiagent_collect_experiences_q(env,
             exps_list[i].action = torch.tensor(exps_list[i].action, device=device, dtype=torch.int)
             exps_list[i].reward = torch.tensor(exps_list[i].reward, device=device)
             exps_list[i].mask = torch.tensor(exps_list[i].mask, device=device)
+            exps_list[i].obs_ = preprocess_obss(exps_list[i].obs_, device=device)
     # print([int(i.item()) for i in reward_trace])
     log_reshaped_return=[0]
     log_done_counter=0
