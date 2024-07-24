@@ -56,7 +56,6 @@ class PPOAlgo(BaseAlgo):
                 for i in range(self.recurrence):
                     # Create a sub-batch of experience
                     sb = exps[inds]
-
                     # Compute loss
 
                     if self.acmodel.recurrent:

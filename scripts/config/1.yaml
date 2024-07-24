@@ -11,5 +11,5 @@ graph:
       to: 0
   start_node: 2
 
-initial_image: ./initial_images/1.png
+initial_image: ./config/initial_images/1.jpg
 agent_num: 1
