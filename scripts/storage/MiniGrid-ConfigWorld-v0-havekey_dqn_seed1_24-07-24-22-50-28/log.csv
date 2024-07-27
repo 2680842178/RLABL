@@ -1,0 +1,32 @@
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+1,256,66.00967907524884,3,-0.6666666666666666,0.4714045207910317,-1.0,0.0,"['None', 'None', '2314459648.000']","['None', 'None', '794281.250']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+2,512,90.8946158741005,6,-0.5,0.5,-1.0,0.0,"['None', 'None', '90266845184.000']","['None', 'None', '35106912.000']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+3,768,106.92721594462985,9,-0.8,0.4,-1.0,0.0,"['None', 'None', '42810159104.000']","['None', 'None', '37850844.000']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+4,1024,92.67615240382408,11,-0.6666666666666666,0.4714045207910317,-1.0,0.0,"['None', 'None', '24374154.000']","['None', 'None', '1361243.625']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+5,1280,105.62302655582305,14,-0.5,0.5,-1.0,0.0,"['None', 'None', '3298952.500']","['None', 'None', '116993.445']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+6,1536,73.84326855799486,17,-0.9090909090909091,0.28747978728803447,-1.0,0.0,"['None', 'None', '337235.281']","['None', 'None', '72698.438']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+7,1792,48.76795754332615,23,-0.6666666666666666,0.4714045207910317,-1.0,0.0,"['None', 'None', '1163794.250']","['None', 'None', '83195.094']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+8,2048,59.97041998994221,27,-0.75,0.4330127018922193,-1.0,0.0,"['None', 'None', '37984248.000']","['None', 'None', '832548.688']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+9,2304,57.12425779130268,31,-0.75,0.4330127018922193,-1.0,0.0,"['None', 'None', '12489.011']","['None', 'None', '15631.101']",-1.0,0.0,-1.0,-1.0
+update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,loss,q_value,return_mean,return_std,return_min,return_max
+10,2560,62.005007097642334,35,-0.6666666666666666,0.4714045207910317,-1.0,0.0,"['None', 'None', '222.296']","['None', 'None', '1487.798']",-1.0,0.0,-1.0,-1.0
+11,2816,55.812866545182985,40,-0.9523809523809523,0.21295885499997996,-1.0,0.0,"['None', 'None', '500776.250']","['None', 'None', '104651.945']",-1.0,0.0,-1.0,-1.0
+12,3072,57.257924397100794,45,-0.8,0.4,-1.0,0.0,"['None', 'None', '16967.594']","['None', 'None', '3630.914']",-1.0,0.0,-1.0,-1.0
+13,3328,51.41455501471102,50,-0.75,0.4330127018922193,-1.0,0.0,"['None', 'None', '515170.875']","['None', 'None', '112835.719']",-1.0,0.0,-1.0,-1.0
+14,3584,53.071976379367854,55,0.0,0.0,0.0,0.0,"['None', 'None', '8340.395']","['None', 'None', '2784.160']",0.0,0.0,0,0
+15,3840,56.78040835458616,59,-0.6666666666666666,0.4714045207910317,-1.0,0.0,"['None', 'None', '3276.945']","['None', 'None', '9926.863']",-1.0,0.0,-1.0,-1.0
+16,4096,51.60251721278445,64,0.0,0.0,0.0,0.0,"['None', 'None', '256.582']","['None', 'None', '1264.067']",0.0,0.0,0,0
+17,4352,52.2689000427014,69,-0.8333333333333334,0.37267799624996495,-1.0,0.0,"['None', 'None', '4073.451']","['None', 'None', '3658.937']",-1.0,0.0,-1.0,-1.0
+18,4608,52.29881140639552,74,-0.8,0.4,-1.0,0.0,"['None', 'None', '623.841']","['None', 'None', '3817.327']",-1.0,0.0,-1.0,-1.0
+19,4864,47.725689626465126,79,-0.5,0.5,-1.0,0.0,"['None', 'None', '438.172']","['None', 'None', '2667.535']",-1.0,0.0,-1.0,-1.0
+20,5120,49.083336803667855,84,-0.5,0.5,-1.0,0.0,"['None', 'None', '166.184']","['None', 'None', '2601.813']",-1.0,0.0,-1.0,-1.0
+21,5376,51.39818852017804,90,-0.8,0.4,-1.0,0.0,"['None', 'None', '50566.848']","['None', 'None', '6955.930']",-1.0,0.0,-1.0,-1.0
+22,5632,49.696103939261384,95,-0.5,0.5,-1.0,0.0,"['None', 'None', '4497.797']","['None', 'None', '9053.863']",-1.0,0.0,-1.0,-1.0

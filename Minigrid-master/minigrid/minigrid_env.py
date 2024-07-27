@@ -568,11 +568,12 @@ class MiniGridEnv(gym.Env):
 
         # Drop an object
         elif action == self.actions.drop:
-            if not fwd_cell and self.carrying:
-                self.grid.set(fwd_pos[0], fwd_pos[1], self.carrying)
-                self.carrying.cur_pos = fwd_pos
-                self.carrying = None
-                self.grid.set(0, 0, None)
+            pass
+            # if not fwd_cell and self.carrying:
+                # self.grid.set(fwd_pos[0], fwd_pos[1], self.carrying)
+                # self.carrying.cur_pos = fwd_pos
+                # self.carrying = None
+                # self.grid.set(0, 0, None)
 
         # Toggle/activate an object
         elif action == self.actions.toggle:

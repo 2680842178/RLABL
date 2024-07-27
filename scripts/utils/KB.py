@@ -38,7 +38,8 @@ def obs_To_state(current_state,
     image_data=preprocess_obss([obs], device=device)
     input_tensor = image_data.image[0]-pre_image_data.image[0]
     input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
-    if anomalyNN(input_batch)[0] >= anomalyNN(input_batch)[1]:
+    # print(anomalyNN(input_batch))
+    if anomalyNN(input_batch)[0, 0] >= anomalyNN(input_batch)[0, 1]:
         return current_state
     similiarity = []
     for next_state in list(G.successors(current_state)):

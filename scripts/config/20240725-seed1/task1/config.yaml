@@ -1,0 +1,16 @@
+graph:  
+  nodes:
+    - 0
+    - 1
+    - 2
+  # 0 == die, 1 == reward. 
+  edges:
+    - from: 2
+      to: 1
+    - from: 2
+      to: 0
+  start_node: 2
+
+# initial_image: ./config/initial_images/MiniGrid-ConfigWorld-v0-havekey_ppo_seed1_task1.jpg
+initial_image: ./config/initial_images/1.jpg
+agent_num: 1

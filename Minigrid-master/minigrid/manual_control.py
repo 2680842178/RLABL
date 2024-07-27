@@ -9,7 +9,32 @@ from gymnasium import Env
 from minigrid.core.actions import Actions
 from minigrid.minigrid_env import MiniGridEnv
 from minigrid.wrappers import ImgObsWrapper, RGBImgPartialObsWrapper
+import torch_ac
+import numpy
+import torch
+import cv2
+import time
 
+import matplotlib.pyplot as plt
+
+def get_state(env):
+    return env.Current_state()
+
+def preprocess_images(images, device=None):
+    # Bug of Pytorch: very slow if not first converted to numpy array
+    X=[]
+    for i in range(len(images)):
+        # print(images[i]['image'].shape)
+        x = cv2.resize(images[i], (300, 300))
+        X.append(x)
+
+    images = numpy.array(X)
+    return torch.tensor(images, device=device, dtype=torch.float)
+
+def preprocess_obss(obss, device=None):
+            return torch_ac.DictList({
+                "image": preprocess_images(obss, device=device)
+            })
 
 class ManualControl:
     def __init__(
@@ -19,7 +44,11 @@ class ManualControl:
     ) -> None:
         self.env = env
         self.seed = seed
-        self.closed = False
+        self.closed = False 
+        
+        self.last_state_img = None
+        self.current_state_img = None
+        self.current_state = None
 
     def start(self):
         """Start the window display with blocking event loop"""
@@ -35,9 +64,33 @@ class ManualControl:
                     self.key_handler(event)
 
     def step(self, action: Actions):
-        _, reward, terminated, truncated, _ = self.env.step(action)
+        obs, reward, terminated, truncated, _ = self.env.step(action)
         print(f"step={self.env.step_count}, reward={reward:.2f}")
         print(env.carrying)
+        # 如果这个状态和前面状态不一样，那么就是1，2，3，4
+        # 若与前面状态相同，那么就是0
+        if self.current_state != get_state(self.env):
+            self.last_state_img = self.current_state_img
+            self.current_state_img = preprocess_obss([obs['image']], device=None).image
+            self.current_state = get_state(self.env)
+            image = self.current_state_img - self.last_state_img
+            image = numpy.squeeze(image)
+            plt.imshow(image)
+            # plt.show()
+            timestamp = int(time.time())
+            plt.imsave(f"../../test/dataset1/{self.current_state}/image_{timestamp}.png", image.cpu().numpy().astype(numpy.uint8))
+        else:
+            self.last_state_img = self.current_state_img
+            self.current_state_img = preprocess_obss([obs['image']], device=None).image
+            self.current_state = get_state(self.env)
+            image = self.current_state_img - self.last_state_img
+            image = numpy.squeeze(image)
+            print(image.shape)
+            plt.imshow(image)
+            # plt.show()
+            timestamp = int(time.time())
+            print(image.cpu().numpy().astype(numpy.uint8))
+            plt.imsave(f"../../test/dataset1/0/image_{timestamp}.png", image.cpu().numpy().astype(numpy.uint8))
 
         if terminated:
             print("terminated!")
@@ -49,7 +102,10 @@ class ManualControl:
             self.env.render()
 
     def reset(self, seed=None):
-        self.env.reset(seed=seed)
+        obs, _ = self.env.reset(seed=seed)
+        self.last_state_img = preprocess_obss([obs['image']], device=None).image
+        self.current_state_img = preprocess_obss([obs['image']], device=None).image
+        self.current_state = get_state(self.env)
         self.env.render()
 
     def key_handler(self, event):

@@ -191,7 +191,7 @@ class Door(WorldObj):
                 return True
             return False
 
-        self.is_open = not self.is_open
+        # self.is_open = not self.is_open
         return True
 
     def encode(self):

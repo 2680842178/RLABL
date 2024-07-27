@@ -1,0 +1,66 @@
+discover.py --task-config 1 --discover 0 --algo dqn --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0003
+
+Namespace(task_config='1', discover=0, algo='dqn', env='MiniGrid-ConfigWorld-v0-havekey', model=None, seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN=None, epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0003, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+QNet(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 1 | F 000256 | FPS 0066 | D 3 | Reward:μσmM -0.67 0.47 -1.00 0.00 | loss ['None', 'None', '2314459648.000'] | q_value ['None', 'None', '794281.250']
+U 2 | F 000512 | FPS 0091 | D 6 | Reward:μσmM -0.50 0.50 -1.00 0.00 | loss ['None', 'None', '90266845184.000'] | q_value ['None', 'None', '35106912.000']
+U 3 | F 000768 | FPS 0107 | D 9 | Reward:μσmM -0.80 0.40 -1.00 0.00 | loss ['None', 'None', '42810159104.000'] | q_value ['None', 'None', '37850844.000']
+U 4 | F 001024 | FPS 0093 | D 11 | Reward:μσmM -0.67 0.47 -1.00 0.00 | loss ['None', 'None', '24374154.000'] | q_value ['None', 'None', '1361243.625']
+U 5 | F 001280 | FPS 0106 | D 14 | Reward:μσmM -0.50 0.50 -1.00 0.00 | loss ['None', 'None', '3298952.500'] | q_value ['None', 'None', '116993.445']
+U 6 | F 001536 | FPS 0074 | D 17 | Reward:μσmM -0.91 0.29 -1.00 0.00 | loss ['None', 'None', '337235.281'] | q_value ['None', 'None', '72698.438']
+U 7 | F 001792 | FPS 0049 | D 23 | Reward:μσmM -0.67 0.47 -1.00 0.00 | loss ['None', 'None', '1163794.250'] | q_value ['None', 'None', '83195.094']
+U 8 | F 002048 | FPS 0060 | D 27 | Reward:μσmM -0.75 0.43 -1.00 0.00 | loss ['None', 'None', '37984248.000'] | q_value ['None', 'None', '832548.688']
+U 9 | F 002304 | FPS 0057 | D 31 | Reward:μσmM -0.75 0.43 -1.00 0.00 | loss ['None', 'None', '12489.011'] | q_value ['None', 'None', '15631.101']
+U 10 | F 002560 | FPS 0062 | D 35 | Reward:μσmM -0.67 0.47 -1.00 0.00 | loss ['None', 'None', '222.296'] | q_value ['None', 'None', '1487.798']
+Status saved
+U 11 | F 002816 | FPS 0056 | D 40 | Reward:μσmM -0.95 0.21 -1.00 0.00 | loss ['None', 'None', '500776.250'] | q_value ['None', 'None', '104651.945']
+U 12 | F 003072 | FPS 0057 | D 45 | Reward:μσmM -0.80 0.40 -1.00 0.00 | loss ['None', 'None', '16967.594'] | q_value ['None', 'None', '3630.914']
+U 13 | F 003328 | FPS 0051 | D 50 | Reward:μσmM -0.75 0.43 -1.00 0.00 | loss ['None', 'None', '515170.875'] | q_value ['None', 'None', '112835.719']
+U 14 | F 003584 | FPS 0053 | D 55 | Reward:μσmM 0.00 0.00 0.00 0.00 | loss ['None', 'None', '8340.395'] | q_value ['None', 'None', '2784.160']
+U 15 | F 003840 | FPS 0057 | D 59 | Reward:μσmM -0.67 0.47 -1.00 0.00 | loss ['None', 'None', '3276.945'] | q_value ['None', 'None', '9926.863']
+U 16 | F 004096 | FPS 0052 | D 64 | Reward:μσmM 0.00 0.00 0.00 0.00 | loss ['None', 'None', '256.582'] | q_value ['None', 'None', '1264.067']
+U 17 | F 004352 | FPS 0052 | D 69 | Reward:μσmM -0.83 0.37 -1.00 0.00 | loss ['None', 'None', '4073.451'] | q_value ['None', 'None', '3658.937']
+U 18 | F 004608 | FPS 0052 | D 74 | Reward:μσmM -0.80 0.40 -1.00 0.00 | loss ['None', 'None', '623.841'] | q_value ['None', 'None', '3817.327']
+U 19 | F 004864 | FPS 0048 | D 79 | Reward:μσmM -0.50 0.50 -1.00 0.00 | loss ['None', 'None', '438.172'] | q_value ['None', 'None', '2667.535']
+U 20 | F 005120 | FPS 0049 | D 84 | Reward:μσmM -0.50 0.50 -1.00 0.00 | loss ['None', 'None', '166.184'] | q_value ['None', 'None', '2601.813']
+Status saved
+U 21 | F 005376 | FPS 0051 | D 90 | Reward:μσmM -0.80 0.40 -1.00 0.00 | loss ['None', 'None', '50566.848'] | q_value ['None', 'None', '6955.930']
+U 22 | F 005632 | FPS 0050 | D 95 | Reward:μσmM -0.50 0.50 -1.00 0.00 | loss ['None', 'None', '4497.797'] | q_value ['None', 'None', '9053.863']
