@@ -1494,3 +1494,3118 @@ ACModel(
 
 Optimizer loaded
 
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 51 | F 013056 | FPS 0049 | D 5 | Reward:μσmM -0.91 0.29 -1.00 0.00 | policy_loss ['None', 'None', '0.465', 'None'] | value_loss ['None', 'None', '0.279', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 51 | F 013056 | FPS 0048 | D 5 | Reward:μσmM -0.91 0.29 -1.00 0.00 | policy_loss ['None', 'None', '0.495', 'None'] | value_loss ['None', 'None', '0.316', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 51 | F 013056 | FPS 0059 | D 4 | Reward:μσmM 0.33 1.89 -1.00 3.00 | policy_loss ['None', 'None', '-0.194', 'None'] | value_loss ['None', 'None', '0.575', 'None']
+U 52 | F 013312 | FPS 0055 | D 8 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', '0.257', 'None'] | value_loss ['None', 'None', '0.137', 'None']
+U 53 | F 013568 | FPS 0056 | D 13 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.118', 'None'] | value_loss ['None', 'None', '0.088', 'None']
+U 54 | F 013824 | FPS 0056 | D 18 | Reward:μσmM -0.88 0.33 -1.00 0.00 | policy_loss ['None', 'None', '0.286', 'None'] | value_loss ['None', 'None', '0.178', 'None']
+U 55 | F 014080 | FPS 0057 | D 22 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.057', 'None'] | value_loss ['None', 'None', '0.032', 'None']
+U 56 | F 014336 | FPS 0073 | D 26 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '-0.526', 'None'] | value_loss ['None', 'None', '0.600', 'None']
+U 57 | F 014592 | FPS 0058 | D 30 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.275', 'None'] | value_loss ['None', 'None', '0.315', 'None']
+U 58 | F 014848 | FPS 0079 | D 33 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.784', 'None'] | value_loss ['None', 'None', '0.792', 'None']
+U 59 | F 015104 | FPS 0084 | D 36 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-2.254', 'None'] | value_loss ['None', 'None', '3.628', 'None']
+U 60 | F 015360 | FPS 0076 | D 40 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.793', 'None'] | value_loss ['None', 'None', '1.778', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 51 | F 013056 | FPS 0051 | D 5 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '-0.302', 'None'] | value_loss ['None', 'None', '0.431', 'None']
+U 52 | F 013312 | FPS 0055 | D 9 | Reward:μσmM -0.20 1.60 -1.00 3.00 | policy_loss ['None', 'None', '-0.029', 'None'] | value_loss ['None', 'None', '0.377', 'None']
+U 53 | F 013568 | FPS 0057 | D 14 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', '0.160', 'None'] | value_loss ['None', 'None', '0.088', 'None']
+U 54 | F 013824 | FPS 0054 | D 18 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.049', 'None'] | value_loss ['None', 'None', '0.036', 'None']
+U 55 | F 014080 | FPS 0056 | D 23 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.016', 'None'] | value_loss ['None', 'None', '0.020', 'None']
+U 56 | F 014336 | FPS 0054 | D 28 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.031', 'None'] | value_loss ['None', 'None', '0.023', 'None']
+U 57 | F 014592 | FPS 0074 | D 31 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.742', 'None'] | value_loss ['None', 'None', '0.794', 'None']
+U 58 | F 014848 | FPS 0080 | D 34 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.995', 'None'] | value_loss ['None', 'None', '0.898', 'None']
+U 59 | F 015104 | FPS 0082 | D 38 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.369', 'None'] | value_loss ['None', 'None', '1.616', 'None']
+U 60 | F 015360 | FPS 0080 | D 41 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-2.012', 'None'] | value_loss ['None', 'None', '3.687', 'None']
+Status saved
+U 61 | F 015616 | FPS 0085 | D 44 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-3.331', 'None'] | value_loss ['None', 'None', '9.537', 'None']
+U 62 | F 015872 | FPS 0086 | D 47 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-2.353', 'None'] | value_loss ['None', 'None', '5.392', 'None']
+U 63 | F 016128 | FPS 0085 | D 50 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-3.177', 'None'] | value_loss ['None', 'None', '14.427', 'None']
+U 64 | F 016384 | FPS 0080 | D 53 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-3.283', 'None'] | value_loss ['None', 'None', '14.947', 'None']
+U 65 | F 016640 | FPS 0080 | D 56 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.310', 'None'] | value_loss ['None', 'None', '1.448', 'None']
+U 66 | F 016896 | FPS 0089 | D 59 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.884', 'None'] | value_loss ['None', 'None', '5.081', 'None']
+U 67 | F 017152 | FPS 0092 | D 62 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-2.343', 'None'] | value_loss ['None', 'None', '11.333', 'None']
+U 68 | F 017408 | FPS 0092 | D 65 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.486', 'None'] | value_loss ['None', 'None', '0.345', 'None']
+U 69 | F 017664 | FPS 0089 | D 68 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.070', 'None'] | value_loss ['None', 'None', '2.950', 'None']
+U 70 | F 017920 | FPS 0086 | D 71 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.633', 'None'] | value_loss ['None', 'None', '0.275', 'None']
+Status saved
+U 71 | F 018176 | FPS 0077 | D 74 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.368', 'None'] | value_loss ['None', 'None', '0.465', 'None']
+U 72 | F 018432 | FPS 0085 | D 77 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.176', 'None'] | value_loss ['None', 'None', '0.164', 'None']
+U 73 | F 018688 | FPS 0088 | D 80 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.704', 'None'] | value_loss ['None', 'None', '1.244', 'None']
+U 74 | F 018944 | FPS 0092 | D 83 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.212', 'None'] | value_loss ['None', 'None', '0.261', 'None']
+U 75 | F 019200 | FPS 0092 | D 86 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.071', 'None'] | value_loss ['None', 'None', '0.620', 'None']
+U 76 | F 019456 | FPS 0092 | D 89 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.136', 'None'] | value_loss ['None', 'None', '0.013', 'None']
+U 77 | F 019712 | FPS 0091 | D 91 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.263', 'None'] | value_loss ['None', 'None', '0.136', 'None']
+U 78 | F 019968 | FPS 0095 | D 94 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.015', 'None'] | value_loss ['None', 'None', '0.066', 'None']
+U 79 | F 020224 | FPS 0093 | D 97 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.048', 'None'] | value_loss ['None', 'None', '0.299', 'None']
+U 80 | F 020480 | FPS 0087 | D 100 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.484', 'None'] | value_loss ['None', 'None', '0.936', 'None']
+Status saved
+U 81 | F 020736 | FPS 0082 | D 103 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.006', 'None'] | value_loss ['None', 'None', '0.212', 'None']
+U 82 | F 020992 | FPS 0092 | D 106 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.112', 'None'] | value_loss ['None', 'None', '0.079', 'None']
+U 83 | F 021248 | FPS 0090 | D 109 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.270', 'None'] | value_loss ['None', 'None', '0.436', 'None']
+U 84 | F 021504 | FPS 0090 | D 112 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.077', 'None'] | value_loss ['None', 'None', '0.101', 'None']
+U 85 | F 021760 | FPS 0087 | D 114 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.351', 'None'] | value_loss ['None', 'None', '0.064', 'None']
+U 86 | F 022016 | FPS 0091 | D 117 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.166', 'None'] | value_loss ['None', 'None', '0.041', 'None']
+U 87 | F 022272 | FPS 0091 | D 120 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.005', 'None'] | value_loss ['None', 'None', '0.048', 'None']
+U 88 | F 022528 | FPS 0093 | D 123 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.309', 'None'] | value_loss ['None', 'None', '0.257', 'None']
+U 89 | F 022784 | FPS 0090 | D 126 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.422', 'None'] | value_loss ['None', 'None', '0.283', 'None']
+U 90 | F 023040 | FPS 0084 | D 129 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.094', 'None'] | value_loss ['None', 'None', '1.439', 'None']
+Status saved
+U 91 | F 023296 | FPS 0087 | D 132 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.512', 'None'] | value_loss ['None', 'None', '0.414', 'None']
+U 92 | F 023552 | FPS 0087 | D 135 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.182', 'None'] | value_loss ['None', 'None', '0.073', 'None']
+U 93 | F 023808 | FPS 0089 | D 138 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.295', 'None'] | value_loss ['None', 'None', '0.062', 'None']
+U 94 | F 024064 | FPS 0088 | D 141 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.090', 'None'] | value_loss ['None', 'None', '0.014', 'None']
+U 95 | F 024320 | FPS 0088 | D 143 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.131', 'None'] | value_loss ['None', 'None', '0.090', 'None']
+U 96 | F 024576 | FPS 0080 | D 147 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.220', 'None'] | value_loss ['None', 'None', '0.063', 'None']
+U 97 | F 024832 | FPS 0085 | D 150 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.001', 'None'] | value_loss ['None', 'None', '0.059', 'None']
+U 98 | F 025088 | FPS 0085 | D 153 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.298', 'None'] | value_loss ['None', 'None', '0.093', 'None']
+U 99 | F 025344 | FPS 0093 | D 155 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.318', 'None'] | value_loss ['None', 'None', '0.135', 'None']
+U 100 | F 025600 | FPS 0092 | D 158 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.236', 'None'] | value_loss ['None', 'None', '0.142', 'None']
+Status saved
+U 101 | F 025856 | FPS 0086 | D 161 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.053', 'None'] | value_loss ['None', 'None', '0.009', 'None']
+U 102 | F 026112 | FPS 0089 | D 164 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.223', 'None'] | value_loss ['None', 'None', '0.073', 'None']
+U 103 | F 026368 | FPS 0089 | D 167 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.160', 'None'] | value_loss ['None', 'None', '0.048', 'None']
+U 104 | F 026624 | FPS 0088 | D 170 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.187', 'None'] | value_loss ['None', 'None', '0.073', 'None']
+U 105 | F 026880 | FPS 0085 | D 173 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.124', 'None'] | value_loss ['None', 'None', '0.039', 'None']
+U 106 | F 027136 | FPS 0085 | D 176 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.051', 'None'] | value_loss ['None', 'None', '0.010', 'None']
+U 107 | F 027392 | FPS 0090 | D 179 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.153', 'None'] | value_loss ['None', 'None', '0.024', 'None']
+U 108 | F 027648 | FPS 0092 | D 182 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.015', 'None'] | value_loss ['None', 'None', '0.047', 'None']
+U 109 | F 027904 | FPS 0092 | D 185 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.161', 'None'] | value_loss ['None', 'None', '0.068', 'None']
+U 110 | F 028160 | FPS 0089 | D 187 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.076', 'None'] | value_loss ['None', 'None', '0.097', 'None']
+Status saved
+U 111 | F 028416 | FPS 0086 | D 191 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.248', 'None'] | value_loss ['None', 'None', '0.184', 'None']
+U 112 | F 028672 | FPS 0086 | D 194 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.002', 'None'] | value_loss ['None', 'None', '0.100', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 111 | F 028416 | FPS 0069 | D 3 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.272', 'None'] | value_loss ['None', 'None', '0.042', 'None']
+U 112 | F 028672 | FPS 0089 | D 6 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.091', 'None'] | value_loss ['None', 'None', '0.055', 'None']
+U 113 | F 028928 | FPS 0084 | D 9 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.366', 'None'] | value_loss ['None', 'None', '0.625', 'None']
+U 114 | F 029184 | FPS 0055 | D 14 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '2.394', 'None'] | value_loss ['None', 'None', '4.965', 'None']
+U 115 | F 029440 | FPS 0055 | D 18 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '2.322', 'None'] | value_loss ['None', 'None', '4.666', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99 --seed 42
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=42, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 111 | F 028416 | FPS 0073 | D 3 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.272', 'None'] | value_loss ['None', 'None', '0.042', 'None']
+U 112 | F 028672 | FPS 0086 | D 6 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.091', 'None'] | value_loss ['None', 'None', '0.030', 'None']
+U 113 | F 028928 | FPS 0088 | D 9 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.476', 'None'] | value_loss ['None', 'None', '0.588', 'None']
+U 114 | F 029184 | FPS 0056 | D 14 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '2.342', 'None'] | value_loss ['None', 'None', '4.730', 'None']
+U 115 | F 029440 | FPS 0057 | D 18 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '2.243', 'None'] | value_loss ['None', 'None', '4.307', 'None']
+U 116 | F 029696 | FPS 0051 | D 23 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '2.347', 'None'] | value_loss ['None', 'None', '6.478', 'None']
+U 117 | F 029952 | FPS 0060 | D 27 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '1.898', 'None'] | value_loss ['None', 'None', '6.846', 'None']
+U 118 | F 030208 | FPS 0059 | D 32 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '1.546', 'None'] | value_loss ['None', 'None', '2.380', 'None']
+U 119 | F 030464 | FPS 0056 | D 36 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '1.278', 'None'] | value_loss ['None', 'None', '2.021', 'None']
+U 120 | F 030720 | FPS 0057 | D 41 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '1.661', 'None'] | value_loss ['None', 'None', '3.545', 'None']
+Status saved
+U 121 | F 030976 | FPS 0058 | D 45 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '1.207', 'None'] | value_loss ['None', 'None', '3.504', 'None']
+U 122 | F 031232 | FPS 0087 | D 48 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.428', 'None'] | value_loss ['None', 'None', '6.660', 'None']
+U 123 | F 031488 | FPS 0085 | D 51 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-3.236', 'None'] | value_loss ['None', 'None', '10.497', 'None']
+U 124 | F 031744 | FPS 0089 | D 54 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.539', 'None'] | value_loss ['None', 'None', '5.672', 'None']
+U 125 | F 032000 | FPS 0085 | D 57 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.542', 'None'] | value_loss ['None', 'None', '12.474', 'None']
+U 126 | F 032256 | FPS 0085 | D 60 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.161', 'None'] | value_loss ['None', 'None', '2.211', 'None']
+U 127 | F 032512 | FPS 0081 | D 63 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.783', 'None'] | value_loss ['None', 'None', '1.461', 'None']
+U 128 | F 032768 | FPS 0084 | D 66 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.234', 'None'] | value_loss ['None', 'None', '2.182', 'None']
+U 129 | F 033024 | FPS 0088 | D 69 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.987', 'None'] | value_loss ['None', 'None', '1.339', 'None']
+U 130 | F 033280 | FPS 0081 | D 72 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.021', 'None'] | value_loss ['None', 'None', '0.343', 'None']
+Status saved
+U 131 | F 033536 | FPS 0057 | D 77 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '1.446', 'None'] | value_loss ['None', 'None', '2.581', 'None']
+U 132 | F 033792 | FPS 0078 | D 81 | Reward:μσmM -0.20 1.60 -1.00 3.00 | policy_loss ['None', 'None', '3.373', 'None'] | value_loss ['None', 'None', '48.683', 'None']
+U 133 | F 034048 | FPS 0093 | D 83 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.310', 'None'] | value_loss ['None', 'None', '2.219', 'None']
+U 134 | F 034304 | FPS 0087 | D 86 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.181', 'None'] | value_loss ['None', 'None', '0.878', 'None']
+U 135 | F 034560 | FPS 0088 | D 89 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.309', 'None'] | value_loss ['None', 'None', '0.164', 'None']
+U 136 | F 034816 | FPS 0086 | D 92 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '2.208', 'None'] | value_loss ['None', 'None', '31.100', 'None']
+U 137 | F 035072 | FPS 0063 | D 96 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '2.012', 'None'] | value_loss ['None', 'None', '8.092', 'None']
+U 138 | F 035328 | FPS 0087 | D 99 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.823', 'None'] | value_loss ['None', 'None', '3.429', 'None']
+U 139 | F 035584 | FPS 0081 | D 102 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.323', 'None'] | value_loss ['None', 'None', '3.959', 'None']
+U 140 | F 035840 | FPS 0089 | D 105 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-2.397', 'None'] | value_loss ['None', 'None', '7.360', 'None']
+Status saved
+U 141 | F 036096 | FPS 0091 | D 108 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.138', 'None'] | value_loss ['None', 'None', '0.029', 'None']
+U 142 | F 036352 | FPS 0094 | D 111 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.112', 'None'] | value_loss ['None', 'None', '0.012', 'None']
+U 143 | F 036608 | FPS 0090 | D 114 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.042', 'None'] | value_loss ['None', 'None', '0.298', 'None']
+U 144 | F 036864 | FPS 0091 | D 117 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.535', 'None'] | value_loss ['None', 'None', '1.700', 'None']
+U 145 | F 037120 | FPS 0088 | D 120 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.408', 'None'] | value_loss ['None', 'None', '3.967', 'None']
+U 146 | F 037376 | FPS 0093 | D 122 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.811', 'None'] | value_loss ['None', 'None', '2.140', 'None']
+U 147 | F 037632 | FPS 0086 | D 125 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.234', 'None'] | value_loss ['None', 'None', '4.828', 'None']
+U 148 | F 037888 | FPS 0098 | D 128 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.202', 'None'] | value_loss ['None', 'None', '0.036', 'None']
+U 149 | F 038144 | FPS 0086 | D 131 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.608', 'None'] | value_loss ['None', 'None', '1.326', 'None']
+U 150 | F 038400 | FPS 0088 | D 134 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.168', 'None'] | value_loss ['None', 'None', '0.014', 'None']
+Status saved
+U 151 | F 038656 | FPS 0089 | D 137 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-0.733', 'None'] | value_loss ['None', 'None', '1.748', 'None']
+U 152 | F 038912 | FPS 0083 | D 140 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.137', 'None'] | value_loss ['None', 'None', '0.173', 'None']
+U 153 | F 039168 | FPS 0062 | D 144 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '1.853', 'None'] | value_loss ['None', 'None', '5.532', 'None']
+U 154 | F 039424 | FPS 0067 | D 148 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '1.608', 'None'] | value_loss ['None', 'None', '3.532', 'None']
+U 155 | F 039680 | FPS 0056 | D 153 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '3.186', 'None'] | value_loss ['None', 'None', '23.806', 'None']
+U 156 | F 039936 | FPS 0059 | D 157 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '1.759', 'None'] | value_loss ['None', 'None', '3.321', 'None']
+U 157 | F 040192 | FPS 0058 | D 161 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '1.973', 'None'] | value_loss ['None', 'None', '10.155', 'None']
+U 158 | F 040448 | FPS 0061 | D 165 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '2.168', 'None'] | value_loss ['None', 'None', '12.619', 'None']
+U 159 | F 040704 | FPS 0065 | D 169 | Reward:μσmM 0.33 1.89 -1.00 3.00 | policy_loss ['None', 'None', '1.653', 'None'] | value_loss ['None', 'None', '10.126', 'None']
+U 160 | F 040960 | FPS 0061 | D 174 | Reward:μσmM 0.00 1.73 -1.00 3.00 | policy_loss ['None', 'None', '2.077', 'None'] | value_loss ['None', 'None', '13.756', 'None']
+Status saved
+U 161 | F 041216 | FPS 0084 | D 177 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-1.216', 'None'] | value_loss ['None', 'None', '2.129', 'None']
+U 162 | F 041472 | FPS 0069 | D 181 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '1.345', 'None'] | value_loss ['None', 'None', '8.259', 'None']
+U 163 | F 041728 | FPS 0067 | D 184 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '1.282', 'None'] | value_loss ['None', 'None', '8.390', 'None']
+U 164 | F 041984 | FPS 0059 | D 189 | Reward:μσmM 0.00 1.73 -1.00 3.00 | policy_loss ['None', 'None', '1.334', 'None'] | value_loss ['None', 'None', '8.209', 'None']
+U 165 | F 042240 | FPS 0093 | D 191 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-4.433', 'None'] | value_loss ['None', 'None', '15.043', 'None']
+U 166 | F 042496 | FPS 0085 | D 194 | Reward:μσmM 1.00 2.00 -1.00 3.00 | policy_loss ['None', 'None', '1.164', 'None'] | value_loss ['None', 'None', '16.260', 'None']
+U 167 | F 042752 | FPS 0096 | D 197 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '-3.357', 'None'] | value_loss ['None', 'None', '11.092', 'None']
+U 168 | F 043008 | FPS 0082 | D 200 | Reward:μσmM 3.00 0.00 3.00 3.00 | policy_loss ['None', 'None', '0.080', 'None'] | value_loss ['None', 'None', '1.376', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 161 | F 041216 | FPS 0068 | D 3 | Reward:μσmM -0.25 0.75 -1.00 0.50 | policy_loss ['None', 'None', '2.484', 'None'] | value_loss ['None', 'None', '21.719', 'None']
+U 162 | F 041472 | FPS 0077 | D 7 | Reward:μσmM -0.25 0.75 -1.00 0.50 | policy_loss ['None', 'None', '2.183', 'None'] | value_loss ['None', 'None', '11.096', 'None']
+U 163 | F 041728 | FPS 0067 | D 10 | Reward:μσmM -0.50 0.71 -1.00 0.50 | policy_loss ['None', 'None', '2.320', 'None'] | value_loss ['None', 'None', '12.104', 'None']
+U 164 | F 041984 | FPS 0057 | D 15 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', '2.430', 'None'] | value_loss ['None', 'None', '13.003', 'None']
+U 165 | F 042240 | FPS 0053 | D 20 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', '2.350', 'None'] | value_loss ['None', 'None', '11.022', 'None']
+U 166 | F 042496 | FPS 0076 | D 23 | Reward:μσmM -0.25 0.75 -1.00 0.50 | policy_loss ['None', 'None', '1.656', 'None'] | value_loss ['None', 'None', '7.688', 'None']
+U 167 | F 042752 | FPS 0059 | D 27 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '1.588', 'None'] | value_loss ['None', 'None', '5.045', 'None']
+U 168 | F 043008 | FPS 0057 | D 32 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.697', 'None'] | value_loss ['None', 'None', '1.223', 'None']
+U 169 | F 043264 | FPS 0056 | D 36 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.519', 'None'] | value_loss ['None', 'None', '0.220', 'None']
+U 170 | F 043520 | FPS 0057 | D 41 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.713', 'None'] | value_loss ['None', 'None', '0.423', 'None']
+Status saved
+U 171 | F 043776 | FPS 0059 | D 46 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '1.009', 'None'] | value_loss ['None', 'None', '1.858', 'None']
+U 172 | F 044032 | FPS 0058 | D 50 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.952', 'None'] | value_loss ['None', 'None', '1.670', 'None']
+U 173 | F 044288 | FPS 0058 | D 54 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.653', 'None'] | value_loss ['None', 'None', '0.818', 'None']
+U 174 | F 044544 | FPS 0061 | D 59 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.619', 'None'] | value_loss ['None', 'None', '0.934', 'None']
+U 175 | F 044800 | FPS 0058 | D 63 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.524', 'None'] | value_loss ['None', 'None', '0.449', 'None']
+U 176 | F 045056 | FPS 0059 | D 67 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', '0.744', 'None'] | value_loss ['None', 'None', '1.395', 'None']
+U 177 | F 045312 | FPS 0058 | D 72 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.423', 'None'] | value_loss ['None', 'None', '0.338', 'None']
+U 178 | F 045568 | FPS 0059 | D 76 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.496', 'None'] | value_loss ['None', 'None', '0.457', 'None']
+U 179 | F 045824 | FPS 0058 | D 81 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.279', 'None'] | value_loss ['None', 'None', '0.170', 'None']
+U 180 | F 046080 | FPS 0057 | D 85 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.236', 'None'] | value_loss ['None', 'None', '0.114', 'None']
+Status saved
+U 181 | F 046336 | FPS 0058 | D 90 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.212', 'None'] | value_loss ['None', 'None', '0.092', 'None']
+U 182 | F 046592 | FPS 0059 | D 94 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.236', 'None'] | value_loss ['None', 'None', '0.144', 'None']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 181 | F 046336 | FPS 0044 | D 5 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.001'] | value_loss ['None', 'None', 'None', '0.013']
+U 182 | F 046592 | FPS 0054 | D 10 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.014'] | value_loss ['None', 'None', 'None', '0.025']
+U 183 | F 046848 | FPS 0056 | D 15 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.010'] | value_loss ['None', 'None', 'None', '0.018']
+U 184 | F 047104 | FPS 0056 | D 19 | Reward:μσmM -1.00 0.00 -1.00 -1.00 | policy_loss ['None', 'None', 'None', '-0.015'] | value_loss ['None', 'None', 'None', '0.010']
+U 185 | F 047360 | FPS 0057 | D 24 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.036'] | value_loss ['None', 'None', 'None', '0.014']
+U 186 | F 047616 | FPS 0057 | D 28 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.093'] | value_loss ['None', 'None', 'None', '0.004']
+U 187 | F 047872 | FPS 0060 | D 32 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.084'] | value_loss ['None', 'None', 'None', '0.001']
+U 188 | F 048128 | FPS 0059 | D 37 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.058'] | value_loss ['None', 'None', 'None', '0.000']
+U 189 | F 048384 | FPS 0057 | D 41 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.049'] | value_loss ['None', 'None', 'None', '0.000']
+U 190 | F 048640 | FPS 0058 | D 46 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.070'] | value_loss ['None', 'None', 'None', '0.002']
+Status saved
+U 191 | F 048896 | FPS 0058 | D 51 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.000']
+U 192 | F 049152 | FPS 0058 | D 55 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.036'] | value_loss ['None', 'None', 'None', '0.000']
+U 193 | F 049408 | FPS 0055 | D 60 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.023'] | value_loss ['None', 'None', 'None', '0.021']
+U 194 | F 049664 | FPS 0060 | D 64 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 195 | F 049920 | FPS 0058 | D 68 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 196 | F 050176 | FPS 0057 | D 73 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 197 | F 050432 | FPS 0059 | D 77 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 198 | F 050688 | FPS 0059 | D 81 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.032'] | value_loss ['None', 'None', 'None', '0.015']
+U 199 | F 050944 | FPS 0056 | D 86 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.026'] | value_loss ['None', 'None', 'None', '0.024']
+U 200 | F 051200 | FPS 0060 | D 90 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.025'] | value_loss ['None', 'None', 'None', '0.023']
+Status saved
+U 201 | F 051456 | FPS 0060 | D 95 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.011'] | value_loss ['None', 'None', 'None', '0.014']
+U 202 | F 051712 | FPS 0057 | D 100 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.071'] | value_loss ['None', 'None', 'None', '0.034']
+U 203 | F 051968 | FPS 0061 | D 104 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.013'] | value_loss ['None', 'None', 'None', '0.007']
+U 204 | F 052224 | FPS 0058 | D 108 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.000']
+U 205 | F 052480 | FPS 0059 | D 112 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.034'] | value_loss ['None', 'None', 'None', '0.000']
+U 206 | F 052736 | FPS 0061 | D 117 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 201 | F 051456 | FPS 0050 | D 5 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.042'] | value_loss ['None', 'None', 'None', '0.017']
+U 202 | F 051712 | FPS 0057 | D 9 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.010']
+U 203 | F 051968 | FPS 0059 | D 13 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.079'] | value_loss ['None', 'None', 'None', '0.004']
+U 204 | F 052224 | FPS 0060 | D 18 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.068'] | value_loss ['None', 'None', 'None', '0.006']
+U 205 | F 052480 | FPS 0059 | D 22 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.040'] | value_loss ['None', 'None', 'None', '0.017']
+U 206 | F 052736 | FPS 0063 | D 26 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.094'] | value_loss ['None', 'None', 'None', '0.001']
+U 207 | F 052992 | FPS 0062 | D 30 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.068'] | value_loss ['None', 'None', 'None', '0.000']
+U 208 | F 053248 | FPS 0060 | D 34 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.058'] | value_loss ['None', 'None', 'None', '0.000']
+U 209 | F 053504 | FPS 0059 | D 39 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.000']
+U 210 | F 053760 | FPS 0060 | D 43 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.004']
+Status saved
+U 211 | F 054016 | FPS 0060 | D 48 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 212 | F 054272 | FPS 0059 | D 52 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 213 | F 054528 | FPS 0058 | D 57 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.085'] | value_loss ['None', 'None', 'None', '0.037']
+U 214 | F 054784 | FPS 0060 | D 61 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.011'] | value_loss ['None', 'None', 'None', '0.012']
+U 215 | F 055040 | FPS 0061 | D 65 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.005'] | value_loss ['None', 'None', 'None', '0.018']
+U 216 | F 055296 | FPS 0058 | D 69 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.003'] | value_loss ['None', 'None', 'None', '0.005']
+U 217 | F 055552 | FPS 0060 | D 74 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.009']
+U 218 | F 055808 | FPS 0062 | D 78 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 219 | F 056064 | FPS 0059 | D 82 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.034'] | value_loss ['None', 'None', 'None', '0.000']
+U 220 | F 056320 | FPS 0063 | D 86 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 221 | F 056576 | FPS 0062 | D 91 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 222 | F 056832 | FPS 0061 | D 95 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.079'] | value_loss ['None', 'None', 'None', '0.037']
+U 223 | F 057088 | FPS 0062 | D 99 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.001']
+U 224 | F 057344 | FPS 0058 | D 104 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 225 | F 057600 | FPS 0059 | D 108 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.020'] | value_loss ['None', 'None', 'None', '0.012']
+U 226 | F 057856 | FPS 0056 | D 112 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.072'] | value_loss ['None', 'None', 'None', '0.017']
+U 227 | F 058112 | FPS 0059 | D 117 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.109'] | value_loss ['None', 'None', 'None', '0.024']
+U 228 | F 058368 | FPS 0061 | D 121 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.002']
+U 229 | F 058624 | FPS 0057 | D 126 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.054'] | value_loss ['None', 'None', 'None', '0.018']
+U 230 | F 058880 | FPS 0058 | D 130 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.004']
+Status saved
+U 231 | F 059136 | FPS 0058 | D 135 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 232 | F 059392 | FPS 0059 | D 139 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 233 | F 059648 | FPS 0060 | D 143 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 234 | F 059904 | FPS 0061 | D 148 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 235 | F 060160 | FPS 0060 | D 152 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.072'] | value_loss ['None', 'None', 'None', '0.033']
+U 236 | F 060416 | FPS 0060 | D 156 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.010']
+U 237 | F 060672 | FPS 0059 | D 160 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 238 | F 060928 | FPS 0059 | D 165 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.001']
+U 239 | F 061184 | FPS 0060 | D 169 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.031'] | value_loss ['None', 'None', 'None', '0.018']
+U 240 | F 061440 | FPS 0059 | D 173 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.072'] | value_loss ['None', 'None', 'None', '0.036']
+Status saved
+U 241 | F 061696 | FPS 0061 | D 178 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.011'] | value_loss ['None', 'None', 'None', '0.020']
+U 242 | F 061952 | FPS 0060 | D 182 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.000']
+U 243 | F 062208 | FPS 0061 | D 186 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.005']
+U 244 | F 062464 | FPS 0063 | D 191 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.000']
+U 245 | F 062720 | FPS 0059 | D 195 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+U 246 | F 062976 | FPS 0061 | D 199 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 247 | F 063232 | FPS 0057 | D 204 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.083'] | value_loss ['None', 'None', 'None', '0.033']
+U 248 | F 063488 | FPS 0060 | D 208 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.001']
+U 249 | F 063744 | FPS 0060 | D 212 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 250 | F 064000 | FPS 0059 | D 216 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.012'] | value_loss ['None', 'None', 'None', '0.012']
+Status saved
+U 251 | F 064256 | FPS 0061 | D 221 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.028'] | value_loss ['None', 'None', 'None', '0.024']
+U 252 | F 064512 | FPS 0062 | D 225 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 253 | F 064768 | FPS 0061 | D 230 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 254 | F 065024 | FPS 0059 | D 234 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 255 | F 065280 | FPS 0061 | D 238 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.036'] | value_loss ['None', 'None', 'None', '0.023']
+U 256 | F 065536 | FPS 0065 | D 242 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.026'] | value_loss ['None', 'None', 'None', '0.020']
+U 257 | F 065792 | FPS 0061 | D 246 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.022'] | value_loss ['None', 'None', 'None', '0.014']
+U 258 | F 066048 | FPS 0062 | D 250 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.021'] | value_loss ['None', 'None', 'None', '0.019']
+U 259 | F 066304 | FPS 0061 | D 255 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.017'] | value_loss ['None', 'None', 'None', '0.019']
+U 260 | F 066560 | FPS 0061 | D 259 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.039'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 261 | F 066816 | FPS 0061 | D 264 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 262 | F 067072 | FPS 0059 | D 268 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 263 | F 067328 | FPS 0061 | D 272 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.036'] | value_loss ['None', 'None', 'None', '0.002']
+U 264 | F 067584 | FPS 0062 | D 276 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.021'] | value_loss ['None', 'None', 'None', '0.000']
+U 265 | F 067840 | FPS 0061 | D 281 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 266 | F 068096 | FPS 0059 | D 285 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.076'] | value_loss ['None', 'None', 'None', '0.041']
+U 267 | F 068352 | FPS 0060 | D 289 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 268 | F 068608 | FPS 0058 | D 294 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 269 | F 068864 | FPS 0061 | D 298 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+U 270 | F 069120 | FPS 0059 | D 302 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.013'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 271 | F 069376 | FPS 0060 | D 307 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.099'] | value_loss ['None', 'None', 'None', '0.038']
+U 272 | F 069632 | FPS 0061 | D 311 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.001']
+U 273 | F 069888 | FPS 0063 | D 315 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 274 | F 070144 | FPS 0061 | D 319 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 275 | F 070400 | FPS 0059 | D 324 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 276 | F 070656 | FPS 0056 | D 328 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.037'] | value_loss ['None', 'None', 'None', '0.012']
+U 277 | F 070912 | FPS 0058 | D 333 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.047'] | value_loss ['None', 'None', 'None', '0.019']
+U 278 | F 071168 | FPS 0059 | D 337 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.015'] | value_loss ['None', 'None', 'None', '0.017']
+U 279 | F 071424 | FPS 0060 | D 341 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.000']
+U 280 | F 071680 | FPS 0056 | D 346 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.035'] | value_loss ['None', 'None', 'None', '0.032']
+Status saved
+U 281 | F 071936 | FPS 0059 | D 351 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.000']
+U 282 | F 072192 | FPS 0060 | D 355 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.000']
+U 283 | F 072448 | FPS 0060 | D 359 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.022'] | value_loss ['None', 'None', 'None', '0.019']
+U 284 | F 072704 | FPS 0061 | D 364 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.023'] | value_loss ['None', 'None', 'None', '0.014']
+U 285 | F 072960 | FPS 0062 | D 368 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 286 | F 073216 | FPS 0061 | D 372 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 287 | F 073472 | FPS 0062 | D 376 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 288 | F 073728 | FPS 0058 | D 381 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 289 | F 073984 | FPS 0062 | D 385 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.132'] | value_loss ['None', 'None', 'None', '0.050']
+U 290 | F 074240 | FPS 0062 | D 389 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.003'] | value_loss ['None', 'None', 'None', '0.007']
+Status saved
+U 291 | F 074496 | FPS 0061 | D 393 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.001'] | value_loss ['None', 'None', 'None', '0.011']
+U 292 | F 074752 | FPS 0060 | D 398 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.065'] | value_loss ['None', 'None', 'None', '0.022']
+U 293 | F 075008 | FPS 0061 | D 402 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.014'] | value_loss ['None', 'None', 'None', '0.018']
+U 294 | F 075264 | FPS 0061 | D 406 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.061'] | value_loss ['None', 'None', 'None', '0.000']
+U 295 | F 075520 | FPS 0061 | D 410 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.000']
+U 296 | F 075776 | FPS 0059 | D 415 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 297 | F 076032 | FPS 0061 | D 419 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.053'] | value_loss ['None', 'None', 'None', '0.037']
+U 298 | F 076288 | FPS 0062 | D 423 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.001']
+U 299 | F 076544 | FPS 0063 | D 427 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 300 | F 076800 | FPS 0059 | D 431 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 301 | F 077056 | FPS 0058 | D 436 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.018']
+U 302 | F 077312 | FPS 0060 | D 441 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.110'] | value_loss ['None', 'None', 'None', '0.042']
+U 303 | F 077568 | FPS 0057 | D 445 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.005'] | value_loss ['None', 'None', 'None', '0.005']
+U 304 | F 077824 | FPS 0059 | D 449 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.009'] | value_loss ['None', 'None', 'None', '0.011']
+U 305 | F 078080 | FPS 0059 | D 454 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.002'] | value_loss ['None', 'None', 'None', '0.016']
+U 306 | F 078336 | FPS 0058 | D 458 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.000']
+U 307 | F 078592 | FPS 0056 | D 463 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.000']
+U 308 | F 078848 | FPS 0056 | D 467 | Reward:μσmM -1.00 0.00 -1.00 -1.00 | policy_loss ['None', 'None', 'None', '0.006'] | value_loss ['None', 'None', 'None', '0.006']
+U 309 | F 079104 | FPS 0055 | D 472 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 310 | F 079360 | FPS 0060 | D 476 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 311 | F 079616 | FPS 0059 | D 481 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.030'] | value_loss ['None', 'None', 'None', '0.019']
+U 312 | F 079872 | FPS 0062 | D 485 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.045'] | value_loss ['None', 'None', 'None', '0.001']
+U 313 | F 080128 | FPS 0061 | D 489 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+U 314 | F 080384 | FPS 0061 | D 494 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 315 | F 080640 | FPS 0058 | D 498 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 316 | F 080896 | FPS 0060 | D 502 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 317 | F 081152 | FPS 0063 | D 506 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.086'] | value_loss ['None', 'None', 'None', '0.038']
+U 318 | F 081408 | FPS 0060 | D 511 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.080'] | value_loss ['None', 'None', 'None', '0.041']
+U 319 | F 081664 | FPS 0064 | D 515 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.001']
+U 320 | F 081920 | FPS 0062 | D 519 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 321 | F 082176 | FPS 0061 | D 524 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 322 | F 082432 | FPS 0059 | D 528 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 323 | F 082688 | FPS 0061 | D 532 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 324 | F 082944 | FPS 0061 | D 536 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.036'] | value_loss ['None', 'None', 'None', '0.022']
+U 325 | F 083200 | FPS 0060 | D 541 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.021'] | value_loss ['None', 'None', 'None', '0.001']
+U 326 | F 083456 | FPS 0062 | D 545 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.034'] | value_loss ['None', 'None', 'None', '0.016']
+U 327 | F 083712 | FPS 0062 | D 549 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.065'] | value_loss ['None', 'None', 'None', '0.030']
+U 328 | F 083968 | FPS 0060 | D 553 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.052'] | value_loss ['None', 'None', 'None', '0.001']
+U 329 | F 084224 | FPS 0060 | D 557 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 330 | F 084480 | FPS 0058 | D 562 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.028'] | value_loss ['None', 'None', 'None', '0.016']
+Status saved
+U 331 | F 084736 | FPS 0058 | D 567 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.019'] | value_loss ['None', 'None', 'None', '0.022']
+U 332 | F 084992 | FPS 0058 | D 571 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 333 | F 085248 | FPS 0058 | D 575 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.021'] | value_loss ['None', 'None', 'None', '0.000']
+U 334 | F 085504 | FPS 0059 | D 580 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.021'] | value_loss ['None', 'None', 'None', '0.000']
+U 335 | F 085760 | FPS 0058 | D 584 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 336 | F 086016 | FPS 0059 | D 589 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.037'] | value_loss ['None', 'None', 'None', '0.020']
+U 337 | F 086272 | FPS 0047 | D 594 | Reward:μσmM 0.50 0.00 0.50 0.50 | policy_loss ['None', 'None', '0.039', '-0.169'] | value_loss ['None', 'None', '0.007', '0.051']
+U 338 | F 086528 | FPS 0060 | D 598 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.020']
+U 339 | F 086784 | FPS 0059 | D 603 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.071'] | value_loss ['None', 'None', 'None', '0.026']
+U 340 | F 087040 | FPS 0053 | D 607 | Reward:μσmM 0.50 0.00 0.50 0.50 | policy_loss ['None', 'None', '0.117', '-0.249'] | value_loss ['None', 'None', '0.005', '0.085']
+Status saved
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 341 | F 087296 | FPS 0047 | D 5 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.004'] | value_loss ['None', 'None', 'None', '0.014']
+U 342 | F 087552 | FPS 0057 | D 9 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.009'] | value_loss ['None', 'None', 'None', '0.010']
+U 343 | F 087808 | FPS 0062 | D 14 | Reward:μσmM -0.89 0.31 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.002'] | value_loss ['None', 'None', 'None', '0.012']
+U 344 | F 088064 | FPS 0058 | D 18 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.014']
+U 345 | F 088320 | FPS 0058 | D 22 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.004']
+U 346 | F 088576 | FPS 0057 | D 27 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.069'] | value_loss ['None', 'None', 'None', '0.003']
+U 347 | F 088832 | FPS 0060 | D 31 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.050'] | value_loss ['None', 'None', 'None', '0.006']
+U 348 | F 089088 | FPS 0057 | D 36 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.083'] | value_loss ['None', 'None', 'None', '0.000']
+U 349 | F 089344 | FPS 0059 | D 40 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.066'] | value_loss ['None', 'None', 'None', '0.000']
+U 350 | F 089600 | FPS 0058 | D 44 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.052'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 351 | F 089856 | FPS 0061 | D 49 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.000']
+U 352 | F 090112 | FPS 0059 | D 53 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.029']
+U 353 | F 090368 | FPS 0058 | D 58 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.041'] | value_loss ['None', 'None', 'None', '0.000']
+U 354 | F 090624 | FPS 0059 | D 62 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.000']
+U 355 | F 090880 | FPS 0058 | D 67 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.069'] | value_loss ['None', 'None', 'None', '0.028']
+U 356 | F 091136 | FPS 0060 | D 71 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.069'] | value_loss ['None', 'None', 'None', '0.039']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 351 | F 089856 | FPS 0049 | D 5 | Reward:μσmM -0.88 0.33 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.072'] | value_loss ['None', 'None', 'None', '0.020']
+U 352 | F 090112 | FPS 0059 | D 9 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.006'] | value_loss ['None', 'None', 'None', '0.013']
+U 353 | F 090368 | FPS 0060 | D 13 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.049'] | value_loss ['None', 'None', 'None', '0.009']
+U 354 | F 090624 | FPS 0060 | D 18 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.000'] | value_loss ['None', 'None', 'None', '0.017']
+U 355 | F 090880 | FPS 0060 | D 22 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.009']
+U 356 | F 091136 | FPS 0058 | D 26 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.055'] | value_loss ['None', 'None', 'None', '0.005']
+U 357 | F 091392 | FPS 0059 | D 31 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.011']
+U 358 | F 091648 | FPS 0059 | D 35 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.012']
+U 359 | F 091904 | FPS 0060 | D 39 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.066'] | value_loss ['None', 'None', 'None', '0.000']
+U 360 | F 092160 | FPS 0061 | D 43 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.055'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 361 | F 092416 | FPS 0059 | D 48 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.052'] | value_loss ['None', 'None', 'None', '0.000']
+U 362 | F 092672 | FPS 0060 | D 52 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.000']
+U 363 | F 092928 | FPS 0061 | D 57 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 364 | F 093184 | FPS 0057 | D 61 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 365 | F 093440 | FPS 0058 | D 65 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 366 | F 093696 | FPS 0058 | D 70 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 367 | F 093952 | FPS 0059 | D 74 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 368 | F 094208 | FPS 0058 | D 79 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.070'] | value_loss ['None', 'None', 'None', '0.047']
+U 369 | F 094464 | FPS 0057 | D 83 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.009']
+U 370 | F 094720 | FPS 0060 | D 87 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 371 | F 094976 | FPS 0058 | D 92 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 372 | F 095232 | FPS 0057 | D 97 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.158'] | value_loss ['None', 'None', 'None', '0.063']
+U 373 | F 095488 | FPS 0056 | D 101 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.001']
+U 374 | F 095744 | FPS 0056 | D 106 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 375 | F 096000 | FPS 0058 | D 110 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 376 | F 096256 | FPS 0057 | D 115 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.028'] | value_loss ['None', 'None', 'None', '0.015']
+U 377 | F 096512 | FPS 0057 | D 119 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.055'] | value_loss ['None', 'None', 'None', '0.026']
+U 378 | F 096768 | FPS 0059 | D 124 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.020']
+U 379 | F 097024 | FPS 0058 | D 128 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.000']
+U 380 | F 097280 | FPS 0056 | D 133 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 381 | F 097536 | FPS 0057 | D 138 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.022'] | value_loss ['None', 'None', 'None', '0.007']
+U 382 | F 097792 | FPS 0057 | D 142 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 383 | F 098048 | FPS 0057 | D 147 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 384 | F 098304 | FPS 0057 | D 151 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.035'] | value_loss ['None', 'None', 'None', '0.021']
+U 385 | F 098560 | FPS 0058 | D 155 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.131'] | value_loss ['None', 'None', 'None', '0.047']
+U 386 | F 098816 | FPS 0056 | D 160 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.095'] | value_loss ['None', 'None', 'None', '0.045']
+U 387 | F 099072 | FPS 0057 | D 165 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.056'] | value_loss ['None', 'None', 'None', '0.000']
+U 388 | F 099328 | FPS 0056 | D 169 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.000'] | value_loss ['None', 'None', 'None', '0.010']
+U 389 | F 099584 | FPS 0058 | D 174 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.073'] | value_loss ['None', 'None', 'None', '0.001']
+U 390 | F 099840 | FPS 0058 | D 178 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.066'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 391 | F 100096 | FPS 0057 | D 183 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.058'] | value_loss ['None', 'None', 'None', '0.000']
+U 392 | F 100352 | FPS 0057 | D 187 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.048'] | value_loss ['None', 'None', 'None', '0.000']
+U 393 | F 100608 | FPS 0059 | D 192 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.049'] | value_loss ['None', 'None', 'None', '0.022']
+U 394 | F 100864 | FPS 0059 | D 196 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.047'] | value_loss ['None', 'None', 'None', '0.000']
+U 395 | F 101120 | FPS 0058 | D 201 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 396 | F 101376 | FPS 0059 | D 205 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 397 | F 101632 | FPS 0058 | D 209 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 398 | F 101888 | FPS 0057 | D 214 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 399 | F 102144 | FPS 0057 | D 218 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 400 | F 102400 | FPS 0060 | D 222 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 401 | F 102656 | FPS 0059 | D 227 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.174'] | value_loss ['None', 'None', 'None', '0.061']
+U 402 | F 102912 | FPS 0058 | D 232 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.036'] | value_loss ['None', 'None', 'None', '0.000']
+U 403 | F 103168 | FPS 0059 | D 236 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 404 | F 103424 | FPS 0059 | D 241 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 405 | F 103680 | FPS 0060 | D 245 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 406 | F 103936 | FPS 0062 | D 249 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.031'] | value_loss ['None', 'None', 'None', '0.023']
+U 407 | F 104192 | FPS 0056 | D 253 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.016'] | value_loss ['None', 'None', 'None', '0.010']
+U 408 | F 104448 | FPS 0059 | D 258 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 409 | F 104704 | FPS 0057 | D 262 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.032'] | value_loss ['None', 'None', 'None', '0.020']
+U 410 | F 104960 | FPS 0061 | D 266 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 411 | F 105216 | FPS 0060 | D 271 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.028'] | value_loss ['None', 'None', 'None', '0.007']
+U 412 | F 105472 | FPS 0061 | D 275 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.094'] | value_loss ['None', 'None', 'None', '0.034']
+U 413 | F 105728 | FPS 0058 | D 280 | Reward:μσmM -1.00 0.00 -1.00 -1.00 | policy_loss ['None', 'None', 'None', '0.182'] | value_loss ['None', 'None', 'None', '0.054']
+U 414 | F 105984 | FPS 0059 | D 284 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.037'] | value_loss ['None', 'None', 'None', '0.024']
+U 415 | F 106240 | FPS 0058 | D 289 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.062'] | value_loss ['None', 'None', 'None', '0.002']
+U 416 | F 106496 | FPS 0060 | D 293 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.045'] | value_loss ['None', 'None', 'None', '0.000']
+U 417 | F 106752 | FPS 0059 | D 297 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.039'] | value_loss ['None', 'None', 'None', '0.000']
+U 418 | F 107008 | FPS 0059 | D 301 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 419 | F 107264 | FPS 0057 | D 306 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 420 | F 107520 | FPS 0059 | D 310 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 421 | F 107776 | FPS 0059 | D 315 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.032'] | value_loss ['None', 'None', 'None', '0.021']
+U 422 | F 108032 | FPS 0059 | D 319 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.060'] | value_loss ['None', 'None', 'None', '0.031']
+U 423 | F 108288 | FPS 0063 | D 324 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.026'] | value_loss ['None', 'None', 'None', '0.008']
+U 424 | F 108544 | FPS 0058 | D 328 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 425 | F 108800 | FPS 0061 | D 332 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.003']
+U 426 | F 109056 | FPS 0059 | D 336 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.081'] | value_loss ['None', 'None', 'None', '0.039']
+U 427 | F 109312 | FPS 0060 | D 341 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+U 428 | F 109568 | FPS 0060 | D 345 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 429 | F 109824 | FPS 0058 | D 349 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 430 | F 110080 | FPS 0062 | D 354 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 431 | F 110336 | FPS 0060 | D 358 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+U 432 | F 110592 | FPS 0059 | D 363 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.025'] | value_loss ['None', 'None', 'None', '0.023']
+U 433 | F 110848 | FPS 0060 | D 367 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 434 | F 111104 | FPS 0061 | D 371 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.000']
+U 435 | F 111360 | FPS 0057 | D 375 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.088'] | value_loss ['None', 'None', 'None', '0.038']
+U 436 | F 111616 | FPS 0058 | D 380 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.119'] | value_loss ['None', 'None', 'None', '0.055']
+U 437 | F 111872 | FPS 0058 | D 384 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.049'] | value_loss ['None', 'None', 'None', '0.000']
+U 438 | F 112128 | FPS 0058 | D 389 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.000']
+U 439 | F 112384 | FPS 0055 | D 393 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.071'] | value_loss ['None', 'None', 'None', '0.033']
+U 440 | F 112640 | FPS 0055 | D 398 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.003']
+Status saved
+U 441 | F 112896 | FPS 0059 | D 403 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.050'] | value_loss ['None', 'None', 'None', '0.000']
+U 442 | F 113152 | FPS 0054 | D 408 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.003'] | value_loss ['None', 'None', 'None', '0.008']
+U 443 | F 113408 | FPS 0054 | D 412 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.041'] | value_loss ['None', 'None', 'None', '0.000']
+U 444 | F 113664 | FPS 0058 | D 417 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+U 445 | F 113920 | FPS 0058 | D 421 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 446 | F 114176 | FPS 0058 | D 426 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.001']
+U 447 | F 114432 | FPS 0058 | D 430 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 448 | F 114688 | FPS 0060 | D 434 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.038'] | value_loss ['None', 'None', 'None', '0.027']
+U 449 | F 114944 | FPS 0059 | D 439 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.008'] | value_loss ['None', 'None', 'None', '0.018']
+U 450 | F 115200 | FPS 0061 | D 443 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.061'] | value_loss ['None', 'None', 'None', '0.023']
+Status saved
+U 451 | F 115456 | FPS 0060 | D 448 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.005'] | value_loss ['None', 'None', 'None', '0.009']
+U 452 | F 115712 | FPS 0061 | D 452 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.007'] | value_loss ['None', 'None', 'None', '0.011']
+U 453 | F 115968 | FPS 0058 | D 456 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.000']
+U 454 | F 116224 | FPS 0058 | D 461 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 455 | F 116480 | FPS 0057 | D 465 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.053'] | value_loss ['None', 'None', 'None', '0.034']
+U 456 | F 116736 | FPS 0057 | D 470 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.001']
+U 457 | F 116992 | FPS 0060 | D 474 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 458 | F 117248 | FPS 0060 | D 478 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 459 | F 117504 | FPS 0061 | D 482 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.022']
+U 460 | F 117760 | FPS 0060 | D 487 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 461 | F 118016 | FPS 0059 | D 491 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 462 | F 118272 | FPS 0060 | D 496 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 463 | F 118528 | FPS 0058 | D 500 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.035'] | value_loss ['None', 'None', 'None', '0.015']
+U 464 | F 118784 | FPS 0057 | D 505 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.001']
+U 465 | F 119040 | FPS 0057 | D 509 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.081'] | value_loss ['None', 'None', 'None', '0.036']
+U 466 | F 119296 | FPS 0058 | D 514 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.001']
+U 467 | F 119552 | FPS 0058 | D 518 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 468 | F 119808 | FPS 0058 | D 522 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.138'] | value_loss ['None', 'None', 'None', '0.050']
+U 469 | F 120064 | FPS 0059 | D 527 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.001']
+U 470 | F 120320 | FPS 0058 | D 531 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 471 | F 120576 | FPS 0059 | D 536 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 472 | F 120832 | FPS 0059 | D 540 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 473 | F 121088 | FPS 0057 | D 545 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.014']
+U 474 | F 121344 | FPS 0060 | D 549 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.001']
+U 475 | F 121600 | FPS 0061 | D 553 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.106'] | value_loss ['None', 'None', 'None', '0.040']
+U 476 | F 121856 | FPS 0060 | D 558 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.046'] | value_loss ['None', 'None', 'None', '0.032']
+U 477 | F 122112 | FPS 0058 | D 562 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.008'] | value_loss ['None', 'None', 'None', '0.014']
+U 478 | F 122368 | FPS 0059 | D 566 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.060'] | value_loss ['None', 'None', 'None', '0.023']
+U 479 | F 122624 | FPS 0060 | D 571 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.039'] | value_loss ['None', 'None', 'None', '0.000']
+U 480 | F 122880 | FPS 0060 | D 575 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.058'] | value_loss ['None', 'None', 'None', '0.031']
+Status saved
+U 481 | F 123136 | FPS 0061 | D 579 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.056'] | value_loss ['None', 'None', 'None', '0.001']
+U 482 | F 123392 | FPS 0058 | D 584 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.009'] | value_loss ['None', 'None', 'None', '0.008']
+U 483 | F 123648 | FPS 0059 | D 588 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.002']
+U 484 | F 123904 | FPS 0057 | D 593 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.001']
+U 485 | F 124160 | FPS 0058 | D 597 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.027'] | value_loss ['None', 'None', 'None', '0.011']
+U 486 | F 124416 | FPS 0058 | D 601 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.001']
+U 487 | F 124672 | FPS 0055 | D 606 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 488 | F 124928 | FPS 0057 | D 611 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 489 | F 125184 | FPS 0058 | D 615 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.033'] | value_loss ['None', 'None', 'None', '0.017']
+U 490 | F 125440 | FPS 0055 | D 620 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 491 | F 125696 | FPS 0057 | D 625 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 492 | F 125952 | FPS 0057 | D 629 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.034'] | value_loss ['None', 'None', 'None', '0.017']
+U 493 | F 126208 | FPS 0057 | D 634 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 494 | F 126464 | FPS 0056 | D 638 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.012'] | value_loss ['None', 'None', 'None', '0.020']
+U 495 | F 126720 | FPS 0059 | D 643 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.019'] | value_loss ['None', 'None', 'None', '0.016']
+U 496 | F 126976 | FPS 0058 | D 647 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.050'] | value_loss ['None', 'None', 'None', '0.001']
+U 497 | F 127232 | FPS 0055 | D 652 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.075'] | value_loss ['None', 'None', 'None', '0.034']
+U 498 | F 127488 | FPS 0057 | D 656 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.034'] | value_loss ['None', 'None', 'None', '0.001']
+U 499 | F 127744 | FPS 0057 | D 661 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 500 | F 128000 | FPS 0059 | D 665 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 501 | F 128256 | FPS 0057 | D 670 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.087'] | value_loss ['None', 'None', 'None', '0.029']
+U 502 | F 128512 | FPS 0059 | D 674 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.019'] | value_loss ['None', 'None', 'None', '0.017']
+U 503 | F 128768 | FPS 0055 | D 679 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.099'] | value_loss ['None', 'None', 'None', '0.035']
+U 504 | F 129024 | FPS 0058 | D 683 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.093'] | value_loss ['None', 'None', 'None', '0.040']
+U 505 | F 129280 | FPS 0061 | D 687 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.066'] | value_loss ['None', 'None', 'None', '0.000']
+U 506 | F 129536 | FPS 0055 | D 692 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.056'] | value_loss ['None', 'None', 'None', '0.000']
+U 507 | F 129792 | FPS 0059 | D 696 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.047'] | value_loss ['None', 'None', 'None', '0.000']
+U 508 | F 130048 | FPS 0056 | D 701 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.057'] | value_loss ['None', 'None', 'None', '0.029']
+U 509 | F 130304 | FPS 0060 | D 705 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.000']
+U 510 | F 130560 | FPS 0055 | D 710 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.057'] | value_loss ['None', 'None', 'None', '0.026']
+Status saved
+U 511 | F 130816 | FPS 0057 | D 715 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.051'] | value_loss ['None', 'None', 'None', '0.027']
+U 512 | F 131072 | FPS 0057 | D 719 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.012']
+U 513 | F 131328 | FPS 0057 | D 724 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.011']
+U 514 | F 131584 | FPS 0061 | D 728 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.000']
+U 515 | F 131840 | FPS 0055 | D 733 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.006']
+U 516 | F 132096 | FPS 0058 | D 737 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.020'] | value_loss ['None', 'None', 'None', '0.017']
+U 517 | F 132352 | FPS 0060 | D 741 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.059'] | value_loss ['None', 'None', 'None', '0.003']
+U 518 | F 132608 | FPS 0058 | D 746 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.017'] | value_loss ['None', 'None', 'None', '0.017']
+U 519 | F 132864 | FPS 0055 | D 750 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 520 | F 133120 | FPS 0054 | D 755 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.023'] | value_loss ['None', 'None', 'None', '0.016']
+Status saved
+U 521 | F 133376 | FPS 0057 | D 760 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.000']
+U 522 | F 133632 | FPS 0056 | D 765 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 523 | F 133888 | FPS 0055 | D 769 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 524 | F 134144 | FPS 0058 | D 774 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 525 | F 134400 | FPS 0058 | D 778 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.032'] | value_loss ['None', 'None', 'None', '0.020']
+U 526 | F 134656 | FPS 0059 | D 782 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.004'] | value_loss ['None', 'None', 'None', '0.012']
+U 527 | F 134912 | FPS 0058 | D 787 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 528 | F 135168 | FPS 0058 | D 791 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 529 | F 135424 | FPS 0057 | D 796 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.030'] | value_loss ['None', 'None', 'None', '0.017']
+U 530 | F 135680 | FPS 0061 | D 800 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.022'] | value_loss ['None', 'None', 'None', '0.012']
+Status saved
+U 531 | F 135936 | FPS 0061 | D 805 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.052'] | value_loss ['None', 'None', 'None', '0.030']
+U 532 | F 136192 | FPS 0063 | D 809 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.040'] | value_loss ['None', 'None', 'None', '0.021']
+U 533 | F 136448 | FPS 0057 | D 814 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.000'] | value_loss ['None', 'None', 'None', '0.010']
+U 534 | F 136704 | FPS 0058 | D 818 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.056'] | value_loss ['None', 'None', 'None', '0.001']
+U 535 | F 136960 | FPS 0057 | D 822 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 536 | F 137216 | FPS 0059 | D 827 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.001']
+U 537 | F 137472 | FPS 0059 | D 831 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 538 | F 137728 | FPS 0057 | D 836 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 539 | F 137984 | FPS 0060 | D 840 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.019']
+U 540 | F 138240 | FPS 0060 | D 844 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 541 | F 138496 | FPS 0060 | D 849 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.035'] | value_loss ['None', 'None', 'None', '0.018']
+U 542 | F 138752 | FPS 0061 | D 853 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.001'] | value_loss ['None', 'None', 'None', '0.016']
+U 543 | F 139008 | FPS 0063 | D 857 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 544 | F 139264 | FPS 0060 | D 862 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 545 | F 139520 | FPS 0058 | D 866 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.013'] | value_loss ['None', 'None', 'None', '0.000']
+U 546 | F 139776 | FPS 0064 | D 870 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.039'] | value_loss ['None', 'None', 'None', '0.018']
+U 547 | F 140032 | FPS 0060 | D 874 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.002']
+U 548 | F 140288 | FPS 0058 | D 879 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.199'] | value_loss ['None', 'None', 'None', '0.081']
+U 549 | F 140544 | FPS 0058 | D 883 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.005'] | value_loss ['None', 'None', 'None', '0.016']
+U 550 | F 140800 | FPS 0059 | D 887 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 551 | F 141056 | FPS 0058 | D 893 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.085'] | value_loss ['None', 'None', 'None', '0.043']
+U 552 | F 141312 | FPS 0060 | D 897 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.050'] | value_loss ['None', 'None', 'None', '0.000']
+U 553 | F 141568 | FPS 0059 | D 901 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.011'] | value_loss ['None', 'None', 'None', '0.016']
+U 554 | F 141824 | FPS 0058 | D 906 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 555 | F 142080 | FPS 0060 | D 910 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 556 | F 142336 | FPS 0059 | D 914 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.075'] | value_loss ['None', 'None', 'None', '0.027']
+U 557 | F 142592 | FPS 0059 | D 919 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.036'] | value_loss ['None', 'None', 'None', '0.000']
+U 558 | F 142848 | FPS 0058 | D 923 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.011'] | value_loss ['None', 'None', 'None', '0.007']
+U 559 | F 143104 | FPS 0060 | D 927 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+U 560 | F 143360 | FPS 0059 | D 932 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.071'] | value_loss ['None', 'None', 'None', '0.032']
+Status saved
+U 561 | F 143616 | FPS 0060 | D 936 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.039'] | value_loss ['None', 'None', 'None', '0.000']
+U 562 | F 143872 | FPS 0062 | D 941 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.027'] | value_loss ['None', 'None', 'None', '0.012']
+U 563 | F 144128 | FPS 0061 | D 945 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 564 | F 144384 | FPS 0062 | D 949 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.014']
+U 565 | F 144640 | FPS 0062 | D 953 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.010'] | value_loss ['None', 'None', 'None', '0.015']
+U 566 | F 144896 | FPS 0060 | D 957 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.052'] | value_loss ['None', 'None', 'None', '0.001']
+U 567 | F 145152 | FPS 0061 | D 962 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.027'] | value_loss ['None', 'None', 'None', '0.023']
+U 568 | F 145408 | FPS 0060 | D 966 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 569 | F 145664 | FPS 0061 | D 970 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+U 570 | F 145920 | FPS 0059 | D 974 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.085'] | value_loss ['None', 'None', 'None', '0.033']
+Status saved
+U 571 | F 146176 | FPS 0061 | D 979 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.025'] | value_loss ['None', 'None', 'None', '0.018']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 571 | F 146176 | FPS 0048 | D 5 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.016'] | value_loss ['None', 'None', 'None', '0.015']
+U 572 | F 146432 | FPS 0060 | D 9 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.036'] | value_loss ['None', 'None', 'None', '0.020']
+U 573 | F 146688 | FPS 0058 | D 14 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.012']
+U 574 | F 146944 | FPS 0060 | D 18 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.011'] | value_loss ['None', 'None', 'None', '0.013']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 571 | F 146176 | FPS 0052 | D 4 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.022'] | value_loss ['None', 'None', 'None', '0.012']
+U 572 | F 146432 | FPS 0059 | D 9 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.012']
+U 573 | F 146688 | FPS 0063 | D 13 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.068'] | value_loss ['None', 'None', 'None', '0.007']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 571 | F 146176 | FPS 0047 | D 5 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.038'] | value_loss ['None', 'None', 'None', '0.016']
+U 572 | F 146432 | FPS 0057 | D 9 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.002'] | value_loss ['None', 'None', 'None', '0.010']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 571 | F 146176 | FPS 0048 | D 5 | Reward:μσmM -0.92 0.28 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.120'] | value_loss ['None', 'None', 'None', '0.026']
+U 572 | F 146432 | FPS 0049 | D 10 | Reward:μσmM -0.57 0.49 -1.00 0.00 | policy_loss ['None', 'None', '0.561', '-0.349'] | value_loss ['None', 'None', '0.359', '0.335']
+U 573 | F 146688 | FPS 0053 | D 15 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', '0.846', '-0.003'] | value_loss ['None', 'None', '0.742', '0.044']
+U 574 | F 146944 | FPS 0053 | D 20 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.093', '-0.068'] | value_loss ['None', 'None', '0.043', '0.058']
+U 575 | F 147200 | FPS 0058 | D 24 | Reward:μσmM 0.15 0.89 -1.00 1.75 | policy_loss ['None', 'None', '-0.108', '-0.307'] | value_loss ['None', 'None', '0.106', '0.107']
+U 576 | F 147456 | FPS 0054 | D 29 | Reward:μσmM -0.25 0.43 -1.00 0.00 | policy_loss ['None', 'None', '0.054', '-0.217'] | value_loss ['None', 'None', '0.030', '0.088']
+U 577 | F 147712 | FPS 0053 | D 34 | Reward:μσmM 0.72 0.78 0.00 1.87 | policy_loss ['None', 'None', '-0.016', '-0.388'] | value_loss ['None', 'None', '0.048', '0.064']
+U 578 | F 147968 | FPS 0052 | D 39 | Reward:μσmM 0.93 0.93 0.00 1.91 | policy_loss ['None', 'None', '-0.174', '-0.226'] | value_loss ['None', 'None', '0.050', '0.031']
+U 579 | F 148224 | FPS 0054 | D 43 | Reward:μσmM 1.33 0.75 0.00 1.93 | policy_loss ['None', 'None', '-0.096', '-0.175'] | value_loss ['None', 'None', '0.119', '0.044']
+U 580 | F 148480 | FPS 0053 | D 48 | Reward:μσmM 1.75 0.34 1.00 1.93 | policy_loss ['None', 'None', '-0.132', '-0.477'] | value_loss ['None', 'None', '0.018', '0.073']
+Status saved
+U 581 | F 148736 | FPS 0052 | D 54 | Reward:μσmM 1.78 0.32 1.00 1.93 | policy_loss ['None', 'None', '-0.117', '-0.182'] | value_loss ['None', 'None', '0.007', '0.006']
+U 582 | F 148992 | FPS 0052 | D 59 | Reward:μσmM 1.81 0.31 1.00 1.96 | policy_loss ['None', 'None', '-0.095', '-0.143'] | value_loss ['None', 'None', '0.005', '0.005']
+U 583 | F 149248 | FPS 0054 | D 63 | Reward:μσmM 1.84 0.28 1.00 1.96 | policy_loss ['None', 'None', '-0.043', '-0.100'] | value_loss ['None', 'None', '0.003', '0.005']
+U 584 | F 149504 | FPS 0053 | D 68 | Reward:μσmM 1.84 0.28 1.00 1.97 | policy_loss ['None', 'None', '-0.026', '-0.085'] | value_loss ['None', 'None', '0.004', '0.004']
+U 585 | F 149760 | FPS 0052 | D 73 | Reward:μσmM 1.82 0.50 0.00 1.97 | policy_loss ['None', 'None', '-0.059', '-0.050'] | value_loss ['None', 'None', '0.001', '0.002']
+U 586 | F 150016 | FPS 0056 | D 78 | Reward:μσmM 1.82 0.50 0.00 1.97 | policy_loss ['None', 'None', '-0.007', '-0.028'] | value_loss ['None', 'None', '0.001', '0.001']
+U 587 | F 150272 | FPS 0053 | D 83 | Reward:μσmM 1.82 0.50 0.00 1.97 | policy_loss ['None', 'None', '-0.020', '-0.014'] | value_loss ['None', 'None', '0.005', '0.002']
+U 588 | F 150528 | FPS 0053 | D 87 | Reward:μσmM 1.28 0.89 0.00 1.96 | policy_loss ['None', 'None', '0.193', '0.272'] | value_loss ['None', 'None', '0.245', '0.293']
+U 589 | F 150784 | FPS 0054 | D 92 | Reward:μσmM 1.14 0.80 0.00 1.73 | policy_loss ['None', 'None', '0.090', '0.171'] | value_loss ['None', 'None', '0.003', '0.016']
+U 590 | F 151040 | FPS 0056 | D 97 | Reward:μσmM 0.88 0.88 0.00 1.76 | policy_loss ['None', 'None', '0.018', '0.147'] | value_loss ['None', 'None', '0.000', '0.007']
+Status saved
+U 591 | F 151296 | FPS 0053 | D 102 | Reward:μσmM -0.26 1.17 -1.00 1.93 | policy_loss ['None', 'None', '0.021', '0.576'] | value_loss ['None', 'None', '0.010', '0.913']
+discover.py --task-config task2 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task2', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 591 | F 151296 | FPS 0048 | D 5 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.021'] | value_loss ['None', 'None', 'None', '0.012']
+U 592 | F 151552 | FPS 0057 | D 9 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.025'] | value_loss ['None', 'None', 'None', '0.015']
+U 593 | F 151808 | FPS 0057 | D 14 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.006']
+U 594 | F 152064 | FPS 0050 | D 19 | Reward:μσmM 0.73 0.73 0.00 1.46 | policy_loss ['None', 'None', '0.125', '-0.268'] | value_loss ['None', 'None', '0.001', '0.144']
+U 595 | F 152320 | FPS 0061 | D 23 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.008'] | value_loss ['None', 'None', 'None', '0.009']
+U 596 | F 152576 | FPS 0060 | D 27 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.060'] | value_loss ['None', 'None', 'None', '0.004']
+U 597 | F 152832 | FPS 0059 | D 32 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.058'] | value_loss ['None', 'None', 'None', '0.000']
+U 598 | F 153088 | FPS 0060 | D 36 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.048'] | value_loss ['None', 'None', 'None', '0.000']
+U 599 | F 153344 | FPS 0062 | D 40 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.041'] | value_loss ['None', 'None', 'None', '0.000']
+U 600 | F 153600 | FPS 0054 | D 45 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '0.038', '-0.169'] | value_loss ['None', 'None', '0.000', '0.064']
+Status saved
+U 601 | F 153856 | FPS 0055 | D 50 | Reward:μσmM -0.07 1.11 -1.00 1.73 | policy_loss ['None', 'None', '-0.024', '-0.057'] | value_loss ['None', 'None', '0.001', '0.132']
+U 602 | F 154112 | FPS 0056 | D 55 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', '0.402', '-0.073'] | value_loss ['None', 'None', '0.216', '0.086']
+U 603 | F 154368 | FPS 0055 | D 59 | Reward:μσmM -0.33 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.301', '-0.071'] | value_loss ['None', 'None', '0.081', '0.056']
+U 604 | F 154624 | FPS 0052 | D 64 | Reward:μσmM -0.33 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.394', '-0.040'] | value_loss ['None', 'None', '0.172', '0.040']
+U 605 | F 154880 | FPS 0053 | D 69 | Reward:μσmM 0.33 0.47 0.00 1.00 | policy_loss ['None', 'None', '0.154', '-0.152'] | value_loss ['None', 'None', '0.040', '0.034']
+U 606 | F 155136 | FPS 0056 | D 74 | Reward:μσmM 0.00 0.82 -1.00 1.00 | policy_loss ['None', 'None', '0.182', '0.047'] | value_loss ['None', 'None', '0.031', '0.076']
+U 607 | F 155392 | FPS 0061 | D 78 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.066'] | value_loss ['None', 'None', 'None', '0.042']
+U 608 | F 155648 | FPS 0052 | D 83 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.129', '-0.073'] | value_loss ['None', 'None', '0.014', '0.003']
+U 609 | F 155904 | FPS 0052 | D 88 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.024', '-0.118'] | value_loss ['None', 'None', '0.014', '0.003']
+U 610 | F 156160 | FPS 0054 | D 92 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.125', '-0.047'] | value_loss ['None', 'None', '0.001', '0.002']
+Status saved
+U 611 | F 156416 | FPS 0057 | D 97 | Reward:μσmM -0.33 0.47 -1.00 0.00 | policy_loss ['None', 'None', '-0.075', '0.171'] | value_loss ['None', 'None', '0.001', '0.134']
+U 612 | F 156672 | FPS 0055 | D 102 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '-0.064', '-0.121'] | value_loss ['None', 'None', '0.006', '0.004']
+U 613 | F 156928 | FPS 0054 | D 107 | Reward:μσmM 0.57 1.15 -1.00 1.71 | policy_loss ['None', 'None', '-0.183', '0.000'] | value_loss ['None', 'None', '0.020', '0.089']
+U 614 | F 157184 | FPS 0057 | D 111 | Reward:μσmM 1.41 0.41 1.00 1.82 | policy_loss ['None', 'None', '-0.158', '-0.231'] | value_loss ['None', 'None', '0.012', '0.015']
+U 615 | F 157440 | FPS 0055 | D 116 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '-0.016', '-0.073'] | value_loss ['None', 'None', '0.004', '0.004']
+U 616 | F 157696 | FPS 0055 | D 120 | Reward:μσmM 1.51 0.36 1.00 1.81 | policy_loss ['None', 'None', '-0.219', '-0.098'] | value_loss ['None', 'None', '0.019', '0.004']
+U 617 | F 157952 | FPS 0055 | D 125 | Reward:μσmM 1.85 0.03 1.81 1.90 | policy_loss ['None', 'None', '-0.275', '-0.251'] | value_loss ['None', 'None', '0.024', '0.033']
+U 618 | F 158208 | FPS 0056 | D 130 | Reward:μσmM 1.55 0.40 1.00 1.91 | policy_loss ['None', 'None', '-0.113', '-0.278'] | value_loss ['None', 'None', '0.014', '0.011']
+U 619 | F 158464 | FPS 0053 | D 134 | Reward:μσmM 1.63 0.67 0.00 1.95 | policy_loss ['None', 'None', '-0.243', '-0.269'] | value_loss ['None', 'None', '0.021', '0.026']
+U 620 | F 158720 | FPS 0054 | D 139 | Reward:μσmM 1.71 0.61 0.00 1.96 | policy_loss ['None', 'None', '-0.160', '-0.274'] | value_loss ['None', 'None', '0.008', '0.023']
+Status saved
+discover.py --task-config task2 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task2', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task2 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task2', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+

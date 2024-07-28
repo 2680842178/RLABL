@@ -1,0 +1,18 @@
+agent_num: 1
+graph:
+  edges:
+  - from: 2
+    to: 1
+  - from: 2
+    to: 0
+  - from: 3
+    to: 0
+  - from: 3
+    to: 2
+  nodes:
+  - 0
+  - 1
+  - 2
+  - 3
+  start_node: 3
+initial_image: ./config/initial_images/1.jpg

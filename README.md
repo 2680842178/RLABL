@@ -30,6 +30,17 @@ cd torch-ac
 pip3 install -e .
 ```
 
+## 主要参数说明
+
+运行脚本：scripts/discover.py   
+参数：--discover 是否进行新状态发现，0为仅训练，1为发现和训练   
+--env 环境名称   
+--task-config 任务配置文件（yaml格式），位于scripts/config/model名称/任务名称.yaml(任务名称应遵循"task?",'?'为数字的格式，例如，使用task1.yaml配置文件，则参数名称为task1)  
+任务配置文件中，主要包含图的结构（知识）和agent数量，若进行发现，还会创建下一个任务配置文件，包含新的图结构以及agent数量。  
+config文件夹中还包括存储的突变图像，保存为bmp格式。  
+--AnomalyNN 异常检测网络名称，存储在scripts/StateNN文件夹下。  
+--model 模型名称，存储在scripts/storage文件夹下。   
+
 ## Files
 
 This package contains:

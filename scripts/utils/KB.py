@@ -1,5 +1,6 @@
 import networkx as nx
 import torch
+from torchvision import transforms
 from torch_ac.format import default_preprocess_obss
 from torch_ac.utils import DictList, ParallelEnv
 from torch.distributions.categorical import Categorical
@@ -37,16 +38,24 @@ def obs_To_state(current_state,
     pre_image_data=preprocess_obss([pre_obs], device=device)
     image_data=preprocess_obss([obs], device=device)
     input_tensor = image_data.image[0]-pre_image_data.image[0]
-    input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
+    mutation = numpy.squeeze(input_tensor).cpu().numpy().astype(numpy.uint8)
+    anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)  
+    # input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
     # print(anomalyNN(input_batch))
-    if anomalyNN(input_batch)[0, 0] >= anomalyNN(input_batch)[0, 1]:
+    if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
         return current_state
+    # print("new_mutation")
+    # plt.imshow(mutation)
+    # plt.show()
     similiarity = []
+    # print("successors", list(G.successors(current_state)))
+    # print("current state:", current_state)
     for next_state in list(G.successors(current_state)):
-        print(next_state, type(next_state))
-        similiarity.append({next_state, contrast(input_batch, G.nodes[next_state]['mutation'])})  
-    output = max(similiarity.item(), key=lambda x: x[1])
+        #print(next_state, type(next_state))
+        similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))  
+    output = max(similiarity, key=lambda x: x[1]) 
     output = output[0]
+    #print("output:", output)
     return output
 
 def Mutiagent_collect_experiences(env, 
@@ -108,7 +117,8 @@ def Mutiagent_collect_experiences(env,
         #     candidate_list=Candidate(current_state)
         #     t=sample_from_selected_dimensions(prob_dist,candidate_list)
         #     current_state = t
-        current_state = obs_To_state(current_state,
+        if not state_ini_flag:
+            current_state = obs_To_state(current_state,
                                      preprocess_obss, 
                                      anomalyNN, 
                                      contrast, 
@@ -121,11 +131,12 @@ def Mutiagent_collect_experiences(env,
         if state_ini_flag:
             current_state=env_ini_state
             state_ini_flag=False
-        agent = G.nodes[current_state]['state'].agent
+        if current_state != 0 and current_state != 1:
+            agent = G.nodes[current_state]['state'].agent
 
-        with torch.no_grad():
-            dist, value = agent.acmodel(preprocessed_obs)
-        action = dist.sample()
+            with torch.no_grad():
+                dist, value = agent.acmodel(preprocessed_obs)
+            action = dist.sample()
 
         if done:
             if reward > 0:
@@ -228,7 +239,7 @@ def Mutiagent_collect_experiences(env,
         if state_trace[i] != state_trace[i + 1]:
             # mental reward
             if reward_trace[i] == 0 and state_trace[i] != 0 and state_trace[i] != 1:
-                reward_trace[i] = torch.tensor(3, device=device, dtype=torch.float)
+                reward_trace[i] = torch.tensor(1, device=device, dtype=torch.float)
 
     next_value=value_trace[-1]
     advantage_trace=[0]*len(action_trace)
@@ -406,14 +417,15 @@ def Mutiagent_collect_experiences_q(env,
         if state_ini_flag:
             current_state=env_ini_state
             state_ini_flag=False
-        agent = G.nodes[current_state]['state'].agent
+        if current_state != 0 and current_state != 1:
+            agent = G.nodes[current_state]['state'].agent
 
-        with torch.no_grad():
-            q_values = agent.acmodel(preprocessed_obs)
-        if random.random() < epsilon:
-            action = torch.tensor([random.choice(range(env.action_space.n))], device=device)
-        else:
-            action = q_values.argmax(dim=1)
+            with torch.no_grad():
+                q_values = agent.acmodel(preprocessed_obs)
+            if random.random() < epsilon:
+                action = torch.tensor([random.choice(range(env.action_space.n))], device=device)
+            else:
+                action = q_values.argmax(dim=1)
 
         if done:
             if reward > 0:
@@ -467,7 +479,7 @@ def Mutiagent_collect_experiences_q(env,
         if state_trace[i] != state_trace[i + 1]:
             # mental reward
             if reward_trace[i] == 0 and state_trace[i] != 0 and state_trace[i] != 1:
-                reward_trace[i] = torch.tensor(3, device=device, dtype=torch.float)
+                reward_trace[i] = torch.tensor(0.5, device=device, dtype=torch.float)
 
     # print("After abl", state_trace)
     exps_list=[]

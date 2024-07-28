@@ -1,6 +1,7 @@
 import argparse
 import yaml
 import time
+import copy
 import datetime
 import torch_ac
 import tensorboardX
@@ -95,7 +96,7 @@ class stateNode():
 def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
     if mutation1 is None or mutation2 is None:
         return 0
-    print(mutation1.shape)
+    # print(mutation1.shape)
     return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
     # print(mutation1, mutation1.shape)
     # gray1 = cv2.cvtColor(mutation1, cv2.COLOR_BGR2GRAY)
@@ -128,8 +129,8 @@ def test(env,
     mutation_buffer = []
     for node, stateNode in G.nodes(data=True):
         print(stateNode['state'].agent)
-        if stateNode['state'].agent is not None:
-            mutation_buffer.append({node, stateNode['state'].mutation})
+        if stateNode['state'].mutation is not None:
+            mutation_buffer.append((node, stateNode['state'].mutation))
     
     log_done_counter = 0
     log_episode_return = torch.zeros(args.procs, device=device)
@@ -148,6 +149,7 @@ def test(env,
         step_count = 0
         while step_count < max_steps_per_episode:
             mutation = obs_To_mutation(pre_obss, obss, preprocess_obss) 
+            mutation = mutation.cpu().numpy().astype(numpy.uint8)
             for node_num, node_mutation in mutation_buffer:
                 if contrast(node_mutation, mutation):
                     current_state = node_num
@@ -199,6 +201,8 @@ def random_discover(env,
                     preprocess_obss = None):
     known_mutation_buffer = []
     self_mutation_buffer = []
+    new_node = len(G.nodes)
+    G.add_node(new_node, state=stateNode(new_node, None, None))
     for node in G.nodes:
         if G.nodes[node]['state'].mutation is not None:
             known_mutation_buffer.append((node, G.nodes[node]['state'].mutation))
@@ -225,47 +229,139 @@ def random_discover(env,
         # 所以需要将mutation(shape=300, 300, 3)转换为(1, 3, 300, 300)
 
         if terminateds:
-            G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
-            G.add_edge(len(G.nodes) - 1, 0)
+            if (new_node, 0) not in G.edges:    
+                G.add_edge(new_node, 0)
             env.reset()
             obss = env.gen_obs()
+            pre_obss = obss
             continue
         if rewards > 0:
-            print("arrive the state 1!")
-            G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation)) 
-            if initial_state:
-                G.add_edge(start_node, node_num)
-            else:
-                for successor in list(G.successors(start_node)):
-                    print(successor)
-                    if successor != 0:
-                        G.remove_edge(start_node, successor)
-                G.add_edge(start_node, len(G.nodes) - 1)
-                G.add_edge(len(G.nodes) - 1, 1)
-                G.nodes[len(G.nodes) - 1]['state'].mutation = self_mutation_buffer[0]
-            nx.draw(G, with_labels=True)
-            plt.show()
-            return len(G.nodes) - 1
+            print("arrive the state 1 without any mutation! The test may have some problems.")
+            return None
+            # G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation)) 
+            # if initial_state:
+            #     G.add_edge(new_node, 1)
+            # else:
+            #     for successor in list(G.successors(start_node)):
+            #         print(successor)
+            #         if successor != 0:
+            #             G.remove_edge(start_node, successor)
+            #     G.add_edge(start_node, new_node)
+            #     G.add_edge(new_node, 1)
+            #     if len(self_mutation_buffer) == 0:
+            #         print("can't find a mutation.")
+            #         nx.draw(G, with_labels=True)    
+            #         plt.show()
+            #         return None 
+            #     G.nodes[new_node]['state'].mutation = self_mutation_buffer[0][0]
+            # nx.draw(G, with_labels=True)
+            # plt.show()
+            # return new_node
         if anomalyNN(anomaly_mutation)[0, 1] > anomalyNN(anomaly_mutation)[0, 0]:
             print("new mutation: ", anomalyNN(anomaly_mutation))
-            # plt.imshow(mutation)
-            # plt.show()
+            plt.imshow(mutation)
+            plt.show()
+            #pre_image_data = preprocess_obss([pre_obss], device=device).image
+            #pre_image_data = numpy.squeeze(pre_image_data).cpu().numpy().astype(numpy.uint8)
+            #image_data = preprocess_obss([obss], device=device).image
+            #image_data = numpy.squeeze(image_data).cpu().numpy().astype(numpy.uint8)
+            #plt.imshow(image_data)
+            #plt.imshow(pre_image_data)
+            #plt.show()
             self_mutation_buffer.append((mutation, anomalyNN(anomaly_mutation)))
-        for node_num, node_mutation in known_mutation_buffer:
-            if contrast(node_mutation, mutation) > 0.95:
-                G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
-                if initial_state:
-                    G.add_edge(start_node, node_num)
-                else:
-                    for successor in list(G.successors(start_node)):
-                        if successor != 0:
-                            G.remove_edge(start_node, successor)
-                    G.add_edge(start_node, len(G.nodes) - 1)
-                    G.add_edge(len(G.nodes) - 1, node_num)
-                    G.nodes[len(G.nodes) - 1]['state'].mutation = self_mutation_buffer[0]
-                nx.draw(G, with_labels=True)
-                plt.show()
-                return len(G.nodes) - 1 
+            mutation_env = copy.deepcopy(env)
+
+            # 此处逻辑（对于初始状态）：发现新的突变之后，如果这个突变与过去已知的突变相似
+            # 那么将新的节点指向这个已知的节点，直接返回。
+            # 如果是新的突变（不与任何已知突变相似），那么这个突变属于起始节点（过去没有突变）
+            if initial_state:
+                for node_num, node_mutation in known_mutation_buffer:
+                    if contrast(node_mutation, mutation) > 0.95:
+                        # G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
+                        G.add_edge(start_node, node_num)
+                        nx.draw(G, with_labels=True)
+                        plt.show()
+                        return new_node
+                G.add_edge(new_node, start_node)
+                G.nodes[start_node]['state'].mutation = self_mutation_buffer[0][0]
+                return new_node
+            # plt.imshow(mutation_env.gen_obs()['image'])
+            # plt.show()
+            for _ in range(int(steps)):
+                action = env.action_space.sample()  
+                pre_obss = obss
+                obss, rewards, terminateds, truncateds, _ = env.step(action)
+                # print("obs", obss)
+                # plt.imshow(obss['image'])
+                # plt.show()
+                mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
+                mutation = mutation.cpu().numpy().astype(numpy.uint8)
+                anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+                #print(rewards)
+                if rewards > 0:
+                    print("arrive the state 1!")
+                    G.add_edge(new_node, 1)
+                    G.add_edge(start_node, new_node)
+                    # if initial_state:
+                    #     G.add_edge(start_node, node_num)
+                    # else:
+                    #     for successor in list(G.successors(start_node)):
+                    #         print(successor)
+                    #         if successor != 0:
+                    #             G.remove_edge(start_node, successor)
+                    #     G.add_edge(start_node, new_node)
+                    #     G.add_edge(new_node, 1)
+                    #     G.nodes[new_node]['state'].mutation = self_mutation_buffer[0][0]
+                    nx.draw(G, with_labels=True)
+                    plt.show()
+                    return new_node 
+                if terminateds:
+                    #print("terminatied!")
+                    env = copy.deepcopy(mutation_env)
+                    obss = env.gen_obs()
+                    pre_obss = obss
+                    # plt.imshow(obss['image'])
+                    # plt.show()
+                    continue
+                if anomalyNN(anomaly_mutation)[0, 1] > anomalyNN(anomaly_mutation)[0, 0]:
+                    print("new mutation1: ", anomalyNN(anomaly_mutation))
+                    plt.imshow(mutation)
+                    plt.show()
+                    
+                    for node_num, node_mutation in known_mutation_buffer:
+                        if contrast(node_mutation, mutation) > 0.95:
+                            # G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
+                            # if initial_state:
+                            #     G.add_edge(start_node, node_num)
+                            # else:
+                            for successor in list(G.successors(start_node)):
+                                if successor != 0:
+                                    G.remove_edge(start_node, successor)
+                            G.add_edge(start_node, new_node)
+                            G.add_edge(new_node, node_num)
+                            G.nodes[new_node]['state'].mutation = self_mutation_buffer[0][0]
+                            nx.draw(G, with_labels=True)
+                            plt.show()
+                            return new_node
+                    print("There are two new mutations, can't find the new state!")
+                    self_mutation_buffer.append((mutation, anomalyNN(anomaly_mutation)))
+                
+            
+        # for node_num, node_mutation in known_mutation_buffer:
+        #     if contrast(node_mutation, mutation) > 0.95:
+        #         G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
+        #         if initial_state:
+        #             G.add_edge(start_node, node_num)
+        #         else:
+        #             for successor in list(G.successors(start_node)):
+        #                 if successor != 0:
+        #                     G.remove_edge(start_node, successor)
+        #             G.add_edge(start_node, len(G.nodes) - 1)
+        #             G.add_edge(len(G.nodes) - 1, node_num)
+        #             G.nodes[len(G.nodes) - 1]['state'].mutation = self_mutation_buffer[0][0]
+        #         nx.draw(G, with_labels=True)
+        #         plt.show()
+        #         return len(G.nodes) - 1 
         
     return None 
     # return the new state number.
@@ -290,7 +386,7 @@ def main():
         #nx.draw(G, with_labels=True)
         G.add_edge(edge["from"], edge["to"])
     start_node = task_config['graph']['start_node'] 
-    nx.draw(G, with_labels=True)
+    # nx.draw(G, with_labels=True)
     # plt.show()
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
     default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
@@ -409,7 +505,7 @@ def main():
     for node in G.nodes:
         if list(G.predecessors(node)):
             if node != 0 and node != 1:
-                G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".jpg")
+                G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
     
     print(G.nodes)
     print(G.edges)
@@ -420,22 +516,23 @@ def main():
             return
         last_initial_img = plt.imread(last_initial_img_dir)
         print(contrast(last_initial_img, initial_img))
-        plt.imshow(last_initial_img)
-        plt.show()
-        plt.imshow(initial_img)
-        plt.show()
+
         if contrast(last_initial_img, initial_img) > 0.95:
             print("contrast! New node will after the initial node!")
             new_node = random_discover(env = stop_env, start_obss = stop_obss, \
-                start_node=stop_state, initial_state=True, steps=1e7, anomalyNN = AnomalyNN, preprocess_obss=preprocess_obss)
-            start_node = new_node
+                start_node=stop_state, initial_state=False, steps=1e7, anomalyNN = AnomalyNN, preprocess_obss=preprocess_obss)
             if new_node != None:
                 agent_num += 1
             print("New node: ", new_node)
         else:
             print("Not contrast! New node will be added before the initial node!")
+            nx.draw(G, with_labels=True)
+            plt.show()
+            print("nodes", G.nodes)
+            print("edges", G.edges)
             new_node = random_discover(env = stop_env, start_obss = stop_obss, \
-                start_node=stop_state, initial_state=False, steps=1e7, anomalyNN = AnomalyNN, preprocess_obss=preprocess_obss)
+                start_node=stop_state, initial_state=True, steps=1e7, anomalyNN = AnomalyNN, preprocess_obss=preprocess_obss)
+            start_node = new_node
             if new_node != None:
                 agent_num += 1
             print("New node: ", new_node)   
@@ -444,21 +541,23 @@ def main():
                 
         new_acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         new_acmodel.to(device)
+        acmodels.append(new_acmodel)
         if args.algo == "a2c":
-            algo = torch_ac.A2CAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+            algo = torch_ac.A2CAlgo(envs, acmodels[new_node - 2], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_alpha, args.optim_eps, preprocess_obss)
         elif args.algo == "ppo":
-            algo = torch_ac.PPOAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+            algo = torch_ac.PPOAlgo(envs, acmodels[new_node - 2], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
         elif args.algo == "dqn":
-            algo = torch_ac.DQNAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr,
+            algo = torch_ac.DQNAlgo(envs, acmodels[new_node - 2], device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
         else:
             raise ValueError("Incorrect algorithm name: {}".format(args.algo))
-        G.nodes[new_node + 2]['state'].agent = algo
+        G.nodes[new_node]['state'].agent = algo
+        algos.append(algo)
         # save the new graph
         new_yaml = task_config
         new_yaml['graph']['nodes'].append(new_node)
@@ -476,7 +575,7 @@ def main():
         ### save the mutation
         for node in G.nodes:
             if G.nodes[node]['state'].mutation is not None:
-                plt.imsave(new_task_path + "/mutation" + str(node) + ".jpg", G.nodes[node]['state'].mutation)
+                plt.imsave(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
     nx.draw(G, with_labels=True)
     plt.show()
     
@@ -516,8 +615,8 @@ def main():
                                                                        epsilon=epsilon)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
-        for i in range(agent_num + 2):
-            if len(exps_list[i].obs):
+        for i in range(2, agent_num + 2):
+            if len(exps_list[i].obs) and i != 0 and i != 1:
                 logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
         logs2 = {}
@@ -527,7 +626,7 @@ def main():
             policy_loss_list = [None] * (agent_num + 2)
             value_loss_list = [None] *(agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(agent_num + 2):
+            for i in range(2, agent_num + 2):
                 if len(exps_list[i].obs):
                     entropy_list[i] = logs2_list[i]["entropy"]
                     value_list[i] = logs2_list[i]["value"]
@@ -545,7 +644,7 @@ def main():
             loss_list = [None] * (agent_num + 2)
             q_value_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(agent_num + 2):
+            for i in range(2, agent_num + 2):
                 if len(exps_list[i].obs):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
