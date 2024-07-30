@@ -142,8 +142,9 @@ def test(env,
     obss = env.gen_obs()
     # print(obss)
     pre_obss = obss
-    stop_env = env
-    stop_obss = obss
+    stop_env = copy.deepcopy(env)
+    stop_obss = copy.deepcopy(obss)
+    show_obs = numpy.squeeze(preprocess_obss([obss], device=device).image).cpu().numpy().astype(numpy.uint8)
 
     for _ in range(episodes):
         step_count = 0
@@ -151,18 +152,24 @@ def test(env,
             mutation = obs_To_mutation(pre_obss, obss, preprocess_obss) 
             mutation = mutation.cpu().numpy().astype(numpy.uint8)
             for node_num, node_mutation in mutation_buffer:
-                if contrast(node_mutation, mutation):
+                if contrast(node_mutation, mutation) > 0.99:
                     current_state = node_num
-                    stop_env = env
-                    stop_obss = obss
+                    stop_env = copy.deepcopy(env)
+                    stop_obss = copy.deepcopy(obss)
                     break
                 
             preprocessed_obss = preprocess_obss([obss], device=device)
             with torch.no_grad():
                 dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
-            #actions = dist.sample() #dist.probs.max(1, keepdim=True)[1]
-            actions = dist.probs.max(1, keepdim=True)[1]
+            print(current_state)
+            print(dist.probs)
+            plt.imshow(show_obs)
+            plt.show()
+            actions = dist.sample() #dist.probs.max(1, keepdim=True)[1]
+            print(actions)
+            #actions = dist.probs.max(1, keepdim=True)[1]
             obss, rewards, terminateds, truncateds, _ = env.step(actions)
+            show_obs = numpy.squeeze(preprocess_obss([obss], device=device).image).cpu().numpy().astype(numpy.uint8)
             
             step_count += 1
             dones = terminateds | truncateds # tuple(a | b for a, b in zip(terminateds, truncateds))
@@ -209,9 +216,11 @@ def random_discover(env,
     print("known_mutation_buffer: ", known_mutation_buffer)
     pre_obss = start_obss   
     obss = start_obss
+    env.reset()
     for _ in range(int(steps)):
         action = env.action_space.sample()  
-        pre_obss = obss
+        # pre_obss = obss
+        pre_obss = env.gen_obs()
         obss, rewards, terminateds, truncateds, _ = env.step(action)
         # print("obs", obss)
         mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
@@ -232,8 +241,8 @@ def random_discover(env,
             if (new_node, 0) not in G.edges:    
                 G.add_edge(new_node, 0)
             env.reset()
-            obss = env.gen_obs()
-            pre_obss = obss
+            # obss = env.gen_obs()
+            # pre_obss = obss
             continue
         if rewards > 0:
             print("arrive the state 1 without any mutation! The test may have some problems.")
@@ -276,7 +285,7 @@ def random_discover(env,
             # 如果是新的突变（不与任何已知突变相似），那么这个突变属于起始节点（过去没有突变）
             if initial_state:
                 for node_num, node_mutation in known_mutation_buffer:
-                    if contrast(node_mutation, mutation) > 0.95:
+                    if contrast(node_mutation, mutation) > 0.99:
                         # G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
                         G.add_edge(start_node, node_num)
                         nx.draw(G, with_labels=True)
@@ -329,7 +338,7 @@ def random_discover(env,
                     plt.show()
                     
                     for node_num, node_mutation in known_mutation_buffer:
-                        if contrast(node_mutation, mutation) > 0.95:
+                        if contrast(node_mutation, mutation) > 0.99:
                             # G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
                             # if initial_state:
                             #     G.add_edge(start_node, node_num)
@@ -425,16 +434,16 @@ def main():
         initial_img, _ = env.reset()
         envs.append(env)
     txt_logger.info("Environments loaded\n")
-    last_initial_img_dir = task_path + "/initial_image.jpg"
+    last_initial_img_dir = task_path + "/initial_image.bmp"
     initial_img = initial_img['image']
     # plt.imshow(initial_img)
     #plt.show()
     if not os.path.exists(new_task_path):
         os.makedirs(new_task_path)
     if args.discover == 0:
-        plt.imsave(task_path + "/initial_image.jpg", initial_img)
+        plt.imsave(task_path + "/initial_image.bmp", initial_img)
     else:
-        plt.imsave(new_task_path + "/initial_image.jpg", initial_img)
+        plt.imsave(new_task_path + "/initial_image.bmp", initial_img)
     print("The same contrast:", contrast(initial_img, initial_img))
     # Load training status
 
@@ -516,12 +525,16 @@ def main():
             return
         last_initial_img = plt.imread(last_initial_img_dir)
         print(contrast(last_initial_img, initial_img))
+        plt.imshow(last_initial_img)
+        plt.show()
+        plt.imshow(initial_img)
+        plt.show()
 
-        if contrast(last_initial_img, initial_img) > 0.95:
+        if contrast(last_initial_img, initial_img) > 0.99:
             print("contrast! New node will after the initial node!")
             new_node = random_discover(env = stop_env, start_obss = stop_obss, \
                 start_node=stop_state, initial_state=False, steps=1e7, anomalyNN = AnomalyNN, preprocess_obss=preprocess_obss)
-            if new_node != None:
+            if new_node is not None:
                 agent_num += 1
             print("New node: ", new_node)
         else:
@@ -533,7 +546,7 @@ def main():
             new_node = random_discover(env = stop_env, start_obss = stop_obss, \
                 start_node=stop_state, initial_state=True, steps=1e7, anomalyNN = AnomalyNN, preprocess_obss=preprocess_obss)
             start_node = new_node
-            if new_node != None:
+            if new_node is not None:
                 agent_num += 1
             print("New node: ", new_node)   
         # save the graph to yaml
@@ -566,6 +579,7 @@ def main():
             new_yaml['graph']['edges'].append({"from": new_node, "to": new_node_successor})
         for new_node_successor in G.predecessors(new_node):
             new_yaml['graph']['edges'].append({"from": new_node_successor, "to": new_node})
+        new_yaml['agent_num'] = agent_num
         # initial_img_name = 'after_' + task_config['initial_image']
         # initial_img_dir = './initial_images/' + initial_img_name
         # initial_img_jpg = initial_img.cpu().numpy().astype(numpy.uint8)

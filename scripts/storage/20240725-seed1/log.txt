@@ -4609,3 +4609,563 @@ ACModel(
 
 Optimizer loaded
 
+discover.py --task-config task2 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task2', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task2 --discover 0 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.00025 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task2', discover=0, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.00025, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 621 | F 158976 | FPS 0045 | D 5 | Reward:μσmM -0.88 0.33 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.049'] | value_loss ['None', 'None', 'None', '0.015']
+U 622 | F 159232 | FPS 0054 | D 10 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.008']
+U 623 | F 159488 | FPS 0055 | D 15 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.009'] | value_loss ['None', 'None', 'None', '0.012']
+U 624 | F 159744 | FPS 0059 | D 19 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.008'] | value_loss ['None', 'None', 'None', '0.014']
+U 625 | F 160000 | FPS 0059 | D 23 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.054'] | value_loss ['None', 'None', 'None', '0.007']
+U 626 | F 160256 | FPS 0062 | D 27 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.105'] | value_loss ['None', 'None', 'None', '0.001']
+U 627 | F 160512 | FPS 0059 | D 32 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.010']
+U 628 | F 160768 | FPS 0061 | D 36 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.016']
+U 629 | F 161024 | FPS 0059 | D 40 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.045'] | value_loss ['None', 'None', 'None', '0.003']
+U 630 | F 161280 | FPS 0061 | D 45 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.007']
+Status saved
+U 631 | F 161536 | FPS 0058 | D 50 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.008']
+U 632 | F 161792 | FPS 0061 | D 54 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.069'] | value_loss ['None', 'None', 'None', '0.004']
+U 633 | F 162048 | FPS 0057 | D 58 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.051'] | value_loss ['None', 'None', 'None', '0.000']
+U 634 | F 162304 | FPS 0061 | D 62 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.000']
+U 635 | F 162560 | FPS 0057 | D 67 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.012'] | value_loss ['None', 'None', 'None', '0.018']
+U 636 | F 162816 | FPS 0058 | D 71 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.005'] | value_loss ['None', 'None', 'None', '0.007']
+U 637 | F 163072 | FPS 0059 | D 76 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.000']
+U 638 | F 163328 | FPS 0059 | D 80 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.017'] | value_loss ['None', 'None', 'None', '0.007']
+U 639 | F 163584 | FPS 0058 | D 84 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.000']
+U 640 | F 163840 | FPS 0059 | D 89 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 641 | F 164096 | FPS 0058 | D 94 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.030'] | value_loss ['None', 'None', 'None', '0.022']
+U 642 | F 164352 | FPS 0058 | D 98 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.035'] | value_loss ['None', 'None', 'None', '0.023']
+U 643 | F 164608 | FPS 0058 | D 102 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.098'] | value_loss ['None', 'None', 'None', '0.039']
+U 644 | F 164864 | FPS 0060 | D 107 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 645 | F 165120 | FPS 0060 | D 111 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.009'] | value_loss ['None', 'None', 'None', '0.019']
+U 646 | F 165376 | FPS 0060 | D 115 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.055'] | value_loss ['None', 'None', 'None', '0.017']
+U 647 | F 165632 | FPS 0058 | D 120 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.034'] | value_loss ['None', 'None', 'None', '0.000']
+U 648 | F 165888 | FPS 0058 | D 124 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 649 | F 166144 | FPS 0057 | D 129 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.025'] | value_loss ['None', 'None', 'None', '0.021']
+U 650 | F 166400 | FPS 0058 | D 133 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.021'] | value_loss ['None', 'None', 'None', '0.014']
+Status saved
+U 651 | F 166656 | FPS 0058 | D 138 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.001']
+U 652 | F 166912 | FPS 0060 | D 142 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.010'] | value_loss ['None', 'None', 'None', '0.012']
+U 653 | F 167168 | FPS 0058 | D 147 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.009']
+U 654 | F 167424 | FPS 0059 | D 151 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.072'] | value_loss ['None', 'None', 'None', '0.031']
+U 655 | F 167680 | FPS 0061 | D 155 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.011']
+U 656 | F 167936 | FPS 0061 | D 160 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.078'] | value_loss ['None', 'None', 'None', '0.014']
+U 657 | F 168192 | FPS 0058 | D 164 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.000']
+U 658 | F 168448 | FPS 0059 | D 168 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.000']
+U 659 | F 168704 | FPS 0059 | D 173 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 660 | F 168960 | FPS 0058 | D 177 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.020'] | value_loss ['None', 'None', 'None', '0.018']
+Status saved
+U 661 | F 169216 | FPS 0057 | D 182 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 662 | F 169472 | FPS 0056 | D 187 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.014'] | value_loss ['None', 'None', 'None', '0.010']
+U 663 | F 169728 | FPS 0060 | D 191 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 664 | F 169984 | FPS 0057 | D 195 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.025'] | value_loss ['None', 'None', 'None', '0.015']
+U 665 | F 170240 | FPS 0060 | D 200 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+U 666 | F 170496 | FPS 0059 | D 204 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.033'] | value_loss ['None', 'None', 'None', '0.022']
+U 667 | F 170752 | FPS 0062 | D 208 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.020'] | value_loss ['None', 'None', 'None', '0.021']
+U 668 | F 171008 | FPS 0060 | D 212 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.055'] | value_loss ['None', 'None', 'None', '0.001']
+U 669 | F 171264 | FPS 0058 | D 217 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.010'] | value_loss ['None', 'None', 'None', '0.016']
+U 670 | F 171520 | FPS 0060 | D 221 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.001']
+Status saved
+U 671 | F 171776 | FPS 0061 | D 226 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.000']
+U 672 | F 172032 | FPS 0060 | D 230 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 673 | F 172288 | FPS 0062 | D 234 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+U 674 | F 172544 | FPS 0060 | D 238 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.072'] | value_loss ['None', 'None', 'None', '0.028']
+U 675 | F 172800 | FPS 0052 | D 243 | Reward:μσmM 0.87 0.87 0.00 1.73 | policy_loss ['None', 'None', '-0.032', '-0.168'] | value_loss ['None', 'None', '0.008', '0.089']
+U 676 | F 173056 | FPS 0061 | D 247 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.031'] | value_loss ['None', 'None', 'None', '0.020']
+U 677 | F 173312 | FPS 0061 | D 252 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.010']
+U 678 | F 173568 | FPS 0062 | D 256 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 679 | F 173824 | FPS 0062 | D 260 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.083'] | value_loss ['None', 'None', 'None', '0.034']
+U 680 | F 174080 | FPS 0064 | D 264 | Reward:μσmM -1.00 0.00 -1.00 -1.00 | policy_loss ['None', 'None', 'None', '0.068'] | value_loss ['None', 'None', 'None', '0.021']
+Status saved
+U 681 | F 174336 | FPS 0063 | D 268 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.002']
+U 682 | F 174592 | FPS 0058 | D 273 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.005'] | value_loss ['None', 'None', 'None', '0.013']
+U 683 | F 174848 | FPS 0057 | D 277 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.064'] | value_loss ['None', 'None', 'None', '0.034']
+U 684 | F 175104 | FPS 0060 | D 282 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.065'] | value_loss ['None', 'None', 'None', '0.000']
+U 685 | F 175360 | FPS 0057 | D 286 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.004'] | value_loss ['None', 'None', 'None', '0.010']
+U 686 | F 175616 | FPS 0056 | D 291 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.044'] | value_loss ['None', 'None', 'None', '0.016']
+U 687 | F 175872 | FPS 0060 | D 295 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.012']
+U 688 | F 176128 | FPS 0060 | D 299 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.058'] | value_loss ['None', 'None', 'None', '0.001']
+U 689 | F 176384 | FPS 0062 | D 303 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.036'] | value_loss ['None', 'None', 'None', '0.000']
+U 690 | F 176640 | FPS 0058 | D 308 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.043'] | value_loss ['None', 'None', 'None', '0.026']
+Status saved
+U 691 | F 176896 | FPS 0060 | D 312 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.000']
+U 692 | F 177152 | FPS 0057 | D 317 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 693 | F 177408 | FPS 0061 | D 321 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.023'] | value_loss ['None', 'None', 'None', '0.017']
+U 694 | F 177664 | FPS 0061 | D 325 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.009'] | value_loss ['None', 'None', 'None', '0.012']
+U 695 | F 177920 | FPS 0058 | D 330 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 696 | F 178176 | FPS 0059 | D 334 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.075'] | value_loss ['None', 'None', 'None', '0.032']
+U 697 | F 178432 | FPS 0062 | D 338 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.084'] | value_loss ['None', 'None', 'None', '0.037']
+U 698 | F 178688 | FPS 0062 | D 342 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.002'] | value_loss ['None', 'None', 'None', '0.012']
+U 699 | F 178944 | FPS 0059 | D 347 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.041'] | value_loss ['None', 'None', 'None', '0.000']
+U 700 | F 179200 | FPS 0059 | D 351 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.010']
+Status saved
+U 701 | F 179456 | FPS 0061 | D 356 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.033'] | value_loss ['None', 'None', 'None', '0.002']
+U 702 | F 179712 | FPS 0061 | D 360 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 703 | F 179968 | FPS 0063 | D 364 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 704 | F 180224 | FPS 0062 | D 368 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 705 | F 180480 | FPS 0064 | D 372 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+U 706 | F 180736 | FPS 0057 | D 377 | Reward:μσmM 0.86 0.86 0.00 1.73 | policy_loss ['None', 'None', '0.066', '-0.167'] | value_loss ['None', 'None', '0.009', '0.081']
+U 707 | F 180992 | FPS 0063 | D 381 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.010'] | value_loss ['None', 'None', 'None', '0.000']
+U 708 | F 181248 | FPS 0064 | D 385 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.075'] | value_loss ['None', 'None', 'None', '0.033']
+U 709 | F 181504 | FPS 0064 | D 389 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.049'] | value_loss ['None', 'None', 'None', '0.029']
+U 710 | F 181760 | FPS 0065 | D 393 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.103'] | value_loss ['None', 'None', 'None', '0.029']
+Status saved
+U 711 | F 182016 | FPS 0062 | D 397 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.000']
+U 712 | F 182272 | FPS 0063 | D 401 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 713 | F 182528 | FPS 0062 | D 406 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.016']
+U 714 | F 182784 | FPS 0064 | D 410 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 715 | F 183040 | FPS 0063 | D 414 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.018'] | value_loss ['None', 'None', 'None', '0.000']
+U 716 | F 183296 | FPS 0061 | D 418 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.036'] | value_loss ['None', 'None', 'None', '0.020']
+U 717 | F 183552 | FPS 0059 | D 422 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.032'] | value_loss ['None', 'None', 'None', '0.009']
+U 718 | F 183808 | FPS 0056 | D 427 | Reward:μσmM -0.33 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.766', '-0.052'] | value_loss ['None', 'None', '0.646', '0.054']
+U 719 | F 184064 | FPS 0063 | D 431 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.003']
+U 720 | F 184320 | FPS 0061 | D 435 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.086'] | value_loss ['None', 'None', 'None', '0.041']
+discover.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0002 --AnomalyNN test_8 --model 20240725-seed1 --discount 0.99
+
+Namespace(task_config='task1', discover=1, algo='ppo', env='MiniGrid-ConfigWorld-v0-havekey', model='20240725-seed1', seed=1, log_interval=1, save_interval=10, procs=1, frames=10000000, AnomalyNN='test_8', epochs=32, batch_size=128, frames_per_proc=256, discount=0.99, lr=0.0002, gae_lambda=0.95, entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, optim_eps=1e-08, optim_alpha=0.99, clip_eps=0.2, recurrence=1, text=False, buffer_size=10000, target_update=10)
+
+Device: cuda
+
+Environments loaded
+
+Training status loaded
+
+Observations preprocessor loaded
+Model loaded
+
+ACModel(
+  (image_conv): Sequential(
+    (0): Conv2d(3, 32, kernel_size=(12, 12), stride=(6, 6))
+    (1): ReLU()
+    (2): Conv2d(32, 64, kernel_size=(9, 9), stride=(4, 4))
+    (3): ReLU()
+    (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2))
+    (5): ReLU()
+    (6): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1))
+    (7): ReLU()
+  )
+  (actor): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=7, bias=True)
+  )
+  (critic): Sequential(
+    (0): Linear(in_features=2304, out_features=512, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=512, out_features=64, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=64, out_features=1, bias=True)
+  )
+)
+
+Optimizer loaded
+
+U 711 | F 182016 | FPS 0051 | D 5 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.013']
+U 712 | F 182272 | FPS 0053 | D 9 | Reward:μσmM -0.91 0.29 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.047'] | value_loss ['None', 'None', 'None', '0.023']
+U 713 | F 182528 | FPS 0058 | D 14 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.008']
+U 714 | F 182784 | FPS 0058 | D 18 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.098'] | value_loss ['None', 'None', 'None', '0.003']
+U 715 | F 183040 | FPS 0060 | D 22 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.082'] | value_loss ['None', 'None', 'None', '0.002']
+U 716 | F 183296 | FPS 0060 | D 27 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.091'] | value_loss ['None', 'None', 'None', '0.001']
+U 717 | F 183552 | FPS 0059 | D 31 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.076'] | value_loss ['None', 'None', 'None', '0.000']
+U 718 | F 183808 | FPS 0060 | D 35 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.066'] | value_loss ['None', 'None', 'None', '0.000']
+U 719 | F 184064 | FPS 0061 | D 40 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.056'] | value_loss ['None', 'None', 'None', '0.000']
+U 720 | F 184320 | FPS 0059 | D 44 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.045'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 721 | F 184576 | FPS 0062 | D 49 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.041'] | value_loss ['None', 'None', 'None', '0.000']
+U 722 | F 184832 | FPS 0061 | D 53 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.034'] | value_loss ['None', 'None', 'None', '0.000']
+U 723 | F 185088 | FPS 0060 | D 57 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 724 | F 185344 | FPS 0062 | D 61 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 725 | F 185600 | FPS 0063 | D 65 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.074'] | value_loss ['None', 'None', 'None', '0.027']
+U 726 | F 185856 | FPS 0064 | D 69 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.060'] | value_loss ['None', 'None', 'None', '0.035']
+U 727 | F 186112 | FPS 0064 | D 73 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.003']
+U 728 | F 186368 | FPS 0061 | D 77 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.060'] | value_loss ['None', 'None', 'None', '0.027']
+U 729 | F 186624 | FPS 0064 | D 81 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.008'] | value_loss ['None', 'None', 'None', '0.013']
+U 730 | F 186880 | FPS 0065 | D 85 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.050'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 731 | F 187136 | FPS 0059 | D 90 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.009'] | value_loss ['None', 'None', 'None', '0.018']
+U 732 | F 187392 | FPS 0057 | D 95 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.136'] | value_loss ['None', 'None', 'None', '0.041']
+U 733 | F 187648 | FPS 0058 | D 99 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.047'] | value_loss ['None', 'None', 'None', '0.001']
+U 734 | F 187904 | FPS 0061 | D 103 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.008'] | value_loss ['None', 'None', 'None', '0.017']
+U 735 | F 188160 | FPS 0059 | D 108 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.002'] | value_loss ['None', 'None', 'None', '0.009']
+U 736 | F 188416 | FPS 0058 | D 112 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.105'] | value_loss ['None', 'None', 'None', '0.028']
+U 737 | F 188672 | FPS 0055 | D 117 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.010'] | value_loss ['None', 'None', 'None', '0.003']
+U 738 | F 188928 | FPS 0060 | D 121 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.000']
+U 739 | F 189184 | FPS 0062 | D 125 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 740 | F 189440 | FPS 0059 | D 129 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.034'] | value_loss ['None', 'None', 'None', '0.002']
+Status saved
+U 741 | F 189696 | FPS 0058 | D 134 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.021'] | value_loss ['None', 'None', 'None', '0.000']
+U 742 | F 189952 | FPS 0061 | D 139 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 743 | F 190208 | FPS 0059 | D 143 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.010'] | value_loss ['None', 'None', 'None', '0.004']
+U 744 | F 190464 | FPS 0058 | D 147 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.035'] | value_loss ['None', 'None', 'None', '0.018']
+U 745 | F 190720 | FPS 0058 | D 152 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.079'] | value_loss ['None', 'None', 'None', '0.033']
+U 746 | F 190976 | FPS 0058 | D 156 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.014'] | value_loss ['None', 'None', 'None', '0.023']
+U 747 | F 191232 | FPS 0061 | D 160 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.014']
+U 748 | F 191488 | FPS 0060 | D 165 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.006']
+U 749 | F 191744 | FPS 0061 | D 169 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+U 750 | F 192000 | FPS 0060 | D 173 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.008']
+Status saved
+U 751 | F 192256 | FPS 0060 | D 178 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.046'] | value_loss ['None', 'None', 'None', '0.022']
+U 752 | F 192512 | FPS 0058 | D 182 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.063'] | value_loss ['None', 'None', 'None', '0.032']
+U 753 | F 192768 | FPS 0060 | D 187 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.042'] | value_loss ['None', 'None', 'None', '0.000']
+U 754 | F 193024 | FPS 0061 | D 191 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 755 | F 193280 | FPS 0061 | D 195 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 756 | F 193536 | FPS 0058 | D 199 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.018'] | value_loss ['None', 'None', 'None', '0.015']
+U 757 | F 193792 | FPS 0058 | D 204 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 758 | F 194048 | FPS 0061 | D 208 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.121'] | value_loss ['None', 'None', 'None', '0.048']
+U 759 | F 194304 | FPS 0056 | D 213 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.111'] | value_loss ['None', 'None', 'None', '0.044']
+U 760 | F 194560 | FPS 0057 | D 217 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.003']
+Status saved
+U 761 | F 194816 | FPS 0057 | D 222 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.012'] | value_loss ['None', 'None', 'None', '0.011']
+U 762 | F 195072 | FPS 0062 | D 227 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.052'] | value_loss ['None', 'None', 'None', '0.001']
+U 763 | F 195328 | FPS 0061 | D 231 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.000']
+U 764 | F 195584 | FPS 0058 | D 235 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.015'] | value_loss ['None', 'None', 'None', '0.008']
+U 765 | F 195840 | FPS 0057 | D 240 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 766 | F 196096 | FPS 0060 | D 244 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.020'] | value_loss ['None', 'None', 'None', '0.011']
+U 767 | F 196352 | FPS 0059 | D 248 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.009'] | value_loss ['None', 'None', 'None', '0.010']
+U 768 | F 196608 | FPS 0061 | D 252 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.011'] | value_loss ['None', 'None', 'None', '0.019']
+U 769 | F 196864 | FPS 0054 | D 257 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.039'] | value_loss ['None', 'None', 'None', '0.000']
+U 770 | F 197120 | FPS 0058 | D 262 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.007'] | value_loss ['None', 'None', 'None', '0.015']
+Status saved
+U 771 | F 197376 | FPS 0051 | D 267 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 772 | F 197632 | FPS 0056 | D 272 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.055'] | value_loss ['None', 'None', 'None', '0.025']
+U 773 | F 197888 | FPS 0055 | D 276 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.001']
+U 774 | F 198144 | FPS 0057 | D 281 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.002'] | value_loss ['None', 'None', 'None', '0.012']
+U 775 | F 198400 | FPS 0058 | D 285 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.030'] | value_loss ['None', 'None', 'None', '0.000']
+U 776 | F 198656 | FPS 0058 | D 290 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.024'] | value_loss ['None', 'None', 'None', '0.000']
+U 777 | F 198912 | FPS 0056 | D 294 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.012']
+U 778 | F 199168 | FPS 0058 | D 299 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+U 779 | F 199424 | FPS 0058 | D 303 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.143'] | value_loss ['None', 'None', 'None', '0.063']
+U 780 | F 199680 | FPS 0059 | D 307 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.009']
+Status saved
+U 781 | F 199936 | FPS 0056 | D 312 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.058'] | value_loss ['None', 'None', 'None', '0.001']
+U 782 | F 200192 | FPS 0057 | D 317 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.045'] | value_loss ['None', 'None', 'None', '0.000']
+U 783 | F 200448 | FPS 0057 | D 321 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.037'] | value_loss ['None', 'None', 'None', '0.000']
+U 784 | F 200704 | FPS 0057 | D 326 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.019'] | value_loss ['None', 'None', 'None', '0.017']
+U 785 | F 200960 | FPS 0060 | D 330 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.041'] | value_loss ['None', 'None', 'None', '0.000']
+U 786 | F 201216 | FPS 0057 | D 335 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.020'] | value_loss ['None', 'None', 'None', '0.011']
+U 787 | F 201472 | FPS 0060 | D 339 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 788 | F 201728 | FPS 0059 | D 343 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.034'] | value_loss ['None', 'None', 'None', '0.024']
+U 789 | F 201984 | FPS 0059 | D 347 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.028'] | value_loss ['None', 'None', 'None', '0.000']
+U 790 | F 202240 | FPS 0057 | D 352 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.078'] | value_loss ['None', 'None', 'None', '0.034']
+Status saved
+U 791 | F 202496 | FPS 0056 | D 357 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.081'] | value_loss ['None', 'None', 'None', '0.038']
+U 792 | F 202752 | FPS 0057 | D 361 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.051'] | value_loss ['None', 'None', 'None', '0.001']
+U 793 | F 203008 | FPS 0057 | D 366 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.000']
+U 794 | F 203264 | FPS 0058 | D 370 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.062'] | value_loss ['None', 'None', 'None', '0.022']
+U 795 | F 203520 | FPS 0057 | D 375 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.038'] | value_loss ['None', 'None', 'None', '0.000']
+U 796 | F 203776 | FPS 0060 | D 379 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.053'] | value_loss ['None', 'None', 'None', '0.036']
+U 797 | F 204032 | FPS 0062 | D 383 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 798 | F 204288 | FPS 0062 | D 388 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 799 | F 204544 | FPS 0059 | D 392 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.019'] | value_loss ['None', 'None', 'None', '0.000']
+U 800 | F 204800 | FPS 0063 | D 396 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 801 | F 205056 | FPS 0061 | D 401 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.000']
+U 802 | F 205312 | FPS 0059 | D 405 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.040'] | value_loss ['None', 'None', 'None', '0.021']
+U 803 | F 205568 | FPS 0060 | D 409 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.056'] | value_loss ['None', 'None', 'None', '0.033']
+U 804 | F 205824 | FPS 0060 | D 413 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.032'] | value_loss ['None', 'None', 'None', '0.000']
+U 805 | F 206080 | FPS 0060 | D 418 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.022'] | value_loss ['None', 'None', 'None', '0.000']
+U 806 | F 206336 | FPS 0060 | D 422 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 807 | F 206592 | FPS 0061 | D 426 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.014'] | value_loss ['None', 'None', 'None', '0.000']
+U 808 | F 206848 | FPS 0061 | D 430 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.038'] | value_loss ['None', 'None', 'None', '0.021']
+U 809 | F 207104 | FPS 0062 | D 435 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.080'] | value_loss ['None', 'None', 'None', '0.032']
+U 810 | F 207360 | FPS 0051 | D 440 | Reward:μσmM 0.74 0.74 0.00 1.48 | policy_loss ['None', 'None', '0.134', '-0.176'] | value_loss ['None', 'None', '0.000', '0.078']
+Status saved
+U 811 | F 207616 | FPS 0058 | D 444 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.029'] | value_loss ['None', 'None', 'None', '0.015']
+U 812 | F 207872 | FPS 0055 | D 449 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 813 | F 208128 | FPS 0058 | D 454 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.186'] | value_loss ['None', 'None', 'None', '0.062']
+U 814 | F 208384 | FPS 0059 | D 458 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.047'] | value_loss ['None', 'None', 'None', '0.020']
+U 815 | F 208640 | FPS 0060 | D 462 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.007'] | value_loss ['None', 'None', 'None', '0.010']
+U 816 | F 208896 | FPS 0060 | D 466 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.043'] | value_loss ['None', 'None', 'None', '0.003']
+U 817 | F 209152 | FPS 0061 | D 471 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.005'] | value_loss ['None', 'None', 'None', '0.012']
+U 818 | F 209408 | FPS 0058 | D 475 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.022'] | value_loss ['None', 'None', 'None', '0.021']
+U 819 | F 209664 | FPS 0059 | D 479 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.005'] | value_loss ['None', 'None', 'None', '0.024']
+U 820 | F 209920 | FPS 0061 | D 484 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.046'] | value_loss ['None', 'None', 'None', '0.000']
+Status saved
+U 821 | F 210176 | FPS 0061 | D 488 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.036'] | value_loss ['None', 'None', 'None', '0.000']
+U 822 | F 210432 | FPS 0060 | D 493 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.029'] | value_loss ['None', 'None', 'None', '0.000']
+U 823 | F 210688 | FPS 0061 | D 497 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 824 | F 210944 | FPS 0062 | D 501 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.031'] | value_loss ['None', 'None', 'None', '0.022']
+U 825 | F 211200 | FPS 0057 | D 505 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.026'] | value_loss ['None', 'None', 'None', '0.014']
+U 826 | F 211456 | FPS 0060 | D 510 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.035'] | value_loss ['None', 'None', 'None', '0.000']
+U 827 | F 211712 | FPS 0059 | D 514 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.026'] | value_loss ['None', 'None', 'None', '0.000']
+U 828 | F 211968 | FPS 0059 | D 518 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.013'] | value_loss ['None', 'None', 'None', '0.000']
+U 829 | F 212224 | FPS 0057 | D 523 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.032'] | value_loss ['None', 'None', 'None', '0.014']
+U 830 | F 212480 | FPS 0061 | D 527 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.044'] | value_loss ['None', 'None', 'None', '0.001']
+Status saved
+U 831 | F 212736 | FPS 0061 | D 532 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.025'] | value_loss ['None', 'None', 'None', '0.000']
+U 832 | F 212992 | FPS 0059 | D 536 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.023'] | value_loss ['None', 'None', 'None', '0.000']
+U 833 | F 213248 | FPS 0060 | D 540 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.017'] | value_loss ['None', 'None', 'None', '0.000']
+U 834 | F 213504 | FPS 0056 | D 545 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.016'] | value_loss ['None', 'None', 'None', '0.000']
+U 835 | F 213760 | FPS 0059 | D 549 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.038'] | value_loss ['None', 'None', 'None', '0.014']
+U 836 | F 214016 | FPS 0058 | D 554 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.012'] | value_loss ['None', 'None', 'None', '0.001']
+U 837 | F 214272 | FPS 0064 | D 558 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.132'] | value_loss ['None', 'None', 'None', '0.048']
+U 838 | F 214528 | FPS 0063 | D 562 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.040'] | value_loss ['None', 'None', 'None', '0.000']
+U 839 | F 214784 | FPS 0058 | D 566 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.039'] | value_loss ['None', 'None', 'None', '0.029']
+U 840 | F 215040 | FPS 0058 | D 571 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.015'] | value_loss ['None', 'None', 'None', '0.007']
+Status saved
+U 841 | F 215296 | FPS 0050 | D 576 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '0.074', '-0.230'] | value_loss ['None', 'None', '0.001', '0.101']
+U 842 | F 215552 | FPS 0057 | D 581 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.027'] | value_loss ['None', 'None', 'None', '0.000']
+U 843 | F 215808 | FPS 0059 | D 585 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.021'] | value_loss ['None', 'None', 'None', '0.000']
+U 844 | F 216064 | FPS 0058 | D 589 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.034'] | value_loss ['None', 'None', 'None', '0.016']
+U 845 | F 216320 | FPS 0060 | D 594 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.020'] | value_loss ['None', 'None', 'None', '0.000']
+U 846 | F 216576 | FPS 0055 | D 598 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '0.057', '-0.074'] | value_loss ['None', 'None', '0.000', '0.074']
+U 847 | F 216832 | FPS 0056 | D 603 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '0.248', '-0.300'] | value_loss ['None', 'None', '0.133', '0.050']
+U 848 | F 217088 | FPS 0064 | D 607 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '-0.000'] | value_loss ['None', 'None', 'None', '0.019']
+U 849 | F 217344 | FPS 0055 | D 612 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.789', '-0.076'] | value_loss ['None', 'None', '0.655', '0.004']
+U 850 | F 217600 | FPS 0055 | D 616 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.436', '-0.053'] | value_loss ['None', 'None', '0.186', '0.009']
+Status saved
+U 851 | F 217856 | FPS 0055 | D 622 | Reward:μσmM 0.00 0.82 -1.00 1.00 | policy_loss ['None', 'None', '0.043', '0.044'] | value_loss ['None', 'None', '0.008', '0.134']
+U 852 | F 218112 | FPS 0055 | D 626 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.247', '-0.005'] | value_loss ['None', 'None', '0.053', '0.005']
+U 853 | F 218368 | FPS 0057 | D 631 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.130', '0.016'] | value_loss ['None', 'None', '0.010', '0.001']
+U 854 | F 218624 | FPS 0059 | D 635 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.247'] | value_loss ['None', 'None', 'None', '0.181']
+U 855 | F 218880 | FPS 0056 | D 640 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.009', '-0.049'] | value_loss ['None', 'None', '0.004', '0.002']
+U 856 | F 219136 | FPS 0055 | D 644 | Reward:μσmM 0.00 0.82 -1.00 1.00 | policy_loss ['None', 'None', '-0.019', '0.102'] | value_loss ['None', 'None', '0.005', '0.083']
+U 857 | F 219392 | FPS 0059 | D 649 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.021', '-0.024'] | value_loss ['None', 'None', '0.006', '0.002']
+U 858 | F 219648 | FPS 0052 | D 653 | Reward:μσmM -0.33 0.94 -1.00 1.00 | policy_loss ['None', 'None', '-0.082', '0.184'] | value_loss ['None', 'None', '0.000', '0.105']
+U 859 | F 219904 | FPS 0058 | D 658 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.075', '0.047'] | value_loss ['None', 'None', '0.000', '0.111']
+U 860 | F 220160 | FPS 0059 | D 662 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '0.009'] | value_loss ['None', 'None', 'None', '0.001']
+Status saved
+U 861 | F 220416 | FPS 0057 | D 667 | Reward:μσmM -0.33 0.94 -1.00 1.00 | policy_loss ['None', 'None', '-0.062', '0.103'] | value_loss ['None', 'None', '0.000', '0.156']
+U 862 | F 220672 | FPS 0056 | D 672 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.021', '-0.120'] | value_loss ['None', 'None', '0.005', '0.018']
+U 863 | F 220928 | FPS 0056 | D 676 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '0.008', '-0.237'] | value_loss ['None', 'None', '0.013', '0.020']
+U 864 | F 221184 | FPS 0056 | D 681 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.043', '-0.193'] | value_loss ['None', 'None', '0.001', '0.013']
+U 865 | F 221440 | FPS 0058 | D 685 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.058', '-0.068'] | value_loss ['None', 'None', '0.001', '0.000']
+U 866 | F 221696 | FPS 0054 | D 690 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.049', '-0.090'] | value_loss ['None', 'None', '0.000', '0.010']
+U 867 | F 221952 | FPS 0063 | D 694 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '0.082'] | value_loss ['None', 'None', 'None', '0.001']
+U 868 | F 222208 | FPS 0059 | D 699 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.037', '-0.029'] | value_loss ['None', 'None', '0.000', '0.002']
+U 869 | F 222464 | FPS 0054 | D 703 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.027', '0.147'] | value_loss ['None', 'None', '0.000', '0.081']
+U 870 | F 222720 | FPS 0058 | D 708 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.027', '0.192'] | value_loss ['None', 'None', '0.000', '0.188']
+Status saved
+U 871 | F 222976 | FPS 0058 | D 713 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.025', '-0.102'] | value_loss ['None', 'None', '0.000', '0.003']
+U 872 | F 223232 | FPS 0057 | D 717 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.106', '-0.136'] | value_loss ['None', 'None', '0.033', '0.011']
+U 873 | F 223488 | FPS 0057 | D 722 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '-0.000', '0.066'] | value_loss ['None', 'None', '0.010', '0.015']
+U 874 | F 223744 | FPS 0055 | D 726 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.028', '0.020'] | value_loss ['None', 'None', '0.013', '0.002']
+U 875 | F 224000 | FPS 0061 | D 730 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.342'] | value_loss ['None', 'None', 'None', '0.197']
+U 876 | F 224256 | FPS 0055 | D 735 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', '0.003', '-0.096'] | value_loss ['None', 'None', '0.007', '0.005']
+U 877 | F 224512 | FPS 0056 | D 740 | Reward:μσmM -0.33 0.47 -1.00 0.00 | policy_loss ['None', 'None', '0.060', '-0.056'] | value_loss ['None', 'None', '0.026', '0.012']
+U 878 | F 224768 | FPS 0056 | D 744 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.087', '0.122'] | value_loss ['None', 'None', '0.005', '0.090']
+U 879 | F 225024 | FPS 0062 | D 748 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.121'] | value_loss ['None', 'None', 'None', '0.067']
+U 880 | F 225280 | FPS 0053 | D 753 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.052', '-0.070'] | value_loss ['None', 'None', '0.000', '0.003']
+Status saved
+U 881 | F 225536 | FPS 0053 | D 759 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.071', '-0.016'] | value_loss ['None', 'None', '0.002', '0.014']
+U 882 | F 225792 | FPS 0053 | D 764 | Reward:μσmM -0.33 0.94 -1.00 1.00 | policy_loss ['None', 'None', '-0.021', '0.204'] | value_loss ['None', 'None', '0.001', '0.198']
+U 883 | F 226048 | FPS 0057 | D 768 | Reward:μσmM -0.33 0.94 -1.00 1.00 | policy_loss ['None', 'None', '-0.021', '0.103'] | value_loss ['None', 'None', '0.001', '0.105']
+U 884 | F 226304 | FPS 0055 | D 773 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.034', '0.086'] | value_loss ['None', 'None', '0.000', '0.112']
+U 885 | F 226560 | FPS 0056 | D 777 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.036', '-0.234'] | value_loss ['None', 'None', '0.000', '0.021']
+U 886 | F 226816 | FPS 0055 | D 782 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.030', '-0.255'] | value_loss ['None', 'None', '0.000', '0.014']
+U 887 | F 227072 | FPS 0059 | D 786 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.022', '-0.069'] | value_loss ['None', 'None', '0.000', '0.000']
+U 888 | F 227328 | FPS 0055 | D 791 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '0.044', '-0.028'] | value_loss ['None', 'None', '0.020', '0.008']
+U 889 | F 227584 | FPS 0057 | D 795 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '0.043', '-0.029'] | value_loss ['None', 'None', '0.013', '0.002']
+U 890 | F 227840 | FPS 0058 | D 800 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.033', '-0.045'] | value_loss ['None', 'None', '0.001', '0.001']
+Status saved
+U 891 | F 228096 | FPS 0058 | D 805 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '0.033', '-0.012'] | value_loss ['None', 'None', '0.013', '0.000']
+U 892 | F 228352 | FPS 0056 | D 809 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.026', '-0.007'] | value_loss ['None', 'None', '0.000', '0.000']
+U 893 | F 228608 | FPS 0053 | D 814 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '-0.017', '0.286'] | value_loss ['None', 'None', '0.000', '0.171']
+U 894 | F 228864 | FPS 0056 | D 819 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.016', '-0.081'] | value_loss ['None', 'None', '0.000', '0.002']
+U 895 | F 229120 | FPS 0056 | D 823 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.013', '-0.087'] | value_loss ['None', 'None', '0.000', '0.000']
+U 896 | F 229376 | FPS 0052 | D 828 | Reward:μσmM 1.00 0.00 1.00 1.00 | policy_loss ['None', 'None', '-0.010', '-0.046'] | value_loss ['None', 'None', '0.000', '0.001']
+U 897 | F 229632 | FPS 0054 | D 833 | Reward:μσmM 1.44 0.44 1.00 1.89 | policy_loss ['None', 'None', '-0.088', '-0.134'] | value_loss ['None', 'None', '0.018', '0.004']
+U 898 | F 229888 | FPS 0054 | D 838 | Reward:μσmM 0.87 0.66 0.00 1.60 | policy_loss ['None', 'None', '0.016', '-0.022'] | value_loss ['None', 'None', '0.021', '0.007']
+U 899 | F 230144 | FPS 0055 | D 842 | Reward:μσmM 0.50 0.50 0.00 1.00 | policy_loss ['None', 'None', '0.054', '0.039'] | value_loss ['None', 'None', '0.021', '0.002']
+U 900 | F 230400 | FPS 0058 | D 847 | Reward:μσmM 0.72 0.72 0.00 1.45 | policy_loss ['None', 'None', '-0.075', '0.027'] | value_loss ['None', 'None', '0.003', '0.009']
+Status saved
+U 901 | F 230656 | FPS 0059 | D 852 | Reward:μσmM 1.50 0.75 0.00 1.89 | policy_loss ['None', 'None', '-0.329', '-0.188'] | value_loss ['None', 'None', '0.024', '0.026']
+U 902 | F 230912 | FPS 0053 | D 857 | Reward:μσmM 1.32 0.32 1.00 1.64 | policy_loss ['None', 'None', '-0.003', '-0.118'] | value_loss ['None', 'None', '0.006', '0.003']
+U 903 | F 231168 | FPS 0055 | D 861 | Reward:μσmM 1.21 0.79 0.00 1.93 | policy_loss ['None', 'None', '-0.052', '-0.004'] | value_loss ['None', 'None', '0.051', '0.059']
+U 904 | F 231424 | FPS 0055 | D 866 | Reward:μσmM 1.63 0.67 0.00 1.93 | policy_loss ['None', 'None', '-0.161', '-0.302'] | value_loss ['None', 'None', '0.011', '0.033']
+U 905 | F 231680 | FPS 0055 | D 871 | Reward:μσmM 1.68 0.64 0.00 1.94 | policy_loss ['None', 'None', '-0.065', '-0.270'] | value_loss ['None', 'None', '0.001', '0.025']
+U 906 | F 231936 | FPS 0053 | D 875 | Reward:μσmM 1.74 0.58 0.00 1.95 | policy_loss ['None', 'None', '-0.029', '-0.223'] | value_loss ['None', 'None', '0.000', '0.011']
+U 907 | F 232192 | FPS 0053 | D 880 | Reward:μσmM 1.72 0.61 0.00 1.95 | policy_loss ['None', 'None', '-0.004', '-0.042'] | value_loss ['None', 'None', '0.001', '0.008']
+U 908 | F 232448 | FPS 0054 | D 885 | Reward:μσmM 1.70 0.35 1.00 1.94 | policy_loss ['None', 'None', '0.026', '0.035'] | value_loss ['None', 'None', '0.008', '0.004']
+U 909 | F 232704 | FPS 0054 | D 890 | Reward:μσmM 0.55 1.30 -1.00 1.94 | policy_loss ['None', 'None', '0.045', '0.581'] | value_loss ['None', 'None', '0.005', '0.738']
+U 910 | F 232960 | FPS 0054 | D 894 | Reward:μσmM 0.28 1.17 -1.00 1.87 | policy_loss ['None', 'None', '0.137', '0.407'] | value_loss ['None', 'None', '0.150', '0.499']
+Status saved
+U 911 | F 233216 | FPS 0053 | D 900 | Reward:μσmM 1.39 0.39 1.00 1.78 | policy_loss ['None', 'None', '-0.013', '0.100'] | value_loss ['None', 'None', '0.007', '0.005']
+U 912 | F 233472 | FPS 0054 | D 904 | Reward:μσmM -0.22 1.12 -1.00 1.89 | policy_loss ['None', 'None', '-0.086', '0.425'] | value_loss ['None', 'None', '0.001', '0.410']
+U 913 | F 233728 | FPS 0060 | D 909 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.425'] | value_loss ['None', 'None', 'None', '0.323']
+U 914 | F 233984 | FPS 0060 | D 913 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.483'] | value_loss ['None', 'None', 'None', '0.340']
+U 915 | F 234240 | FPS 0062 | D 917 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.128'] | value_loss ['None', 'None', 'None', '0.042']
+U 916 | F 234496 | FPS 0058 | D 921 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.102'] | value_loss ['None', 'None', 'None', '0.030']
+U 917 | F 234752 | FPS 0059 | D 926 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.196'] | value_loss ['None', 'None', 'None', '0.091']
+U 918 | F 235008 | FPS 0061 | D 930 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.146'] | value_loss ['None', 'None', 'None', '0.066']
+U 919 | F 235264 | FPS 0055 | D 935 | Reward:μσmM 0.23 1.10 -1.00 1.68 | policy_loss ['None', 'None', '0.049', '-0.104'] | value_loss ['None', 'None', '0.001', '0.081']
+U 920 | F 235520 | FPS 0059 | D 939 | Reward:μσmM -0.50 0.50 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.044'] | value_loss ['None', 'None', 'None', '0.021']
+Status saved
+U 921 | F 235776 | FPS 0053 | D 944 | Reward:μσmM 0.75 0.75 0.00 1.51 | policy_loss ['None', 'None', '0.070', '-0.144'] | value_loss ['None', 'None', '0.003', '0.047']
+U 922 | F 236032 | FPS 0060 | D 949 | Reward:μσmM -0.67 0.47 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.094'] | value_loss ['None', 'None', 'None', '0.036']
+U 923 | F 236288 | FPS 0060 | D 953 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.031'] | value_loss ['None', 'None', 'None', '0.000']
+U 924 | F 236544 | FPS 0058 | D 957 | Reward:μσmM -0.83 0.37 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.126'] | value_loss ['None', 'None', 'None', '0.052']
+U 925 | F 236800 | FPS 0056 | D 962 | Reward:μσmM -0.80 0.40 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.048'] | value_loss ['None', 'None', 'None', '0.030']
+U 926 | F 237056 | FPS 0054 | D 967 | Reward:μσmM -0.86 0.35 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.067'] | value_loss ['None', 'None', 'None', '0.044']
+U 927 | F 237312 | FPS 0053 | D 972 | Reward:μσmM -0.75 0.43 -1.00 0.00 | policy_loss ['None', 'None', 'None', '0.017'] | value_loss ['None', 'None', 'None', '0.016']
+U 928 | F 237568 | FPS 0058 | D 976 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.093'] | value_loss ['None', 'None', 'None', '0.000']
+U 929 | F 237824 | FPS 0058 | D 980 | Reward:μσmM 0.00 0.00 0.00 0.00 | policy_loss ['None', 'None', 'None', '-0.084'] | value_loss ['None', 'None', 'None', '0.000']
+U 930 | F 238080 | FPS 0055 | D 985 | Reward:μσmM 0.00 1.00 -1.00 1.00 | policy_loss ['None', 'None', '0.064', '-0.175'] | value_loss ['None', 'None', '0.000', '0.065']
