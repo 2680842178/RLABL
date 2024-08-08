@@ -47,6 +47,8 @@ class MiniGridEnv(gym.Env):
         agent_pov: bool = False,
         map=None
     ):
+        self.text = None
+        
         # Initialize mission
         self.mission = mission_space.sample()
 
@@ -125,6 +127,7 @@ class MiniGridEnv(gym.Env):
         options: dict[str, Any] | None = None,
     ) -> tuple[ObsType, dict[str, Any]]:
         super().reset(seed=seed)
+        self.text = None
 
         # Reinitialize episode-specific variables
         self.agent_pos = (-1, -1)
@@ -157,7 +160,7 @@ class MiniGridEnv(gym.Env):
         # Return first observation
         obs = self.gen_obs()
         self.current_state = 0
-        return obs, {}
+        return obs, {"text": self.text}
 
     def hash(self, size=16):
         """Compute a hash that uniquely identifies the current state of the environment.
@@ -524,6 +527,7 @@ class MiniGridEnv(gym.Env):
         reward = 0
         terminated = False
         truncated = False
+        self.text = None 
 
         # Get the position in front of the agent
         fwd_pos = self.front_pos
@@ -550,10 +554,12 @@ class MiniGridEnv(gym.Env):
                 reward = self._reward()
                 self.current_state = 3
                 fwd_cell.color = "red"
+                self.text = "Goal reached!"
             if fwd_cell is not None and fwd_cell.type == "lava":
                 terminated = True
                 reward = -1
                 self.current_state = 4
+                self.text = "You died!"
 
         # Pick up an object
         elif action == self.actions.pickup:
@@ -565,6 +571,7 @@ class MiniGridEnv(gym.Env):
                     self.grid.set(0, 0, fwd_cell)
                     if self.current_state == 0:
                         self.current_state = 1
+                    self.text = "Picked up " + fwd_cell.type
 
         # Drop an object
         elif action == self.actions.drop:
@@ -582,6 +589,7 @@ class MiniGridEnv(gym.Env):
                 if flag:
                     if self.current_state == 1:
                         self.current_state = 2
+                    self.text = "Toggled " + fwd_cell.type
 
         # Done action (not used by default)
         elif action == self.actions.done:
@@ -597,7 +605,7 @@ class MiniGridEnv(gym.Env):
 
         obs = self.gen_obs()
 
-        return obs, reward, terminated, truncated, {}
+        return obs, reward, terminated, truncated, {"text": self.text}
 
     def gen_obs_grid(self, agent_view_size=None):
         """

@@ -8,8 +8,6 @@ import tensorboardX
 from torchvision import transforms
 import sys
 import networkx as nx
-from typing import Tuple
-from PIL import Image
 import cv2
 from sklearn.metrics.pairwise import cosine_similarity
 from skimage.metrics import structural_similarity as ssim
@@ -86,10 +84,12 @@ class stateNode():
     def __init__(self, 
                  id, 
                  mutation = None, 
-                 agent: ACModel = None):
+                 agents: ACModel = None,
+                 env_image = None):
         self.id = id
         self.mutation = mutation
-        self.agent = agent
+        self.agents = agents
+        self.env_image = env_image  
 
 # need to get parameters to get the graph
     
@@ -98,18 +98,6 @@ def contrast(mutation1, mutation2) -> float: # that means the similarity between
         return 0
     # print(mutation1.shape)
     return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
-    # print(mutation1, mutation1.shape)
-    # gray1 = cv2.cvtColor(mutation1, cv2.COLOR_BGR2GRAY)
-    # gray2 = cv2.cvtColor(mutation2, cv2.COLOR_BGR2GRAY)
-    # orb1 = cv2.ORB_create()
-    # orb2 = cv2.ORB_create()
-    # kp1, des1 = orb1.detectAndCompute(gray1, None)
-    # kp2, des2 = orb2.detectAndCompute(gray2, None)
-    # similarity_matrix = cosine_similarity(des1, des2)
-    # print(similarity_matrix.mean())
-    # return similarity_matrix.mean()
-    
-    
     # return similiarity_list (length=count of states, means mutation to known states and a common mutation),
     # and most similiar mutation/state(0 means new mutation, -1 means common mutation)
     
@@ -161,13 +149,13 @@ def test(env,
             preprocessed_obss = preprocess_obss([obss], device=device)
             with torch.no_grad():
                 dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
-            print(current_state)
-            print(dist.probs)
-            plt.imshow(show_obs)
-            plt.show()
+            # print(current_state)
+            # print(dist.probs)
+            # plt.imshow(show_obs)
+            # plt.show()
             actions = dist.sample() #dist.probs.max(1, keepdim=True)[1]
-            print(actions)
-            #actions = dist.probs.max(1, keepdim=True)[1]
+            # actions = dist.probs.max(1, keepdim=True)[1]
+            # print(actions)
             obss, rewards, terminateds, truncateds, _ = env.step(actions)
             show_obs = numpy.squeeze(preprocess_obss([obss], device=device).image).cpu().numpy().astype(numpy.uint8)
             
@@ -194,6 +182,7 @@ def test(env,
     return_per_episode = utils.synthesize(test_logs["return_per_episode"])
     if return_per_episode["mean"] > 0:
         print("successful test!")
+        print("Reward:", return_per_episode["mean"])
         return 1, 1, None
     else:
         print("unsuccessful test, last state: ", current_state)
@@ -213,10 +202,11 @@ def random_discover(env,
     for node in G.nodes:
         if G.nodes[node]['state'].mutation is not None:
             known_mutation_buffer.append((node, G.nodes[node]['state'].mutation))
-    print("known_mutation_buffer: ", known_mutation_buffer)
+    # print("known_mutation_buffer: ", known_mutation_buffer)
     pre_obss = start_obss   
     obss = start_obss
     env.reset()
+    print("Searching for new mutation...")
     for _ in range(int(steps)):
         action = env.action_space.sample()  
         # pre_obss = obss
@@ -521,7 +511,7 @@ def main():
     if args.discover != 0:
         stop_state, stop_env, stop_obss = test(envs[0], start_node, 1, 128, preprocess_obss)
         if stop_state == 1:
-            print("successful test!")
+            # print("successful test!")
             return
         last_initial_img = plt.imread(last_initial_img_dir)
         print(contrast(last_initial_img, initial_img))
