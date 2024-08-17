@@ -42,16 +42,16 @@ def obs_To_state(current_state,
     anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)  
     # input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
     # print(anomalyNN(input_batch))
-    return current_state
+    # return current_state
     ####### 下面是原先的代码
-    # if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
-    #     return current_state
-    # similiarity = []
-    # for next_state in list(G.successors(current_state)):
-    #     similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))  
-    # output = max(similiarity, key=lambda x: x[1]) 
-    # output = output[0]
-    # return output
+    if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
+        return current_state
+    similiarity = []
+    for next_state in list(G.successors(current_state)):
+        similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))  
+    output = max(similiarity, key=lambda x: x[1]) 
+    output = output[0]
+    return output
 
 def Mutiagent_collect_experiences(env, 
                                 algos,
