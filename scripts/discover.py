@@ -99,11 +99,17 @@ def get_discover_probability(mean_reward, test_turns):
     prob = (1 - mean_reward['mean']) / 2.0 + test_turns / 500.0
     return prob
 
-def get_mutation_score(mutation):
-    raise NotImplementedError
+# def get_mutation_score(mutation, anomalyNN):
+#     mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+#     anomaly_score = anomalyNN(mutation) 
+#     e_x = numpy.exp(anomaly_score - numpy.max(anomaly_score))
+#     return (e_x / e_x.sum())[1]
 
 def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean_reward):
-    raise NotImplementedError
+    score = 0.4 * mutation_score + 0.0001 * mutation_times + 0.01 * test_turns + (1 + test_mean_reward['mean']) / 2
+    if score > 0.6:
+        return True
+    return False
     
 def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
     if mutation1 is None or mutation2 is None:
@@ -123,11 +129,13 @@ def get_importance_prob(lst):
     normalized_lst = [x / total if x != 0 else 0 for x in lst]
     return normalized_lst
 
-def test(env, 
+def test(start_env, 
             start_node: int, 
             episodes: int = 10,
             max_steps_per_episode: int = 256,
             preprocess_obss = None):
+    test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
+    env = copy_env(start_env, args.env)
     mutation_buffer = []
     for node, stateNode in G.nodes(data=True):
         # print(stateNode['state'].agent)
@@ -140,25 +148,31 @@ def test(env,
     
     current_state = start_node
     # print(start_node, "start_node")
-    obss, _ = env.reset()
     obss = env.gen_obs()
+    # obss_img = preprocess_obss([obss], device=device).image
+    # obss_img = numpy.squeeze(obss_img)
+    # obss_img = obss_img.cpu().numpy().astype(numpy.uint8)
+    # plt.imshow(obss_img)
+    # plt.show()
+
     # print(obss)
     pre_obss = obss
-    stop_env = copy.deepcopy(env)
-    stop_obss = copy.deepcopy(obss)
+    stop_env = copy_env(env, args.env)
+    stop_obss = obss
 
     stop_env_list = []
     stop_obs_list = []
     stop_state_list = []
 
     for _ in range(episodes):
+        
         for i in range(max_steps_per_episode):
             mutation = obs_To_mutation(pre_obss, obss, preprocess_obss) 
             mutation = mutation.cpu().numpy().astype(numpy.uint8)
             for node_num, node_mutation in mutation_buffer:
                 if contrast(node_mutation, mutation) > 0.99:
                     current_state = node_num
-                    stop_env = copy.deepcopy(env)
+                    stop_env = copy_env(env, args.env)
                     stop_obss = copy.deepcopy(obss)
                     break
                 
@@ -166,8 +180,15 @@ def test(env,
             with torch.no_grad():
                 dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
             actions = dist.sample() #dist.probs.max(1, keepdim=True)[1]
+            # print(dist.probs)
+            # print(actions)
             # actions = dist.probs.max(1, keepdim=True)[1]
             obss, rewards, terminateds, truncateds, text_dict = env.step(actions)
+            # obss_img = preprocess_obss([obss], device=device).image
+            # obss_img = numpy.squeeze(obss_img)
+            # obss_img = obss_img.cpu().numpy().astype(numpy.uint8)
+            # plt.imshow(obss_img)
+            # plt.show()
             
             dones = terminateds | truncateds # tuple(a | b for a, b in zip(terminateds, truncateds))
             
@@ -177,12 +198,15 @@ def test(env,
             # print(dones)
             if dones: 
                 current_state = start_node
-                env.reset()
+                env = copy_env(start_env, args.env)
                 obss = env.gen_obs()
                 pre_obss = obss
-                stop_env = copy.deepcopy(env)
-                stop_obss = copy.deepcopy(obss)
                 break
+        dones = True
+        current_state = start_node
+        env = copy_env(start_env, args.env)
+        obss = env.gen_obs()
+        pre_obss = obss
 
         log_done_counter += 1
         test_logs["return_per_episode"].append(log_episode_return[0].item())
@@ -191,12 +215,13 @@ def test(env,
         log_episode_return *= mask
         log_episode_num_frames *= mask
 
-        stop_env_list.append(copy.deepcopy(stop_env))
+        stop_env_list.append(copy_env(stop_env, args.env))
         stop_obs_list.append(copy.deepcopy(stop_obss))
         stop_state_list.append(current_state)
 
     return_per_episode = utils.synthesize(test_logs["return_per_episode"])
     num_frames_per_episode = utils.synthesize(test_logs["num_frames_per_episode"])  
+    print(test_logs)
 
     counter = collections.Counter(stop_state_list)
     stop_state, _ = counter.most_common(1)[0]
@@ -212,9 +237,19 @@ def discover(start_env,
             txt_logger,
             mutation_value,
             test_turns,
-            test_mean_reward):
-    start_env = copy.deepcopy(start_env)
+            test_mean_reward,
+            preprocess_obss,
+            anomalyNN):
+    def get_mutation_score(mutation):
+        # mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+        anomaly_score = anomalyNN(mutation).detach().cpu().numpy() 
+        e_x = numpy.exp(anomaly_score[0] - numpy.max(anomaly_score[0]))
+        return (e_x / e_x.sum())[1]
+    start_env = copy_env(start_env, args.env)
+    # start_env = ParallelEnv([start_env])
     mutation_buffer = []
+    heapq.heapify(mutation_buffer)
     
     txt_logger.info("Optimizer loaded\n")
     
@@ -232,13 +267,16 @@ def discover(start_env,
     
     while num_frames < discover_frames:
         update_start_time = time.time()
-        exps, logs1 = algo.collect_experiences_mutation(G, 
+        exps, logs1 = collect_experiences_mutation(algo,
+                                                   start_env, 
                                                         get_mutation_score, 
                                                         mutation_buffer, 
                                                         mutation_value, 
                                                         contrast, 
                                                         known_mutation_buffer, 
-                                                        arrived_state_buffer)
+                                                        arrived_state_buffer,
+                                                        preprocess_obss,
+                                                        args.env)
 
         logs2 = algo.update_parameters(exps)
 
@@ -273,11 +311,26 @@ def discover(start_env,
             header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
 
-    for idx, (score_, mutation_, times_, env_) in mutation_buffer:
-        if define_accept_mutation(score_, times_, test_turns, test_mean_reward):
-            return mutation_, env_.gen_obs()['image']
+    if arrived_state_buffer == []:
+        return None, None, None
+    counter = collections.Counter(arrived_state_buffer)
+    most_state, count = counter.most_common(1)[0]
+    print("Most state & Count:", most_state, count)
+    if count >= 50:
+        out_state = most_state
+    else:
+        return None, None, None
 
-    return None, None
+    for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
+        if define_accept_mutation(score_, times_, test_turns, test_mean_reward):
+            print(score_, times_, test_turns, test_mean_reward)
+            print("Accept mutation with score: ", score_)
+            env_img = preprocess_obss(env_.gen_obs(), device=device).image
+            env_img = numpy.squeeze(env_img)
+            env_img = env_img.cpu().numpy().astype(numpy.uint8)
+            return mutation_, env_img, out_state
+
+    return None, None, None
     
 def main():
     # task_path: the path of the last task, the last folder name is "task"+task_number.
@@ -338,13 +391,11 @@ def main():
         initial_img, _ = env.reset()
         envs.append(env)
     txt_logger.info("Environments loaded\n")
-    initial_img = initial_img['image']
     # plt.imshow(initial_img)
     #plt.show()
     if not os.path.exists(new_task_path):
         os.makedirs(new_task_path)
-    if args.discover == 0:
-        plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
+
     # Load training status
 
     try:
@@ -359,6 +410,12 @@ def main():
     if "vocab" in status:
         preprocess_obss.vocab.load_vocab(status["vocab"])
     txt_logger.info("Observations preprocessor loaded")
+
+    initial_img = preprocess_obss([initial_img], device=device).image
+    initial_img = numpy.squeeze(initial_img)
+    initial_img = initial_img.cpu().numpy().astype(numpy.uint8)
+    if args.discover == 0:
+        plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
     
     agent_num = task_config['agent_num']
     acmodels=[]
@@ -442,10 +499,13 @@ def main():
             algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
+        min_stop_state = 0
         while 1:
-            test_start_node = numpy.random.choice(G.number_of_nodes(), 1, p=node_probability_list)[0]
+            test_start_node = numpy.random.choice(len(node_probability_list), 1, p=node_probability_list)[0]
             test_turns = 10
             mean_return, _, stop_state, stop_env, stop_obss = test(envs[0], test_start_node, 10, 128, preprocess_obss)
+            if stop_state > min_stop_state:
+                min_stop_state = stop_state
             if mean_return['mean'] > 0.8:
                 txt_logger.info("successful test! Start from: {0}, reward per episode: {1}".format(test_start_node, mean_return))
                 return 
@@ -453,26 +513,35 @@ def main():
             txt_logger.info("Test {} turns results: Start from {}, reward per episode: {}".format(test_turns, test_start_node, mean_return))
             total_test_turns += test_turns
             discover_prob = get_discover_probability(mean_return, total_test_turns)
+            print("discover_prob:", discover_prob)
             random_number = numpy.random.rand()
+            # plt.imshow(stop_env.gen_obs()['image'])
+            # plt.show()
 
-            if discover_prob <= random_number:
-                new_mutation, new_state_img = discover(start_env=stop_env, 
-                                        start_node=stop_state, 
+            if random_number <= discover_prob:
+                new_mutation, new_state_img, out_state = discover(start_env=stop_env, 
+                                        start_node=min_stop_state, 
                                         algo=algo, 
-                                        discover_frames=10000, 
+                                        discover_frames=5000, 
                                         txt_logger=txt_logger, 
                                         mutation_value=0.5, 
                                         test_turns=total_test_turns, 
-                                        test_mean_reward=mean_return) 
+                                        test_mean_reward=mean_return,
+                                        preprocess_obss=preprocess_obss,
+                                        anomalyNN=AnomalyNN) 
                 if new_mutation is not None:
                     new_node_id = len(G.nodes)
-                    G.add_node(new_node_id, state=stateNode(new_node_id, new_mutation, None, stop_env.gen_obs()['image']))
-                    if stop_state == start_node:
+                    G.add_node(new_node_id, state=stateNode(new_node_id, None, None, stop_env.gen_obs()['image']))
+                    if min_stop_state == start_node:
                         G.add_edge(new_node_id, start_node)
-                        plt.imsave(state_img_path + "state{}.bmp".format(start_node), new_state_img)
+                        G.nodes[start_node]['state'].mutation = new_mutation
                         plt.imsave(state_img_path + "state{}.bmp".format(new_node_id), initial_img)
+                        start_node = new_node_id
                     else:
                         plt.imsave(state_img_path + "state{}.bmp".format(new_node_id), new_state_img)
+                        G.nodes[new_node_id]['state'].mutation = new_mutation
+                        G.add_edge(stop_state, new_node_id)
+                        G.add_edge(new_node_id, out_state)
                         # for successor in list(G.successors(stop_state)):
                         #     if successor != 0:
                         #         G.remove_edge(stop_state, successor)
@@ -483,10 +552,16 @@ def main():
                     acmodels.append(new_acmodel)
                     G.nodes[new_node_id]['state'].agent = algo
                     algos.append(algo)
+                    agent_num += 1
                     # save the new graph
                     new_yaml = task_config
                     new_yaml['graph']['nodes'].append(new_node_id)
                     new_yaml['graph']['start_node'] = start_node
+                    new_yaml['agent_num'] = agent_num
+                    for successor in G.successors(new_node_id):
+                        new_yaml['graph']['edges'].append({"from": new_node_id, "to": successor})
+                    for predecessor in G.predecessors(new_node_id):
+                        new_yaml['graph']['edges'].append({"from": predecessor, "to": new_node_id})
                     with open(new_task_path + '/config.yaml', 'w') as file:
                         yaml.dump(data = new_yaml, stream = file, allow_unicode = True)
                     ### save the mutation
@@ -494,6 +569,8 @@ def main():
                         if G.nodes[node]['state'].mutation is not None:
                             plt.imsave(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
                     
+                    nx.draw(G, with_labels=True)
+                    plt.show()
                     break
                 # discover new state
             else:
@@ -706,7 +783,8 @@ def main():
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
-            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(envs[0], start_node, 10, 128, preprocess_obss)
+            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(envs[0], start_node, 10, 256, preprocess_obss)
+            print(start_node)
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
                             .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))
 

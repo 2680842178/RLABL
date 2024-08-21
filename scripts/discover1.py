@@ -236,6 +236,7 @@ def test(env,
         stop_state_list.append(stop_state)
 
     return_per_episode = utils.synthesize(test_logs["return_per_episode"])
+    test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
 
     counter = collections.Counter(stop_state_list)
     stop_state, _ = counter.most_common(1)[0]
