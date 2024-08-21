@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import math
+import copy
 from abc import abstractmethod
 from typing import Any, Iterable, SupportsFloat, TypeVar
 
@@ -810,4 +811,8 @@ class MiniGridEnv(gym.Env):
 
     def Current_state(self):
         return self.current_state
+
+    def copy(self):
+        new_env = copy.deepcopy(self)
+        return new_env
 
