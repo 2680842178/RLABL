@@ -1,22 +1,13 @@
 update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 1,256,42.4441243899216,6,0.0,0.0,0.0,0.0,"['None', 'None', '0.030']","['None', 'None', '0.000']",0.0,0.0,0,0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 2,512,47.63197413378904,11,-0.8,0.4,-1.0,0.0,"['None', 'None', '0.206']","['None', 'None', '0.097']",-1.0,0.0,-1.0,-1.0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 3,768,51.404655116541164,16,-0.9166666666666666,0.2763853991962833,-1.0,0.0,"['None', 'None', '0.277']","['None', 'None', '0.120']",-1.0,0.0,-1.0,-1.0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 4,1024,62.488674056186866,20,0.0,1.0,-1.0,1.0,"['None', 'None', '-0.132']","['None', 'None', '0.033']",-1.0,0.0,-1.0,-1.0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 5,1280,79.26168691561362,23,1.0,0.0,1.0,1.0,"['None', 'None', '-0.461']","['None', 'None', '0.176']",0.0,0.0,0,0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 6,1536,64.54052619908495,27,0.0,1.0,-1.0,1.0,"['None', 'None', '-0.133']","['None', 'None', '0.107']",-1.0,0.0,-1.0,-1.0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 7,1792,87.18367301866643,30,1.0,0.0,1.0,1.0,"['None', 'None', '-1.227']","['None', 'None', '0.984']",0.0,0.0,0,0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 8,2048,85.16284401886978,33,1.0,0.0,1.0,1.0,"['None', 'None', '-1.197']","['None', 'None', '0.822']",0.0,0.0,0,0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 9,2304,86.65849513542516,36,1.0,0.0,1.0,1.0,"['None', 'None', '-0.736']","['None', 'None', '0.268']",0.0,0.0,0,0
-update,frames,FPS,duration,rreturn_mean,rreturn_std,rreturn_min,rreturn_max,policy_loss,value_loss,return_mean,return_std,return_min,return_max
 10,2560,80.99827629829439,39,1.0,0.0,1.0,1.0,"['None', 'None', '-0.614']","['None', 'None', '0.170']",0.0,0.0,0,0
 11,2816,81.09184507763655,53,1.0,0.0,1.0,1.0,"['None', 'None', '-0.810']","['None', 'None', '1.031']",0.0,0.0,0,0
 12,3072,88.06176959945962,56,1.0,0.0,1.0,1.0,"['None', 'None', '-0.450']","['None', 'None', '0.066']",0.0,0.0,0,0
