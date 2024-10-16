@@ -9,11 +9,12 @@ import torch
 import tensorboardX
 from torchvision import transforms
 import sys
+import os
 import networkx as nx
 import heapq
 from sklearn.metrics.pairwise import cosine_similarity
 from skimage.metrics import structural_similarity as ssim
-from typing import optional
+from typing import Optional
 
 import utils
 from utils import *
@@ -160,7 +161,7 @@ test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
 
 class stateNode:
     def __init__(
-        self, id, mutation=None, agent: optional[ACModel] = None, env_image=None
+        self, id, mutation=None, agent: Optional[ACModel] = None, env_image=None
     ):
         self.id = id
         self.mutation = mutation
@@ -343,10 +344,13 @@ def discover(
     MutationMudule,
 ):
     def get_mutation_score(mutation):
-        # mutation = mutation.cpu().numpy().astype(numpy.uint8)
-        mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+        # mutation = mutation.numpy().astype(numpy.uint8)
+        # mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
         # anomaly_score = anomalyNN(mutation).detach().cpu().numpy()
         anomaly_score, anomaly_probability = MutationMudule.predict(mutation)
+        print(anomaly_score, anomaly_probability)
+        plt.imshow(mutation)
+        plt.show()
         # e_x = numpy.exp(anomaly_score[0] - numpy.max(anomaly_score[0]))
         # return (e_x / e_x.sum())[1]
         return anomaly_probability
@@ -623,7 +627,11 @@ def main():
     #     # print(AnomalyNN(preprocess_obss(initial_img)))
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
-    mutation_module = MutationModule()
+    if os.path.exists(AnomalyNN_model_dir):
+        mutation_module = MutationModule.load_model(AnomalyNN_model_dir)
+        print(mutation_module.kde)
+    else:
+        mutation_module = MutationModule()
 
     # load the mutations
     for node in G.nodes:
@@ -911,6 +919,7 @@ def main():
                 discount=args.discount,
                 gae_lambda=args.gae_lambda,
                 preprocess_obss=preprocess_obss,
+                discover=args.discover,
             )
         elif args.algo == "dqn":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(
@@ -926,6 +935,17 @@ def main():
                 preprocess_obss=preprocess_obss,
                 epsilon=epsilon,
             )
+
+        # add to the autoencoder buffer
+        if args.discover == 0:
+            mutation_module.train(num_epochs=1)
+        # print(exps_list[2].obs.image.shape)
+        # for img_index in range(1, exps_list[2].obs.image.shape(0)):
+        #     mutation_module.add_to_buffer(exps_list[2].obs.image[ima_index].cpu().numpy() - exps_list[2].pre_obs.image[ima_index - 1].cpu().numpy())
+        # mutation_module.train(num_epochs=1)
+        # for exp in exps_list[2]:
+        #     mutation_module.add_to_buffer(exp.obs)
+
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
         for i in range(2, agent_num + 2):
@@ -1057,6 +1077,8 @@ def main():
         # Save status
 
         if args.save_interval > 0 and update % args.save_interval == 0:
+            if args.discover == 0:
+                mutation_module.save_model(AnomalyNN_model_dir)
             status = {
                 "num_frames": num_frames,
                 "update": update,

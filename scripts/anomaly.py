@@ -1,6 +1,9 @@
 import os
+import pickle
 from PIL import Image
+import cv2
 import torch
+from collections import deque
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
 import torch.nn as nn
@@ -11,6 +14,7 @@ import matplotlib.pyplot as plt
 from sklearn.neighbors import KernelDensity
 
 # 定义数据增强和转换
+# not used
 transform = transforms.Compose(
     [
         transforms.Resize((128, 128)),
@@ -21,15 +25,18 @@ transform = transforms.Compose(
 # 设置超参数
 params = {"lr": 0.001, "batch_size": 16, "dropout_prob": 0.5}
 
+
 # 定义数据集
 class ImageBuffer:
-    def __init__(self, max_size, shape): #shape is a tuple, for example: (256, 256, 3)
+    def __init__(self, max_size, shape):  # shape is a tuple, for example: (256, 256, 3)
         self.max_size = max_size
-        self.buffer = np.ndarray(shape=(max_size, *shape))
+        # self.buffer = np.ndarray(shape=(max_size, *shape))
+        self.buffer = deque(maxlen=max_size)
 
     def add_image(self, image):
         if len(self.buffer) >= self.max_size:
-            self.buffer = self.buffer[1:]  # 移除旧的图片
+            self.buffer.popleft()
+        image = cv2.resize(image, (256, 256))
         self.buffer.append(image)
 
     def reset(self):
@@ -72,11 +79,9 @@ class ConvAutoencoder(nn.Module):
 
 
 class MutationModule:
-    def __init__(self, 
-                 params=params,
-                batch_size=16, 
-                 device='cuda', 
-                transform=transform):
+    def __init__(
+        self, params=params, batch_size=16, device="cuda", transform=transform
+    ):
         self.params = params
         self.device = device
         self.autoencoder = ConvAutoencoder(params["dropout_prob"]).to(self.device)
@@ -84,15 +89,14 @@ class MutationModule:
         self.optimizer = torch.optim.Adam(
             self.autoencoder.parameters(), lr=params["lr"]
         )
+        self.kde = None
         self.train_batch_size = batch_size
-        self.mu = None
-        self.std = None
         self.transform = transform
-        self.buffer = ImageBuffer(max_size=256)
+        self.buffer = ImageBuffer(max_size=256, shape=(256, 256, 3))
 
     def add_to_buffer(self, img):
         self.buffer.add_image(img)
-    
+
     def add_batch_to_buffer(self, batch_images):
         if batch_images[0] == self.buffer.max_size:
             self.buffer.reset()
@@ -105,7 +109,18 @@ class MutationModule:
             running_loss = 0.0
             for _ in range(256 // self.train_batch_size):
                 batch_images = self.buffer.get_images(self.train_batch_size)
-                batch_images = torch.tensor(batch_images).to(self.device)
+                # plt.imshow(batch_images[0])
+                # plt.show()
+                # batch_images = (
+                #     torch.tensor(batch_images).to(self.device).permute(0, 3, 1, 2)
+                # )
+                # batch_images = transforms.ToTensor()(batch_images).to(self.device)
+                batch_images = batch_images.astype(np.float32)
+                batch_images /= 255.0
+                batch_images = (
+                    torch.tensor(batch_images).to(self.device).permute(0, 3, 1, 2)
+                )
+
                 self.optimizer.zero_grad()
                 outputs = self.autoencoder(batch_images)
                 loss = self.criterion(outputs, batch_images)
@@ -121,7 +136,14 @@ class MutationModule:
             with torch.no_grad():
                 for _ in range(256 // self.train_batch_size):
                     batch_images = self.buffer.get_images(self.train_batch_size)
-                    batch_images = torch.tensor(batch_images).to(self.device)
+                    # batch_images = (
+                    #     torch.tensor(batch_images).to(self.device).permute(0, 3, 1, 2)
+                    # )
+                    batch_images = batch_images.astype(np.float32)
+                    batch_images /= 255.0
+                    batch_images = (
+                        torch.tensor(batch_images).to(self.device).permute(0, 3, 1, 2)
+                    )
                     outputs = self.autoencoder(batch_images)
                     loss = torch.mean((outputs - batch_images) ** 2, dim=[1, 2, 3])
                     reconstruction_errors.extend(loss.cpu().numpy())
@@ -133,12 +155,18 @@ class MutationModule:
                 self.reconstruction_errors
             )
 
+        
+
     def predict(self, img):
         # 在异常数据上进行检测
-        img = img.numpy()
-
         with torch.no_grad():
-            img = img.to(self.device)
+            # print(img.shape)
+            img = cv2.resize(img, (256, 256))
+            img = img.astype(np.float32)
+            img /= 255.0
+            img = (
+                torch.tensor(img).to(self.device).permute(2, 0, 1).unsqueeze(0)
+            )
             outputs = self.autoencoder(img)
             loss = torch.mean((outputs - img) ** 2, dim=[1, 2, 3])
             anomaly_score = loss.cpu().numpy()
@@ -148,4 +176,28 @@ class MutationModule:
 
         return anomaly_score, anomaly_probability
 
+    @classmethod
+    def load_model(
+        cls,
+        model_path,
+        params=params,
+        batch_size=16,
+        device="cuda",
+        transform=transform,
+    ):
+        new_instance = cls(
+            params=params, batch_size=batch_size, device=device, transform=transform
+        )
+        new_instance.autoencoder.load_state_dict(torch.load(model_path))
+        kde_path = model_path + "_kde"
+        with open(kde_path, "rb") as f:
+            new_instance.kde = pickle.load(f)
+            print(new_instance.kde)
+        return new_instance
 
+    def save_model(self, model_path):
+        torch.save(self.autoencoder.state_dict(), model_path)
+        kde_path = model_path + "_kde"
+        with open(kde_path, "wb") as f:
+            pickle.dump(self.kde, f)
+        print("Mutation Module saved to ", model_path)

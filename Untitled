@@ -1,0 +1,17 @@
+    ~/Codes/RLABL1/scripts/test_anomaly/  4 
+   └╴󰌠  new_anomaly.py  4 
+     ├╴  "Adam" is not exported from module "torch.optim" Pyright (reportPrivateImportUsage) [116, 33]
+     ├╴  Argument of type "Dataset[Unknown]" cannot be assigned to parameter "obj" of type "Sized" in function "len"
+     │      "Dataset[Unknown]" is incompatible with protocol "Sized"
+     │        "__len__" is not present Pyright (reportArgumentType) [130, 45]
+     ├╴  "score_samples" is not a known attribute of "None" Pyright (reportOptionalMemberAccess) [160, 32]
+     └╴  Argument of type "ndarray[Any, dtype[Unknown]] | None" cannot be assigned to parameter "x" of type "ArrayLike | Sequence[ArrayLike]"
+            Type "ndarray[Any, dtype[Unknown]] | None" is not assignable to type "ArrayLike | Sequence[ArrayLike]"
+              Type "None" is not assignable to type "ArrayLike | Sequence[ArrayLike]"
+                "None" is incompatible with protocol "Buffer"
+                  "__buffer__" is not present
+                "None" is incompatible with protocol "_SupportsArray[dtype[Any]]"
+                  "__array__" is not present
+                "None" is incompatible with protocol "_NestedSequence[_SupportsArray[dtype[Any]]]"
+                  "__len__" is not present
+            ... Pyright (reportArgumentType) [206, 9]

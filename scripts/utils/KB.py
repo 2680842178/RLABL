@@ -54,8 +54,11 @@ def obs_To_state(
     # return current_state
     ####### 下面是原先的代码
     # if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
-    if mutation_module.predict(anomaly_mutation[0])[1] >= 0.5:
-        return current_state
+    if len(G.nodes) == 3:
+        return current_state, mutation
+    if mutation_module.predict(mutation)[1] <= 0.5:
+        return current_state, mutation
+
     similiarity = []
     for next_state in list(G.successors(current_state)):
         similiarity.append(
@@ -63,9 +66,9 @@ def obs_To_state(
         )
     output = max(similiarity, key=lambda x: x[1])
     if output[1] < 0.99:
-        return current_state
+        return current_state, mutation
     output = output[0]
-    return output
+    return output, mutation
 
 
 def Mutiagent_collect_experiences(
@@ -81,6 +84,7 @@ def Mutiagent_collect_experiences(
     discount,
     gae_lambda,
     preprocess_obss,
+    discover,
 ):
     # def pre_obs_softmax(model, obs):
     #     image_data=preprocess_obss([obs], device=device)
@@ -128,7 +132,7 @@ def Mutiagent_collect_experiences(
         #     t=sample_from_selected_dimensions(prob_dist,candidate_list)
         #     current_state = t
         if not state_ini_flag:
-            current_state = obs_To_state(
+            current_state, mutation = obs_To_state(
                 current_state,
                 preprocess_obss,
                 # anomalyNN,
@@ -163,6 +167,8 @@ def Mutiagent_collect_experiences(
             state_ini_flag = True
         else:
             next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
+            if not discover:
+                mutation_module.add_to_buffer(mutation)
 
         state_trace.append(current_state)
         mask_trace.append(mask)
@@ -661,6 +667,8 @@ def collect_experiences_mutation(
         mutation = mutation.cpu().numpy().astype(numpy.uint8)
         # print(mutation.shape)
         if get_mutation_score(mutation) > mutation_value and reward[0] == 0:
+            # plt.imshow(mutation)
+            # plt.show()
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
                 if contrast(mutation, mutation_) > 0.99:
                     arrived_state_buffer.append(idx)
@@ -674,7 +682,7 @@ def collect_experiences_mutation(
                         score_,
                         mutation_,
                         times_ + 1,
-                        copy_env(algo.env),
+                        copy_env(algo.env.envs[0], env_name),
                     )
                     is_in_buffer = True
                     break
@@ -684,7 +692,12 @@ def collect_experiences_mutation(
                 # print(get_mutation_score(mutation).dtype)
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
                 mutation_buffer.append(
-                    (get_mutation_score(mutation), mutation, 1, copy_env(algo.env))
+                    (
+                        get_mutation_score(mutation),
+                        mutation,
+                        1,
+                        copy_env(algo.env.envs[0], env_name),
+                    )
                 )
         # Update experiences values
 

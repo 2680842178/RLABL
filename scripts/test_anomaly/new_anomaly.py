@@ -138,6 +138,7 @@ class MutationModule:
                     images = images.to(device)
                     outputs = autoencoder(images)
                     loss = torch.mean((outputs - images) ** 2, dim=[1, 2, 3])
+                    print(loss)
                     reconstruction_errors.extend(loss.cpu().numpy())
 
             # 使用核密度估计拟合分布
@@ -182,7 +183,7 @@ if len(normal_dataset) > 0 and len(anomaly_dataset) > 0:
     # 初始化模型和优化器
     device = "cuda" if torch.cuda.is_available() else "cpu"
     mutation_module = MutationModule(params, normal_dir, anomaly_dir, device, transform)
-    mutation_module.train(num_epochs=25)
+    mutation_module.train(num_epochs=10)
 
     # 在异常数据上进行检测
     anomaly_scores = []
@@ -198,6 +199,23 @@ if len(normal_dataset) > 0 and len(anomaly_dataset) > 0:
     for idx, (score, prob) in enumerate(zip(anomaly_scores, anomaly_probabilities)):
         print(
             f"Image {idx + 1}: Reconstruction Error = {score[0]:.4f}, Anomaly Probability = {prob:.4f}"
+        )
+
+    train_loader = DataLoader(
+        normal_dataset, batch_size=1, shuffle=True
+    )
+    normal_scores = []
+    normal_probabilities = []
+    with torch.no_grad():
+        for images, _ in train_loader:
+            images = images.to(device)
+            score, prob = mutation_module.predict(images)
+            normal_scores.append(score[0])
+            normal_probabilities.append(prob[0])
+
+    for idx, (score, prob) in enumerate(zip(normal_scores, normal_probabilities)):
+        print(
+            f"Normal Image {idx + 1}: Reconstruction Error = {score[0]:.4f}, Anomaly Probability = {prob:.4f}"
         )
 
     # 可视化重构误差的分布
@@ -226,4 +244,3 @@ if len(normal_dataset) > 0 and len(anomaly_dataset) > 0:
 
 else:
     print("No images found in one or both datasets.")
-
