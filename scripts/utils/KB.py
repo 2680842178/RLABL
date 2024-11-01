@@ -53,7 +53,7 @@ def obs_To_state(current_state,
     for next_state in list(G.successors(current_state)):
         similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))  
     output = max(similiarity, key=lambda x: x[1]) 
-    if output[1] < 0.99:
+    if output[1] < 0.98:
         return current_state
     output = output[0]
     return output

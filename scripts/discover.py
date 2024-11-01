@@ -172,6 +172,7 @@ def test(start_env,
             for node_num, node_mutation in mutation_buffer:
                 if contrast(node_mutation, mutation) > 0.99:
                     current_state = node_num
+                    print("Current state: ", current_state)
                     stop_env = copy_env(env, args.env)
                     stop_obss = copy.deepcopy(obss)
                     break
@@ -310,6 +311,12 @@ def discover(start_env,
 
             header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
+
+    ####
+    # for node, mutation in mutation_buffer:
+    #     print("mutation score for node {}: {}".format(node, mutation[0]))
+    #     plt.imshow(mutation[1])
+    #     plt.show()
 
     if arrived_state_buffer == []:
         return None, None, None
@@ -502,8 +509,11 @@ def main():
         min_stop_state = 0
         while 1:
             test_start_node = numpy.random.choice(len(node_probability_list), 1, p=node_probability_list)[0]
+            # print(node_probability_list)
             test_turns = 10
             mean_return, _, stop_state, stop_env, stop_obss = test(envs[0], test_start_node, 10, 128, preprocess_obss)
+            # 此处使用test_start_node时存在问题：相似度差异并不大，根据概率采样可能选中错误的初始状态。
+            # mean_return, _, stop_state, stop_env, stop_obss = test(envs[0], 3, 10, 128, preprocess_obss)
             if stop_state > min_stop_state:
                 min_stop_state = stop_state
             if mean_return['mean'] > 0.8:
@@ -537,6 +547,7 @@ def main():
                         G.nodes[start_node]['state'].mutation = new_mutation
                         plt.imsave(state_img_path + "state{}.bmp".format(new_node_id), initial_img)
                         start_node = new_node_id
+                        print("New start node: ", start_node)
                     else:
                         plt.imsave(state_img_path + "state{}.bmp".format(new_node_id), new_state_img)
                         G.nodes[new_node_id]['state'].mutation = new_mutation

@@ -30,7 +30,6 @@ def get_obss_preprocessor(obs_space):
                 "text": preprocess_texts([obs["mission"] for obs in obss], vocab, device=device)
             })
 
-
         preprocess_obss.vocab = vocab
 
     else:
