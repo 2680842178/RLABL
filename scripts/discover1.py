@@ -6,10 +6,9 @@ import datetime
 import torch_ac
 import tensorboardX
 from torchvision import transforms
-import collections
 import sys
 import networkx as nx
-import cv2
+import heapq
 from sklearn.metrics.pairwise import cosine_similarity
 from skimage.metrics import structural_similarity as ssim
 
@@ -17,6 +16,8 @@ import utils
 from utils import *
 from utils import device
 from model import ACModel, CNN, QNet
+
+from graph_test import test, ddm_decision
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -33,6 +34,8 @@ parser.add_argument("--seed", type=int, default=1,
                     help="random seed (default: 1)")
 parser.add_argument("--log-interval", type=int, default=1,
                     help="number of updates between two logs (default: 1)")
+parser.add_argument("--test-interval", type=int, default=10,
+                    help="number of updates between two tests (default: 1)")
 parser.add_argument("--save-interval", type=int, default=10,
                     help="number of updates between two saves (default: 10, 0 means no saving)")
 parser.add_argument("--procs", type=int, default=1,
@@ -82,52 +85,40 @@ args = parser.parse_args()
 test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
 
 class stateNode():
-    def __init__(self,
-                 id,
-                 with_agent = True,
-                 mutation = None,
+    def __init__(self, 
+                 id, 
+                 mutation = None, 
+                 agent: ACModel = None,
                  env_image = None):
         self.id = id
-        self.with_agent = with_agent
         self.mutation = mutation
-        self.env_image = env_image
-
-class agentEdge():
-    def __init__(self,
-                 id,
-                 from_node: int,
-                 to_node: int,
-                 agent: ACModel = None):
-        self.id = id
-        self.from_node = from_node
-        self.to_node = to_node
         self.agent = agent
+        self.env_image = env_image  
 
-def contrast(image1, image2) -> float:
-    """Summary
+# need to get parameters to get the graph
 
-    Args:
-        image1 (np.array(np.uint8)): the first image. example: (300, 300, 3) 
-        image2 (np.array(np.uint8)): the second image. The same as image1.
+def get_discover_probability(mean_reward, test_turns):
+    prob = (1 - mean_reward['mean']) / 2.0 + test_turns / 500.0
+    return prob
 
-    Returns:
-        float: the ssim (skimage.metrics.structural_similarity) between image1 and image2.
-    """
-    if image1 is None or image2 is None:
+# def get_mutation_score(mutation, anomalyNN):
+#     mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+#     anomaly_score = anomalyNN(mutation) 
+#     e_x = numpy.exp(anomaly_score - numpy.max(anomaly_score))
+#     return (e_x / e_x.sum())[1]
+
+def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean_reward):
+    score = 0.4 * mutation_score + 0.0001 * mutation_times + 0.01 * test_turns + (1 + test_mean_reward) / 2
+    if score > 0.6:
+        return True
+    return False
+    
+def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
+    if mutation1 is None or mutation2 is None:
         return 0
-    return ssim(image1, image2, multichannel=True, channel_axis=2)
-
-def obs_to_mutation(pre_obs, obs, preprocess_obss):
-    """convert from pre_obs and obs to mutation (torch.tensor, example: (300, 300, 3))
-
-    Args:
-        pre_obs (list): pre_observation (list, example: (300, 300, 3))
-        obs (list): observation (list, example: (300, 300, 3))
-        preprocess_obss (func): the preprocess func, convert from list to torch.tensor
-
-    Returns:
-        torch.tensor: the mutation tensor. (example: torch.tensor(300, 300, 3))
-    """
+    return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
+    
+def obs_To_mutation(pre_obs, obs, preprocess_obss):
     pre_image_data=preprocess_obss([pre_obs], device=device).image
     image_data=preprocess_obss([obs], device=device).image
     input_tensor = image_data - pre_image_data
@@ -135,119 +126,232 @@ def obs_to_mutation(pre_obs, obs, preprocess_obss):
     # input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
     return input_tensor
 
-def find_shortest_path_excluding_edges(G, start_node, end_node, excluded_edges):
-    # 创建图的副本
-    G_copy = G.copy()
-    
-    # 移除特定的边
-    G_copy.remove_edges_from(excluded_edges)
-    
-    try:
-        # 寻找最短路径
-        shortest_path = nx.shortest_path(G_copy, source=start_node, target=end_node)
-        return shortest_path
-    except nx.NetworkXNoPath:
-        return None
+def get_importance_prob(lst):
+    total = sum(x for x in lst if x != 0)
+    normalized_lst = [x / total if x != 0 else 0 for x in lst]
+    return normalized_lst
 
-def get_find_probability(test_turns: int, mean_rewards: float):
-    raise NotImplementedError
+    
 
-def test(env,
-        start_state: int,
-        episodes: int = 10,
-        max_steps_per_episode: int = 256,
-        preprocess_obss = None):
-    mutation_buffer = {}
+# def test(start_env, 
+#             start_node: int, 
+#             episodes: int = 10,
+#             max_steps_per_episode: int = 256,
+#             preprocess_obss = None,
+#             anomalyNN = None):
+#     test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
+#     env = copy_env(start_env, args.env)
+#     mutation_buffer = []
+#     for node, stateNode in G.nodes(data=True):
+#         # print(stateNode['state'].agent)
+#         if stateNode['state'].mutation is not None:
+#             mutation_buffer.append((node, stateNode['state'].mutation))
+    
+#     log_done_counter = 0
+#     log_episode_return = torch.zeros(args.procs, device=device)
+#     log_episode_num_frames = torch.zeros(args.procs, device=device) 
+    
+#     current_state = start_node
+#     # print(start_node, "start_node")
+#     obss = env.gen_obs()
+#     # obss_img = preprocess_obss([obss], device=device).image
+#     # obss_img = numpy.squeeze(obss_img)
+#     # obss_img = obss_img.cpu().numpy().astype(numpy.uint8)
+#     # plt.imshow(obss_img)
+#     # plt.show()
+
+#     # print(obss)
+#     pre_obss = obss
+#     stop_env = copy_env(env, args.env)
+#     stop_obss = obss
+
+#     stop_env_list = []
+#     stop_obs_list = []
+#     stop_state_list = []
+
+#     for _ in range(episodes):
+        
+#         for i in range(max_steps_per_episode):
+#             mutation = obs_To_mutation(pre_obss, obss, preprocess_obss) 
+#             mutation = mutation.cpu().numpy().astype(numpy.uint8)
+#             anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+#             if anomalyNN(anomaly_mutation)[0, 0] < anomalyNN(anomaly_mutation)[0, 1]:
+#                 for node_num, node_mutation in mutation_buffer:
+#                     if contrast(node_mutation, mutation) > 0.99:
+#                         current_state = node_num
+#                         print("Current state: ", current_state)
+#                         stop_env = copy_env(env, args.env)
+#                         stop_obss = copy.deepcopy(obss)
+#                         break
+                
+#             preprocessed_obss = preprocess_obss([obss], device=device)
+#             with torch.no_grad():
+#                 dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
+#             actions = dist.sample() #dist.probs.max(1, keepdim=True)[1]
+#             # print(dist.probs)
+#             # print(actions)
+#             # actions = dist.probs.max(1, keepdim=True)[1]
+#             obss, rewards, terminateds, truncateds, text_dict = env.step(actions)
+#             # obss_img = preprocess_obss([obss], device=device).image
+#             # obss_img = numpy.squeeze(obss_img)
+#             # obss_img = obss_img.cpu().numpy().astype(numpy.uint8)
+#             # plt.imshow(obss_img)
+#             # plt.show()
+            
+#             dones = terminateds | truncateds # tuple(a | b for a, b in zip(terminateds, truncateds))
+            
+#             log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
+#             log_episode_num_frames += torch.ones(args.procs, device=device)
+            
+#             # print(dones)
+#             if dones: 
+#                 current_state = start_node
+#                 env = copy_env(start_env, args.env)
+#                 obss = env.gen_obs()
+#                 pre_obss = obss
+#                 break
+#         dones = True
+#         current_state = start_node
+#         env = copy_env(start_env, args.env)
+#         obss = env.gen_obs()
+#         pre_obss = obss
+
+#         log_done_counter += 1
+#         test_logs["return_per_episode"].append(log_episode_return[0].item())
+#         test_logs["num_frames_per_episode"].append(log_episode_num_frames[0].item())
+#         mask = 1 - torch.tensor(dones, device=device, dtype=torch.float)
+#         log_episode_return *= mask
+#         log_episode_num_frames *= mask
+
+#         stop_env_list.append(copy_env(stop_env, args.env))
+#         stop_obs_list.append(copy.deepcopy(stop_obss))
+#         stop_state_list.append(current_state)
+
+#     return_per_episode = utils.synthesize(test_logs["return_per_episode"])
+#     num_frames_per_episode = utils.synthesize(test_logs["num_frames_per_episode"])  
+#     print(test_logs)
+
+#     counter = collections.Counter(stop_state_list)
+#     stop_state, _ = counter.most_common(1)[0]
+#     stop_state_index = stop_state_list.index(stop_state)
+#     stop_env = stop_env_list[stop_state_index]
+#     stop_obss = stop_obs_list[stop_state_index]
+#     return return_per_episode, num_frames_per_episode, stop_state, stop_env, stop_obss
+
+def discover(start_env, 
+            start_node, 
+            algo, 
+            discover_frames, 
+            txt_logger,
+            mutation_value,
+            test_turns,
+            test_mean_reward,
+            preprocess_obss,
+            anomalyNN):
+    def get_mutation_score(mutation):
+        # mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+        anomaly_score = anomalyNN(mutation).detach().cpu().numpy() 
+        e_x = numpy.exp(anomaly_score[0] - numpy.max(anomaly_score[0]))
+        return (e_x / e_x.sum())[1]
+    start_env = copy_env(start_env, args.env)
+    # start_env = ParallelEnv([start_env])
+    mutation_buffer = []
+    heapq.heapify(mutation_buffer)
+    
+    txt_logger.info("Optimizer loaded\n")
+    
+    num_frames = 0
+    update = 0
+    start_time = time.time()
+
+    known_mutation_buffer = []
+    arrived_state_buffer = []
     for node, data in G.nodes(data=True):
-        mutation_buffer[node] = data['state'].mutation
-
-    log_done_counter = 0
-    log_episode_return = torch.zeros(args.procs, device=device)
-    log_episode_num_frames = torch.zeros(args.procs, device=device) 
-
-    current_state = start_state
-    env.reset()
-    obs = env.gen_obs()
-    pre_obs = obs
-
-    stop_env = copy.deepcopy(env)
-    stop_obs = copy.deepcopy(obs)
-
-    stop_env_list = []
-    stop_obs_list = []
-    stop_state_list = []
+        if data['state'].mutation is not None:
+            known_mutation_buffer.append((node, data['state'].mutation))
     
-    for i in range(episodes):
-        successors = list(G.successors(current_state))
-        successor_list = []
-        for successor in successors:
-            if G.get_edge_data(current_state, successor)['state'].agent is not None:
-                successor_list.append(successor)
-        random_successor = random.choice(successor_list)
-        agent = G.get_edge_data(current_state, random_successor)['state'].agent
+    txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
+    
+    while num_frames < discover_frames:
+        update_start_time = time.time()
+        exps, logs1 = collect_experiences_mutation(algo,
+                                                   start_env, 
+                                                        get_mutation_score, 
+                                                        mutation_buffer, 
+                                                        mutation_value, 
+                                                        contrast, 
+                                                        known_mutation_buffer, 
+                                                        arrived_state_buffer,
+                                                        preprocess_obss,
+                                                        args.env)
 
-        for step in range(max_steps_per_episode):
-            mutation = obs_to_mutation(pre_obs, obs, preprocess_obss)
-            mutaion = mutation.cpu().numpy().astype(numpy.uint8)
-            # compare the mutation with other known node's mutations.
-            for node, node_mutation in mutation_buffer.items():
-                if contrast(mutation, node_mutation) > 0.99:
-                    current_state = node
-                    successors = list(G.successors(current_state))
-                    successor_list = []
-                    for successor in successors:
-                        if G.get_edge_data(current_state, successor)['state'].agent is not None:
-                            successor_list.append(successor)
-                    random_successor = random.choice(successor_list)
-                    agent = G.get_edge_data(current_state, random_successor)['state'].agent
+        logs2 = algo.update_parameters(exps)
 
-                    stop_env = copy.deepcopy(obs)
-                    stop_obs = copy.deepcopy(obs)
-                    stop_state = current_state
-                    break
+        logs = {**logs1, **logs2}
+        update_end_time = time.time()
 
-            preprocessed_obs = preprocess_obss([obs], device=device)
-            with torch.no_grad():
-                dist, _ = agent.acmodel(preprocessed_obs)
-            actions = dist.sample()
-            
-            obs, rewards, terminateds, truncateds, text_dict = env.step(actions.cpu().numpy())
-            
-            dones = terminateds | truncateds
-            
-            log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
-            log_episode_num_frames += torch.ones(args.procs, device=device)
-            
-            if dones:
-                current_state = start_state
-                env.reset()
-                obs = env.gen_obs()
-                pre_obs = obs
-                stop_env = copy.deepcopy(env)
-                stop_obs = copy.deepcopy(obs)
-                break
+        num_frames += logs["num_frames"]
+        update += 1
 
-        log_done_counter += 1
-        test_logs["return_per_episode"].append(log_episode_return.clone())
-        test_logs["num_frames_per_episode"].append(log_episode_num_frames.clone())
+        # Print logs
 
-        stop_env_list.append(stop_env)
-        stop_obs_list.append(stop_obs)
-        stop_state_list.append(stop_state)
+        if update % args.log_interval == 0:
+            fps = logs["num_frames"] / (update_end_time - update_start_time)
+            duration = int(time.time() - start_time)
+            return_per_episode = utils.synthesize(logs["return_per_episode"])
+            rreturn_per_episode = utils.synthesize(logs["reshaped_return_per_episode"])
+            num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
 
-    return_per_episode = utils.synthesize(test_logs["return_per_episode"])
-    test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
+            header = ["update", "frames", "FPS", "duration"]
+            data = [update, num_frames, fps, duration]
+            header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
+            data += rreturn_per_episode.values()
+            # header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
+            # data += num_frames_per_episode.values()
+            header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
+            data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
 
-    counter = collections.Counter(stop_state_list)
-    stop_state, _ = counter.most_common(1)[0]
-    stop_state_index = stop_state_list.index(stop_state)
-    stop_env = stop_env_list[stop_state_index]
-    stop_obs = stop_obs_list[stop_state_index]
-    return return_per_episode, stop_state, stop_env, stop_obs
+            txt_logger.info(
+                "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} |  entropy {:.3f} | value {:.3f} | policy_loss {:.3f} | value_loss {:.3f} | grad_norm {:.3f}"
+                .format(*data))
 
-            
+            header += ["return_" + key for key in return_per_episode.keys()]
+            data += return_per_episode.values()
+
+    ####
+    # for node, mutation in mutation_buffer:
+    #     print("mutation score for node {}: {}".format(node, mutation[0]))
+    #     plt.imshow(mutation[1])
+    #     plt.show()
+
+    if arrived_state_buffer == []:
+        return None, None, None
+    counter = collections.Counter(arrived_state_buffer)
+    most_state, count = counter.most_common(1)[0]
+    print("Most state & Count:", most_state, count)
+    if count >= 50:
+        out_state = most_state
+    else:
+        return None, None, None
+
+    for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
+        if define_accept_mutation(score_, times_, test_turns, test_mean_reward):
+            print(score_, times_, test_turns, test_mean_reward)
+            print("Accept mutation with score: ", score_)
+            env_img = preprocess_obss(env_.gen_obs(), device=device).image
+            env_img = numpy.squeeze(env_img)
+            env_img = env_img.cpu().numpy().astype(numpy.uint8)
+            return mutation_, env_img, out_state
+
+    print("No mutation detected or accepted.")
+    return None, None, None
+    
 def main():
-    initial_img_path = "config/" + args.model + "/"
+    # task_path: the path of the last task, the last folder name is "task"+task_number.
+    # task_config_path: the path of the last task config(a yaml file).
+    # new_task_path: the path of the new task, the last folder name is "task"+new_task_number.
+    state_img_path = "config/" + args.model + "/"
     task_path = os.path.join("config", args.model, args.task_config)
     task_config_path = os.path.join("config", args.model, args.task_config, "config.yaml")
     task_number = int(args.task_config[-1])
@@ -256,14 +360,15 @@ def main():
     new_task_path = os.path.join("config", args.model, new_task_name)
     with open(task_config_path, "r") as file:
         task_config = yaml.safe_load(file)
-
     # get the graph structure
     for node_id in task_config['graph']['nodes']:
         G.add_node(node_id, state=stateNode(node_id, agent=None, mutation=None))
     for edge in task_config['graph']['edges']:
-        G.add_edge(edge["from"], edge["to"], state=agentEdge(edge["id"], edge["with_agent"], edge["from"], edge["to"], agent=None))
+        #nx.draw(G, with_labels=True)
+        G.add_edge(edge["from"], edge["to"])
     start_node = task_config['graph']['start_node'] 
-    
+    # nx.draw(G, with_labels=True)
+    # plt.show()
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
     default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
 
@@ -274,33 +379,40 @@ def main():
     AnomalyNN_model_dir = utils.get_StateNN_model_dir(AnomalyNN_model_name)
 
     # Load loggers and Tensorboard writer
+
     txt_logger = utils.get_txt_logger(model_dir)
     csv_file, csv_logger = utils.get_csv_logger(model_dir)
     tb_writer = tensorboardX.SummaryWriter(model_dir)
 
     # Log command and all script arguments
+
     txt_logger.info("{}\n".format(" ".join(sys.argv)))
     txt_logger.info("{}\n".format(args))
 
     # Set seed for all randomness sources
+
     utils.seed(args.seed)
 
     # Set device
+
     txt_logger.info(f"Device: {device}\n")
+    
+    # Load environments
 
     envs = []
     initial_img = None
     for i in range(args.procs):
         env=utils.make_env(args.env, args.seed + 10000 * i)
-        env.reset()
+        initial_img, _ = env.reset()
         envs.append(env)
     txt_logger.info("Environments loaded\n")
-    initial_img = env.gen_obs()
+    # plt.imshow(initial_img)
+    #plt.show()
     if not os.path.exists(new_task_path):
         os.makedirs(new_task_path)
-    plt.imsave(initial_img_path + "initial_image{}.bmp".format(start_node), initial_img)
-    plt.imsave(initial_img_path + "initial_image{}.bmp".format(start_node), initial_img)
-    
+
+    # Load training status
+
     try:
         status = utils.get_status(model_dir)
     except OSError:
@@ -308,44 +420,47 @@ def main():
     txt_logger.info("Training status loaded\n")
 
     # Load observations preprocessor
+
     obs_space, preprocess_obss = utils.get_obss_preprocessor(envs[0].observation_space)
     if "vocab" in status:
         preprocess_obss.vocab.load_vocab(status["vocab"])
     txt_logger.info("Observations preprocessor loaded")
+
+    initial_img = preprocess_obss([initial_img], device=device).image
+    initial_img = numpy.squeeze(initial_img)
+    initial_img = initial_img.cpu().numpy().astype(numpy.uint8)
+    if args.discover == 0:
+        plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
     
-    num_edges = G.number_of_edges()
-    edges_list = list(G.edges())
-    acmodels = [None] * num_edges
-    algos = [None] * num_edges
-    
-    for i in range(num_edges):
-        edge_state = G.edges[edges_list[i]]['state']
-        if edge_state.with_agent:
-            if args.algo == "a2c" or args.algo == "ppo":
-                acmodel = ACModel(obs_space, envs[0].action_space, args.text)
-            elif args.algo == "dqn":
-                acmodel = QNet(obs_space, envs[0].action_space, args.text)
-            if "model_state" in status:
-                acmodel.load_state_dict(status["model_state"][i])
-            acmodel.to(device)
-            acmodels[edge_state.id] = acmodel
+    agent_num = task_config['agent_num']
+    acmodels=[]
+    for i in range(agent_num):
+        if args.algo == "a2c" or args.algo == "ppo":
+            acmodel = ACModel(obs_space, envs[0].action_space, args.text)
+        elif args.algo == "dqn":
+            acmodel = QNet(obs_space, envs[0].action_space, args.text)
+        if "model_state" in status:
+            acmodel.load_state_dict(status["model_state"][i])
+        acmodel.to(device)
+        acmodels.append(acmodel)
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodels[0]))
-        
-    for i in range(num_edges):
-        edge_state = G.edges[edges_list[i]]['state']
-        edge_id = edge_state.id
+
+    algos=[]
+    algos.append(None)
+    algos.append(None)
+    for i in range(agent_num):
         # Load algo
         if args.algo == "a2c":
-            algo = torch_ac.A2CAlgo(envs, acmodels[edge_id], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+            algo = torch_ac.A2CAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_alpha, args.optim_eps, preprocess_obss)
         elif args.algo == "ppo":
-            algo = torch_ac.PPOAlgo(envs, acmodels[edge_id], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+            algo = torch_ac.PPOAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
         elif args.algo == "dqn":
-            algo = torch_ac.DQNAlgo(envs, acmodels[edge_id], device, args.frames_per_proc, args.discount, args.lr,
+            algo = torch_ac.DQNAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
         else:
@@ -354,8 +469,9 @@ def main():
         if "optimizer_state" in status:
             algo.optimizer.load_state_dict(status["optimizer_state"])
         txt_logger.info("Optimizer loaded\n")
-        algos[edge_id] = algo
-        edge_state.agent = algo
+        algos.append(algo)
+        print("G.nodes[i + 2]", G.nodes[i + 2])
+        G.nodes[i + 2]['state'].agent = algo
 
     AnomalyNN = CNN(num_classes=2)
     try: 
@@ -365,31 +481,120 @@ def main():
         # print(AnomalyNN(preprocess_obss(initial_img)))
     except OSError:
         AnomalyNN = lambda x: [[1.0, 0]]
-
-    for node, data in G.nodes(data=True):
-        try: 
-            data['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
-        except OSError:
-            data['state'].mutation = None
-
-    excluded_edges = []
-
-    if args.discover:
-        total_test_turns = 0
-        while 1: 
-            return_per_episode, stop_state, stop_env, stop_obs = \
-                test(envs[0], start_node, episodes=10, max_steps_per_episode=256, preprocess_obss=preprocess_obss)
-            total_test_turns += 10
-            probability = get_find_probability(total_test_turns, return_per_episode["mean"])
-            
+        
+    # load the mutations 
+    for node in G.nodes:
+        if list(G.predecessors(node)):
+            if node != 0 and node != 1:
+                G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
+        if node != 0 and node != 1:
+            G.nodes[node]['state'].env_image = plt.imread(state_img_path + "/state" + str(node) + ".bmp")
     
-    best_path = find_shortest_path_excluding_edges(G, start_node, 0, excluded_edges)
+    print(G.nodes)
+    print(G.edges)
+    
+    if args.discover != 0:
+        node_probability_list = [0] * G.number_of_nodes()
+        for node, data in G.nodes(data=True):
+            if data['state'].env_image is not None:
+                node_probability_list[node] = contrast(data['state'].env_image, initial_img)
+        node_probability_list = get_importance_prob(node_probability_list)
+        total_test_turns = 0
+        new_acmodel = ACModel(obs_space, envs[0].action_space, args.text)
+        new_acmodel.to(device)
+        if args.algo == "ppo":
+            algo = torch_ac.PPOAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+        elif args.algo == "a2c":
+            algo = torch_ac.A2CAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_alpha, args.optim_eps, preprocess_obss)
+        elif args.algo == "dqn":
+            algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
+                                    args.max_grad_norm,
+                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
+        min_stop_state = 0
+        ######
+        # use ddm to decide whether need to discover
+        need_discover, decision_steps, stop_state, stop_env, stop_obss, mean_return = ddm_decision(
+            G=G,
+            start_env=envs[0],
+            env_key=args.env,
+            max_decision_steps=100,
+            node_probability_list=node_probability_list,
+            preprocess_obss=preprocess_obss,
+            anomaly_detector=AnomalyNN,
+            drift_rate=0.1,
+            boundary_separation=1.0,
+            starting_point=0.0,
+        )
+        if not need_discover:
+            txt_logger.info("successful test! reward per episode: {1}".format(mean_return))
+            return 
+        else:
+            txt_logger.info("failed test! need to discover!")
+        if stop_state > min_stop_state:
+            min_stop_state = stop_state
+        
+        new_mutation, new_state_img, out_state = discover(start_env=stop_env, 
+                                start_node=min_stop_state, 
+                                algo=algo, 
+                                discover_frames=50000, 
+                                txt_logger=txt_logger, 
+                                mutation_value=0.5, 
+                                test_turns=total_test_turns, 
+                                test_mean_reward=mean_return,
+                                preprocess_obss=preprocess_obss,
+                                anomalyNN=AnomalyNN) 
+        if new_mutation is not None:
+            new_node_id = len(G.nodes)
+            G.add_node(new_node_id, state=stateNode(new_node_id, None, None, stop_env.gen_obs()['image']))
+            if min_stop_state == start_node:
+                G.add_edge(new_node_id, start_node)
+                G.nodes[start_node]['state'].mutation = new_mutation
+                plt.imsave(state_img_path + "state{}.bmp".format(new_node_id), initial_img)
+                start_node = new_node_id
+                print("New start node: ", start_node)
+            else:
+                plt.imsave(state_img_path + "state{}.bmp".format(new_node_id), new_state_img)
+                G.nodes[new_node_id]['state'].mutation = new_mutation
+                G.add_edge(stop_state, new_node_id)
+                G.add_edge(new_node_id, out_state)
+                # for successor in list(G.successors(stop_state)):
+                #     if successor != 0:
+                #         G.remove_edge(stop_state, successor)
+                # G.add_edge(stop_state, new_node_id)
+                # G.add_edge(new_node_id, )
+                raise NotImplementedError
 
-    # start train the model
+            acmodels.append(new_acmodel)
+            G.nodes[new_node_id]['state'].agent = algo
+            algos.append(algo)
+            agent_num += 1
+            # save the new graph
+            new_yaml = task_config
+            new_yaml['graph']['nodes'].append(new_node_id)
+            new_yaml['graph']['start_node'] = start_node
+            new_yaml['agent_num'] = agent_num
+            for successor in G.successors(new_node_id):
+                new_yaml['graph']['edges'].append({"from": new_node_id, "to": successor})
+            for predecessor in G.predecessors(new_node_id):
+                new_yaml['graph']['edges'].append({"from": predecessor, "to": new_node_id})
+            with open(new_task_path + '/config.yaml', 'w') as file:
+                yaml.dump(data = new_yaml, stream = file, allow_unicode = True)
+            ### save the mutation
+            for node in G.nodes:
+                if G.nodes[node]['state'].mutation is not None:
+                    plt.imsave(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
+            
+            nx.draw(G, with_labels=True)
+            plt.show()
+        ######
+    # train the model.
     num_frames = status["num_frames"]
     update = status["update"]
     start_time = time.time()
-    num_edges = G.number_of_edge()
 
     while num_frames < args.frames:
         # Update model parameters
@@ -408,8 +613,7 @@ def main():
                                                                        num_frames_per_proc=args.frames_per_proc, 
                                                                        discount=args.discount,
                                                                        gae_lambda=args.gae_lambda, 
-                                                                       preprocess_obss=preprocess_obss,
-                                                                       path = best_path)
+                                                                       preprocess_obss=preprocess_obss)
         elif args.algo == "dqn":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0], 
                                                                            algos=algos,
@@ -420,22 +624,21 @@ def main():
                                                                            anomalyNN=AnomalyNN,
                                                                        num_frames_per_proc=args.frames_per_proc,
                                                                        preprocess_obss=preprocess_obss,
-                                                                       epsilon=epsilon,
-                                                                       path = best_path)
+                                                                       epsilon=epsilon)
         # #每个algo更新
-        logs2_list = [None] * (num_edges + 2)
-        for i in range(2, num_edges + 2):
+        logs2_list = [None] * (agent_num + 2)
+        for i in range(2, agent_num + 2):
             if len(exps_list[i].obs) and i != 0 and i != 1:
                 logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
         logs2 = {}
         if args.algo == "a2c" or args.algo == "ppo":
-            entropy_list = [None] * (num_edges)
-            value_list = [None] * (num_edges)
-            policy_loss_list = [None] * (num_edges)
-            value_loss_list = [None] *(num_edges)
-            grad_norm_list = [None] * (num_edges)
-            for i in range(num_edges):
+            entropy_list = [None] * (agent_num + 2)
+            value_list = [None] * (agent_num + 2)
+            policy_loss_list = [None] * (agent_num + 2)
+            value_loss_list = [None] *(agent_num + 2)
+            grad_norm_list = [None] * (agent_num + 2)
+            for i in range(2, agent_num + 2):
                 if len(exps_list[i].obs):
                     entropy_list[i] = logs2_list[i]["entropy"]
                     value_list[i] = logs2_list[i]["value"]
@@ -450,10 +653,10 @@ def main():
                 "grad_norm": grad_norm_list
             }
         elif args.algo == "dqn":
-            loss_list = [None] * (num_edges)
-            q_value_list = [None] * (num_edges)
-            grad_norm_list = [None] * (num_edges)
-            for i in range(num_edges):
+            loss_list = [None] * (agent_num + 2)
+            q_value_list = [None] * (agent_num + 2)
+            grad_norm_list = [None] * (agent_num + 2)
+            for i in range(2, agent_num + 2):
                 if len(exps_list[i].obs):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
@@ -519,12 +722,17 @@ def main():
 
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
+        if args.test_interval > 0 and update % args.test_interval == 0:
+            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, AnomalyNN)
+            print(start_node)
+            txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
+                            .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))
 
         # Save status
 
         if args.save_interval > 0 and update % args.save_interval == 0:
-            status = {"num_frames": num_frames, "update": update,
-                      "model_state": [acmodels[i].state_dict() for i in range(num_edges)],
+            status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,
+                      "model_state": [acmodels[i].state_dict() for i in range(agent_num)],
                       "optimizer_state": algo.optimizer.state_dict()}
             # if hasattr(preprocess_obss, "vocab"):
             #     status["vocab"] = preprocess_obss.vocab.vocab
@@ -538,126 +746,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-        
-def random_discover(env,
-                    start_obss, 
-                    start_node: int, 
-                    initial_state: bool = True,
-                    steps: int = 1e8,
-                    anomalyNN = None,
-                    preprocess_obss = None):
-    known_mutation_buffer = []
-    self_mutation_buffer = []
-    new_node = len(G.nodes)
-    G.add_node(new_node, state=stateNode(new_node, None, None))
-    for node in G.nodes:
-        if G.nodes[node]['state'].mutation is not None:
-            known_mutation_buffer.append((node, G.nodes[node]['state'].mutation))
-    pre_obss = start_obss   
-    obss = start_obss
-    env.reset()
-    print("Searching for new mutation...")
-    for _ in range(int(steps)):
-        action = env.action_space.sample()  
-        # pre_obss = obss
-        pre_obss = env.gen_obs()
-        obss, rewards, terminateds, truncateds, _ = env.step(action)
-        # print("obs", obss)
-        mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
-        mutation = mutation.cpu().numpy().astype(numpy.uint8)
-        anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
-        # print(mutation.shape)
-        # print(anomalyNN(anomaly_mutation))
-        #plt.imshow(mutation)
-        #plt.show()
-        ##### find the new state and its next state.
-        #print(mutation.shape)
-        #print(anomalyNN(mutation))
-        # 此处anomalyNN接受的shape：(1, 3, 300, 300)
-        # imshow接受的shape: (300, 300, 3)
-        # 所以需要将mutation(shape=300, 300, 3)转换为(1, 3, 300, 300)
-
-        if terminateds:
-            if (new_node, 0) not in G.edges:    
-                G.add_edge(new_node, 0)
-            env.reset()
-            # obss = env.gen_obs()
-            # pre_obss = obss
-            continue
-        if rewards > 0:
-            print("arrive the state 1 without any mutation! The test may have some problems.")
-            return None
-        if anomalyNN(anomaly_mutation)[0, 1] > anomalyNN(anomaly_mutation)[0, 0]:
-            print("new mutation: ", anomalyNN(anomaly_mutation))
-            plt.imshow(mutation)
-            plt.show()
-            #pre_image_data = preprocess_obss([pre_obss], device=device).image
-            #pre_image_data = numpy.squeeze(pre_image_data).cpu().numpy().astype(numpy.uint8)
-            #image_data = preprocess_obss([obss], device=device).image
-            #image_data = numpy.squeeze(image_data).cpu().numpy().astype(numpy.uint8)
-            #plt.imshow(image_data)
-            #plt.imshow(pre_image_data)
-            #plt.show()
-            self_mutation_buffer.append((mutation, anomalyNN(anomaly_mutation)))
-            mutation_env = copy.deepcopy(env)
-
-            # 此处逻辑（对于初始状态）：发现新的突变之后，如果这个突变与过去已知的突变相似
-            # 那么将新的节点指向这个已知的节点，直接返回。
-            # 如果是新的突变（不与任何已知突变相似），那么这个突变属于起始节点（过去没有突变）
-            if initial_state:
-                for node_num, node_mutation in known_mutation_buffer:
-                    if contrast(node_mutation, mutation) > 0.99:
-                        # G.add_node(len(G.nodes), state=stateNode(len(G.nodes), mutation))
-                        G.add_edge(start_node, node_num)
-                        nx.draw(G, with_labels=True)
-                        plt.show()
-                        return new_node
-                G.add_edge(new_node, start_node)
-                G.nodes[start_node]['state'].mutation = self_mutation_buffer[0][0]
-                return new_node
-            # plt.imshow(mutation_env.gen_obs()['image'])
-            # plt.show()
-            for _ in range(int(steps)):
-                action = env.action_space.sample()  
-                pre_obss = obss
-                obss, rewards, terminateds, truncateds, _ = env.step(action)
-                mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
-                mutation = mutation.cpu().numpy().astype(numpy.uint8)
-                anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
-                if rewards > 0:
-                    print("arrive the state 1!")
-                    G.add_edge(new_node, 1)
-                    G.add_edge(start_node, new_node)
-                    nx.draw(G, with_labels=True)
-                    plt.show()
-                    return new_node 
-                if terminateds:
-                    env = copy.deepcopy(mutation_env)
-                    obss = env.gen_obs()
-                    pre_obss = obss
-                    continue
-                if anomalyNN(anomaly_mutation)[0, 1] > anomalyNN(anomaly_mutation)[0, 0]:
-                    print("new mutation1: ", anomalyNN(anomaly_mutation))
-                    plt.imshow(mutation)
-                    plt.show()
-                    
-                    for node_num, node_mutation in known_mutation_buffer:
-                        if contrast(node_mutation, mutation) > 0.99:
-                            for successor in list(G.successors(start_node)):
-                                if successor != 0:
-                                    G.remove_edge(start_node, successor)
-                            G.add_edge(start_node, new_node)
-                            G.add_edge(new_node, node_num)
-                            G.nodes[new_node]['state'].mutation = self_mutation_buffer[0][0]
-                            nx.draw(G, with_labels=True)
-                            plt.show()
-                            return new_node
-                    print("There are two new mutations, can't find the new state!")
-                    self_mutation_buffer.append((mutation, anomalyNN(anomaly_mutation)))
-                
-        
-    return None 
-    # return the new state number.
-    # return stop state, stop env
-    
-    

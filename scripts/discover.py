@@ -17,6 +17,8 @@ from utils import *
 from utils import device
 from model import ACModel, CNN, QNet
 
+# python discover1.py --task-config task1 --discover 0 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0001 --AnomalyNN test_8 --model 20240829-seed1 --discount 0.99
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
                     help="the task config to use, including the graph(knowledge)")
