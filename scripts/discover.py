@@ -16,8 +16,13 @@ import utils
 from utils import *
 from utils import device
 from model import ACModel, CNN, QNet
+from utils.process import obs_To_mutation, contrast
 
-# python discover1.py --task-config task1 --discover 0 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0001 --AnomalyNN test_8 --model 20240829-seed1 --discount 0.99
+# python discover1.py --task-config task1 --discover 0 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0001 --AnomalyNN test_8 --model 20240829-seed1 --discount 0.99 --frames 40000
+# add door to the map
+# python discover1.py --task-config task1 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0-havekey --lr 0.0003 --AnomalyNN test_8 --model 20240819-seed1 --discount 0.99 --frames 40000
+# add key to the map
+# python discover1.py --task-config task2 --discover 1 --algo ppo --env MiniGrid-ConfigWorld-v0 --lr 0.0002 --AnomalyNN test_8 --model 20240819-seed1 --discount 0.995 --frames 120000
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -113,18 +118,17 @@ def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean
         return True
     return False
     
-def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
-    if mutation1 is None or mutation2 is None:
-        return 0
-    return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
+# def contrast(mutation1, mutation2) -> float: 
+#     if mutation1 is None or mutation2 is None:
+#         return 0
+#     return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
     
-def obs_To_mutation(pre_obs, obs, preprocess_obss):
-    pre_image_data=preprocess_obss([pre_obs], device=device).image
-    image_data=preprocess_obss([obs], device=device).image
-    input_tensor = image_data - pre_image_data
-    input_tensor = numpy.squeeze(input_tensor)
-    # input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
-    return input_tensor
+# def obs_To_mutation(pre_obs, obs, preprocess_obss):
+#     pre_image_data=preprocess_obss([pre_obs], device=device).image
+#     image_data=preprocess_obss([obs], device=device).image
+#     input_tensor = image_data - pre_image_data
+#     input_tensor = numpy.squeeze(input_tensor)
+#     return input_tensor
 
 def get_importance_prob(lst):
     total = sum(x for x in lst if x != 0)

@@ -174,11 +174,12 @@ def ddm_decision(
         
         drift = drift_rate * episode_return + numpy.random.normal(0, 0.05)
         position += drift
+        print("position: ", position)
         return_per_episode = total_return / decision_steps
         if position >= boundary_separation:
             print("Successful test, no need to discover.")
             return False, decision_steps, None, None, None, return_per_episode
-        elif position <= 0:
+        elif position <= -boundary_separation:
             print("Failed test, need to discover.")
             counter = collections.Counter(stop_state_list)
             stop_state, _ = counter.most_common(1)[0]

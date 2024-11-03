@@ -1,1 +1,12 @@
 test/
+__pycache__/
+.idea/
+.vscode/
+ppo_models/
+runs/
+prolog/
+*/__pycache__/
+*/.idea/
+*/.vscode/
+storage/
+scripts/storage/

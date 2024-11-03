@@ -108,8 +108,10 @@ def get_discover_probability(mean_reward, test_turns):
 #     return (e_x / e_x.sum())[1]
 
 def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean_reward):
-    score = 0.4 * mutation_score + 0.0001 * mutation_times + 0.01 * test_turns + (1 + test_mean_reward) / 2
-    if score > 0.6:
+    score = 0.6 * mutation_score + 0.001 * mutation_times + 0.01 * test_turns - (1 + test_mean_reward) / 2
+    print("Define accept mutation score: ", score)
+    print(mutation_score, mutation_times, test_turns, test_mean_reward)
+    if score > 0.5:
         return True
     return False
     
@@ -319,6 +321,10 @@ def discover(start_env,
             header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
 
+            if return_per_episode["mean"] > 0.9:
+                print("return per episode: {} > 0.9".format(return_per_episode['mean']))
+                break
+
     ####
     # for node, mutation in mutation_buffer:
     #     print("mutation score for node {}: {}".format(node, mutation[0]))
@@ -330,7 +336,7 @@ def discover(start_env,
     counter = collections.Counter(arrived_state_buffer)
     most_state, count = counter.most_common(1)[0]
     print("Most state & Count:", most_state, count)
-    if count >= 50:
+    if count >= 10:
         out_state = most_state
     else:
         return None, None, None
@@ -343,6 +349,8 @@ def discover(start_env,
             env_img = numpy.squeeze(env_img)
             env_img = env_img.cpu().numpy().astype(numpy.uint8)
             return mutation_, env_img, out_state
+        else:
+            print("Reject mutation with score: ", score_)
 
     print("No mutation detected or accepted.")
     return None, None, None
@@ -406,8 +414,6 @@ def main():
         initial_img, _ = env.reset()
         envs.append(env)
     txt_logger.info("Environments loaded\n")
-    # plt.imshow(initial_img)
-    #plt.show()
     if not os.path.exists(new_task_path):
         os.makedirs(new_task_path)
 
@@ -499,7 +505,6 @@ def main():
             if data['state'].env_image is not None:
                 node_probability_list[node] = contrast(data['state'].env_image, initial_img)
         node_probability_list = get_importance_prob(node_probability_list)
-        total_test_turns = 0
         new_acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         new_acmodel.to(device)
         if args.algo == "ppo":
@@ -540,10 +545,10 @@ def main():
         new_mutation, new_state_img, out_state = discover(start_env=stop_env, 
                                 start_node=min_stop_state, 
                                 algo=algo, 
-                                discover_frames=50000, 
+                                discover_frames=200000, 
                                 txt_logger=txt_logger, 
                                 mutation_value=0.5, 
-                                test_turns=total_test_turns, 
+                                test_turns=decision_steps, 
                                 test_mean_reward=mean_return,
                                 preprocess_obss=preprocess_obss,
                                 anomalyNN=AnomalyNN) 
@@ -590,6 +595,9 @@ def main():
             
             nx.draw(G, with_labels=True)
             plt.show()
+        else: 
+            print("Failed to discover, return.")
+            return
         ######
     # train the model.
     num_frames = status["num_frames"]
