@@ -625,11 +625,12 @@ def main():
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
-                                                                           anomalyNN=AnomalyNN,
+                                                                           anomaly_detector=anomaly_detector,
                                                                        num_frames_per_proc=args.frames_per_proc, 
                                                                        discount=args.discount,
                                                                        gae_lambda=args.gae_lambda, 
-                                                                       preprocess_obss=preprocess_obss)
+                                                                       preprocess_obss=preprocess_obss,
+                                                                       discover=args.discover,)
         elif args.algo == "dqn":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0], 
                                                                            algos=algos,
@@ -637,10 +638,11 @@ def main():
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
-                                                                           anomalyNN=AnomalyNN,
+                                                                           anomaly_detector=anomaly_detector,
                                                                        num_frames_per_proc=args.frames_per_proc,
                                                                        preprocess_obss=preprocess_obss,
-                                                                       epsilon=epsilon)
+                                                                       epsilon=epsilon,
+                                                                       discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
         for i in range(2, agent_num + 2):
@@ -739,7 +741,7 @@ def main():
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
-            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, AnomalyNN)
+            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, anomaly_detector=anomaly_detector)
             print(start_node)
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
                             .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))

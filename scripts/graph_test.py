@@ -56,7 +56,7 @@ def test_once(
     
     for i in range(max_steps):
         mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
-        # mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        mutation = mutation.cpu().numpy().astype(numpy.uint8)
         # anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
         # if anomaly_detector(anomaly_mutation)[0, 0] < anomaly_detector(anomaly_mutation)[0, 1]:
         if anomaly_detector.detect_anomaly(mutation):

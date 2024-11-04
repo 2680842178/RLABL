@@ -32,22 +32,22 @@ def sample_from_selected_dimensions(logits, selected_dims):
 
 def obs_To_state(current_state,
                 preprocess_obss,
-                anomalyNN, 
+                anomaly_detector, 
                 contrast, 
                 G: nx.DiGraph,
                 pre_obs,
                 obs,
-                device):
+                device,
+                is_add_normal_samples=False):
     pre_image_data=preprocess_obss([pre_obs], device=device)
     image_data=preprocess_obss([obs], device=device)
     input_tensor = image_data.image[0]-pre_image_data.image[0]
     mutation = numpy.squeeze(input_tensor).cpu().numpy().astype(numpy.uint8)
-    anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)  
-    # input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
-    # print(anomalyNN(input_batch))
-    # return current_state
-    ####### 下面是原先的代码
-    if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
+    if is_add_normal_samples:
+        anomaly_detector.add_normal_samples(mutation)
+    # anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)  
+    # if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
+    if not anomaly_detector.detect_anomaly(mutation):
         return current_state
     similiarity = []
     for next_state in list(G.successors(current_state)):
@@ -63,17 +63,18 @@ def Mutiagent_collect_experiences(env,
                                 contrast,
                                 G: nx.DiGraph,
                                 start_node,
-                                anomalyNN,  
+                                anomaly_detector,  
                                 device,
                                 num_frames_per_proc, 
                                 discount, 
                                 gae_lambda, 
-                                preprocess_obss):
+                                preprocess_obss,
+                                discover):
 
     # 这里是指要不要训练异常检测器，如果节点数小于等于3，就是初始状态，训练异常检测器。
     is_add_normal_samples = False
-    # if len(G.nodes) <= 3:
-        
+    if len(G.nodes) <= 3 and not discover:
+        is_add_normal_samples = True
 
     # def pre_obs_softmax(model, obs):
     #     image_data=preprocess_obss([obs], device=device)
@@ -125,12 +126,13 @@ def Mutiagent_collect_experiences(env,
         if not state_ini_flag:
             current_state = obs_To_state(current_state,
                                      preprocess_obss, 
-                                     anomalyNN, 
+                                     anomaly_detector, 
                                      contrast, 
                                      G, 
                                      pre_obs, 
                                      obs, 
-                                     device)
+                                     device,
+                                     is_add_normal_samples)
 
 
         if state_ini_flag:
@@ -356,12 +358,16 @@ def Mutiagent_collect_experiences_q(env,
                                 contrast,
                                 G: nx.DiGraph,
                                 start_node,
-                                anomalyNN,  
+                                anomaly_detector,  
                                 device,
                                 num_frames_per_proc, 
                                 preprocess_obss,
-                                epsilon):
-
+                                epsilon,
+                                discover):
+    # 这里是指要不要训练异常检测器，如果节点数小于等于3，就是初始状态，训练异常检测器。
+    is_add_normal_samples = False
+    if len(G.nodes) <= 3 and not discover:
+        is_add_normal_samples = True
     # def pre_obs_softmax(model, obs):
     #     image_data=preprocess_obss([obs], device=device)
     #     input_tensor = image_data.image[0]
@@ -411,12 +417,13 @@ def Mutiagent_collect_experiences_q(env,
         #     current_state = t
         current_state = obs_To_state(current_state,
                                      preprocess_obss,
-                                     anomalyNN, 
+                                     anomaly_detector, 
                                      contrast, 
                                      G, 
                                      pre_obs, 
                                      obs, 
-                                     device)
+                                     device,
+                                     is_add_normal_samples)
 
 
         if state_ini_flag:
