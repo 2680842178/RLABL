@@ -18,6 +18,7 @@ from utils import device
 from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
+from utils.anomaly import BoundaryDetector
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -336,10 +337,7 @@ def discover(start_env,
     counter = collections.Counter(arrived_state_buffer)
     most_state, count = counter.most_common(1)[0]
     print("Most state & Count:", most_state, count)
-    if count >= 10:
-        out_state = most_state
-    else:
-        return None, None, None
+    out_state = most_state
 
     for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
         if define_accept_mutation(score_, times_, test_turns, test_mean_reward):
@@ -534,6 +532,7 @@ def main():
             boundary_separation=1.0,
             starting_point=0.0,
         )
+        print("stop state", stop_state)
         if not need_discover:
             txt_logger.info("successful test! reward per episode: {1}".format(mean_return))
             return 
@@ -555,6 +554,7 @@ def main():
         if new_mutation is not None:
             new_node_id = len(G.nodes)
             G.add_node(new_node_id, state=stateNode(new_node_id, None, None, stop_env.gen_obs()['image']))
+            print("most stop state: ", stop_state)
             if min_stop_state == start_node:
                 G.add_edge(new_node_id, start_node)
                 G.nodes[start_node]['state'].mutation = new_mutation
@@ -731,6 +731,9 @@ def main():
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
+            testobs, _ = envs[0].reset()
+            plt.imshow(testobs['image'])
+            plt.show()
             test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, AnomalyNN)
             print(start_node)
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"

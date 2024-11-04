@@ -47,13 +47,22 @@ def test_once(
 
     episode_return = 0
     episode_num_frames = 0
+
+    # print(len(mutation_buffer))
+    # for i in range(len(mutation_buffer)):
+
+    #     plt.imshow(mutation_buffer[i][1])
+    #     plt.show()
     
     for i in range(max_steps):
         mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
-        mutation = mutation.cpu().numpy().astype(numpy.uint8)
-        anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
-        if anomaly_detector(anomaly_mutation)[0, 0] < anomaly_detector(anomaly_mutation)[0, 1]:
+        # mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        # anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
+        # if anomaly_detector(anomaly_mutation)[0, 0] < anomaly_detector(anomaly_mutation)[0, 1]:
+        if anomaly_detector.detect_anomaly(mutation):
+            print("anomaly")
             for node_num, node_mutation in mutation_buffer:
+                print(contrast(node_mutation, mutation))
                 if contrast(node_mutation, mutation) > 0.99:
                     current_state = node_num
                     print("Current state: ", current_state)
@@ -65,6 +74,7 @@ def test_once(
         with torch.no_grad():
             dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
         actions = dist.sample()
+        pre_obss = obss
         obss, rewards, terminateds, truncateds, infos = env.step(actions)
         dones = terminateds | truncateds
         
@@ -165,6 +175,7 @@ def ddm_decision(
             anomaly_detector=anomaly_detector
         )
         print("Decision step: ", decision_steps, "Return: ", episode_return, "Num_frames: ", episode_num_frames)
+        print("Start state", test_start_node, "Stop state: ", stop_state)
         total_return += episode_return
         stop_env_list.append(stop_env)
         stop_obs_list.append(stop_obss)
@@ -182,7 +193,8 @@ def ddm_decision(
         elif position <= -boundary_separation:
             print("Failed test, need to discover.")
             counter = collections.Counter(stop_state_list)
-            stop_state, _ = counter.most_common(1)[0]
+            # stop_state, _ = counter.most_common(1)[0]
+            stop_state = max(stop_state_list)
             stop_state_index = stop_state_list.index(stop_state)
             stop_env = stop_env_list[stop_state_index]
             stop_obss = stop_obs_list[stop_state_index]

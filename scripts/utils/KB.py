@@ -70,6 +70,11 @@ def Mutiagent_collect_experiences(env,
                                 gae_lambda, 
                                 preprocess_obss):
 
+    # 这里是指要不要训练异常检测器，如果节点数小于等于3，就是初始状态，训练异常检测器。
+    is_add_normal_samples = False
+    # if len(G.nodes) <= 3:
+        
+
     # def pre_obs_softmax(model, obs):
     #     image_data=preprocess_obss([obs], device=device)
     #     input_tensor = image_data.image[0]
