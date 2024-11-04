@@ -1,23 +1,21 @@
+# RLABL 
+
+## 实验脚本：scripts/minigrid.sh
+
+多次调用discover_anomaly.py脚本并更改地图，进行课程学习。
+
 # Minigrid
 
 
 ## Installation
 
+安装本地包（在conda内构建符号链接指向该文件夹，不直接安装到conda环境内）
 ```
 cd Minigrid-master
-pip3 install -r requirements.txt
-pip install .
-or
-cd Minigrid-master
-pip3 install -r requirements.txt
-python setup.py build
-python setup.py install
+pip install -e .
 ```
-or 
-python setup.py install
 
 # Torch-ac
-
 
 ## Installation
 

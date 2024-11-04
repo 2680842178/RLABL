@@ -341,10 +341,7 @@ def discover(start_env,
     counter = collections.Counter(arrived_state_buffer)
     most_state, count = counter.most_common(1)[0]
     print("Most state & Count:", most_state, count)
-    if count >= 10:
-        out_state = most_state
-    else:
-        return None, None, None
+    out_state = most_state
 
     for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
         if define_accept_mutation(score_, times_, test_turns, test_mean_reward):
