@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 def moving_average(data, window_size):
     return data.rolling(window=window_size).mean()
 # 读取 CSV 文件
-data = pd.read_csv('./storage/20241105-seed1/log.csv')
+data = pd.read_csv('./storage/20241108-seed1/log.csv')
 
 window_size = 30
 data['return_mean_smooth'] = moving_average(data['return_mean'], window_size)

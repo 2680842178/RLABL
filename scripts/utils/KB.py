@@ -286,6 +286,7 @@ def Mutiagent_collect_experiences(env,
                 exps_list[id].advantage.extend(advantage_trace[start_index:i+1])
                 exps_list[id].log_prob.extend(log_prob_trace[start_index:i+1])
             start_index=i+1
+    # 1111修改：去除此处的未完成episode的经验
     if start_index<len(state_trace)-2:
         id = state_trace[start_index]
         exps_list[id].obs.extend(obs_trace[start_index:])
@@ -294,6 +295,7 @@ def Mutiagent_collect_experiences(env,
         exps_list[id].value.extend(value_trace[start_index:])
         exps_list[id].advantage.extend(advantage_trace[start_index:])
         exps_list[id].log_prob.extend(log_prob_trace[start_index:])
+    ####
 
     for i in range(agent_num):
         exp_len=len(exps_list[i].obs)
@@ -311,7 +313,9 @@ def Mutiagent_collect_experiences(env,
     log_episode_reshaped_return=torch.zeros(1, device=device)
     for i in range(len(reward_trace)):
         log_episode_reshaped_return+=reward_trace[i]
+        ## 1111修改：去除此处的未完成episode的经验
         if mask_trace[i].item() == 0 or i==len(reward_trace)-1:
+        # if mask_trace[i].item() == 0:
             log_done_counter += 1
             log_reshaped_return.append(log_episode_reshaped_return.item())
         log_episode_reshaped_return *= mask_trace[i]
@@ -320,9 +324,6 @@ def Mutiagent_collect_experiences(env,
     log2={
                 "reshaped_return_per_episode": log_reshaped_return[-keep2:],
             }
-    # print(log_reshaped_return[-keep2:])
-    # print(action_trace)
-    # print([i.item() for i in mask_trace])
 
     image_trace = preprocess_obss(obs_trace, device=device).image
 

@@ -623,7 +623,7 @@ def main():
                                                                            device=device,
                                                                            start_node=start_node,
                                                                            anomaly_detector=anomaly_detector,
-                                                                       num_frames_per_proc=args.frames_per_proc, 
+                                                                       num_frames_per_proc=args.frames_per_proc * agent_num, 
                                                                        discount=args.discount,
                                                                        gae_lambda=args.gae_lambda, 
                                                                        preprocess_obss=preprocess_obss,
@@ -636,7 +636,7 @@ def main():
                                                                            device=device,
                                                                            start_node=start_node,
                                                                            anomaly_detector=anomaly_detector,
-                                                                       num_frames_per_proc=args.frames_per_proc,
+                                                                       num_frames_per_proc=args.frames_per_proc * agent_num,
                                                                        preprocess_obss=preprocess_obss,
                                                                        epsilon=epsilon,
                                                                        discover=args.discover)
