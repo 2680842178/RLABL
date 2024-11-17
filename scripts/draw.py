@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 def moving_average(data, window_size):
     return data.rolling(window=window_size).mean()
 # 读取 CSV 文件
-data = pd.read_csv('./storage/20241108-seed1/log.csv')
+data = pd.read_csv('./storage/20241112-seed1/log.csv')
+print(data.columns)
 
 window_size = 30
 data['return_mean_smooth'] = moving_average(data['return_mean'], window_size)
@@ -19,6 +20,18 @@ plt.plot(data['frames'], data['rreturn_mean_smooth'], label='rreturn_mean_smooth
 plt.xlabel('frames')
 plt.ylabel('Reward')
 plt.title('Reward Curve')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+plt.plot(data['frames'], data['agent1_entropy'], label='entropy')
+plt.plot(data['frames'], data['agent1_value'], label='value')
+plt.plot(data['frames'], data['agent1_policy_loss'], label='policy_loss')
+plt.plot(data['frames'], data['agent1_value_loss'], label='value_loss')
+plt.plot(data['frames'], data['agent1_grad_norm'], label='grad_norm')
+plt.xlabel('frames')
+plt.ylabel('Loss')
+plt.title('Loss Curve')
 plt.legend()
 plt.grid(True)
 plt.show()

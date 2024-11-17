@@ -25,7 +25,7 @@ START_CONFIG_CONTENT="graph:
 agent_num: 1"
 
 # 设置模型名称和配置文件夹
-MODEL_NAME=20241111-seed1
+MODEL_NAME=20241112-seed1
 MODEL_CONFIG_FOLDER=config/$MODEL_NAME
 
 if [ "$1" == "1" ]; then
@@ -83,13 +83,12 @@ LR=0.0003
 DISCOUNT=0.995
 ALGO=ppo
 EPOCHS=16
-BATCH_SIZE=128
-FRAMES_PER_PROC=512
+BATCH_SIZE=256
+FRAMES_PER_PROC=1024
 
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_1" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 200000
-exit 1
+python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 50000
 # add door to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_2" >> $CONFIGMAP

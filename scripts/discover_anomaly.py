@@ -710,6 +710,7 @@ def main():
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
             header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
+            header += ["agent1_entropy", "agent1_value", "agent1_policy_loss", "agent1_value_loss", "agent1_grad_norm"]
             data += rreturn_per_episode.values()
             # header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
             # data += num_frames_per_episode.values()
@@ -720,6 +721,7 @@ def main():
                 txt_logger.info(
                     "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | policy_loss {} "
                     "| value_loss {}".format(*data))
+                agent1_data = [logs["entropy"][2], logs["value"][2], logs["policy_loss"][2], logs["value_loss"][2], logs["grad_norm"][2]]
             elif args.algo == "dqn":
                 header += ["loss", "q_value"]
                 data += [['{:.3f}'.format(item) if item is not None else 'None' for item in logs["loss"]],
@@ -727,12 +729,13 @@ def main():
                 txt_logger.info(
                     "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | loss {} "
                     "| q_value {}".format(*data))
+                agent1_data = [logs["loss"][2], logs["q_value"][2], logs["grad_norm"][2]]
             header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
 
             if status["num_frames"] == 0:
                 csv_logger.writerow(header)
-            csv_logger.writerow(data)
+            csv_logger.writerow(data + agent1_data)
             csv_file.flush()
 
             # for field, value in zip(header, data):

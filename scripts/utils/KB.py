@@ -314,8 +314,8 @@ def Mutiagent_collect_experiences(env,
     for i in range(len(reward_trace)):
         log_episode_reshaped_return+=reward_trace[i]
         ## 1111修改：去除此处的未完成episode的经验
-        if mask_trace[i].item() == 0 or i==len(reward_trace)-1:
-        # if mask_trace[i].item() == 0:
+        # if mask_trace[i].item() == 0 or i==len(reward_trace)-1:
+        if mask_trace[i].item() == 0:
             log_done_counter += 1
             log_reshaped_return.append(log_episode_reshaped_return.item())
         log_episode_reshaped_return *= mask_trace[i]

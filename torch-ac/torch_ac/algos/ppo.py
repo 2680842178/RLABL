@@ -4,6 +4,24 @@ import torch.nn.functional as F
 
 from torch_ac.algos.base import BaseAlgo
 
+class LearningRateScheduler:
+    def __init__(self, initial_lr, **kwargs):
+        self.initial_lr = initial_lr
+        self.kwargs = kwargs
+        self.step_count = 0
+
+        self.final_lr = kwargs.get('final_lr', 0.000001)
+        self.total_steps = kwargs.get('total_steps', 100000)
+
+    def get_lr(self):
+        progress = min(self.step_count / self.total_steps, 1.0)
+        lr = self.initial_lr + (self.final_lr - self.initial_lr) * progress
+
+        return lr
+
+    def step(self, num_steps):
+        self.step_count += num_steps
+
 class PPOAlgo(BaseAlgo):
     """The Proximal Policy Optimization algorithm
     ([Schulman et al., 2015](https://arxiv.org/abs/1707.06347))."""
@@ -20,6 +38,7 @@ class PPOAlgo(BaseAlgo):
         self.clip_eps = clip_eps
         self.epochs = epochs
         self.batch_size = batch_size
+        self.lr_scheduler = LearningRateScheduler(lr, total_steps=100000)
 
         assert self.batch_size % self.recurrence == 0
 
@@ -28,6 +47,7 @@ class PPOAlgo(BaseAlgo):
 
     def update_parameters(self, exps):
         # Collect experiences
+        num_steps = len(exps)
 
         for _ in range(self.epochs):
             # Initialize log values
@@ -98,6 +118,8 @@ class PPOAlgo(BaseAlgo):
 
                 # Update actor-critic
 
+                for param_group in self.optimizer.param_groups:
+                    param_group['lr'] = self.lr_scheduler.get_lr()
                 self.optimizer.zero_grad()
                 batch_loss.backward()
                 grad_norm = sum(p.grad.data.norm(2).item() ** 2 for p in self.acmodel.parameters()) ** 0.5
@@ -111,6 +133,8 @@ class PPOAlgo(BaseAlgo):
                 log_policy_losses.append(batch_policy_loss)
                 log_value_losses.append(batch_value_loss)
                 log_grad_norms.append(grad_norm)
+                
+        self.lr_scheduler.step(num_steps)
 
         # Log some values
         logs = {
