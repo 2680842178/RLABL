@@ -120,33 +120,35 @@ class BoundaryDetector(AnomalyDetector):
     def detect_anomaly(self, image):
         return not self.is_known_image(image, add_to_buffer=False)
 
-folder_path = "test_split/dataset/0"
+if __name__ == "__main__":
 
-files = os.listdir(folder_path)
-images = [f for f in files]
-images.sort()
-saved_images_folder = 'buffer'
-processor = BoundaryDetector(saved_images_folder)
+    folder_path = "test_split/dataset/0"
 
-for image_name in images:
-    image_path = os.path.join(folder_path, image_name)
-    # image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    image = plt.imread(image_path)
+    files = os.listdir(folder_path)
+    images = [f for f in files]
+    images.sort()
+    saved_images_folder = 'buffer'
+    processor = BoundaryDetector(saved_images_folder)
 
-    processor.add_normal_samples(image)
+    for image_name in images:
+        image_path = os.path.join(folder_path, image_name)
+        # image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        image = plt.imread(image_path)
 
-test_images_folder = 'test_split/dataset/1'
-test_files = os.listdir(test_images_folder)
-test_images = [f for f in test_files]
-test_images.sort()
-for image_name in test_images:
-    image_path = os.path.join(test_images_folder, image_name)
-    # image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-    image = plt.imread(image_path)
+        processor.add_normal_samples(image)
 
-    if processor.detect_anomaly(image):
-        print(f"Anomaly detected in {image_name}")
-    else:
-        print(f"No anomaly detected in {image_name}")
+    test_images_folder = 'test_split/dataset/1'
+    test_files = os.listdir(test_images_folder)
+    test_images = [f for f in test_files]
+    test_images.sort()
+    for image_name in test_images:
+        image_path = os.path.join(test_images_folder, image_name)
+        # image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        image = plt.imread(image_path)
 
-# 使用示例
+        if processor.detect_anomaly(image):
+            print(f"Anomaly detected in {image_name}")
+        else:
+            print(f"No anomaly detected in {image_name}")
+
+    # 使用示例
