@@ -90,6 +90,8 @@ def Mutiagent_collect_experiences(env,
     pre_obs=obs
 
     mask_trace=[]
+    ###
+    state_mask_trace=[]
     obs_trace=[]
     state_trace=[]
     action_trace=[]
@@ -98,6 +100,7 @@ def Mutiagent_collect_experiences(env,
     log_prob_trace=[]
 
     mask=torch.ones(1, device=device)
+    state_mask = torch.ones(1, device=device)
     done=0
 
     done_counter=0
@@ -133,14 +136,12 @@ def Mutiagent_collect_experiences(env,
                                      obs, 
                                      device,
                                      is_add_normal_samples)
-
-
-        if state_ini_flag:
+        else:
             current_state=env_ini_state
             state_ini_flag=False
+
         if current_state != 0 and current_state != 1:
             agent = G.nodes[current_state]['state'].agent
-
             with torch.no_grad():
                 dist, value = agent.acmodel(preprocessed_obs)
             action = dist.sample()
@@ -161,6 +162,7 @@ def Mutiagent_collect_experiences(env,
 
         state_trace.append(current_state)
         mask_trace.append(mask)
+        state_mask_trace.append(state_mask)
         obs_trace.append(obs)
         action_trace.append(action)
         value_trace.append(value)
@@ -170,6 +172,10 @@ def Mutiagent_collect_experiences(env,
 #####################################################
         done = terminated|truncated
         mask = 1 - torch.tensor(done, device=device, dtype=torch.float)
+        ####
+        change_state = len(state_trace) >= 2 and (done or current_state != state_trace[-2])
+        state_mask = 1 - torch.tensor(change_state, device=device, dtype=torch.float)
+        
         pre_obs=obs
         obs=next_obs
 
@@ -250,8 +256,9 @@ def Mutiagent_collect_experiences(env,
 
     next_value=value_trace[-1]
     advantage_trace=[0]*len(action_trace)
+    ### 1123修改：修改mask_trace为state_mask_trace
     for i in reversed(range(num_frames_per_proc)):
-        next_mask = mask_trace[i + 1] if i < num_frames_per_proc - 1 else mask
+        next_mask = state_mask_trace[i + 1] if i < num_frames_per_proc - 1 else state_mask
         next_value = value_trace[i + 1] if i < num_frames_per_proc - 1 else next_value
         next_advantage = advantage_trace[i + 1] if i < num_frames_per_proc - 1 else 0
 
@@ -286,7 +293,6 @@ def Mutiagent_collect_experiences(env,
                 exps_list[id].advantage.extend(advantage_trace[start_index:i+1])
                 exps_list[id].log_prob.extend(log_prob_trace[start_index:i+1])
             start_index=i+1
-    # 1111修改：去除此处的未完成episode的经验
     if start_index<len(state_trace)-2:
         id = state_trace[start_index]
         exps_list[id].obs.extend(obs_trace[start_index:])
@@ -295,7 +301,6 @@ def Mutiagent_collect_experiences(env,
         exps_list[id].value.extend(value_trace[start_index:])
         exps_list[id].advantage.extend(advantage_trace[start_index:])
         exps_list[id].log_prob.extend(log_prob_trace[start_index:])
-    ####
 
     for i in range(agent_num):
         exp_len=len(exps_list[i].obs)

@@ -3,6 +3,7 @@ import torch
 import torch.nn.functional as F
 
 from torch_ac.algos.base import BaseAlgo
+from typing import Optional
 
 class LearningRateScheduler:
     def __init__(self, initial_lr, **kwargs):
@@ -11,11 +12,16 @@ class LearningRateScheduler:
         self.step_count = 0
 
         self.final_lr = kwargs.get('final_lr', 0.000001)
-        self.total_steps = kwargs.get('total_steps', 100000)
+        self.total_steps = kwargs.get('total_steps', 50000)
 
-    def get_lr(self):
-        progress = min(self.step_count / self.total_steps, 1.0)
-        lr = self.initial_lr + (self.final_lr - self.initial_lr) * progress
+    def get_lr(self, lr_setting:Optional[str]=None, lr_ratio:Optional[float]=None):
+        # progress = min(self.step_count / self.total_steps, 1.0)
+        # lr = self.initial_lr + (self.final_lr - self.initial_lr) * progress
+        if lr_setting is None:
+            lr = self.initial_lr
+        elif lr_setting == 'linear':
+            assert lr_ratio is not None
+            lr = self.initial_lr * lr_ratio
 
         return lr
 
@@ -45,7 +51,7 @@ class PPOAlgo(BaseAlgo):
         self.optimizer = torch.optim.Adam(self.acmodel.parameters(), lr, eps=adam_eps)
         self.batch_num = 0
 
-    def update_parameters(self, exps):
+    def update_parameters(self, exps, **kwargs):
         # Collect experiences
         num_steps = len(exps)
 
@@ -119,7 +125,8 @@ class PPOAlgo(BaseAlgo):
                 # Update actor-critic
 
                 for param_group in self.optimizer.param_groups:
-                    param_group['lr'] = self.lr_scheduler.get_lr()
+                    # param_group['lr'] = self.lr_scheduler.get_lr(average_reward=)
+                    param_group['lr'] = self.lr_scheduler.get_lr(lr_setting=kwargs.get('lr_setting', None), lr_ratio=kwargs.get('lr_ratio', 1.0))
                 self.optimizer.zero_grad()
                 batch_loss.backward()
                 grad_norm = sum(p.grad.data.norm(2).item() ** 2 for p in self.acmodel.parameters()) ** 0.5

@@ -394,6 +394,7 @@ def main():
 
     txt_logger = utils.get_txt_logger(model_dir)
     csv_file, csv_logger = utils.get_csv_logger(model_dir)
+    csv_episode_file, csv_episode_logger = utils.get_csv_episode_logger(model_dir)
     tb_writer = tensorboardX.SummaryWriter(model_dir)
 
     # Log command and all script arguments
@@ -609,6 +610,9 @@ def main():
     update = status["update"]
     start_time = time.time()
 
+    # the_max_return = agent_num.copy()
+    start_num_frames = copy.deepcopy(num_frames)
+
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
@@ -644,7 +648,7 @@ def main():
         logs2_list = [None] * (agent_num + 2)
         for i in range(2, agent_num + 2):
             if len(exps_list[i].obs) and i != 0 and i != 1:
-                logs2 = algos[i].update_parameters(exps_list[i])
+                logs2 = algos[i].update_parameters(exps_list[i], lr_setting=None, lr_ratio=(args.frames - num_frames + start_num_frames) / (args.frames - start_num_frames))
                 logs2_list[i] = logs2
         logs2 = {}
         if args.algo == "a2c" or args.algo == "ppo":
@@ -703,13 +707,17 @@ def main():
             fps = logs["num_frames"] / (update_end_time - update_start_time)
 
             duration = int(time.time() - start_time)
+            # print(logs['return_per_episode'])
+            # print(logs['reshaped_return_per_episode'])
             return_per_episode = utils.synthesize(logs["return_per_episode"])
             rreturn_per_episode = utils.synthesize(logs["reshaped_return_per_episode"])
+            # print(rreturn_per_episode, "rreturn_per_episode", return_per_episode, "return_per_episode")
             num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
 
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
             header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
+            header += ["return_" + key for key in return_per_episode.keys()]
             header += ["agent1_entropy", "agent1_value", "agent1_policy_loss", "agent1_value_loss", "agent1_grad_norm"]
             data += rreturn_per_episode.values()
             # header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
@@ -730,13 +738,16 @@ def main():
                     "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | loss {} "
                     "| q_value {}".format(*data))
                 agent1_data = [logs["loss"][2], logs["q_value"][2], logs["grad_norm"][2]]
-            header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
 
             if status["num_frames"] == 0:
                 csv_logger.writerow(header)
             csv_logger.writerow(data + agent1_data)
             csv_file.flush()
+
+            for episode in range(len(logs["reshaped_return_per_episode"])):
+                csv_episode_logger.writerow([logs["reshaped_return_per_episode"][episode], logs["num_frames_per_episode"][episode]])
+            csv_episode_file.flush()
 
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
