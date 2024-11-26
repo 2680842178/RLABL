@@ -703,6 +703,7 @@ def main():
 
         # Print logs
 
+        no_csv_head = True
         if update % args.log_interval == 0:
             fps = logs["num_frames"] / (update_end_time - update_start_time)
 
@@ -718,8 +719,8 @@ def main():
             data = [update, num_frames, fps, duration]
             header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
             header += ["return_" + key for key in return_per_episode.keys()]
-            header += ["agent1_entropy", "agent1_value", "agent1_policy_loss", "agent1_value_loss", "agent1_grad_norm"]
             data += rreturn_per_episode.values()
+            data += return_per_episode.values()
             # header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
             # data += num_frames_per_episode.values()
             if args.algo == "a2c" or args.algo == "ppo":
@@ -738,10 +739,11 @@ def main():
                     "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | loss {} "
                     "| q_value {}".format(*data))
                 agent1_data = [logs["loss"][2], logs["q_value"][2], logs["grad_norm"][2]]
-            data += return_per_episode.values()
+            header += ["agent1_entropy", "agent1_value", "agent1_policy_loss", "agent1_value_loss", "agent1_grad_norm"]
 
-            if status["num_frames"] == 0:
+            if status["num_frames"] == 0 and no_csv_head:
                 csv_logger.writerow(header)
+                no_csv_head = False
             csv_logger.writerow(data + agent1_data)
             csv_file.flush()
 
