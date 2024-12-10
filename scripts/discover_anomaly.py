@@ -78,7 +78,7 @@ parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
 parser.add_argument("--buffer-size", type=int, default=10000,
                     help="buffer size for dqn")
-parser.add_argument("--target-update", type=int, default=10,
+parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
 
 
@@ -637,7 +637,7 @@ def main():
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
-        epsilon = 0.3 * (1 - num_frames / args.frames)
+        epsilon = 0.5 * (1 - (num_frames / args.frames)**2) + 0.1
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0], 
                                                                            algos=algos, 
@@ -772,7 +772,7 @@ def main():
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
-            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, anomaly_detector=anomaly_detector)
+            test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, anomaly_detector=anomaly_detector, args=args)
             print(start_node)
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
                             .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))

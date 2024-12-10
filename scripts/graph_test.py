@@ -36,6 +36,7 @@ def test_once(
     env_key: str,
     anomaly_detector: Optional[Callable], 
     preprocess_obss: Optional[Callable],
+    args,
     ):
     env = copy_env(start_env, env_key)
 
@@ -71,9 +72,12 @@ def test_once(
                     break
 
         preprocessed_obss = preprocess_obss([obss], device=device)
-        with torch.no_grad():
-            dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
-        actions = dist.sample()
+        if args.algo == 'dqn':
+            actions = G.nodes[current_state]['state'].agent.select_action(preprocessed_obss,0)
+        else:
+            with torch.no_grad():
+                dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
+            actions = dist.sample()
         pre_obss = obss
         obss, rewards, terminateds, truncateds, infos = env.step(actions)
         dones = terminateds | truncateds
@@ -94,6 +98,7 @@ def test(
     env_key: str,
     preprocess_obss: Optional[Callable],
     anomaly_detector: Optional[Callable],
+    args,
 ):
     test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
     env = copy_env(start_env, env_key)
@@ -113,7 +118,7 @@ def test(
 
     for episode in range(episodes):
         episode_return, episode_num_frames, current_state, stop_env, stop_obss = test_once(
-            G, start_env, mutation_buffer, start_node, max_steps_per_episode, env_key, anomaly_detector, preprocess_obss
+            G, start_env, mutation_buffer, start_node, max_steps_per_episode, env_key, anomaly_detector, preprocess_obss, args
         )
         print("Episode: ", episode, "Return: ", episode_return, "Num_frames: ", episode_num_frames)
         test_logs["num_frames_per_episode"].append(episode_num_frames)
