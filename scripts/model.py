@@ -112,20 +112,35 @@ class ACModel(nn.Module, torch_ac.ACModel):
 
 
 class QNet(ACModel):
+    def __init__(self, obs_space, action_space,use_memory=False,use_text=False):
+        super().__init__(obs_space, action_space,use_memory,use_text)
+        
+        # 图像编码器部分保持不变
+        self.use_text = use_text
+        if self.use_text:
+            self.word_embedding_size = 32
+            self.word_embedding = nn.Embedding(obs_space["text"], self.word_embedding_size)
+            self.text_embedding_size = 128
+            self.text_rnn = nn.GRU(self.word_embedding_size, self.text_embedding_size, batch_first=True)
+
+
     def forward(self, obs):
         x = obs.image.transpose(1, 3).transpose(2, 3)
         x = self.image_conv(x)
         x = x.reshape(x.shape[0], -1)
 
-        embedding = x
-
         if self.use_text:
-            embed_text = self._get_embed_text(obs.text)
-            embedding = torch.cat((embedding, embed_text), dim=1)
+            embedded_text = self.word_embedding(obs.text)
+            _, hidden = self.text_rnn(embedded_text)
+            x = torch.cat((x, hidden[0]), dim=1)
 
-        x = self.actor(embedding)
-
-        return x
+        value = self.critic(x)
+        advantage = self.actor(x)
+        
+        # Q = V + (A - mean(A))
+        q = value + advantage - advantage.mean(dim=1, keepdim=True)
+        
+        return q
 
 class CNN(nn.Module):
     def __init__(self, num_classes):

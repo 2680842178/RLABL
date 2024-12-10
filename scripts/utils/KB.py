@@ -440,10 +440,7 @@ def Mutiagent_collect_experiences_q(env,
 
             with torch.no_grad():
                 q_values = agent.acmodel(preprocessed_obs)
-            if random.random() < epsilon:
-                action = torch.tensor([random.choice(range(env.action_space.n))], device=device)
-            else:
-                action = q_values.argmax(dim=1)
+                action = agent.select_action(preprocessed_obs, epsilon)
 
         if done:
             if reward > 0:
