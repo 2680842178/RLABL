@@ -1,4 +1,5 @@
 import argparse
+from typing import Optional
 import yaml
 import time
 import copy
@@ -109,10 +110,10 @@ def get_discover_probability(mean_reward, test_turns):
 #     return (e_x / e_x.sum())[1]
 
 def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean_reward):
-    score = 0.6 * mutation_score + 0.001 * mutation_times + 0.01 * test_turns - (1 + test_mean_reward) / 2
+    score = 0.6 * mutation_score + 0.01 * mutation_times + 0.01 * test_turns - (1 + test_mean_reward) / 2
     print("Define accept mutation score: ", score)
     print(mutation_score, mutation_times, test_turns, test_mean_reward)
-    if score > 0.5:
+    if score > 0.3:
         return True
     return False
     
@@ -250,7 +251,8 @@ def discover(start_env,
             test_turns,
             test_mean_reward,
             preprocess_obss,
-            anomaly_detector):
+            anomaly_detector,
+            discover_csv_logger=None):
     def get_mutation_score(mutation):
         # mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
         # anomaly_score = anomalyNN(mutation).detach().cpu().numpy() 
@@ -261,6 +263,7 @@ def discover(start_env,
             return 1
         else:
             return 0
+
     start_env = copy_env(start_env, args.env)
     # start_env = ParallelEnv([start_env])
     mutation_buffer = []
@@ -326,8 +329,13 @@ def discover(start_env,
             header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
 
-            if return_per_episode["mean"] > 0.9:
-                print("return per episode: {} > 0.9".format(return_per_episode['mean']))
+            if update == 1:
+                discover_csv_logger.writerow(header)
+
+            discover_csv_logger.writerow(data)
+
+            if return_per_episode["max"] > 0:
+                print("return per episode: {} > 0".format(return_per_episode['max']))
                 break
 
     ####
@@ -337,7 +345,7 @@ def discover(start_env,
     #     plt.show()
 
     if arrived_state_buffer == []:
-        return None, None, None
+        return None, None, None, num_frames
     counter = collections.Counter(arrived_state_buffer)
     most_state, count = counter.most_common(1)[0]
     print("Most state & Count:", most_state, count)
@@ -350,12 +358,12 @@ def discover(start_env,
             env_img = preprocess_obss(env_.gen_obs(), device=device).image
             env_img = numpy.squeeze(env_img)
             env_img = env_img.cpu().numpy().astype(numpy.uint8)
-            return mutation_, env_img, out_state
+            return mutation_, env_img, out_state, num_frames
         else:
             print("Reject mutation with score: ", score_)
 
     print("No mutation detected or accepted.")
-    return None, None, None
+    return None, None, None, num_frames
     
 def main():
     # task_path: the path of the last task, the last folder name is "task"+task_number.
@@ -387,8 +395,8 @@ def main():
     model_name = args.model or default_model_name
     model_dir = utils.get_model_dir(model_name)
 
-    AnomalyNN_model_name = args.AnomalyNN or model_name
-    AnomalyNN_model_dir = utils.get_StateNN_model_dir(AnomalyNN_model_name)
+    # AnomalyNN_model_name = args.AnomalyNN or model_name
+    # AnomalyNN_model_dir = utils.get_StateNN_model_dir(AnomalyNN_model_name)
 
     # Load loggers and Tensorboard writer
 
@@ -511,20 +519,6 @@ def main():
             if data['state'].env_image is not None:
                 node_probability_list[node] = contrast(data['state'].env_image, initial_img)
         node_probability_list = get_importance_prob(node_probability_list)
-        new_acmodel = ACModel(obs_space, envs[0].action_space, args.text)
-        new_acmodel.to(device)
-        if args.algo == "ppo":
-            algo = torch_ac.PPOAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-        elif args.algo == "a2c":
-            algo = torch_ac.A2CAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                    args.optim_alpha, args.optim_eps, preprocess_obss)
-        elif args.algo == "dqn":
-            algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
-                                    args.max_grad_norm,
-                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
         min_stop_state = 0
         ######
         # use ddm to decide whether need to discover
@@ -545,10 +539,29 @@ def main():
             return 
         else:
             txt_logger.info("failed test! need to discover!")
+
+        new_acmodel = ACModel(obs_space, envs[0].action_space, args.text)
+        new_acmodel.load_state_dict(status["model_state"][stop_state - 2])
+        new_acmodel.to(device)
+        if args.algo == "ppo":
+            algo = torch_ac.PPOAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+        elif args.algo == "a2c":
+            algo = torch_ac.A2CAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_alpha, args.optim_eps, preprocess_obss)
+        elif args.algo == "dqn":
+            algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
+                                    args.max_grad_norm,
+                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
+
         if stop_state > min_stop_state:
             min_stop_state = stop_state
+
+        discover_csv_file, discover_csv_logger = utils.get_csv_discover_logger(model_dir=model_dir, agent_idx=agent_num)
         
-        new_mutation, new_state_img, out_state = discover(start_env=stop_env, 
+        new_mutation, new_state_img, out_state, discover_num_frames = discover(start_env=stop_env, 
                                 start_node=min_stop_state, 
                                 algo=algo, 
                                 discover_frames=200000, 
@@ -557,7 +570,10 @@ def main():
                                 test_turns=decision_steps, 
                                 test_mean_reward=mean_return,
                                 preprocess_obss=preprocess_obss,
-                                anomaly_detector=anomaly_detector) 
+                                anomaly_detector=anomaly_detector,
+                                discover_csv_logger=discover_csv_logger) 
+        discover_csv_file.flush()
+    
         if new_mutation is not None:
             new_node_id = len(G.nodes)
             G.add_node(new_node_id, state=stateNode(new_node_id, None, None, stop_env.gen_obs()['image']))
@@ -607,12 +623,15 @@ def main():
         ######
     # train the model.
     num_frames = status["num_frames"]
+    if args.discover != 0:
+        num_frames += discover_num_frames
     update = status["update"]
     start_time = time.time()
 
     # the_max_return = agent_num.copy()
     start_num_frames = copy.deepcopy(num_frames)
 
+    no_csv_head = True
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
@@ -703,7 +722,6 @@ def main():
 
         # Print logs
 
-        no_csv_head = True
         if update % args.log_interval == 0:
             fps = logs["num_frames"] / (update_end_time - update_start_time)
 
@@ -769,6 +787,14 @@ def main():
             #     status["vocab"] = preprocess_obss.vocab.vocab
             utils.save_status(status, model_dir)
             txt_logger.info("Status saved")
+    # save
+    status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,
+                "model_state": [acmodels[i].state_dict() for i in range(agent_num)],
+                "optimizer_state": algo.optimizer.state_dict()}
+    # if hasattr(preprocess_obss, "vocab"):
+    #     status["vocab"] = preprocess_obss.vocab.vocab
+    utils.save_status(status, model_dir)
+    txt_logger.info("Status saved")
 
     
     # random discover, save the changes.

@@ -2,6 +2,7 @@ test/
 __pycache__/
 .idea/
 .vscode/
+*/.github/
 ppo_models/
 runs/
 prolog/
@@ -10,3 +11,4 @@ prolog/
 */.vscode/
 storage/
 scripts/storage/
+yolov8n.pt

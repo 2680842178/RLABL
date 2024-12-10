@@ -25,7 +25,7 @@ START_CONFIG_CONTENT="graph:
 agent_num: 1"
 
 # 设置模型名称和配置文件夹
-MODEL_NAME=20241114-seed1
+MODEL_NAME=20241129-discover2
 MODEL_CONFIG_FOLDER=config/$MODEL_NAME
 
 if [ "$1" == "1" ]; then
@@ -55,27 +55,27 @@ END_LINE=22
 MAP_1="map_grid = x, x, x, x, x, x, x, x
            x, x, x, x, x, x, x, x
            x, -, E, x, E, E, G, x
-           x, -, E, x, -, -, -, x
-           x, E, -, x, -, x, x, x
-           x, E, -, -, -, -, E, x
+           x, E, E, x, -, -, -, x
+           x, -, -, x, -, x, x, x
+           x, -, -, -, -, -, E, x
            x, E, E, E, -, S, E, x
            x, x, x, x, x, x, x, x"
 
 MAP_2="map_grid = x, x, x, x, x, x, x, x
            x, x, x, x, x, x, x, x
            x, -, E, x, E, E, G, x
-           x, -, E, x, -, -, -, x
-           x, E, -, x, D, x, x, x
-           x, E, S, -, -, -, E, x
+           x, E, E, x, -, -, -, x
+           x, S, -, x, D, x, x, x
+           x, -, -, -, -, -, E, x
            x, E, E, E, -, -, E, x
            x, x, x, x, x, x, x, x"
 
 MAP_3="map_grid = x, x, x, x, x, x, x, x
            x, x, x, x, x, x, x, x
            x, -, E, x, E, E, G, x
-           x, -, E, x, -, -, -, x
-           x, E, -, x, D, x, x, x
-           x, E, K, -, -, -, E, x
+           x, E, E, x, -, -, -, x
+           x, K, -, x, D, x, x, x
+           x, -, -, -, -, -, E, x
            x, E, E, E, -, S, E, x
            x, x, x, x, x, x, x, x"
 
@@ -96,7 +96,7 @@ python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env M
 # add key to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_3" >> $CONFIGMAP
-python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 300000
+python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 500000
 
 # # 替换配置文件中的地图
 # sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
