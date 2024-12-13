@@ -1,4 +1,5 @@
 import argparse
+import pdb
 from typing import Optional
 import yaml
 import time
@@ -20,6 +21,7 @@ from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
 from utils.anomaly import BoundaryDetector
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -76,7 +78,7 @@ parser.add_argument("--recurrence", type=int, default=1,
                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
-parser.add_argument("--buffer-size", type=int, default=10000,
+parser.add_argument("--buffer-size", type=int, default=4000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
@@ -135,112 +137,6 @@ def get_importance_prob(lst):
     normalized_lst = [x / total if x != 0 else 0 for x in lst]
     return normalized_lst
 
-    
-
-# def test(start_env, 
-#             start_node: int, 
-#             episodes: int = 10,
-#             max_steps_per_episode: int = 256,
-#             preprocess_obss = None,
-#             anomalyNN = None):
-#     test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
-#     env = copy_env(start_env, args.env)
-#     mutation_buffer = []
-#     for node, stateNode in G.nodes(data=True):
-#         # print(stateNode['state'].agent)
-#         if stateNode['state'].mutation is not None:
-#             mutation_buffer.append((node, stateNode['state'].mutation))
-    
-#     log_done_counter = 0
-#     log_episode_return = torch.zeros(args.procs, device=device)
-#     log_episode_num_frames = torch.zeros(args.procs, device=device) 
-    
-#     current_state = start_node
-#     # print(start_node, "start_node")
-#     obss = env.gen_obs()
-#     # obss_img = preprocess_obss([obss], device=device).image
-#     # obss_img = numpy.squeeze(obss_img)
-#     # obss_img = obss_img.cpu().numpy().astype(numpy.uint8)
-#     # plt.imshow(obss_img)
-#     # plt.show()
-
-#     # print(obss)
-#     pre_obss = obss
-#     stop_env = copy_env(env, args.env)
-#     stop_obss = obss
-
-#     stop_env_list = []
-#     stop_obs_list = []
-#     stop_state_list = []
-
-#     for _ in range(episodes):
-        
-#         for i in range(max_steps_per_episode):
-#             mutation = obs_To_mutation(pre_obss, obss, preprocess_obss) 
-#             mutation = mutation.cpu().numpy().astype(numpy.uint8)
-#             anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
-#             if anomalyNN(anomaly_mutation)[0, 0] < anomalyNN(anomaly_mutation)[0, 1]:
-#                 for node_num, node_mutation in mutation_buffer:
-#                     if contrast(node_mutation, mutation) > 0.99:
-#                         current_state = node_num
-#                         print("Current state: ", current_state)
-#                         stop_env = copy_env(env, args.env)
-#                         stop_obss = copy.deepcopy(obss)
-#                         break
-                
-#             preprocessed_obss = preprocess_obss([obss], device=device)
-#             with torch.no_grad():
-#                 dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
-#             actions = dist.sample() #dist.probs.max(1, keepdim=True)[1]
-#             # print(dist.probs)
-#             # print(actions)
-#             # actions = dist.probs.max(1, keepdim=True)[1]
-#             obss, rewards, terminateds, truncateds, text_dict = env.step(actions)
-#             # obss_img = preprocess_obss([obss], device=device).image
-#             # obss_img = numpy.squeeze(obss_img)
-#             # obss_img = obss_img.cpu().numpy().astype(numpy.uint8)
-#             # plt.imshow(obss_img)
-#             # plt.show()
-            
-#             dones = terminateds | truncateds # tuple(a | b for a, b in zip(terminateds, truncateds))
-            
-#             log_episode_return += torch.tensor(rewards, device=device, dtype=torch.float)
-#             log_episode_num_frames += torch.ones(args.procs, device=device)
-            
-#             # print(dones)
-#             if dones: 
-#                 current_state = start_node
-#                 env = copy_env(start_env, args.env)
-#                 obss = env.gen_obs()
-#                 pre_obss = obss
-#                 break
-#         dones = True
-#         current_state = start_node
-#         env = copy_env(start_env, args.env)
-#         obss = env.gen_obs()
-#         pre_obss = obss
-
-#         log_done_counter += 1
-#         test_logs["return_per_episode"].append(log_episode_return[0].item())
-#         test_logs["num_frames_per_episode"].append(log_episode_num_frames[0].item())
-#         mask = 1 - torch.tensor(dones, device=device, dtype=torch.float)
-#         log_episode_return *= mask
-#         log_episode_num_frames *= mask
-
-#         stop_env_list.append(copy_env(stop_env, args.env))
-#         stop_obs_list.append(copy.deepcopy(stop_obss))
-#         stop_state_list.append(current_state)
-
-#     return_per_episode = utils.synthesize(test_logs["return_per_episode"])
-#     num_frames_per_episode = utils.synthesize(test_logs["num_frames_per_episode"])  
-#     print(test_logs)
-
-#     counter = collections.Counter(stop_state_list)
-#     stop_state, _ = counter.most_common(1)[0]
-#     stop_state_index = stop_state_list.index(stop_state)
-#     stop_env = stop_env_list[stop_state_index]
-#     stop_obss = stop_obs_list[stop_state_index]
-#     return return_per_episode, num_frames_per_episode, stop_state, stop_env, stop_obss
 
 def discover(start_env, 
             start_node, 
@@ -284,18 +180,31 @@ def discover(start_env,
     txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
     
     while num_frames < discover_frames:
+        epsilon = 0.8 * (1 - (num_frames / args.frames)**0.5)
         update_start_time = time.time()
-        exps, logs1 = collect_experiences_mutation(algo,
-                                                   start_env, 
-                                                        get_mutation_score, 
-                                                        mutation_buffer, 
-                                                        mutation_value, 
-                                                        contrast, 
-                                                        known_mutation_buffer, 
-                                                        arrived_state_buffer,
-                                                        preprocess_obss,
-                                                        args.env)
-
+        if args.algo == 'ppo' or args.algo == 'a2c':
+            exps, logs1 = collect_experiences_mutation(algo,
+                                                    start_env, 
+                                                            get_mutation_score, 
+                                                            mutation_buffer, 
+                                                            mutation_value, 
+                                                            contrast, 
+                                                            known_mutation_buffer, 
+                                                            arrived_state_buffer,
+                                                            preprocess_obss,
+                                                            args.env)
+        elif args.algo == 'dqn':
+            exps, logs1 = collect_experiences_mutation_q(algo,
+                                                    start_env, 
+                                                            get_mutation_score, 
+                                                            mutation_buffer, 
+                                                            mutation_value, 
+                                                            contrast, 
+                                                            known_mutation_buffer, 
+                                                            arrived_state_buffer,
+                                                            preprocess_obss,
+                                                            args.env,
+                                                            epsilon)
         logs2 = algo.update_parameters(exps)
 
         logs = {**logs1, **logs2}
@@ -312,19 +221,26 @@ def discover(start_env,
             return_per_episode = utils.synthesize(logs["return_per_episode"])
             rreturn_per_episode = utils.synthesize(logs["reshaped_return_per_episode"])
             num_frames_per_episode = utils.synthesize(logs["num_frames_per_episode"])
-
             header = ["update", "frames", "FPS", "duration"]
             data = [update, num_frames, fps, duration]
             header += ["rreturn_" + key for key in rreturn_per_episode.keys()]
             data += rreturn_per_episode.values()
-            # header += ["num_frames_" + key for key in num_frames_per_episode.keys()]
-            # data += num_frames_per_episode.values()
-            header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
-            data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
+            if args.algo == "a2c" or args.algo == "ppo":
+                header += ["entropy", "value", "policy_loss", "value_loss", "grad_norm"]
+                data += [logs["entropy"], logs["value"], logs["policy_loss"], logs["value_loss"], logs["grad_norm"]]
 
-            txt_logger.info(
-                "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} |  entropy {:.3f} | value {:.3f} | policy_loss {:.3f} | value_loss {:.3f} | grad_norm {:.3f}"
-                .format(*data))
+                txt_logger.info(
+                    "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | entropy {:.3f} | value {:.3f} | policy_loss {:.3f} | value_loss {:.3f} | grad_norm {:.3f}"
+                    .format(*data))
+
+            elif args.algo == "dqn":
+
+                header += ["loss", "q_value", "grad_norm"] 
+                data += [logs["loss"], logs["q_value"], logs["grad_norm"]]
+
+                txt_logger.info(
+                    "U {} | F {:06} | FPS {:04.0f} | D {} | Reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | loss {:.3f} | q_value {:.3f} | grad_norm {:.3f}"
+                    .format(*data))
 
             header += ["return_" + key for key in return_per_episode.keys()]
             data += return_per_episode.values()
@@ -364,8 +280,8 @@ def discover(start_env,
 
     print("No mutation detected or accepted.")
     return None, None, None, num_frames
-    
 def main():
+    print("args", args)
     # task_path: the path of the last task, the last folder name is "task"+task_number.
     # task_config_path: the path of the last task config(a yaml file).
     # new_task_path: the path of the new task, the last folder name is "task"+new_task_number.
@@ -451,46 +367,54 @@ def main():
     if args.discover == 0:
         plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
     
-    agent_num = task_config['agent_num']
-    acmodels=[]
-    for i in range(agent_num):
+    # 记录原始agent数量
+    original_agent_num = status.get("agent_num", 0)
+    current_agent_num = task_config['agent_num']
+    
+    # 加载所有模型
+    acmodels = []
+    algos = [None] * 2  # 前两个位置保持None
+    
+    for i in range(current_agent_num):
+        # 创建模型
         if args.algo == "a2c" or args.algo == "ppo":
             acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         elif args.algo == "dqn":
             acmodel = QNet(obs_space, envs[0].action_space, args.text)
-        if "model_state" in status:
+            
+        # 加载已有模型的状态
+        if "model_state" in status and i < len(status["model_state"]):
             acmodel.load_state_dict(status["model_state"][i])
+            
         acmodel.to(device)
         acmodels.append(acmodel)
-    txt_logger.info("Model loaded\n")
-    txt_logger.info("{}\n".format(acmodels[0]))
-
-    algos=[]
-    algos.append(None)
-    algos.append(None)
-    for i in range(agent_num):
-        # Load algo
-        if args.algo == "a2c":
-            algo = torch_ac.A2CAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                    args.optim_alpha, args.optim_eps, preprocess_obss)
-        elif args.algo == "ppo":
-            algo = torch_ac.PPOAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+        
+        # 只为新添加的agent创建优化器和算法实例
+        if i >= original_agent_num and i >= 2:  # i >= 2 确保跳过前两个特殊位置
+            if args.algo == "ppo":
+                algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-        elif args.algo == "dqn":
-            algo = torch_ac.DQNAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr,
+            elif args.algo == "a2c":
+                algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_alpha, args.optim_eps, preprocess_obss)
+            elif args.algo == "dqn":
+                algo = torch_ac.DQNAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
-                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
+                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
+            
+            # 如果有对应的优化器状态则加载
+            if "optimizer_state" in status and i < len(status["optimizer_state"]):
+                algo.optimizer.load_state_dict(status["optimizer_state"][i])
         else:
-            raise ValueError("Incorrect algorithm name: {}".format(args.algo))
-
-        if "optimizer_state" in status:
-            algo.optimizer.load_state_dict(status["optimizer_state"])
-        txt_logger.info("Optimizer loaded\n")
+            # 对于已有的agent,创建一个不进行训练的算法实例
+            algo = None
+            
         algos.append(algo)
-        print("G.nodes[i + 2]", G.nodes[i + 2])
-        G.nodes[i + 2]['state'].agent = algo
+        
+        if i >= 2:  # 跳过前两个特殊节点
+            G.nodes[i]['state'].agent = algo
 
     # AnomalyNN = CNN(num_classes=2)
     # try: 
@@ -533,16 +457,22 @@ def main():
             drift_rate=0.1,
             boundary_separation=1.0,
             starting_point=0.0,
+            args=args
         )
         if not need_discover:
-            txt_logger.info("successful test! reward per episode: {1}".format(mean_return))
+            txt_logger.info("successful test! reward per episode: {}".format(mean_return))
             return 
         else:
             txt_logger.info("failed test! need to discover!")
 
-        new_acmodel = ACModel(obs_space, envs[0].action_space, args.text)
+
+        if args.algo == "a2c" or args.algo == "ppo":
+            new_acmodel= ACModel(obs_space, envs[0].action_space, args.text)
+        elif args.algo == "dqn":
+            new_acmodel = QNet(obs_space, envs[0].action_space, args.text)
         new_acmodel.load_state_dict(status["model_state"][stop_state - 2])
         new_acmodel.to(device)
+        
         if args.algo == "ppo":
             algo = torch_ac.PPOAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
@@ -554,7 +484,7 @@ def main():
         elif args.algo == "dqn":
             algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
-                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update)
+                                    args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
 
         if stop_state > min_stop_state:
             min_stop_state = stop_state
@@ -630,14 +560,21 @@ def main():
 
     # the_max_return = agent_num.copy()
     start_num_frames = copy.deepcopy(num_frames)
-
+    print("G.nodes", G.nodes)
+    print("G.edges", G.edges)
+    # pdb.set_trace()
     no_csv_head = True
+    # 添加变量跟踪最佳测试结果
+    best_test_return = float('-inf')
+    best_model_states = None
+    
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
-        epsilon = 0.5 * (1 - (num_frames / args.frames)**2) + 0.1
+        epsilon = 0.95 * (1 - (num_frames / args.frames)**0.5) + 0.05
+        print("epsilon", epsilon)   
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0], 
                                                                            algos=algos, 
@@ -666,8 +603,8 @@ def main():
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
         for i in range(2, agent_num + 2):
-            if len(exps_list[i].obs) and i != 0 and i != 1:
-                logs2 = algos[i].update_parameters(exps_list[i], lr_setting=None, lr_ratio=(args.frames - num_frames + start_num_frames) / (args.frames - start_num_frames))
+            if len(exps_list[i].obs) and i >= original_agent_num:  # 只更新新agent
+                logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
         logs2 = {}
         if args.algo == "a2c" or args.algo == "ppo":
@@ -764,7 +701,8 @@ def main():
                 no_csv_head = False
             csv_logger.writerow(data + agent1_data)
             csv_file.flush()
-
+            # print("reshaped_return_per_episode", len(logs["reshaped_return_per_episode"]))
+            # print("num_frames_per_episode", len(logs["num_frames_per_episode"]))
             for episode in range(len(logs["reshaped_return_per_episode"])):
                 csv_episode_logger.writerow([logs["reshaped_return_per_episode"][episode], logs["num_frames_per_episode"][episode]])
             csv_episode_file.flush()
@@ -773,9 +711,30 @@ def main():
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
             test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, anomaly_detector=anomaly_detector, args=args)
-            print(start_node)
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
                             .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))
+            # 检查是否获得了更好的测试结果
+            current_test_return = test_return_per_episode['mean']
+            print("current_test_return", current_test_return)
+            print("best_test_return", best_test_return)
+            if current_test_return >= best_test_return:
+                best_test_return = current_test_return
+                # 保存当前最佳模型状态
+                best_model_states = [acmodel.state_dict() for acmodel in acmodels]
+                
+                # 保存最佳模型
+                best_status = {
+                    "num_frames": num_frames,
+                    "update": update,
+                    "agent_num": agent_num,
+                    "model_state": best_model_states,
+                    "optimizer_state": algo.optimizer.state_dict(),
+                    "best_test_return": best_test_return
+                }
+                utils.save_status(best_status, os.path.join(model_dir, "best_model"))
+                txt_logger.info(f"New best model saved with test return: {best_test_return:.2f}")
+            
+            
 
         # Save status
 
@@ -795,7 +754,24 @@ def main():
     #     status["vocab"] = preprocess_obss.vocab.vocab
     utils.save_status(status, model_dir)
     txt_logger.info("Status saved")
-
+    
+    for i, acmodel in enumerate(acmodels):
+        acmodel.load_state_dict(best_model_states[i])
+    txt_logger.info(f"Loaded best model with test return: {best_test_return:.2f}")
+    # 训练结束时保存最终状态和最佳状态
+    final_status = {
+        "num_frames": num_frames,
+        "update": update,
+        "agent_num": agent_num,
+        "model_state": [acmodel.state_dict() for acmodel in acmodels],
+        "optimizer_state": algo.optimizer.state_dict(),
+        "best_test_return": best_test_return
+    }
+    utils.save_status(final_status, model_dir)
+    txt_logger.info("Final status saved")
+    
+    # 如果最终模型不是最佳模型,则加载最佳模型状态
+    
     
     # random discover, save the changes.
     # until get a familiar change(state)
