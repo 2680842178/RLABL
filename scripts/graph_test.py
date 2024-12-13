@@ -152,7 +152,8 @@ def ddm_decision(
     anomaly_detector: Optional[Callable],
     drift_rate: float,
     boundary_separation: float,
-    starting_point: float, 
+    starting_point: float,
+    args,
     # non_decision_time: float,
 ):
     decision_steps = 0
@@ -177,7 +178,8 @@ def ddm_decision(
             max_steps=256,
             env_key=env_key, 
             preprocess_obss=preprocess_obss, 
-            anomaly_detector=anomaly_detector
+            anomaly_detector=anomaly_detector,
+            args=args
         )
         print("Decision step: ", decision_steps, "Return: ", episode_return, "Num_frames: ", episode_num_frames)
         print("Start state", test_start_node, "Stop state: ", stop_state)
@@ -188,7 +190,7 @@ def ddm_decision(
 
         decision_steps += 1
         
-        drift = drift_rate * episode_return + numpy.random.normal(0, 0.05)
+        drift = drift_rate * episode_return + numpy.random.normal(-0.05, 0.05)
         position += drift
         print("position: ", position)
         return_per_episode = total_return / decision_steps
