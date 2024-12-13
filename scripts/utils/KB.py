@@ -39,6 +39,7 @@ def obs_To_state(current_state,
                 obs,
                 device,
                 is_add_normal_samples=False):
+    # print("current_state", current_state)
     pre_image_data=preprocess_obss([pre_obs], device=device)
     image_data=preprocess_obss([obs], device=device)
     input_tensor = image_data.image[0]-pre_image_data.image[0]
@@ -51,7 +52,10 @@ def obs_To_state(current_state,
         return current_state
     similiarity = []
     for next_state in list(G.successors(current_state)):
-        similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))  
+        # print("next_state", next_state)
+        # print("G.nodes[next_state]['state'].mutation", G.nodes[next_state]['state'].mutation)
+        similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))
+    # print("similiarity", similiarity)
     output = max(similiarity, key=lambda x: x[1]) 
     if output[1] < 0.98:
         return current_state
@@ -190,7 +194,7 @@ def Mutiagent_collect_experiences(env,
         episode_reward_return *= mask
         log_episode_num_frames *= mask
 
-
+        torch.cuda.empty_cache()
 
     keep1 = max(done_counter,1)
     log1 = {
@@ -199,54 +203,6 @@ def Mutiagent_collect_experiences(env,
         "num_frames": num_frames_per_proc
     }
 
-
-    ############################################################
-    # print("before abl", state_trace)
-    #
-    # # ABL修正state_trace
-    # state_list = [1, 2, 3] # 课程路径
-    # trace_list=[]
-    # obs_trace_list=[]
-    # end_list=[]
-    # start_index=0
-    # for t in range(len(state_trace)):
-    #     if(mask_trace[t]==0):
-    #         trace_list.append(state_trace[start_index:t+1])
-    #         obs_trace_list.append(obs_trace[start_index:t+1])
-    #         start_index=t+1
-    #         if reward_trace[t - 1] > 0:
-    #             end_list.append(3)
-    #         else:
-    #             end_list.append(4)
-    # last_trace = state_trace[start_index:]
-    # last_obs_trace_list = obs_trace[start_index:]
-    # # for i in range(len(last_trace)):
-    # #     last_trace[i] = 2
-    # # def testStateNN(obs):
-    # #     return [1, 1, 1, 1, 1, 1]
-    # def get_prob(obs):
-    #     return pre_obs_softmax(StateNN, obs)
-    # for m in range(len(trace_list)):
-    #     _, trace_list[m] = abl_trace(trace_list[m], state_list, end_list[m], obs_trace_list[m], get_prob)
-    # if len(last_trace) > 0:
-    #     last_state_list = []
-    #     for i in state_list:
-    #         if i <= last_trace[-1]:
-    #             last_state_list.append(i)
-    #
-    #     _, last_trace = abl_trace(last_trace, last_state_list, last_trace[-1], last_obs_trace_list, get_prob)
-    #
-    # # last_trace = abl_trace(last_trace, [0, 1], 1, last_obs_trace_list, get_prob)
-    # ### abl over
-    # ### abl
-    # after_abl_list = trace_list + [last_trace]
-    # print("after abl:", after_abl_list)
-    #
-    # state_trace = []
-    # for m in range(len(trace_list)):
-    #     state_trace.extend(trace_list[m])
-    # state_trace.extend(last_trace)
-    #################################################################
 
     for i in range(len(state_trace) - 1):
         if state_trace[i] != state_trace[i + 1]:
@@ -421,28 +377,29 @@ def Mutiagent_collect_experiences_q(env,
         #     candidate_list=Candidate(current_state)
         #     t=sample_from_selected_dimensions(prob_dist,candidate_list)
         #     current_state = t
-        current_state = obs_To_state(current_state,
-                                     preprocess_obss,
-                                     anomaly_detector, 
-                                     contrast, 
-                                     G, 
-                                     pre_obs, 
-                                     obs, 
-                                     device,
-                                     is_add_normal_samples)
-
-
-        if state_ini_flag:
+        if not state_ini_flag:
+            current_state = obs_To_state(current_state,
+                                        preprocess_obss, 
+                                        anomaly_detector, 
+                                        contrast, 
+                                        G, 
+                                        pre_obs, 
+                                        obs, 
+                                        device,
+                                        is_add_normal_samples)
+        else:
             current_state=env_ini_state
             state_ini_flag=False
+
         if current_state != 0 and current_state != 1:
             agent = G.nodes[current_state]['state'].agent
 
             with torch.no_grad():
                 q_values = agent.acmodel(preprocessed_obs)
                 action = agent.select_action(preprocessed_obs, epsilon)
-
+        # print("output_state", current_state)
         if done:
+            # print("done")
             if reward > 0:
                 current_state = 1
             if reward < 0:
@@ -455,7 +412,9 @@ def Mutiagent_collect_experiences_q(env,
             state_ini_flag=True
         else:
             next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
-
+        # print("reward", reward)
+        # print("terminated", terminated)
+        # print("truncated", truncated)
         state_trace.append(current_state)
         mask_trace.append(mask)
         obs_trace.append(obs)
@@ -481,7 +440,11 @@ def Mutiagent_collect_experiences_q(env,
         episode_reward_return *= mask
         log_episode_num_frames *= mask
 
+        # 在不再需要时删除变量
+        del preprocessed_obs, next_obs
 
+        # 清除未使用的显存
+        torch.cuda.empty_cache()
 
     keep1 = max(done_counter,1)
     log1 = {
@@ -494,7 +457,7 @@ def Mutiagent_collect_experiences_q(env,
         if state_trace[i] != state_trace[i + 1]:
             # mental reward
             if reward_trace[i] == 0 and state_trace[i] != 0 and state_trace[i] != 1:
-                reward_trace[i] = torch.tensor(0.5, device=device, dtype=torch.float)
+                reward_trace[i] = torch.tensor(1, device=device, dtype=torch.float)
 
     # print("After abl", state_trace)
     exps_list=[]
@@ -544,7 +507,7 @@ def Mutiagent_collect_experiences_q(env,
     log_episode_reshaped_return=torch.zeros(1, device=device)
     for i in range(len(reward_trace)):
         log_episode_reshaped_return+=reward_trace[i]
-        if mask_trace[i].item() == 0 or i==len(reward_trace)-1:
+        if mask_trace[i].item() == 0:
             log_done_counter += 1
             log_reshaped_return.append(log_episode_reshaped_return.item())
         log_episode_reshaped_return *= mask_trace[i]
@@ -713,6 +676,8 @@ def collect_experiences_mutation(algo,
         algo.log_episode_reshaped_return *= algo.mask
         algo.log_episode_num_frames *= algo.mask
 
+        torch.cuda.empty_cache()
+
     # Add advantage and return to experiences
 
     preprocessed_obs = preprocess_obss(algo.obs, device=algo.device)
@@ -755,7 +720,7 @@ def collect_experiences_mutation(algo,
     exps.log_prob = algo.log_probs.transpose(0, 1).reshape(-1)
 
     # Preprocess experiences
-
+    # print("obs", exps.obs)
     exps.obs = algo.preprocess_obss(exps.obs, device=algo.device)
 
     # Log some values
@@ -774,8 +739,136 @@ def collect_experiences_mutation(algo,
 
     return exps, logs
 
+def collect_experiences_mutation_q(algo, 
+                                start_env, 
+                                get_mutation_score, 
+                                mutation_buffer, 
+                                mutation_value, 
+                                contrast,
+                                known_mutation_buffer,
+                                arrived_state_buffer,
+                                preprocess_obss,
+                                env_name,
+                                epsilon):
+    """为DQN收集经验的版本。
+    主要区别:
+    1. 使用epsilon-greedy策略选择动作
+    2. 收集的经验包含 (s,a,r,s',done) 元组
+    """
+    env = copy_env(start_env, env_name)
+    parallel_env = ParallelEnv([env])
+    done = (True,)
+    last_done = (True,)
+    
+    for i in range(algo.num_frames_per_proc):
+        last_done = done
+        preprocessed_obs = preprocess_obss(algo.obs, device=algo.device)
 
+        with torch.no_grad():
+            q_values = algo.acmodel(preprocessed_obs)
+            action = algo.select_action(preprocessed_obs, epsilon)
+            # print("action", action) 
 
+        obs, reward, terminated, truncated, _ = parallel_env.step(action.cpu().numpy())
+        if reward[0] > 0:
+            arrived_state_buffer.append(1)
+            
+        done = tuple(a | b for a, b in zip(terminated, truncated))
+        if done[0]:
+            env = copy_env(start_env, env_name)
+            parallel_env = ParallelEnv([env])
+            obs = parallel_env.gen_obs()
+
+        the_preprocessed_obs = preprocess_obss(obs, device=algo.device)
+        
+        if last_done[0]:
+            mutation = the_preprocessed_obs.image - the_preprocessed_obs.image
+        else:
+            mutation = the_preprocessed_obs.image - preprocessed_obs.image
+        mutation = numpy.squeeze(mutation)
+        mutation = mutation.cpu().numpy().astype(numpy.uint8)
+
+        if get_mutation_score(mutation) > mutation_value and reward[0] == 0:
+            for _, (idx, mutation_) in enumerate(known_mutation_buffer):
+                if contrast(mutation, mutation_) > 0.99:
+                    arrived_state_buffer.append(idx)
+                    reward = 1
+                    done = (True,)
+                    break
+            is_in_buffer = False
+            for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
+                if contrast(mutation, mutation_) > 0.99:
+                    mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
+                    is_in_buffer = True
+                    break
+            if not is_in_buffer:
+                mutation_buffer.append((get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
+
+        # 更新经验值
+        algo.obss[i] = algo.obs
+        algo.obs = obs
+        algo.masks[i] = algo.mask
+        algo.mask = 1 - torch.tensor(done, device=algo.device, dtype=torch.float)
+        algo.actions[i] = action
+        if algo.reshape_reward is not None:
+            algo.rewards[i] = torch.tensor([
+                algo.reshape_reward(obs_, action_, reward_, done_)
+                for obs_, action_, reward_, done_ in zip(obs, action, reward, done)
+            ], device=algo.device)
+        else:
+            algo.rewards[i] = torch.tensor(reward, device=algo.device)
+        algo.obs_[i] = obs  # 存储下一个状态
+
+        # 更新日志值
+        algo.log_episode_return += torch.tensor(reward, device=algo.device, dtype=torch.float)
+        algo.log_episode_reshaped_return += algo.rewards[i]
+        algo.log_episode_num_frames += torch.ones(algo.num_procs, device=algo.device)
+
+        for i, done_ in enumerate(done):
+            if done_:
+                algo.log_done_counter += 1
+                algo.log_return.append(algo.log_episode_return[i].item())
+                algo.log_reshaped_return.append(algo.log_episode_reshaped_return[i].item())
+                algo.log_num_frames.append(algo.log_episode_num_frames[i].item())
+
+        algo.log_episode_return *= algo.mask
+        algo.log_episode_reshaped_return *= algo.mask
+        algo.log_episode_num_frames *= algo.mask
+
+        del preprocessed_obs, the_preprocessed_obs
+        torch.cuda.empty_cache()
+
+    # 定义经验
+    exps = DictList()
+    exps.obs = [algo.obss[i][j]
+                for j in range(algo.num_procs)
+                for i in range(algo.num_frames_per_proc)]
+    exps.action = algo.actions.transpose(0, 1).reshape(-1)
+    exps.reward = algo.rewards.transpose(0, 1).reshape(-1)
+    exps.mask = algo.masks.transpose(0, 1).reshape(-1)
+    exps.obs_ = [algo.obs_[i][j]
+                 for j in range(algo.num_procs)
+                 for i in range(algo.num_frames_per_proc)]
+
+    # 预处理经验
+    exps.obs = algo.preprocess_obss(exps.obs, device=algo.device)
+    exps.obs_ = algo.preprocess_obss(exps.obs_, device=algo.device)
+
+    # 记录日志
+    keep = max(algo.log_done_counter, algo.num_procs)
+    logs = {
+        "return_per_episode": algo.log_return[-keep:],
+        "reshaped_return_per_episode": algo.log_reshaped_return[-keep:],
+        "num_frames_per_episode": algo.log_num_frames[-keep:],
+        "num_frames": algo.num_frames
+    }
+
+    algo.log_done_counter = 0
+    algo.log_return = algo.log_return[-algo.num_procs:]
+    algo.log_reshaped_return = algo.log_reshaped_return[-algo.num_procs:]
+    algo.log_num_frames = algo.log_num_frames[-algo.num_procs:]
+
+    return exps, logs
 
 
 
