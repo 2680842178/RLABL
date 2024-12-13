@@ -85,6 +85,7 @@ class BaseAlgo(ABC):
 
         self.obs = self.env.gen_obs()
         self.obss = [None] * (shape[0])
+        self.obs_ = [None] * (shape[0])
         if self.acmodel.recurrent:
             print("use recurrent")
             self.memory = torch.zeros(shape[1], self.acmodel.memory_size, device=self.device)
