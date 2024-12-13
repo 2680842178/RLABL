@@ -36,7 +36,7 @@ class TestWrapper(ObservationWrapper):
 
 def make_env(env_key, seed=None, render_mode="rgb_array"):
     env = gym.make(env_key, render_mode=render_mode)
-    env = TestWrapper(env)
+    # env = TestWrapper(env)
     env.reset(seed=seed)
     return env
 
