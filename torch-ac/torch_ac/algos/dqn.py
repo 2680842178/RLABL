@@ -53,12 +53,12 @@ class ReplayBuffer:
 
 class DQNAlgo(BaseAlgo):
     def __init__(self, envs, acmodel, device=None, num_frames_per_proc=None, discount=0.99,
-                 lr=0.01, max_grad_norm=None, adam_eps=1e-8, epochs=4, buffer_size=10000, batch_size=32,
-                 target_update=10):
+                lr=0.01, max_grad_norm=None, adam_eps=1e-8, epochs=4, buffer_size=10000, batch_size=32,
+                target_update=10, preprocess_obss=None, reshape_reward=None):
         num_frames_per_proc = num_frames_per_proc or 128
 
         super().__init__(envs, acmodel, device, num_frames_per_proc, discount, lr,
-                         None, None, None, max_grad_norm, 1, None, None)
+                        0.95, 0.01, 0.5, max_grad_norm, 1, preprocess_obss, reshape_reward)
 
         self.replay_buffer = ReplayBuffer(capacity=buffer_size)
         self.epochs = epochs
@@ -128,7 +128,7 @@ class DQNAlgo(BaseAlgo):
         for _ in range(self.epochs):
             if len(self.replay_buffer) < self.batch_size:
                 continue
-            if len(self.replay_buffer) < self.buffer_size / 2:
+            if len(self.replay_buffer) < self.buffer_size / 4:
                 print(len(self.replay_buffer))
                 print("replay buffer is not full")
                 continue
