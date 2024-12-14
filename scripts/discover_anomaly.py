@@ -599,6 +599,8 @@ def main():
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
         print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
+        for i in range(0,len(exps_list)):
+            print(i, len(exps_list[i].obs))
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
                 logs2 = algos[i].update_parameters(exps_list[i])
