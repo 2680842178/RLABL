@@ -366,41 +366,37 @@ def main():
     initial_img = initial_img.cpu().numpy().astype(numpy.uint8)
     if args.discover == 0:
         plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
-    
-    # 记录原始agent数量
-    original_agent_num = status.get("agent_num", 0)
-    current_agent_num = task_config['agent_num']
-    
-    # 加载所有模型
-    acmodels = []
-    algos = [None] * 2  # 前两个位置保持None
-    
-    for i in range(current_agent_num):
-        # 创建模型
+
+    initial_agent_num = task_config['agent_num']
+    agent_num = task_config['agent_num']
+    acmodels=[]
+    for i in range(agent_num):
         if args.algo == "a2c" or args.algo == "ppo":
             acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         elif args.algo == "dqn":
             acmodel = QNet(obs_space, envs[0].action_space, args.text)
-            
-        # 加载已有模型的状态
-        if "model_state" in status and i < len(status["model_state"]):
+        if "model_state" in status:
             acmodel.load_state_dict(status["model_state"][i])
-            
         acmodel.to(device)
         acmodels.append(acmodel)
-        
-        # 只为新添加的agent创建优化器和算法实例
-        if i >= original_agent_num and i >= 2:  # i >= 2 确保跳过前两个特殊位置
-            if args.algo == "ppo":
-                algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-            elif args.algo == "a2c":
-                algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+    txt_logger.info("Model loaded\n")
+    txt_logger.info("{}\n".format(acmodels[0]))
+
+    algos=[]
+    algos.append(None)
+    algos.append(None)
+    for i in range(agent_num):
+        # Load algo
+        if args.algo == "a2c":
+            algo = torch_ac.A2CAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_alpha, args.optim_eps, preprocess_obss)
-            elif args.algo == "dqn":
-                algo = torch_ac.DQNAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr,
+        elif args.algo == "ppo":
+            algo = torch_ac.PPOAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+        elif args.algo == "dqn":
+            algo = torch_ac.DQNAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
             
@@ -408,13 +404,14 @@ def main():
             if "optimizer_state" in status and i < len(status["optimizer_state"]):
                 algo.optimizer.load_state_dict(status["optimizer_state"][i])
         else:
-            # 对于已有的agent,创建一个不进行训练的算法实例
-            algo = None
-            
+            raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+
+        if "optimizer_state" in status:
+            algo.optimizer.load_state_dict(status["optimizer_state"])
+        txt_logger.info("Optimizer loaded\n")
         algos.append(algo)
-        
-        if i >= 2:  # 跳过前两个特殊节点
-            G.nodes[i]['state'].agent = algo
+        print("G.nodes[i + 2]", G.nodes[i + 2])
+        G.nodes[i + 2]['state'].agent = algo
 
     # AnomalyNN = CNN(num_classes=2)
     # try: 
@@ -602,8 +599,8 @@ def main():
                                                                        discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
-        for i in range(2, agent_num + 2):
-            if len(exps_list[i].obs) and i >= original_agent_num:  # 只更新新agent
+        for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
+            if len(exps_list[i].obs):
                 logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
         logs2 = {}
@@ -611,9 +608,11 @@ def main():
             entropy_list = [None] * (agent_num + 2)
             value_list = [None] * (agent_num + 2)
             policy_loss_list = [None] * (agent_num + 2)
-            value_loss_list = [None] *(agent_num + 2)
+            value_loss_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(2, agent_num + 2):
+            
+            # 只记录新agent的日志
+            for i in range(initial_agent_num + 2, agent_num + 2):
                 if len(exps_list[i].obs):
                     entropy_list[i] = logs2_list[i]["entropy"]
                     value_list[i] = logs2_list[i]["value"]
@@ -631,7 +630,9 @@ def main():
             loss_list = [None] * (agent_num + 2)
             q_value_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(2, agent_num + 2):
+            
+            # 只记录新agent的日志
+            for i in range(initial_agent_num + 2, agent_num + 2):
                 if len(exps_list[i].obs):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
