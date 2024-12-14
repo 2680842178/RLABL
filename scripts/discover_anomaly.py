@@ -368,6 +368,8 @@ def main():
         plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
 
     initial_agent_num = task_config['agent_num']
+    if initial_agent_num == 1:
+        initial_agent_num = 0
     agent_num = task_config['agent_num']
     acmodels=[]
     for i in range(agent_num):
@@ -399,10 +401,7 @@ def main():
             algo = torch_ac.DQNAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
-            
-            # 如果有对应的优化器状态则加载
-            if "optimizer_state" in status and i < len(status["optimizer_state"]):
-                algo.optimizer.load_state_dict(status["optimizer_state"][i])
+
         else:
             raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 
@@ -599,6 +598,7 @@ def main():
                                                                        discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
+        print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
                 logs2 = algos[i].update_parameters(exps_list[i])
