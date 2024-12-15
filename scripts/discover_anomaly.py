@@ -21,7 +21,7 @@ from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
 from utils.anomaly import BoundaryDetector
-
+import math 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -78,7 +78,7 @@ parser.add_argument("--recurrence", type=int, default=1,
                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
-parser.add_argument("--buffer-size", type=int, default=4000,
+parser.add_argument("--buffer-size", type=int, default=10000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
@@ -137,6 +137,18 @@ def get_importance_prob(lst):
     normalized_lst = [x / total if x != 0 else 0 for x in lst]
     return normalized_lst
 
+def calculate_epsilon(num_frames, initial_num_frames, total_frames):
+    progress = (num_frames - initial_num_frames) / (total_frames - initial_num_frames)
+    
+    # 当进度达到90%时保持最小值
+    if progress >= 0.9:
+        progress = 0.9
+        
+    # 使用指数函数实现快速下降后缓慢下降
+    epsilon = 1 - progress ** 0.5
+    
+    return epsilon
+
 
 def discover(start_env, 
             start_node, 
@@ -178,9 +190,9 @@ def discover(start_env,
             known_mutation_buffer.append((node, data['state'].mutation))
     
     txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
-    
+    initial_num_frames = num_frames
     while num_frames < discover_frames:
-        epsilon = 0.8 * (1 - (num_frames / args.frames)**0.5)
+        epsilon = calculate_epsilon(num_frames, initial_num_frames, args.frames)
         update_start_time = time.time()
         if args.algo == 'ppo' or args.algo == 'a2c':
             exps, logs1 = collect_experiences_mutation(algo,
@@ -368,7 +380,7 @@ def main():
         plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
 
     initial_agent_num = task_config['agent_num']
-    if initial_agent_num == 1:
+    if "model_state" not in status:
         initial_agent_num = 0
     agent_num = task_config['agent_num']
     acmodels=[]
@@ -563,13 +575,14 @@ def main():
     # 添加变量跟踪最佳测试结果
     best_test_return = float('-inf')
     best_model_states = None
-    
+    initial_num_frames = num_frames
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
-        epsilon = 0.95 * (1 - (num_frames / args.frames)**0.5) + 0.05
+        epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
+        print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         print("epsilon", epsilon)   
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0], 
