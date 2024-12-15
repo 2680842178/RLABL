@@ -21,7 +21,7 @@ from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
 from utils.anomaly import BoundaryDetector
-
+import math 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -78,7 +78,7 @@ parser.add_argument("--recurrence", type=int, default=1,
                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
-parser.add_argument("--buffer-size", type=int, default=4000,
+parser.add_argument("--buffer-size", type=int, default=10000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
@@ -137,6 +137,18 @@ def get_importance_prob(lst):
     normalized_lst = [x / total if x != 0 else 0 for x in lst]
     return normalized_lst
 
+def calculate_epsilon(num_frames, initial_num_frames, total_frames):
+    progress = (num_frames - initial_num_frames) / (total_frames - initial_num_frames)
+    
+    # 当进度达到90%时保持最小值
+    if progress >= 0.9:
+        progress = 0.9
+        
+    # 使用指数函数实现快速下降后缓慢下降
+    epsilon = 1 - progress ** 0.5
+    
+    return epsilon
+
 
 def discover(start_env, 
             start_node, 
@@ -178,9 +190,9 @@ def discover(start_env,
             known_mutation_buffer.append((node, data['state'].mutation))
     
     txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
-    
+    initial_num_frames = num_frames
     while num_frames < discover_frames:
-        epsilon = 0.8 * (1 - (num_frames / args.frames)**0.5)
+        epsilon = calculate_epsilon(num_frames, initial_num_frames, args.frames)
         update_start_time = time.time()
         if args.algo == 'ppo' or args.algo == 'a2c':
             exps, logs1 = collect_experiences_mutation(algo,
@@ -366,55 +378,51 @@ def main():
     initial_img = initial_img.cpu().numpy().astype(numpy.uint8)
     if args.discover == 0:
         plt.imsave(state_img_path + "state{}.bmp".format(start_node), initial_img)
-    
-    # 记录原始agent数量
-    original_agent_num = status.get("agent_num", 0)
-    current_agent_num = task_config['agent_num']
-    
-    # 加载所有模型
-    acmodels = []
-    algos = [None] * 2  # 前两个位置保持None
-    
-    for i in range(current_agent_num):
-        # 创建模型
+
+    initial_agent_num = task_config['agent_num']
+    if "model_state" not in status:
+        initial_agent_num = 0
+    agent_num = task_config['agent_num']
+    acmodels=[]
+    for i in range(agent_num):
         if args.algo == "a2c" or args.algo == "ppo":
             acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         elif args.algo == "dqn":
             acmodel = QNet(obs_space, envs[0].action_space, args.text)
-            
-        # 加载已有模型的状态
-        if "model_state" in status and i < len(status["model_state"]):
+        if "model_state" in status:
             acmodel.load_state_dict(status["model_state"][i])
-            
         acmodel.to(device)
         acmodels.append(acmodel)
-        
-        # 只为新添加的agent创建优化器和算法实例
-        if i >= original_agent_num and i >= 2:  # i >= 2 确保跳过前两个特殊位置
-            if args.algo == "ppo":
-                algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
-                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
-            elif args.algo == "a2c":
-                algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+    txt_logger.info("Model loaded\n")
+    txt_logger.info("{}\n".format(acmodels[0]))
+
+    algos=[]
+    algos.append(None)
+    algos.append(None)
+    for i in range(agent_num):
+        # Load algo
+        if args.algo == "a2c":
+            algo = torch_ac.A2CAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
                                     args.optim_alpha, args.optim_eps, preprocess_obss)
-            elif args.algo == "dqn":
-                algo = torch_ac.DQNAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr,
+        elif args.algo == "ppo":
+            algo = torch_ac.PPOAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
+                                    args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
+                                    args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss)
+        elif args.algo == "dqn":
+            algo = torch_ac.DQNAlgo(envs, acmodels[i], device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
-            
-            # 如果有对应的优化器状态则加载
-            if "optimizer_state" in status and i < len(status["optimizer_state"]):
-                algo.optimizer.load_state_dict(status["optimizer_state"][i])
+
         else:
-            # 对于已有的agent,创建一个不进行训练的算法实例
-            algo = None
-            
+            raise ValueError("Incorrect algorithm name: {}".format(args.algo))
+
+        if "optimizer_state" in status:
+            algo.optimizer.load_state_dict(status["optimizer_state"])
+        txt_logger.info("Optimizer loaded\n")
         algos.append(algo)
-        
-        if i >= 2:  # 跳过前两个特殊节点
-            G.nodes[i]['state'].agent = algo
+        print("G.nodes[i + 2]", G.nodes[i + 2])
+        G.nodes[i + 2]['state'].agent = algo
 
     # AnomalyNN = CNN(num_classes=2)
     # try: 
@@ -567,13 +575,14 @@ def main():
     # 添加变量跟踪最佳测试结果
     best_test_return = float('-inf')
     best_model_states = None
-    
+    initial_num_frames = num_frames
     while num_frames < args.frames:
         # Update model parameters
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
-        epsilon = 0.95 * (1 - (num_frames / args.frames)**0.5) + 0.05
+        epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
+        print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         print("epsilon", epsilon)   
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0], 
@@ -602,8 +611,11 @@ def main():
                                                                        discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
-        for i in range(2, agent_num + 2):
-            if len(exps_list[i].obs) and i >= original_agent_num:  # 只更新新agent
+        print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
+        for i in range(0,len(exps_list)):
+            print(i, len(exps_list[i].obs))
+        for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
+            if len(exps_list[i].obs):
                 logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
         logs2 = {}
@@ -611,9 +623,11 @@ def main():
             entropy_list = [None] * (agent_num + 2)
             value_list = [None] * (agent_num + 2)
             policy_loss_list = [None] * (agent_num + 2)
-            value_loss_list = [None] *(agent_num + 2)
+            value_loss_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(2, agent_num + 2):
+            
+            # 只记录新agent的日志
+            for i in range(initial_agent_num + 2, agent_num + 2):
                 if len(exps_list[i].obs):
                     entropy_list[i] = logs2_list[i]["entropy"]
                     value_list[i] = logs2_list[i]["value"]
@@ -631,7 +645,9 @@ def main():
             loss_list = [None] * (agent_num + 2)
             q_value_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            for i in range(2, agent_num + 2):
+            
+            # 只记录新agent的日志
+            for i in range(initial_agent_num + 2, agent_num + 2):
                 if len(exps_list[i].obs):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
