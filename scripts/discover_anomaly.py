@@ -536,7 +536,7 @@ def main():
         )
         if not need_discover:
             txt_logger.info("successful test! reward per episode: {1}".format(mean_return))
-            return 
+            return True
         else:
             txt_logger.info("failed test! need to discover!")
 
@@ -796,10 +796,16 @@ def main():
     utils.save_status(status, model_dir)
     txt_logger.info("Status saved")
 
+    if return_per_episode <= 0.5:
+        return False
+    else:
+        return True
+
     
     # random discover, save the changes.
     # until get a familiar change(state)
     # change the graph
 
 if __name__ == "__main__":
-    main()
+    ret_value = main()
+    sys.exit(0 if ret_value else 1)

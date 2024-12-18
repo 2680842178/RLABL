@@ -147,7 +147,7 @@ def ddm_decision(
     anomaly_detector: Optional[Callable],
     drift_rate: float,
     boundary_separation: float,
-    starting_point: float, 
+    starting_point: float = -0.2, 
     # non_decision_time: float,
 ):
     decision_steps = 0
@@ -161,9 +161,12 @@ def ddm_decision(
     stop_obs_list = []
     stop_state_list = []
     total_return = 0
+
+    return_mean_list = [[]] * len(G.nodes)
     
     while decision_steps < max_decision_steps:
         test_start_node = numpy.random.choice(len(node_probability_list), 1,  p=node_probability_list)[0]
+
         episode_return, episode_num_frames, stop_state, stop_env, stop_obss = test_once(
             G=G, 
             start_env=start_env, 
@@ -176,6 +179,15 @@ def ddm_decision(
         )
         print("Decision step: ", decision_steps, "Return: ", episode_return, "Num_frames: ", episode_num_frames)
         print("Start state", test_start_node, "Stop state: ", stop_state)
+
+        if return_mean_list[test_start_node] == 0:
+            return_mean_list[test_start_node] = episode_return
+        else:
+            n = len(return_mean_list[test_start_node])
+            mean_return = return_mean_list[test_start_node].mean().item()
+            if n >= 3 and mean_return >= 0.8:
+                return False, decision_steps, None, None, None, return_per_episode
+        
         total_return += episode_return
         stop_env_list.append(stop_env)
         stop_obs_list.append(stop_obss)
