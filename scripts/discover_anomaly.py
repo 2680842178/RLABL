@@ -112,7 +112,7 @@ def get_discover_probability(mean_reward, test_turns):
 #     return (e_x / e_x.sum())[1]
 
 def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean_reward):
-    score = 0.6 * mutation_score + 0.01 * mutation_times + 0.01 * test_turns - (1 + test_mean_reward) / 2
+    score = 0.65 * mutation_score + 0.01 * mutation_times + 0.015 * test_turns - (1 + test_mean_reward) / 2
     print("Define accept mutation score: ", score)
     print(mutation_score, mutation_times, test_turns, test_mean_reward)
     if score > 0.3:
@@ -424,9 +424,12 @@ def main():
         print("G.nodes[i + 2]", G.nodes[i + 2])
         G.nodes[i + 2]['state'].agent = algo
 
-    for i in range(2, initial_agent_num + 2): 
-        if args.algo == "dqn":
-            algos[i].trained = True
+    if initial_agent_num > 0:
+        for i in range(2, initial_agent_num + 2):
+            if i < len(algos):
+                print(f"Setting trained flag for algo {i}")
+                if args.algo == "dqn" and hasattr(algos[i], 'trained'):
+                    algos[i].trained = True
     # AnomalyNN = CNN(num_classes=2)
     # try: 
     #     # AnomalyNN.load_state_dict(torch.load(AnomalyNN_model_dir))
