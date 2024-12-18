@@ -11,4 +11,5 @@ prolog/
 */.vscode/
 storage/
 scripts/storage/
+scripts/config/
 yolov8n.pt

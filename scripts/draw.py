@@ -2,17 +2,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-model_name = '20241129-discover1'
+model_name = '20241217-dqn-seed1'
 
 def moving_average(data, window_size):
     return data.rolling(window=window_size).mean()
 # 读取 CSV 文件
 data = pd.read_csv(f'./storage/{model_name}/log.csv')
-data_part1 = data[data['frames'] < 102000]
+data_part1 = data[data['frames'] < 152000]
 last_step_part1 = data_part1['frames'].iloc[-1]
-data_part2 = data[(data['frames'] > 102000) & (data['frames'] < 203000)]
+data_part2 = data[(data['frames'] > 152000) & (data['frames'] < 303000)]
 last_step_part2 = data_part2['frames'].iloc[-1]
-data_part3 = data[data['frames'] > 203000]
+data_part3 = data[data['frames'] > 303000]
 
 discover1_data = pd.read_csv(f'./storage/{model_name}/log_discover_1.csv')
 discover1_data['frames'] += last_step_part1
@@ -39,7 +39,8 @@ window_size = 10
 merged_data['mental_reward_smooth'] = moving_average(merged_data['rreturn_mean'], window_size)
 
 # 绘制奖励曲线
-plt.plot(merged_data['frames'], merged_data['mental_reward_smooth'], label='mental_reward_smooth', color='pink')
+# plt.plot(merged_data['frames'], merged_data['mental_reward_smooth'], label='mental_reward_smooth', color='pink')
+plt.plot(merged_data['frames'], merged_data['rreturn_mean'], label='mental_reward_smooth', color='pink')
 plt.xlabel('frames')
 plt.ylabel('Reward')
 plt.title('Reward Curve')

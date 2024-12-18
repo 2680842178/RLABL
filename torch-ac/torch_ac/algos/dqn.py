@@ -53,18 +53,18 @@ class ReplayBuffer:
 
 class DQNAlgo(BaseAlgo):
     def __init__(self, envs, acmodel, device=None, num_frames_per_proc=None, discount=0.99,
-                 lr=0.01, max_grad_norm=None, adam_eps=1e-8, epochs=4, buffer_size=10000, batch_size=32,
-                 target_update=10):
+                lr=0.01, max_grad_norm=None, adam_eps=1e-8, epochs=4, buffer_size=10000, batch_size=32,
+                target_update=10, preprocess_obss=None, reshape_reward=None):
         num_frames_per_proc = num_frames_per_proc or 128
 
         super().__init__(envs, acmodel, device, num_frames_per_proc, discount, lr,
-                         None, None, None, max_grad_norm, 1, None, None)
+                        0.95, 0.01, 0.5, max_grad_norm, 1, preprocess_obss, reshape_reward)
 
         self.replay_buffer = ReplayBuffer(capacity=buffer_size)
         self.epochs = epochs
         self.batch_size = batch_size
         self.target_update = target_update
-
+        self.buffer_size = buffer_size
         self.optimizer = optim.Adam(self.acmodel.parameters(), lr=lr, eps=adam_eps)
         self.steps_done = 0
 
@@ -75,9 +75,12 @@ class DQNAlgo(BaseAlgo):
         sample = random.random()
         if sample > epsilon:
             with torch.no_grad():
-                return self.acmodel(state).max(1)[1].view(1, 1)
+                action =  self.acmodel(state).max(1)[1].view(1, 1)
         else:
-            return torch.tensor([[random.randrange(self.env.action_space.n)]], device=self.device, dtype=torch.long)
+            action =  torch.tensor([[random.randrange(self.env.action_space.n)]], device=self.device, dtype=torch.long)
+
+        # print(action)
+        return action
 
     def update_target(self):
         self.target_model.load_state_dict(self.acmodel.state_dict())
@@ -90,13 +93,20 @@ class DQNAlgo(BaseAlgo):
 
         action_batch = torch.tensor(action_batch, device=self.device, dtype=torch.int64)
         action_batch = action_batch.unsqueeze(1)
-        state_action_values = self.acmodel(state_batch)
-        state_action_values = state_action_values.gather(1, action_batch)
-        next_state_values = self.target_model(next_states_batch).max(1)[0].detach().view(-1, 1)
+        
+        # 当前Q值
+        state_action_values = self.acmodel(state_batch).gather(1, action_batch)
 
-        expected_state_action_values = (next_state_values * self.discount) + reward_batch
+        # Double DQN: 用当前网络选择动作,用目标网络评估动作
+        with torch.no_grad():
+            # 用当前网络选择动作
+            next_state_actions = self.acmodel(next_states_batch).max(1)[1].unsqueeze(1)
+            # 用目标网络评估这些动作的Q值
+            next_state_values = self.target_model(next_states_batch).gather(1, next_state_actions)
 
-        loss = F.mse_loss(state_action_values, expected_state_action_values)
+        expected_state_action_values = (next_state_values * self.discount) + reward_batch.unsqueeze(1)
+
+        loss = F.smooth_l1_loss(state_action_values, expected_state_action_values)
 
         self.optimizer.zero_grad()
         loss.backward()
@@ -112,18 +122,22 @@ class DQNAlgo(BaseAlgo):
         # Collect experiences
         for i in range(len(exps)):
             self.replay_buffer.push(exps.obs[i], exps.action[i], exps.reward[i], exps.obs_[i], exps.mask[i])
-
+        log_losses = []
+        log_grad_norms = []
+        log_q_values = []
         for _ in range(self.epochs):
             if len(self.replay_buffer) < self.batch_size:
                 continue
-
-            log_losses = []
-            log_grad_norms = []
-            log_q_values = []
+            if len(self.replay_buffer) < self.buffer_size / 4:
+                print(len(self.replay_buffer))
+                print("replay buffer is not full")
+                continue
+            
 
             s, a, r, s_, d = self.replay_buffer.sample(self.batch_size)
             loss, grad_norm, q_value = self.optimize_model(s, a, r, s_)
-            self.update_target()
+            if self.steps_done % self.target_update == 0:
+                self.update_target()
             self.steps_done += 1
 
             log_losses.append(loss)
