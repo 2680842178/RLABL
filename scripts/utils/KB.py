@@ -396,7 +396,10 @@ def Mutiagent_collect_experiences_q(env,
 
             with torch.no_grad():
                 q_values = agent.acmodel(preprocessed_obs)
-                action = agent.select_action(preprocessed_obs, epsilon)
+                if agent.trained == False:
+                    action = agent.select_action(preprocessed_obs, epsilon)
+                else:
+                    action = agent.select_action(preprocessed_obs, 0)
         # print("output_state", current_state)
         if done:
             # print("done")
