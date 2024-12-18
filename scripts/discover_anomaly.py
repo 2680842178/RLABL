@@ -424,6 +424,9 @@ def main():
         print("G.nodes[i + 2]", G.nodes[i + 2])
         G.nodes[i + 2]['state'].agent = algo
 
+    for i in range(2, initial_agent_num + 2): 
+        if args.algo == "dqn":
+            algos[i].trained = True
     # AnomalyNN = CNN(num_classes=2)
     # try: 
     #     # AnomalyNN.load_state_dict(torch.load(AnomalyNN_model_dir))
@@ -766,6 +769,8 @@ def main():
     # status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,
     #             "model_state": [acmodels[i].state_dict() for i in range(agent_num)],
     #             "optimizer_state": algo.optimizer.state_dict()}
+    # # if hasattr(preprocess_obss, "vocab"):
+    # #     status["vocab"] = preprocess_obss.vocab.vocab
     # utils.save_status(status, model_dir)
     # txt_logger.info("Status saved")
     
