@@ -66,7 +66,7 @@ FRAMES_PER_PROC=512
 # 循环执行 20 次
 for i in $(seq 1 30); do
   # 生成唯一的模型名
-  MODEL_NAME="20241202-seed1-discover-${i}"
+  MODEL_NAME="20241221-discover-ppo-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"
   
   if [ ! -d $MODEL_CONFIG_FOLDER ]; then
@@ -82,15 +82,15 @@ for i in $(seq 1 30); do
   # 修改任务配置并执行训练
   sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
   printf "%s\n" "$MAP_1" >> $CONFIGMAP
-  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 100000
+  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 100000 --seed $i
 
   sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
   printf "%s\n" "$MAP_2" >> $CONFIGMAP
-  python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 200000
+  python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 200000 --seed $i
 
   sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
   printf "%s\n" "$MAP_3" >> $CONFIGMAP
-  python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 500000
+  python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 500000 --seed $i
 done
 
 # # 替换配置文件中的地图

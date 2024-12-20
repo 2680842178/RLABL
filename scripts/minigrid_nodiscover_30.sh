@@ -35,9 +35,9 @@ END_LINE=22
 MAP_1="map_grid = x, x, x, x, x, x, x, x
            x, x, x, x, x, x, x, x
            x, -, E, x, E, E, G, x
-           x, -, E, x, -, -, -, x
-           x, E, -, x, D, x, x, x
-           x, E, K, -, -, -, E, x
+           x, E, E, x, -, -, -, x
+           x, K, -, x, D, x, x, x
+           x, -, -, -, -, -, E, x
            x, E, E, E, -, S, E, x
            x, x, x, x, x, x, x, x"
 
@@ -49,7 +49,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 for i in $(seq 1 30); do
-  MODEL_NAME="20241207-seed1-fullDFA-${i}"
+  MODEL_NAME="20241220-seed1-fullDFA-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"
 
   if [ ! -d $MODEL_CONFIG_FOLDER ]; then
