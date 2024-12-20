@@ -54,7 +54,7 @@ class ReplayBuffer:
 class DQNAlgo(BaseAlgo):
     def __init__(self, envs, acmodel, device=None, num_frames_per_proc=None, discount=0.99,
                 lr=0.01, max_grad_norm=None, adam_eps=1e-8, epochs=4, buffer_size=10000, batch_size=32,
-                target_update=10, preprocess_obss=None, reshape_reward=None):
+                target_update=10, preprocess_obss=None, reshape_reward=None,trained = False):
         num_frames_per_proc = num_frames_per_proc or 128
 
         super().__init__(envs, acmodel, device, num_frames_per_proc, discount, lr,
@@ -70,7 +70,8 @@ class DQNAlgo(BaseAlgo):
 
         self.target_model = deepcopy(acmodel)
         self.target_model.eval()
-
+        self.trained = trained
+        
     def select_action(self, state, epsilon):
         sample = random.random()
         if sample > epsilon:
