@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-model_name = '20241217-dqn-seed1'
+model_name = '20241218-dqn-seed1'
 
 def moving_average(data, window_size):
     return data.rolling(window=window_size).mean()

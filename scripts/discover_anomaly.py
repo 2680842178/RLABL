@@ -389,8 +389,10 @@ def main():
             acmodel = ACModel(obs_space, envs[0].action_space, args.text)
         elif args.algo == "dqn":
             acmodel = QNet(obs_space, envs[0].action_space, args.text)
-        if "model_state" in status:
+        if "model_state" in status and status["model_state"][i] is not None:
             acmodel.load_state_dict(status["model_state"][i])
+        else:
+            print(f"This model {i} is None. No load.")
         acmodel.to(device)
         acmodels.append(acmodel)
     txt_logger.info("Model loaded\n")
@@ -417,7 +419,7 @@ def main():
         else:
             raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 
-        if "optimizer_state" in status:
+        if "optimizer_state" in status and status["optimizer_state"] is not None:
             algo.optimizer.load_state_dict(status["optimizer_state"])
         txt_logger.info("Optimizer loaded\n")
         algos.append(algo)
@@ -468,8 +470,8 @@ def main():
             args=args
         )
         if not need_discover:
-            txt_logger.info("successful test! reward per episode: {1}".format(mean_return))
-            return True
+            txt_logger.info("successful test! reward per episode: {}".format(mean_return))
+            return "can_solve"
         else:
             txt_logger.info("failed test! need to discover!")
 
@@ -557,7 +559,7 @@ def main():
             plt.show()
         else: 
             print("Failed to discover, return.")
-            return
+            return "fail to discover anomaly"
         ######
     # train the model.
     num_frames = status["num_frames"]
@@ -582,8 +584,8 @@ def main():
         envs[0].reset()
         # ini_agent
         epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
-        print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
-        print("epsilon", epsilon)   
+        # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
+        # print("epsilon", epsilon)   
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0], 
                                                                            algos=algos, 
@@ -611,9 +613,9 @@ def main():
                                                                        discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
-        print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
-        for i in range(0,len(exps_list)):
-            print(i, len(exps_list[i].obs))
+        # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
+        # for i in range(0,len(exps_list)):
+        #     print(i, len(exps_list[i].obs))
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
                 logs2 = algos[i].update_parameters(exps_list[i])
@@ -750,8 +752,6 @@ def main():
                 utils.save_status(best_status, os.path.join(model_dir, "best_model"))
                 txt_logger.info(f"New best model saved with test return: {best_test_return:.2f}")
             
-            
-
         # Save status
 
         if args.save_interval > 0 and update % args.save_interval == 0:
@@ -773,27 +773,47 @@ def main():
         acmodel.load_state_dict(best_model_states[i])
     txt_logger.info(f"Loaded best model with test return: {best_test_return:.2f}")
     # 训练结束时保存最终状态和最佳状态
+    model_state = [acmodel.state_dict() for acmodel in acmodels]
+    optimizer_state = algo.optimizer.state_dict()
+    if return_per_episode['mean'] <= 0.5:
+        print("No save bad model.")
+        model_state[-1] = None
+        optimizer_state = None
+        print(len(model_state))
     final_status = {
         "num_frames": num_frames,
         "update": update,
         "agent_num": agent_num,
-        "model_state": [acmodel.state_dict() for acmodel in acmodels],
-        "optimizer_state": algo.optimizer.state_dict(),
+        "model_state": model_state, #[acmodel.state_dict() for acmodel in acmodels],
+        "optimizer_state": optimizer_state,
         "best_test_return": best_test_return
     }
     utils.save_status(final_status, model_dir)
     txt_logger.info("Final status saved")
     
     # 如果最终模型不是最佳模型,则加载最佳模型状态
-
     if return_per_episode['mean'] <= 0.5:
-        return False
+        return "fail train"
     else:
-        return True
+        return "successfull train"
     # random discover, save the changes.
     # until get a familiar change(state)
     # change the graph
 
 if __name__ == "__main__":
-    ret_value = main()
-    sys.exit(0 if ret_value else 1)
+    ret_state = main()
+    ret_value = 0
+    if ret_state == "can_solve":
+        ret_value = 0
+    elif ret_state == "fail to discover anomaly":
+        ret_value = 1
+    elif ret_state == "fail train":
+        ret_value = 2
+    elif ret_state == "successfull train":
+        ret_value = 3
+    print(f"Return value: {ret_value}")
+    sys.exit(ret_value)
+# return "can_solve"
+# return "fail to discover anomaly"
+# return "fail train"
+# return "successfull train"

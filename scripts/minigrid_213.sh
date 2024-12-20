@@ -25,7 +25,7 @@ START_CONFIG_CONTENT="graph:
 agent_num: 1"
 
 # 设置模型名称和配置文件夹
-MODEL_NAME=20241219-discover-ppo-test
+MODEL_NAME=20241218-213
 MODEL_CONFIG_FOLDER=config/$MODEL_NAME
 
 if [ "$1" == "1" ]; then
@@ -86,17 +86,27 @@ EPOCHS=8
 BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
-sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
-printf "%s\n" "$MAP_1" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 100000
-# add door to the map
+INITIAL_FRAMES=100000
+
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_2" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 200000
+python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $INITIAL_FRAMES
+return_code=$?
+if [ $return_code -eq 0 ]; then
+  INITIAL_FRAMES=$((INITIAL_FRAMES+100000))
+fi
+# add door to the map
+sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
+printf "%s\n" "$MAP_1" >> $CONFIGMAP
+python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $INITIAL_FRAMES
+return_code=$?
+if [ $return_code -eq 0 ]; then
+  INITIAL_FRAMES=$((INITIAL_FRAMES+100000))
+fi
 # add key to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_3" >> $CONFIGMAP
-python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 500000
+python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $INITIAL_FRAMES
 
 # # 替换配置文件中的地图
 # sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
