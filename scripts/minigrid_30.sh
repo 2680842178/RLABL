@@ -64,7 +64,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 20 次
-for i in $(seq 1 30); do
+for i in $(seq 25 30); do
   # 生成唯一的模型名
   MODEL_NAME="20241221-discover-ppo-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"

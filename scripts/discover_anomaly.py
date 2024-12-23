@@ -30,6 +30,8 @@ parser.add_argument("--discover", required=True, type=int,
                     help="if this task need to discover new state")
 parser.add_argument("--algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
+parser.add_argument("--curriculum", default=1,
+                    help="Curriculum number(1, 2, 3), used in random env")
 parser.add_argument("--env", required=True,
                     help="name of the environment to train on (REQUIRED)")
 parser.add_argument("--model", default=None,
@@ -341,6 +343,7 @@ def main():
     # Set seed for all randomness sources
 
     utils.seed(args.seed)
+    print("Seed:", args.seed)
 
     # Set device
 
@@ -351,7 +354,8 @@ def main():
     envs = []
     initial_img = None
     for i in range(args.procs):
-        env=utils.make_env(args.env, args.seed + 10000 * i)
+        kwargs = {"curriculum": args.curriculum}
+        env=utils.make_env(args.env, args.seed + 10000 * i, kwargs)
         initial_img, _ = env.reset()
         envs.append(env)
     txt_logger.info("Environments loaded\n")
