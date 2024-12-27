@@ -74,8 +74,30 @@ class BoundaryDetector(AnomalyDetector):
         
         return gray_image, processed
 
-    def is_known_image(self, image, add_to_buffer=False):
-        _, processed = self.preprocess_RGBimage(image)
+    def is_known_roi(self, roi, add_to_buffer=False):
+        is_anomaly = False
+        processed_hist = cv2.calcHist([roi], [0], None, [256], [0, 256])
+        processed_hist = cv2.normalize(processed_hist, processed_hist).flatten()
+
+        similar = 0
+        # print(len(self.saved_images))
+        for saved_image_name, saved_image, saved_hist in self.saved_images:
+            saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
+            correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
+            similar = max(similar, abs(correlation))
+            # print(similar)
+            if similar > 0.9999999:
+                break
+        if similar < 0.9999999 and similar >= 0:
+            is_anomaly = True
+            if add_to_buffer:
+                # print("Anomaly detected, saving image")
+                self.add_new_image(roi, is_processed=True)
+
+        return is_anomaly
+
+    def is_known_image(self, processed, add_to_buffer=False):
+        # _, processed = self.preprocess_RGBimage(image)
         is_anomaly = False
         for processed_image in processed:
             processed_hist = cv2.calcHist([processed_image], [0], None, [256], [0, 256])

@@ -16,8 +16,24 @@ from typing import Optional, Callable
 import utils
 from utils import *
 from utils import device
-from utils.process import contrast
+# from utils.process import contrast
+from utils.KB import RGB2GARY_ROI
 from model import ACModel, CNN, QNet
+
+def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
+    # if mutation1 is None or mutation2 is None:
+    #     return 0
+    # return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
+    if mutation1.shape != mutation2.shape:
+        target_size = (min(mutation1.shape[0], mutation2.shape[0]), 
+                       min(mutation1.shape[1], mutation2.shape[1]))
+        mutation1 = cv2.resize(mutation1, target_size, interpolation=cv2.INTER_AREA)
+        mutation2 = cv2.resize(mutation2, target_size, interpolation=cv2.INTER_AREA)
+    hist_1, hist_2 = cv2.calcHist([mutation1], [0], None, [256], [0, 256]), cv2.calcHist([mutation2], [0], None, [256], [0, 256])
+    hist_1, hist_2 = cv2.normalize(hist_1, hist_1).flatten(), cv2.normalize(hist_2, hist_2).flatten()
+    correlation = cv2.compareHist(hist_1, hist_2, cv2.HISTCMP_CORREL)
+    similar = abs(correlation)
+    return similar
 
 def obs_To_mutation(pre_obs, obs, preprocess_obss):
     pre_image_data=preprocess_obss([pre_obs], device=device).image
@@ -38,7 +54,8 @@ def test_once(
     preprocess_obss: Optional[Callable],
     args,
     ):
-    env = copy_env(start_env, env_key)
+    env = copy_env(start_env, env_key, curriculum=args.curriculum)
+    env.reset()
 
     current_state = start_node
     obss = env.gen_obs()
@@ -58,18 +75,28 @@ def test_once(
     for i in range(max_steps):
         mutation = obs_To_mutation(pre_obss, obss, preprocess_obss)
         mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        _, mutation_roi_list = RGB2GARY_ROI(mutation)
         # anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
         # if anomaly_detector(anomaly_mutation)[0, 0] < anomaly_detector(anomaly_mutation)[0, 1]:
-        if anomaly_detector.detect_anomaly(mutation):
-            print("anomaly")
+        for mutation_roi in mutation_roi_list:
+            if not anomaly_detector.is_known_roi(mutation_roi, add_to_buffer=False):
+                continue
             for node_num, node_mutation in mutation_buffer:
-                print(contrast(node_mutation, mutation))
-                if contrast(node_mutation, mutation) > 0.99:
+                if contrast(node_mutation, mutation_roi) > 0.999999:
                     current_state = node_num
-                    print("Current state: ", current_state)
                     stop_env = copy_env(env, env_key)
                     stop_obss = copy.deepcopy(obss)
                     break
+        # if anomaly_detector.detect_anomaly(mutation):
+        #     print("anomaly")
+        #     for node_num, node_mutation in mutation_buffer:
+        #         print(contrast(node_mutation, mutation))
+        #         if contrast(node_mutation, mutation) > 0.99:
+        #             current_state = node_num
+        #             print("Current state: ", current_state)
+        #             stop_env = copy_env(env, env_key)
+        #             stop_obss = copy.deepcopy(obss)
+        #             break
 
         preprocessed_obss = preprocess_obss([obss], device=device)
         if args.algo == 'dqn':

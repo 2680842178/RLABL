@@ -3,7 +3,7 @@ from collections import deque, namedtuple
 from copy import deepcopy
 
 
-import numpy
+import numpy as np
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
@@ -14,17 +14,43 @@ from torch_ac.utils import DictList
 
 class ReplayBuffer:
 
-    def __init__(self, capacity):
+    def __init__(self, capacity, alpha=0.6, beta=0.4, beta_increment=0.001):
         self.buffer = deque(maxlen=capacity)
         self.Transition = namedtuple('Transition',
                                      ['state', 'action', 'reward', 'state_', 'done'])
+        self.priorities = deque(maxlen=capacity)
+        self.alpha = alpha  # 优先级指数
+        self.beta = beta    # 重要性采样指数
+        self.beta_increment = beta_increment
+        self.max_priority = 1.0
 
     def push(self, *args):
         self.buffer.append(self.Transition(*args))
+        self.priorities.append(self.max_priority)  # 新样本设置最大优先级
 
     def sample(self, batch_size):
-        transitions = random.sample(self.buffer, batch_size)
+        if len(self.buffer) == 0:
+            return None
+        
+        # 计算采样概率
+        priorities = np.array(self.priorities)
+        probs = priorities ** self.alpha
+        probs /= probs.sum()
 
+        # 根据优先级采样
+        indices = np.random.choice(len(self.buffer), batch_size, p=probs)
+        
+        # 计算重要性权重
+        total = len(self.buffer)
+        weights = (total * probs[indices]) ** (-self.beta)
+        weights /= weights.max()
+        weights = torch.tensor(weights, dtype=torch.float32)
+        
+        # beta递增
+        self.beta = min(1.0, self.beta + self.beta_increment)
+
+        transitions = [self.buffer[idx] for idx in indices]
+        
         states_obs = [trans.state.image for trans in transitions]
         states_text = [trans.state.text for trans in transitions]
         actions = [trans.action for trans in transitions]
@@ -45,7 +71,12 @@ class ReplayBuffer:
                                "text": next_state_text_tensor})
         done_tensor = torch.stack(dones)
 
-        return state, action_tensor, reward_tensor, next_state, done_tensor
+        return state, action_tensor, reward_tensor, next_state, done_tensor, weights, indices
+
+    def update_priorities(self, indices, priorities):
+        for idx, priority in zip(indices, priorities):
+            self.priorities[idx] = priority
+            self.max_priority = max(self.max_priority, priority)
 
     def __len__(self):
         return len(self.buffer)
@@ -86,7 +117,7 @@ class DQNAlgo(BaseAlgo):
     def update_target(self):
         self.target_model.load_state_dict(self.acmodel.state_dict())
 
-    def optimize_model(self, s, a, r, s_):
+    def optimize_model(self, s, a, r, s_, weights, indices):
         state_batch = s
         action_batch = a
         reward_batch = r
@@ -107,13 +138,23 @@ class DQNAlgo(BaseAlgo):
 
         expected_state_action_values = (next_state_values * self.discount) + reward_batch.unsqueeze(1)
 
-        loss = F.smooth_l1_loss(state_action_values, expected_state_action_values)
-
+        # 计算TD误差
+        with torch.no_grad():
+            td_error = abs(expected_state_action_values - state_action_values)
+        
+        # 使用重要性权重更新损失
+        loss = (weights.to(self.device) * F.smooth_l1_loss(state_action_values, 
+                expected_state_action_values, reduction='none')).mean()
+        
         self.optimizer.zero_grad()
         loss.backward()
         if self.max_grad_norm is not None:
             torch.nn.utils.clip_grad_norm_(self.acmodel.parameters(), self.max_grad_norm)
         self.optimizer.step()
+
+        # 更新优先级
+        new_priorities = (td_error + 1e-6).squeeze().cpu().numpy()  # 添加小常数避免零优先级
+        self.replay_buffer.update_priorities(indices, new_priorities)
 
         grad_norm = sum(p.grad.data.norm(2).item() ** 2 for p in self.acmodel.parameters() if p.grad is not None) ** 0.5
 
@@ -135,8 +176,8 @@ class DQNAlgo(BaseAlgo):
                 continue
             
 
-            s, a, r, s_, d = self.replay_buffer.sample(self.batch_size)
-            loss, grad_norm, q_value = self.optimize_model(s, a, r, s_)
+            s, a, r, s_, d, weights, indices = self.replay_buffer.sample(self.batch_size)
+            loss, grad_norm, q_value = self.optimize_model(s, a, r, s_, weights, indices)
             if self.steps_done % self.target_update == 0:
                 self.update_target()
             self.steps_done += 1
@@ -146,9 +187,9 @@ class DQNAlgo(BaseAlgo):
             log_q_values.append(q_value)
 
         logs = {
-            "loss": numpy.mean(log_losses),
-            "grad_norm": numpy.mean(log_grad_norms),
-            "q_value": numpy.mean(log_q_values)
+            "loss": np.mean(log_losses),
+            "grad_norm": np.mean(log_grad_norms),
+            "q_value": np.mean(log_q_values)
         }
 
         return logs

@@ -1,104 +1,104 @@
 <mxfile host="65bd71144e">
     <diagram id="ulLpGSY-NQxyycDTdsdK" name="第 1 页">
-        <mxGraphModel dx="1189" dy="553" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="1" pageScale="1" pageWidth="900" pageHeight="1600" background="none" math="0" shadow="0">
+        <mxGraphModel dx="849" dy="695" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="0" page="1" pageScale="1" pageWidth="900" pageHeight="1600" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="3" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="2">
+                <mxCell id="3" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="2" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="377" y="207.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="2" value="使用上一次训练好的模型进行测试" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="2" value="使用上一次训练好的模型进行测试" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="119" y="173" width="117" height="69" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="不能成功获得奖励" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
-                    <mxGeometry x="268" y="168.5" width="138" height="30" as="geometry"/>
+                <mxCell id="4" value="不能成功获得奖励" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="246" y="167.5" width="138" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="5">
+                <mxCell id="6" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="5" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="447" y="317.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="9" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="5">
+                <mxCell id="9" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="5" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="597" y="207.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="5" value="判断最终停留的状态" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="5" value="判断最终停留的状态" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="377" y="167.5" width="140" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="7" value="不是过去任务&lt;br style=&quot;font-size: 15px;&quot;&gt;的初始状态" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="7" value="不是过去任务&lt;br style=&quot;font-size: 15px;&quot;&gt;的初始状态" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="339" y="251" width="108" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="8">
+                <mxCell id="16" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="8" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="447" y="417.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="8" value="在图中去掉停留状态A的出边，新建一个状态B，新建一条A到B的边" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="8" value="在图中去掉停留状态A的出边，新建一个状态B，新建一条A到B的边" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="363" y="306" width="168" height="71.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="是过去任务&lt;br style=&quot;font-size: 15px;&quot;&gt;的初始状态" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="10" value="是过去任务&lt;br style=&quot;font-size: 15px;&quot;&gt;的初始状态" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="496" y="149" width="93" height="48" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="13" target="8">
+                <mxCell id="14" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="13" target="8" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="判断是否是当前任务的初始状态（使用stateNN与上次任务的初始状态分析相似度）" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="13" value="判断是否是当前任务的初始状态（使用stateNN与上次任务的初始状态分析相似度）" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="597" y="149" width="173" height="117" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="随机游走，记录突变并与已知的突变进行相似度分析，直到产生到已知状态C的突变" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="15" value="随机游走，记录突变并与已知的突变进行相似度分析，直到产生到已知状态C的突变" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="362" y="417.5" width="170" height="80.5" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1">
+                <mxCell id="18" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="449" y="498" as="sourcePoint"/>
                         <mxPoint x="449" y="541" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="19" value="新建一条从B到C的边，将B到C过程中最特殊的突变加入突变的buffer." style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="19" value="新建一条从B到C的边，将B到C过程中最特殊的突变加入突变的buffer." style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="363" y="548" width="174" height="76" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="不是" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="20" value="不是" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="557" y="248.5" width="48" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="13" target="22">
+                <mxCell id="21" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="13" target="22" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="666" y="257.5" as="sourcePoint"/>
                         <mxPoint x="666" y="317.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="25" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1" source="22">
+                <mxCell id="25" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" source="22" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="682.5" y="420.5" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="22" value="新建一个初始状态B" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="22" value="新建一个初始状态B" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="622.5" y="320.5" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="26" value="是" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="26" value="是" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="687" y="275.5" width="33" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="28" value="随机游走，记录特殊突变，与buffer中的突变进行相似度分析，若存在相似突变，则B指向相似突变的终点C；若不存在相似突变，则B指向上一次的初始状态A。" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="28" value="随机游走，记录特殊突变，与buffer中的突变进行相似度分析，若存在相似突变，则B指向相似突变的终点C；若不存在相似突变，则B指向上一次的初始状态A。" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="561" y="416" width="244" height="101" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1">
+                <mxCell id="30" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="447" y="624" as="sourcePoint"/>
                         <mxPoint x="447" y="664" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="31" value="训练A-&amp;gt;B, B-&amp;gt;C的agent" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="31" value="训练A-&amp;gt;B, B-&amp;gt;C的agent" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="387" y="664" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="32" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" edge="1" parent="1">
+                <mxCell id="32" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="683" y="517" as="sourcePoint"/>
                         <mxPoint x="683" y="557" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="33" value="训练B-&amp;gt;A/C的agent" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" vertex="1" parent="1">
+                <mxCell id="33" value="训练B-&amp;gt;A/C的agent" style="whiteSpace=wrap;html=1;strokeWidth=1;fontSize=15;fontColor=#FFFFFF;labelBackgroundColor=none;" parent="1" vertex="1">
                     <mxGeometry x="623" y="557" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>

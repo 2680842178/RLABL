@@ -1,4 +1,5 @@
 import networkx as nx
+import cv2
 import torch
 from torchvision import transforms
 from torch_ac.format import default_preprocess_obss
@@ -30,6 +31,19 @@ def sample_from_selected_dimensions(logits, selected_dims):
     samples = torch.multinomial(probabilities, num_samples=1)
     return samples
 
+def RGB2GARY_ROI(image):
+    gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+    _, thresh = cv2.threshold(gray_image, 1, 255, cv2.THRESH_BINARY)
+    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    processed = []
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        roi = gray_image[y:y + h, x:x + w]
+        processed.append(roi)
+    
+    return gray_image, processed
+
 def obs_To_state(current_state,
                 preprocess_obss,
                 anomaly_detector, 
@@ -44,20 +58,31 @@ def obs_To_state(current_state,
     image_data=preprocess_obss([obs], device=device)
     input_tensor = image_data.image[0]-pre_image_data.image[0]
     mutation = numpy.squeeze(input_tensor).cpu().numpy().astype(numpy.uint8)
-    if is_add_normal_samples:
-        anomaly_detector.add_normal_samples(mutation)
+    _, roi_list = RGB2GARY_ROI(mutation)
+    is_anomaly = False
+    for roi in roi_list:
+        is_anomaly = anomaly_detector.is_known_roi(roi, add_to_buffer=is_add_normal_samples)
+        if is_anomaly:
+            break
+
+    # if is_add_normal_samples:
+    #     anomaly_detector.add_normal_samples(mutation)
     # anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)  
     # if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
-    if not anomaly_detector.detect_anomaly(mutation):
+    if is_add_normal_samples or not is_anomaly:
         return current_state
+    # if not anomaly_detector.detect_anomaly(mutation):
     similiarity = []
     for next_state in list(G.successors(current_state)):
         # print("next_state", next_state)
         # print("G.nodes[next_state]['state'].mutation", G.nodes[next_state]['state'].mutation)
-        similiarity.append((next_state, contrast(mutation, G.nodes[next_state]['state'].mutation)))
+        for roi in roi_list:
+            similiarity.append((next_state, contrast(roi, G.nodes[next_state]['state'].mutation)))
+
+        # print(contrast(mutation, G.nodes[next_state]['state'].mutation))
     # print("similiarity", similiarity)
     output = max(similiarity, key=lambda x: x[1]) 
-    if output[1] < 0.98:
+    if output[1] < 0.999999:
         return current_state
     output = output[0]
     return output
@@ -157,6 +182,8 @@ def Mutiagent_collect_experiences(env,
                 current_state = 0
             env.reset()
             next_obs=env.gen_obs()
+            # plt.imshow(next_obs['image'].astype(numpy.uint8))
+            # plt.show()
             reward=0
             terminated=0
             truncated=0
@@ -205,9 +232,10 @@ def Mutiagent_collect_experiences(env,
 
 
     for i in range(len(state_trace) - 1):
-        if state_trace[i] != state_trace[i + 1]:
+        if state_trace[i] > state_trace[i + 1]:
             # mental reward
             if reward_trace[i] == 0 and state_trace[i] != 0 and state_trace[i] != 1:
+                # print("State change:", state_trace[i], " ", state_trace[i+1], " ", reward_trace[i], "", reward_trace[i+1])
                 reward_trace[i] = torch.tensor(1, device=device, dtype=torch.float)
 
     next_value=value_trace[-1]
@@ -457,7 +485,7 @@ def Mutiagent_collect_experiences_q(env,
     }
 
     for i in range(len(state_trace) - 1):
-        if state_trace[i] != state_trace[i + 1]:
+        if state_trace[i] > state_trace[i + 1]:
             # mental reward
             if reward_trace[i] == 0 and state_trace[i] != 0 and state_trace[i] != 1:
                 reward_trace[i] = torch.tensor(1, device=device, dtype=torch.float)
@@ -613,8 +641,6 @@ def collect_experiences_mutation(algo,
         the_preprocessed_obs = preprocess_obss(obs, device=algo.device)
         # plt.imshow(numpy.squeeze(the_preprocessed_obs.image).cpu().numpy().astype(numpy.uint8))
         # plt.show()
-        # print("reward", reward)
-        # print("action", action)
         
         if last_done[0]:
             mutation = the_preprocessed_obs.image - the_preprocessed_obs.image
@@ -622,17 +648,21 @@ def collect_experiences_mutation(algo,
             mutation = the_preprocessed_obs.image - preprocessed_obs.image
         mutation = numpy.squeeze(mutation)
         mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        _, mutation_roi_list = RGB2GARY_ROI(mutation)
+        ### 检查突变是否与已知的突变相同
         # print(mutation.shape)
-        if get_mutation_score(mutation) > mutation_value and reward[0] == 0:
+        for mutation_roi in mutation_roi_list:
+            if get_mutation_score(mutation_roi) < mutation_value or reward[0] != 0:
+                continue
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
-                if contrast(mutation, mutation_) > 0.99:
+                if contrast(mutation_roi, mutation_) > 0.99:
                     arrived_state_buffer.append(idx)
                     reward = 1
                     done = (True,)
                     break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
-                if contrast(mutation, mutation_) > 0.99:
+                if contrast(mutation_roi, mutation_) > 0.99:
                     mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
                     is_in_buffer = True
                     break
@@ -641,8 +671,7 @@ def collect_experiences_mutation(algo,
                 # plt.show()
                 #print(get_mutation_score(mutation).dtype)
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
-                mutation_buffer.append((get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
-        # Update experiences values
+                mutation_buffer.append((get_mutation_score(mutation), mutation_roi, 1, copy.deepcopy(algo.env)))
 
         algo.obss[i] = algo.obs
         algo.obs = obs

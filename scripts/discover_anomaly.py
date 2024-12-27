@@ -21,7 +21,7 @@ from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
 from utils.anomaly import BoundaryDetector
-import math 
+import math
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -30,6 +30,8 @@ parser.add_argument("--discover", required=True, type=int,
                     help="if this task need to discover new state")
 parser.add_argument("--algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
+parser.add_argument("--curriculum", default=1, type=int,
+                    help="Curriculum number(1, 2, 3), used in random env")
 parser.add_argument("--env", required=True,
                     help="name of the environment to train on (REQUIRED)")
 parser.add_argument("--model", default=None,
@@ -89,15 +91,15 @@ args = parser.parse_args()
 test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
 
 class stateNode():
-    def __init__(self, 
-                 id, 
-                 mutation = None, 
+    def __init__(self,
+                 id,
+                 mutation = None,
                  agent: ACModel = None,
                  env_image = None):
         self.id = id
         self.mutation = mutation
         self.agent = agent
-        self.env_image = env_image  
+        self.env_image = env_image
 
 # need to get parameters to get the graph
 
@@ -107,7 +109,7 @@ def get_discover_probability(mean_reward, test_turns):
 
 # def get_mutation_score(mutation, anomalyNN):
 #     mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
-#     anomaly_score = anomalyNN(mutation) 
+#     anomaly_score = anomalyNN(mutation)
 #     e_x = numpy.exp(anomaly_score - numpy.max(anomaly_score))
 #     return (e_x / e_x.sum())[1]
 
@@ -118,12 +120,28 @@ def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean
     if score > 0.3:
         return True
     return False
-    
+
 def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
     if mutation1 is None or mutation2 is None:
         return 0
-    return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
-    
+    # return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
+    if mutation1.shape != mutation2.shape:
+        target_size = (min(mutation1.shape[0], mutation2.shape[0]),
+                       min(mutation1.shape[1], mutation2.shape[1]))
+        mutation1 = cv2.resize(mutation1, target_size, interpolation=cv2.INTER_AREA)
+        mutation2 = cv2.resize(mutation2, target_size, interpolation=cv2.INTER_AREA)
+    hist_1, hist_2 = cv2.calcHist([mutation1], [0], None, [256], [0, 256]), cv2.calcHist([mutation2], [0], None, [256], [0, 256])
+    hist_1, hist_2 = cv2.normalize(hist_1, hist_1).flatten(), cv2.normalize(hist_2, hist_2).flatten()
+    correlation = cv2.compareHist(hist_1, hist_2, cv2.HISTCMP_CORREL)
+    similar = abs(correlation)
+    return similar
+
+def contrast_ssim(image1, image2) -> float:
+    if image1 is None or image2 is None:
+        return 0
+    return ssim(image1, image2, multichannel=True, channel_axis=2)
+
+
 def obs_To_mutation(pre_obs, obs, preprocess_obss):
     pre_image_data=preprocess_obss([pre_obs], device=device).image
     image_data=preprocess_obss([obs], device=device).image
@@ -139,21 +157,21 @@ def get_importance_prob(lst):
 
 def calculate_epsilon(num_frames, initial_num_frames, total_frames):
     progress = (num_frames - initial_num_frames) / (total_frames - initial_num_frames)
-    
+
     # 当进度达到90%时保持最小值
     if progress >= 0.9:
         progress = 0.9
-        
+
     # 使用指数函数实现快速下降后缓慢下降
     epsilon = 1 - progress ** 0.5
-    
+
     return epsilon
 
 
-def discover(start_env, 
-            start_node, 
-            algo, 
-            discover_frames, 
+def discover(start_env,
+            start_node,
+            algo,
+            discover_frames,
             txt_logger,
             mutation_value,
             test_turns,
@@ -161,24 +179,26 @@ def discover(start_env,
             preprocess_obss,
             anomaly_detector,
             discover_csv_logger=None):
-    def get_mutation_score(mutation):
+    def get_mutation_score(processed_mutation_roi):
         # mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
-        # anomaly_score = anomalyNN(mutation).detach().cpu().numpy() 
-        is_anomaly = anomaly_detector.detect_anomaly(mutation)
-        # e_x = numpy.exp(anomaly_score[0] - numpy.max(anomaly_score[0]))
-        # return (e_x / e_x.sum())[1]
+        # anomaly_score = anomalyNN(mutation).detach().cpu().numpy()
+        # is_anomaly = anomaly_detector.detect_anomaly(mutation)
+        is_anomaly = anomaly_detector.is_known_roi(processed_mutation_roi, add_to_buffer=False)
         if is_anomaly:
             return 1
-        else:
-            return 0
+        return 0
+        # if is_anomaly:
+        #     return 1
+        # else:
+        #     return 0
 
-    start_env = copy_env(start_env, args.env)
+    start_env = copy_env(start_env, args.env, args.curriculum)
     # start_env = ParallelEnv([start_env])
     mutation_buffer = []
     heapq.heapify(mutation_buffer)
-    
+
     txt_logger.info("Optimizer loaded\n")
-    
+
     num_frames = 0
     update = 0
     start_time = time.time()
@@ -188,7 +208,7 @@ def discover(start_env,
     for node, data in G.nodes(data=True):
         if data['state'].mutation is not None:
             known_mutation_buffer.append((node, data['state'].mutation))
-    
+
     txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
     initial_num_frames = num_frames
     while num_frames < discover_frames:
@@ -196,23 +216,23 @@ def discover(start_env,
         update_start_time = time.time()
         if args.algo == 'ppo' or args.algo == 'a2c':
             exps, logs1 = collect_experiences_mutation(algo,
-                                                    start_env, 
-                                                            get_mutation_score, 
-                                                            mutation_buffer, 
-                                                            mutation_value, 
-                                                            contrast, 
-                                                            known_mutation_buffer, 
+                                                    start_env,
+                                                            get_mutation_score,
+                                                            mutation_buffer,
+                                                            mutation_value,
+                                                            contrast,
+                                                            known_mutation_buffer,
                                                             arrived_state_buffer,
                                                             preprocess_obss,
                                                             args.env)
         elif args.algo == 'dqn':
             exps, logs1 = collect_experiences_mutation_q(algo,
-                                                    start_env, 
-                                                            get_mutation_score, 
-                                                            mutation_buffer, 
-                                                            mutation_value, 
-                                                            contrast, 
-                                                            known_mutation_buffer, 
+                                                    start_env,
+                                                            get_mutation_score,
+                                                            mutation_buffer,
+                                                            mutation_value,
+                                                            contrast,
+                                                            known_mutation_buffer,
                                                             arrived_state_buffer,
                                                             preprocess_obss,
                                                             args.env,
@@ -247,7 +267,7 @@ def discover(start_env,
 
             elif args.algo == "dqn":
 
-                header += ["loss", "q_value", "grad_norm"] 
+                header += ["loss", "q_value", "grad_norm"]
                 data += [logs["loss"], logs["q_value"], logs["grad_norm"]]
 
                 txt_logger.info(
@@ -298,7 +318,7 @@ def main():
     # task_config_path: the path of the last task config(a yaml file).
     # new_task_path: the path of the new task, the last folder name is "task"+new_task_number.
     normal_buffer_path = "config/" + args.model + "/buffer/"
-    
+
     state_img_path = "config/" + args.model + "/"
     task_path = os.path.join("config", args.model, args.task_config)
     task_config_path = os.path.join("config", args.model, args.task_config, "config.yaml")
@@ -314,7 +334,7 @@ def main():
     for edge in task_config['graph']['edges']:
         #nx.draw(G, with_labels=True)
         G.add_edge(edge["from"], edge["to"])
-    start_node = task_config['graph']['start_node'] 
+    start_node = task_config['graph']['start_node']
     # nx.draw(G, with_labels=True)
     # plt.show()
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
@@ -331,7 +351,7 @@ def main():
     txt_logger = utils.get_txt_logger(model_dir)
     csv_file, csv_logger = utils.get_csv_logger(model_dir)
     csv_episode_file, csv_episode_logger = utils.get_csv_episode_logger(model_dir)
-    tb_writer = tensorboardX.SummaryWriter(model_dir)
+    # tb_writer = tensorboardX.SummaryWriter(model_dir)
 
     # Log command and all script arguments
 
@@ -341,17 +361,19 @@ def main():
     # Set seed for all randomness sources
 
     utils.seed(args.seed)
+    print("Seed:", args.seed)
 
     # Set device
 
     txt_logger.info(f"Device: {device}\n")
-    
+
     # Load environments
 
     envs = []
     initial_img = None
     for i in range(args.procs):
-        env=utils.make_env(args.env, args.seed + 10000 * i)
+        # kwargs = {"curriculum": args.curriculum}
+        env=utils.make_env(args.env, args.seed + 10000 * i, curriculum=args.curriculum)
         initial_img, _ = env.reset()
         envs.append(env)
     txt_logger.info("Environments loaded\n")
@@ -433,7 +455,7 @@ def main():
                 if args.algo == "dqn" and hasattr(algos[i], 'trained'):
                     algos[i].trained = True
     # AnomalyNN = CNN(num_classes=2)
-    # try: 
+    # try:
     #     # AnomalyNN.load_state_dict(torch.load(AnomalyNN_model_dir))
     #     AnomalyNN = torch.load(AnomalyNN_model_dir)
     #     AnomalyNN.to(device)
@@ -441,23 +463,24 @@ def main():
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
     anomaly_detector = BoundaryDetector(normal_buffer_path)
-        
-    # load the mutations 
+
+    # load the mutations
     for node in G.nodes:
         if list(G.predecessors(node)):
             if node != 0 and node != 1:
-                G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
+                # G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
+                G.nodes[node]['state'].mutation = cv2.imread(task_path + "/mutation" + str(node) + ".bmp", cv2.IMREAD_GRAYSCALE)
         if node != 0 and node != 1:
             G.nodes[node]['state'].env_image = plt.imread(state_img_path + "/state" + str(node) + ".bmp")
-    
+
     print(G.nodes)
     print(G.edges)
-    
+
     if args.discover != 0:
         node_probability_list = [0] * G.number_of_nodes()
         for node, data in G.nodes(data=True):
             if data['state'].env_image is not None:
-                node_probability_list[node] = contrast(data['state'].env_image, initial_img)
+                node_probability_list[node] = contrast_ssim(data['state'].env_image, initial_img)
         node_probability_list = get_importance_prob(node_probability_list)
         min_stop_state = 0
         ######
@@ -488,7 +511,7 @@ def main():
             new_acmodel = QNet(obs_space, envs[0].action_space, args.text)
         new_acmodel.load_state_dict(status["model_state"][stop_state - 2])
         new_acmodel.to(device)
-        
+
         if args.algo == "ppo":
             algo = torch_ac.PPOAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                     args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
@@ -506,20 +529,20 @@ def main():
             min_stop_state = stop_state
 
         discover_csv_file, discover_csv_logger = utils.get_csv_discover_logger(model_dir=model_dir, agent_idx=agent_num)
-        
-        new_mutation, new_state_img, out_state, discover_num_frames = discover(start_env=stop_env, 
-                                start_node=min_stop_state, 
-                                algo=algo, 
-                                discover_frames=200000, 
-                                txt_logger=txt_logger, 
-                                mutation_value=0.5, 
-                                test_turns=decision_steps, 
+
+        new_mutation, new_state_img, out_state, discover_num_frames = discover(start_env=stop_env,
+                                start_node=min_stop_state,
+                                algo=algo,
+                                discover_frames=200000,
+                                txt_logger=txt_logger,
+                                mutation_value=0.5,
+                                test_turns=decision_steps,
                                 test_mean_reward=mean_return,
                                 preprocess_obss=preprocess_obss,
                                 anomaly_detector=anomaly_detector,
-                                discover_csv_logger=discover_csv_logger) 
+                                discover_csv_logger=discover_csv_logger)
         discover_csv_file.flush()
-    
+
         if new_mutation is not None:
             new_node_id = len(G.nodes)
             G.add_node(new_node_id, state=stateNode(new_node_id, None, None, stop_env.gen_obs()['image']))
@@ -559,11 +582,12 @@ def main():
             ### save the mutation
             for node in G.nodes:
                 if G.nodes[node]['state'].mutation is not None:
-                    plt.imsave(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
-            
+                    # plt.imsave(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
+                    cv2.imwrite(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
+
             nx.draw(G, with_labels=True)
             plt.show()
-        else: 
+        else:
             print("Failed to discover, return.")
             return "fail to discover anomaly"
         ######
@@ -591,24 +615,24 @@ def main():
         # ini_agent
         epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
-        # print("epsilon", epsilon)   
+        # print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
-            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0], 
-                                                                           algos=algos, 
-                                                                           contrast=contrast, 
+            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0],
+                                                                           algos=algos,
+                                                                           contrast=contrast,
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
                                                                            anomaly_detector=anomaly_detector,
-                                                                       num_frames_per_proc=args.frames_per_proc * agent_num, 
+                                                                       num_frames_per_proc=args.frames_per_proc * agent_num,
                                                                        discount=args.discount,
-                                                                       gae_lambda=args.gae_lambda, 
+                                                                       gae_lambda=args.gae_lambda,
                                                                        preprocess_obss=preprocess_obss,
                                                                        discover=args.discover,)
         elif args.algo == "dqn":
-            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0], 
+            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0],
                                                                            algos=algos,
-                                                                           contrast=contrast, 
+                                                                           contrast=contrast,
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
@@ -622,6 +646,8 @@ def main():
         # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
         # for i in range(0,len(exps_list)):
         #     print(i, len(exps_list[i].obs))
+        if args.algo == "ppo":
+            initial_agent_num = 0
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
                 logs2 = algos[i].update_parameters(exps_list[i])
@@ -633,7 +659,7 @@ def main():
             policy_loss_list = [None] * (agent_num + 2)
             value_loss_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            
+
             # 只记录新agent的日志
             for i in range(initial_agent_num + 2, agent_num + 2):
                 if len(exps_list[i].obs):
@@ -653,7 +679,7 @@ def main():
             loss_list = [None] * (agent_num + 2)
             q_value_list = [None] * (agent_num + 2)
             grad_norm_list = [None] * (agent_num + 2)
-            
+
             # 只记录新agent的日志
             for i in range(initial_agent_num + 2, agent_num + 2):
                 if len(exps_list[i].obs):
@@ -745,7 +771,7 @@ def main():
                 best_test_return = current_test_return
                 # 保存当前最佳模型状态
                 best_model_states = [acmodel.state_dict() for acmodel in acmodels]
-                
+
                 # 保存最佳模型
                 best_status = {
                     "num_frames": num_frames,
@@ -757,7 +783,7 @@ def main():
                 }
                 utils.save_status(best_status, os.path.join(model_dir, "best_model"))
                 txt_logger.info(f"New best model saved with test return: {best_test_return:.2f}")
-            
+
         # Save status
 
         if args.save_interval > 0 and update % args.save_interval == 0:
@@ -776,7 +802,7 @@ def main():
     # #     status["vocab"] = preprocess_obss.vocab.vocab
     # utils.save_status(status, model_dir)
     # txt_logger.info("Status saved")
-    
+
     for i, acmodel in enumerate(acmodels):
         acmodel.load_state_dict(best_model_states[i])
     txt_logger.info(f"Loaded best model with test return: {best_test_return:.2f}")
@@ -798,7 +824,7 @@ def main():
     }
     utils.save_status(final_status, model_dir)
     txt_logger.info("Final status saved")
-    
+
     # 如果最终模型不是最佳模型,则加载最佳模型状态
     if return_per_episode['mean'] <= 0.5:
         return "fail train"
