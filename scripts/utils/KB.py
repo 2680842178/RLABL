@@ -15,6 +15,7 @@ from .abl_trace import abl_trace
 from .env import copy_env
 import matplotlib.pyplot as plt
 from torchvision.utils import save_image
+from skimage.metrics import structural_similarity as ssim
 
 def get_state(env):
     return env.Current_state()
@@ -44,6 +45,17 @@ def RGB2GARY_ROI(image):
     
     return gray_image, processed
 
+def contrast_ssim(img1, img2):
+    if img1 is None or img2 is None:
+        return 0
+    # return ssim(img1, img2, multichannel=True, channel_axis=2)
+    if img1.shape != img2.shape:
+        target_size = (min(img1.shape[0], img2.shape[0]),
+                       min(img1.shape[1], img2.shape[1]))
+        img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_AREA)
+        img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_AREA)
+    return ssim(img1, img2)
+
 def obs_To_state(current_state,
                 preprocess_obss,
                 anomaly_detector, 
@@ -71,19 +83,25 @@ def obs_To_state(current_state,
     # if anomalyNN(anomaly_mutation)[0, 0] >= anomalyNN(anomaly_mutation)[0, 1]:
     if is_add_normal_samples or not is_anomaly:
         return current_state
+
     # if not anomaly_detector.detect_anomaly(mutation):
     similiarity = []
     for next_state in list(G.successors(current_state)):
         # print("next_state", next_state)
         # print("G.nodes[next_state]['state'].mutation", G.nodes[next_state]['state'].mutation)
         for roi in roi_list:
-            similiarity.append((next_state, contrast(roi, G.nodes[next_state]['state'].mutation)))
+            similiarity.append((next_state, contrast_ssim(roi, G.nodes[next_state]['state'].mutation)))
+            print(contrast_ssim(roi, G.nodes[next_state]['state'].mutation))
 
         # print(contrast(mutation, G.nodes[next_state]['state'].mutation))
     # print("similiarity", similiarity)
     output = max(similiarity, key=lambda x: x[1]) 
-    if output[1] < 0.999999:
+    # plt.imshow(mutation)
+    # plt.show()
+    if output[1] < 0.6:
+        # print("no", output[1])
         return current_state
+    # print("yes", output[0], output[1])
     output = output[0]
     return output
 
@@ -612,11 +630,12 @@ def collect_experiences_mutation(algo,
     parallel_env = ParallelEnv([env])
     done = (True,)
     last_done = (True,)
+    obs = parallel_env.gen_obs()
     for i in range(algo.num_frames_per_proc):
         # Do one agent-environment interaction
         last_done = done
 
-        preprocessed_obs = preprocess_obss(algo.obs, device=algo.device)
+        preprocessed_obs = preprocess_obss(obs, device=algo.device)
 
         with torch.no_grad():
             if algo.acmodel.recurrent:
@@ -642,7 +661,7 @@ def collect_experiences_mutation(algo,
         # plt.imshow(numpy.squeeze(the_preprocessed_obs.image).cpu().numpy().astype(numpy.uint8))
         # plt.show()
         
-        if last_done[0]:
+        if done[0]:
             mutation = the_preprocessed_obs.image - the_preprocessed_obs.image
         else:
             mutation = the_preprocessed_obs.image - preprocessed_obs.image
@@ -667,6 +686,9 @@ def collect_experiences_mutation(algo,
                     is_in_buffer = True
                     break
             if not is_in_buffer:
+                # print(last_done, done)
+                # plt.imshow(mutation)
+                # plt.show()
                 # plt.imshow(mutation)
                 # plt.show()
                 #print(get_mutation_score(mutation).dtype)

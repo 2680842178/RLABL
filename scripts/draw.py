@@ -2,17 +2,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-model_name = '20241218-dqn-seed1'
+model_name = '20241227-discover-ppo-random-test18'
 
-def moving_average(data, window_size):
-    return data.rolling(window=window_size).mean()
+# def moving_average(data, window_size):
+#     return data.rolling(window=window_size).mean()
 # 读取 CSV 文件
 data = pd.read_csv(f'./storage/{model_name}/log.csv')
-data_part1 = data[data['frames'] < 152000]
+data_part1 = data[data['frames'] < 100500]
 last_step_part1 = data_part1['frames'].iloc[-1]
-data_part2 = data[(data['frames'] > 152000) & (data['frames'] < 303000)]
+data_part2 = data[(data['frames'] > 100500) & (data['frames'] < 202000)]
 last_step_part2 = data_part2['frames'].iloc[-1]
-data_part3 = data[data['frames'] > 303000]
+data_part3 = data[data['frames'] > 202000]
+
+print(last_step_part1.dtype, last_step_part2.dtype)
 
 discover1_data = pd.read_csv(f'./storage/{model_name}/log_discover_1.csv')
 discover1_data['frames'] += last_step_part1
@@ -36,11 +38,12 @@ merged_data = pd.concat([data_part1, discover1_data, data_part2, discover2_data,
 
 window_size = 10
 # data['return_mean_smooth'] = moving_average(data['rreturn_mean'], window_size)
-merged_data['mental_reward_smooth'] = moving_average(merged_data['rreturn_mean'], window_size)
+# merged_data['mental_reward_smooth'] = moving_average(merged_data['rreturn_mean'], window_size)
 
 # 绘制奖励曲线
 # plt.plot(merged_data['frames'], merged_data['mental_reward_smooth'], label='mental_reward_smooth', color='pink')
-plt.plot(merged_data['frames'], merged_data['rreturn_mean'], label='mental_reward_smooth', color='pink')
+plt.plot(merged_data['frames'], merged_data['rreturn_mean'], label='mental_reward', color='pink')
+plt.plot(merged_data['frames'], merged_data['return_mean'], label='reward', color='blue')
 plt.xlabel('frames')
 plt.ylabel('Reward')
 plt.title('Reward Curve')
@@ -49,17 +52,17 @@ plt.grid(True)
 plt.savefig(f"./test_figs/reward_curve_{model_name}.png")
 plt.show()
 
-first_column_data = episode_data.iloc[:, 0]
+# first_column_data = episode_data.iloc[:, 0]
 
-# 绘制散点图
-plt.figure(figsize=(10, 6))
-plt.scatter(range(len(first_column_data)), first_column_data, label='episode return', color='red', s=10, alpha=0.6)
-plt.xlabel('episode')
-plt.ylabel('return')
-plt.title('episodes return')
-plt.legend()
-plt.grid(True)
-plt.show()
+# # 绘制散点图
+# plt.figure(figsize=(10, 6))
+# plt.scatter(range(len(first_column_data)), first_column_data, label='episode return', color='red', s=10, alpha=0.6)
+# plt.xlabel('episode')
+# plt.ylabel('return')
+# plt.title('episodes return')
+# plt.legend()
+# plt.grid(True)
+# plt.show()
 
 # plt.plot(data['frames'], data['agent1_entropy'], label='entropy')
 # plt.plot(data['frames'], data['agent1_value'], label='value')
