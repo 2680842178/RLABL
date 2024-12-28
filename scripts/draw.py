@@ -2,17 +2,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-model_name = '20241227-discover-ppo-random-test18'
+model_name = '20241228-discover-ppo-random-test2'
 
 # def moving_average(data, window_size):
 #     return data.rolling(window=window_size).mean()
 # 读取 CSV 文件
 data = pd.read_csv(f'./storage/{model_name}/log.csv')
-data_part1 = data[data['frames'] < 100500]
+data_part1 = data[data['frames'] < 200500]
 last_step_part1 = data_part1['frames'].iloc[-1]
-data_part2 = data[(data['frames'] > 100500) & (data['frames'] < 202000)]
+data_part2 = data[(data['frames'] > 200500) & (data['frames'] < 402000)]
 last_step_part2 = data_part2['frames'].iloc[-1]
-data_part3 = data[data['frames'] > 202000]
+data_part3 = data[data['frames'] > 402000]
 
 print(last_step_part1.dtype, last_step_part2.dtype)
 

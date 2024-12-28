@@ -15,7 +15,8 @@ from .abl_trace import abl_trace
 from .env import copy_env
 import matplotlib.pyplot as plt
 from torchvision.utils import save_image
-from skimage.metrics import structural_similarity as ssim
+# from skimage.metrics import structural_similarity as ssim
+from .process import contrast_ssim  
 
 def get_state(env):
     return env.Current_state()
@@ -44,17 +45,6 @@ def RGB2GARY_ROI(image):
         processed.append(roi)
     
     return gray_image, processed
-
-def contrast_ssim(img1, img2):
-    if img1 is None or img2 is None:
-        return 0
-    # return ssim(img1, img2, multichannel=True, channel_axis=2)
-    if img1.shape != img2.shape:
-        target_size = (min(img1.shape[0], img2.shape[0]),
-                       min(img1.shape[1], img2.shape[1]))
-        img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_AREA)
-        img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_AREA)
-    return ssim(img1, img2)
 
 def obs_To_state(current_state,
                 preprocess_obss,
@@ -91,14 +81,14 @@ def obs_To_state(current_state,
         # print("G.nodes[next_state]['state'].mutation", G.nodes[next_state]['state'].mutation)
         for roi in roi_list:
             similiarity.append((next_state, contrast_ssim(roi, G.nodes[next_state]['state'].mutation)))
-            print(contrast_ssim(roi, G.nodes[next_state]['state'].mutation))
+            # print(contrast_ssim(roi, G.nodes[next_state]['state'].mutation))
 
         # print(contrast(mutation, G.nodes[next_state]['state'].mutation))
     # print("similiarity", similiarity)
     output = max(similiarity, key=lambda x: x[1]) 
     # plt.imshow(mutation)
     # plt.show()
-    if output[1] < 0.6:
+    if output[1] < 0.5:
         # print("no", output[1])
         return current_state
     # print("yes", output[0], output[1])
@@ -693,7 +683,7 @@ def collect_experiences_mutation(algo,
                 # plt.show()
                 #print(get_mutation_score(mutation).dtype)
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
-                mutation_buffer.append((get_mutation_score(mutation), mutation_roi, 1, copy.deepcopy(algo.env)))
+                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))
 
         algo.obss[i] = algo.obs
         algo.obs = obs

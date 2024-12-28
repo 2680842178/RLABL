@@ -13,6 +13,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import gymnasium as gym
 from typing import Optional, Callable, List
 from abc import abstractmethod
+from .process import contrast_ssim
 
 
 import matplotlib.pyplot as plt
@@ -82,13 +83,14 @@ class BoundaryDetector(AnomalyDetector):
         similar = 0
         # print(len(self.saved_images))
         for saved_image_name, saved_image, saved_hist in self.saved_images:
-            saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
-            correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
-            similar = max(similar, abs(correlation))
+            # saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
+            # correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
+            # similar = max(similar, abs(correlation))
+            similar = max(similar, contrast_ssim(roi, saved_image))
             # print(similar)
-            if similar > 0.9999999:
+            if similar > 0.7:
                 break
-        if similar < 0.9999999 and similar >= 0:
+        if similar < 0.7 and similar >= 0:
             is_anomaly = True
             if add_to_buffer:
                 # print("Anomaly detected, saving image")
@@ -106,13 +108,14 @@ class BoundaryDetector(AnomalyDetector):
             similar = 0
             # print(len(self.saved_images))
             for saved_image_name, saved_image, saved_hist in self.saved_images:
-                saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
-                correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
-                similar = max(similar, abs(correlation))
+                # saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
+                # correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
+                # similar = max(similar, abs(correlation))
+                similar = max(similar, contrast_ssim(processed_image, saved_image)) 
                 # print(similar)
-                if similar > 0.9999999:
+                if similar > 0.7:
                     break
-            if similar < 0.9999999 and similar >= 0:
+            if similar < 0.7 and similar >= 0:
                 is_anomaly = True
                 if add_to_buffer:
                     # print("Anomaly detected, saving image")

@@ -7,12 +7,9 @@ from minigrid.minigrid_env import MiniGridEnv
 from minigrid.core.constants import COLOR_NAMES
 from minigrid.core.mission import MissionSpace
 from minigrid.core.world_object import Door, Goal, Key, Wall, Box, Lava
-from minigrid.core.constants import COLOR_NAMES
-from minigrid.core.mission import MissionSpace
-from minigrid.core.world_object import Door, Goal, Key, Wall, Box, Lava
+from minigrid.envs import ConfigWorldEnv, ConfigWorldEnvHavingKey
 from gymnasium import spaces
 from gymnasium.core import ObservationWrapper, Wrapper
-from configparser import ConfigParser
 from configparser import ConfigParser
 
 class TestWrapper(ObservationWrapper):
@@ -94,6 +91,8 @@ class RandomMinigridEnv(MiniGridEnv):
         self.config_path = config_path
         self.maps = read_maps_from_config(config_path)
         self.curriculum = kwargs.get('curriculum', 1)
+        self.fixed_map = kwargs.get('fixed_map', None)
+        print(self.fixed_map)
         # 初始化父类，传入地图的宽度和高度
         super().__init__(
             mission_space=mission_space,
@@ -118,7 +117,9 @@ class RandomMinigridEnv(MiniGridEnv):
             selected_map = random.choice(self.maps[20:25])
         else:
             selected_map = random.choice(self.maps[40:45])
-        # print(f"选中的地图: {selected_map}")  # 调试信息
+        if self.fixed_map is not None:
+            selected_map = self.maps[self.fixed_map]
+        
         self.selected_map = selected_map
         map_grid = self.selected_map
         self.size=len(selected_map)
@@ -177,6 +178,7 @@ class RandomMinigridEnvHavekey(MiniGridEnv):
         )
         self.config_path = config_path
         self.maps = read_maps_from_config(config_path)
+        self.fixed_map = kwargs.get('fixed_map', None)
         # print(self.maps)
         # for i in self.maps:
         #     for j in i:
@@ -209,6 +211,8 @@ class RandomMinigridEnvHavekey(MiniGridEnv):
             selected_map = random.choice(self.maps[20:25])
         else:
             selected_map = random.choice(self.maps[40:45])
+        if self.fixed_map is not None:
+            selected_map = self.maps[self.fixed_map]
         # print(f"选中的地图: {selected_map}")  # 调试信息
         self.selected_map = selected_map
         map_grid = self.selected_map
@@ -260,8 +264,11 @@ def make_env(env_key, seed=None, render_mode="rgb_array", **kwargs):
         env = RandomMinigridEnv(**kwargs)
     elif env_key == "MiniGrid-ConfigWorld-Random-havekey":
         env = RandomMinigridEnvHavekey(**kwargs)
-    else:
-        env = gym.make(env_key, render_mode=render_mode)
+    elif env_key == "MiniGrid-ConfigWorld-v0":
+        env = ConfigWorldEnv()
+    elif env_key == "MiniGrid-ConfigWorld-v0-havekey":
+        env = ConfigWorldEnvHavingKey()
+        # env = gym.make(env_key, render_mode=render_mode)
     # env = TestWrapper(env)
     env.reset(seed=seed)
     return env
