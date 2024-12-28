@@ -1,13 +1,18 @@
 import gymnasium as gym
 import copy
 import random
+import random
 from minigrid.core.grid import Grid
 from minigrid.minigrid_env import MiniGridEnv
 from minigrid.core.constants import COLOR_NAMES
 from minigrid.core.mission import MissionSpace
 from minigrid.core.world_object import Door, Goal, Key, Wall, Box, Lava
+from minigrid.core.constants import COLOR_NAMES
+from minigrid.core.mission import MissionSpace
+from minigrid.core.world_object import Door, Goal, Key, Wall, Box, Lava
 from gymnasium import spaces
 from gymnasium.core import ObservationWrapper, Wrapper
+from configparser import ConfigParser
 from configparser import ConfigParser
 
 class TestWrapper(ObservationWrapper):

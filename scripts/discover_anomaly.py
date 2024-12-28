@@ -362,6 +362,7 @@ def main():
 
     utils.seed(args.seed)
     print("Seed:", args.seed)
+    print("Seed:", args.seed)
 
     # Set device
 
