@@ -25,7 +25,7 @@ START_CONFIG_CONTENT="graph:
 agent_num: 1"
 
 # 设置模型名称和配置文件夹
-MODEL_NAME=20241226-discover-ppo-bigmap
+MODEL_NAME=20241229-discover-ppo-bigmap
 MODEL_CONFIG_FOLDER=config/$MODEL_NAME
 
 if [ "$1" == "1" ]; then
@@ -54,38 +54,38 @@ END_LINE=25
 # 三个任务地图
 MAP_1="map_grid=   x, x, x, x, x, x, x, x, x, x, x
             x, x, x, x, x, x, x, x, x, x, x
-            x, -, E, E, E, x, E, E, E, G, x
-            x, -, E, E, E, x, E, E, E, -, x
+            x, E, E, E, E, x, -, -, -, G, x
+            x, E, E, E, E, x, -, -, -, -, x
             x, -, -, -, -, x, -, -, -, -, x
-            x, -, -, -, -, x, x, -, x, x, x
+            x, -, -, -, -, x, -, x, x, x, x
+            x, -, -, -, -, -, -, -, -, -, x
             x, -, -, -, -, -, -, -, -, E, x
-            x, -, -, -, -, -, -, -, -, E, x
-            x, E, E, E, -, -, -, -, -, E, x
-            x, E, E, E, -, -, -, -, S, E, x
+            x, E, -, -, -, -, -, -, -, E, x
+            x, E, -, -, -, -, S, E, E, E, x
             x, x, x, x, x, x, x, x, x, x, x"
 
 MAP_2="map_grid=   x, x, x, x, x, x, x, x, x, x, x
             x, x, x, x, x, x, x, x, x, x, x
-            x, -, E, E, E, x, E, E, E, G, x
-            x, S, E, E, E, x, E, E, E, -, x
-            x, -, -, -, -, x, -, -, -, -, x
-            x, -, -, -, -, x, x, D, x, x, x
+            x, E, E, E, E, x, -, -, -, G, x
+            x, E, E, E, E, x, -, -, -, -, x
+            x, S, -, -, -, x, -, -, -, -, x
+            x, -, -, -, -, x, D, x, x, x, x
+            x, -, -, -, -, -, -, -, -, -, x
             x, -, -, -, -, -, -, -, -, E, x
-            x, -, -, -, -, -, -, -, -, E, x
-            x, E, E, E, -, -, -, -, -, E, x
-            x, E, E, E, -, -, -, -, -, E, x
+            x, E, -, -, -, -, -, -, -, E, x
+            x, E, -, -, -, -, -, E, E, E, x
             x, x, x, x, x, x, x, x, x, x, x"
 
 MAP_3="map_grid=   x, x, x, x, x, x, x, x, x, x, x
             x, x, x, x, x, x, x, x, x, x, x
-            x, K, E, E, E, x, E, E, E, G, x
-            x, -, E, E, E, x, E, E, E, -, x
+            x, E, E, E, E, x, -, -, -, G, x
+            x, E, E, E, E, x, -, -, -, -, x
             x, -, -, -, -, x, -, -, -, -, x
-            x, -, -, -, -, x, x, -, x, x, x
+            x, -, -, -, -, x, D, x, x, x, x
+            x, K, -, -, -, -, -, -, -, -, x
             x, -, -, -, -, -, -, -, -, E, x
-            x, -, -, -, -, -, -, -, -, E, x
-            x, E, E, E, -, -, -, -, -, E, x
-            x, E, E, E, -, -, -, -, S, E, x
+            x, E, -, -, -, -, -, -, -, E, x
+            x, E, -, -, -, S, -, E, E, E, x
             x, x, x, x, x, x, x, x, x, x, x"
 
 LR=0.00006
@@ -97,15 +97,15 @@ FRAMES_PER_PROC=512
 
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_1" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 200000
+python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 860000
 # add door to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_2" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 400000
+python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 920000
 # add key to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_3" >> $CONFIGMAP
-python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 600000
+python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 9000000
 
 # # 替换配置文件中的地图
 # sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP

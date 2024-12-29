@@ -26,3 +26,15 @@ for i in range(5):
     img = obs['image']
     plt.imsave(fig_path + f"test_fig_3_{i}.bmp", img)
 
+
+MAP_3="map_grid=   x, x, x, x, x, x, x, x, x, x, x
+            x, x, x, x, x, x, x, x, x, x, x
+            x, E, E, E, E, x, -, -, -, G, x
+            x, -, -, -, -, x, -, -, -, -, x
+            x, -, -, K, -, x, -, -, -, -, x
+            x, -, -, -, -, x, D, x, x, x, x
+            x, -, -, -, -, -, -, -, -, -, x
+            x, E, -, -, -, -, -, -, -, -, x
+            x, E, -, -, -, -, -, -, -, -, x
+            x, E, -, -, -, S, -, E, E, E, x
+            x, x, x, x, x, x, x, x, x, x, x"

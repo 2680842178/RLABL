@@ -17,20 +17,21 @@ from skimage.metrics import structural_similarity as ssim
 import utils
 from utils import *
 from utils import device
+from utils.process import contrast_ssim
 # from utils.process import contrast
 from utils.KB import RGB2GARY_ROI
 from model import ACModel, CNN, QNet
 
-def contrast_ssim(img1, img2):
-    if img1 is None or img2 is None:
-        return 0
-    # return ssim(img1, img2, multichannel=True, channel_axis=2)
-    if img1.shape != img2.shape:
-        target_size = (min(img1.shape[0], img2.shape[0]),
-                       min(img1.shape[1], img2.shape[1]))
-        img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_AREA)
-        img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_AREA)
-    return ssim(img1, img2)
+# def contrast_ssim(img1, img2):
+#     if img1 is None or img2 is None:
+#         return 0
+#     # return ssim(img1, img2, multichannel=True, channel_axis=2)
+#     if img1.shape != img2.shape:
+#         target_size = (min(img1.shape[0], img2.shape[0]),
+#                        min(img1.shape[1], img2.shape[1]))
+#         img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_AREA)
+#         img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_AREA)
+#     return ssim(img1, img2)
 
 
 def obs_To_mutation(pre_obs, obs, preprocess_obss):

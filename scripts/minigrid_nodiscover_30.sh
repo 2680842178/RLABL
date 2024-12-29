@@ -4,26 +4,6 @@ if [ "$#" -ne 1 ]; then
   echo "Need a parameter to decide whether to delete old model and config: 0 for no(save), 1 for yes(delete)"
   exit 1
 fi 
-
-# 初始化任务配置文件：单目标状态，3个节点，2个边，1个agent
-# START_CONFIG_CONTENT="graph:  
-#   nodes:
-#     - 0
-#     - 1
-#     - 2
-#   # 0 == die, 1 == reward. 
-#   edges:
-#     - from: 2
-#       to: 1
-#       id: 0
-#       with_agent: 1
-#     - from: 2
-#       to: 0
-#       id: 1
-#       with_agent: 0
-#   start_node: 2
-# agent_num: 1"
-
 # 设置模型名称和配置文件夹
 
 CONFIGMAP="configmap.config"

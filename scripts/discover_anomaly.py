@@ -183,6 +183,8 @@ def discover(start_env,
         # mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
         # anomaly_score = anomalyNN(mutation).detach().cpu().numpy()
         # is_anomaly = anomaly_detector.detect_anomaly(mutation)
+        if numpy.any(numpy.asarray(processed_mutation_roi.shape) < 5):
+            return 0
         is_anomaly = anomaly_detector.is_known_roi(processed_mutation_roi, add_to_buffer=False)
         if is_anomaly:
             return 1
@@ -534,7 +536,7 @@ def main():
         new_mutation, new_state_img, out_state, discover_num_frames = discover(start_env=stop_env,
                                 start_node=min_stop_state,
                                 algo=algo,
-                                discover_frames=200000,
+                                discover_frames=500000,
                                 txt_logger=txt_logger,
                                 mutation_value=0.5,
                                 test_turns=decision_steps,
