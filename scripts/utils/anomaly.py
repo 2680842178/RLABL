@@ -62,6 +62,9 @@ class BoundaryDetector(AnomalyDetector):
             return False
         return True
 
+    def contrast(self, img1, img2):
+        return contrast_ssim(img1, img2)
+
     def preprocess_RGBimage(self, image):
         gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 

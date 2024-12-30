@@ -16,7 +16,7 @@ from .env import copy_env
 import matplotlib.pyplot as plt
 from torchvision.utils import save_image
 # from skimage.metrics import structural_similarity as ssim
-from .process import contrast_ssim  
+# from .process import contrast_ssim  
 
 def get_state(env):
     return env.Current_state()
@@ -80,7 +80,7 @@ def obs_To_state(current_state,
         # print("next_state", next_state)
         # print("G.nodes[next_state]['state'].mutation", G.nodes[next_state]['state'].mutation)
         for roi in roi_list:
-            similiarity.append((next_state, contrast_ssim(roi, G.nodes[next_state]['state'].mutation)))
+            similiarity.append((next_state, contrast(roi, G.nodes[next_state]['state'].mutation)))
             # print(contrast_ssim(roi, G.nodes[next_state]['state'].mutation))
 
         # print(contrast(mutation, G.nodes[next_state]['state'].mutation))
@@ -679,10 +679,10 @@ def collect_experiences_mutation(algo,
                 # print(last_done, done)
                 # plt.imshow(mutation)
                 # plt.show()
-                plt.imshow(mutation)
-                plt.show()
-                plt.imshow(mutation_roi)
-                plt.show()
+                # plt.imshow(mutation)
+                # plt.show()
+                # plt.imshow(mutation_roi)
+                # plt.show()
                 #print(get_mutation_score(mutation).dtype)
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
                 mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))

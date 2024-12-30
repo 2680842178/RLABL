@@ -17,7 +17,7 @@ from skimage.metrics import structural_similarity as ssim
 import utils
 from utils import *
 from utils import device
-from utils.process import contrast_ssim
+# from utils.process import contrast_ssim
 # from utils.process import contrast
 from utils.KB import RGB2GARY_ROI
 from model import ACModel, CNN, QNet
@@ -81,7 +81,7 @@ def test_once(
             if not anomaly_detector.is_known_roi(mutation_roi, add_to_buffer=False):
                 continue
             for node_num, node_mutation in mutation_buffer:
-                if contrast_ssim(node_mutation, mutation_roi) > 0.5:
+                if anomaly_detector.contrast(node_mutation, mutation_roi) > 0.5:
                     current_state = node_num
                     stop_env = copy_env(env, env_key)
                     stop_obss = copy.deepcopy(obss)

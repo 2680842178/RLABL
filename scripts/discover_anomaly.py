@@ -17,6 +17,7 @@ from skimage.metrics import structural_similarity as ssim
 import utils
 from utils import *
 from utils import device
+from utils.process import contrast_ssim
 from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
@@ -136,12 +137,6 @@ def contrast(mutation1, mutation2) -> float: # that means the similarity between
     similar = abs(correlation)
     return similar
 
-def contrast_ssim(image1, image2) -> float:
-    if image1 is None or image2 is None:
-        return 0
-    return ssim(image1, image2, multichannel=True, channel_axis=2)
-
-
 def obs_To_mutation(pre_obs, obs, preprocess_obss):
     pre_image_data=preprocess_obss([pre_obs], device=device).image
     image_data=preprocess_obss([obs], device=device).image
@@ -222,7 +217,7 @@ def discover(start_env,
                                                             get_mutation_score,
                                                             mutation_buffer,
                                                             mutation_value,
-                                                            contrast,
+                                                            contrast_ssim,
                                                             known_mutation_buffer,
                                                             arrived_state_buffer,
                                                             preprocess_obss,
@@ -233,7 +228,7 @@ def discover(start_env,
                                                             get_mutation_score,
                                                             mutation_buffer,
                                                             mutation_value,
-                                                            contrast,
+                                                            contrast_ssim,
                                                             known_mutation_buffer,
                                                             arrived_state_buffer,
                                                             preprocess_obss,
@@ -588,8 +583,8 @@ def main():
                     # plt.imsave(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
                     cv2.imwrite(new_task_path + "/mutation" + str(node) + ".bmp", G.nodes[node]['state'].mutation)
 
-            nx.draw(G, with_labels=True)
-            plt.show()
+            # nx.draw(G, with_labels=True)
+            # plt.show()
         else:
             print("Failed to discover, return.")
             return "fail to discover anomaly"
@@ -622,7 +617,7 @@ def main():
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0],
                                                                            algos=algos,
-                                                                           contrast=contrast,
+                                                                           contrast=contrast_ssim,
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
@@ -635,7 +630,7 @@ def main():
         elif args.algo == "dqn":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0],
                                                                            algos=algos,
-                                                                           contrast=contrast,
+                                                                           contrast=contrast_ssim,
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,

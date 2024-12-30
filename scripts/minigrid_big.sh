@@ -1,10 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 # 此处需要参数：0表示不删除旧模型和配置，1表示删除旧模型和配置
-if [ "$#" -ne 1 ]; then
-  echo "Need a parameter to decide whether to delete old model and config: 0 for no(save), 1 for yes(delete)"
-  exit 1
-fi
+# if [ "$#" -ne 1 ]; then
+#   echo "Need a parameter to decide whether to delete old model and config: 0 for no(save), 1 for yes(delete)"
+#   exit 1
+# fi
 
+while getopts "d:r:" opt; do
+  case $opt in
+    d) DELETE="$OPTARG" ;;  # 获取 -n 的值
+    r) IS_RL="$OPTARG" ;;   # 获取 -a 的值
+    *) echo "Invalid option"; exit 1 ;;
+  esac
+done
 # 初始化任务配置文件：单目标状态，3个节点，2个边，1个agent
 START_CONFIG_CONTENT="graph:
   nodes:
@@ -25,10 +32,10 @@ START_CONFIG_CONTENT="graph:
 agent_num: 1"
 
 # 设置模型名称和配置文件夹
-MODEL_NAME=20241229-discover-ppo-bigmap
+MODEL_NAME=20241230-RL-ppo-bigmap2
 MODEL_CONFIG_FOLDER=config/$MODEL_NAME
 
-if [ "$1" == "1" ]; then
+if [ "$DELETE" == "1" ]; then
   echo "Warning: Deleting old model and config..."
   rm -rf $MODEL_CONFIG_FOLDER
   rm -rf storage/$MODEL_NAME
@@ -95,17 +102,30 @@ EPOCHS=8
 BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
+if [ "$IS_RL" == "1" ]; then
+  echo $IS_RL
+fi
+
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_1" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 860000
+python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 400000
 # add door to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_2" >> $CONFIGMAP
-python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 920000
+if [ "$IS_RL" == "1" ]; then
+  echo $IS_RL
+  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 600000 --curriculum 1
+else
+  python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0-havekey --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 600000 --curriculum 2
+fi
 # add key to the map
 sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
 printf "%s\n" "$MAP_3" >> $CONFIGMAP
-python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 9000000
+if [ "$IS_RL" == "1" ]; then
+  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 2000000 --curriculum 3
+else
+  python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env MiniGrid-ConfigWorld-v0 --lr $LR --AnomalyNN test_8 --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames 2000000 --curriculum 3
+fi
 
 # # 替换配置文件中的地图
 # sed -i "${START_LINE},${END_LINE}d" $CONFIGMAP
