@@ -16,9 +16,11 @@ class ConfigWorldEnv(MiniGridEnv):
 
     """
 
-    def __init__(self, size=19, max_steps: int | None = None,**kwargs):
+    def __init__(self, size=19, max_steps: int | None = None, config_path = 'configmap.config', curriculum = 1,**kwargs):
 
         self.size = size
+        self.config_path = config_path
+        self.curriculum = curriculum
         if max_steps is None:
             max_steps = 20 * size
         mission_space = MissionSpace(
@@ -46,7 +48,8 @@ class ConfigWorldEnv(MiniGridEnv):
         from configparser import ConfigParser
 
         config = ConfigParser()
-        config.read('configmap.config', encoding='UTF-8')
+        # config.read('configmap.config', encoding='UTF-8')
+        config.read(self.config_path, encoding='UTF-8')
         string = config['map']['map_grid']
         lines = string.split("\n")
         map = []
@@ -105,9 +108,11 @@ class ConfigWorldEnvHavingKey(MiniGridEnv):
 
     """
 
-    def __init__(self, size=19, max_steps: int | None = None,**kwargs):
+    def __init__(self, size=19, max_steps: int | None = None, config_path = "configmap.config", curriculum = 1, **kwargs):
 
         self.size = size
+        self.config_path = config_path
+        self.curriculum = curriculum
         if max_steps is None:
             max_steps = 20 * size
         mission_space = MissionSpace(
@@ -135,7 +140,8 @@ class ConfigWorldEnvHavingKey(MiniGridEnv):
         from configparser import ConfigParser
 
         config = ConfigParser()
-        config.read('configmap.config', encoding='UTF-8')
+        # config.read('configmap.config', encoding='UTF-8')
+        config.read(self.config_path, encoding='UTF-8')
         string = config['map']['map_grid']
         lines = string.split("\n")
         map = []
