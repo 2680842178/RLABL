@@ -53,6 +53,11 @@ parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
 parser.add_argument("--AnomalyNN", default=None,
                     help="name of the anomalyNN")
+parser.add_argument("--configmap", default="configmap.config", type=str,
+                    help="the name of the map config file.")
+parser.add_argument("--discover-steps", type=int, default=100000, help="number of steps for discovering")
+# parser.add_argument("--is-random", type=int,
+#                     default=0, help="if the env is random env")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=32,
@@ -374,7 +379,7 @@ def main():
     initial_img = None
     for i in range(args.procs):
         # kwargs = {"curriculum": args.curriculum}
-        env=utils.make_env(args.env, args.seed + 10000 * i, curriculum=args.curriculum)
+        env=utils.make_env(args.env, args.seed + 10000 * i, curriculum=args.curriculum, config_path=args.configmap)
         initial_img, _ = env.reset()
         envs.append(env)
     # memory_tracker.log_memory('after_env_load')
@@ -536,7 +541,7 @@ def main():
         new_mutation, new_state_img, out_state, discover_num_frames = discover(start_env=stop_env,
                                 start_node=min_stop_state,
                                 algo=algo,
-                                discover_frames=500000,
+                                discover_frames=args.discover_steps,
                                 txt_logger=txt_logger,
                                 mutation_value=0.5,
                                 test_turns=decision_steps,
@@ -592,7 +597,7 @@ def main():
             # plt.show()
         else:
             print("Failed to discover, return.")
-            return "fail to discover anomaly"
+            # return "fail to discover anomaly"
         ######
     # train the model.
     num_frames = status["num_frames"]
@@ -618,7 +623,8 @@ def main():
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
-        epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
+        if args.algo == "dqn":
+            epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         # print("epsilon", epsilon)
         # 收集经验前

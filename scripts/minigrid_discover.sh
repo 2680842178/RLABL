@@ -11,6 +11,7 @@ ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 CURRICULUM_1_STEPS=30000
 CURRICULUM_2_STEPS=40000
 CURRICULUM_3_STEPS=100000
+DISCOVER_STEPS=100000 # discover过程的最多步数，注意这步数是算在总步数里的，所以最好小于单个课程训练的步数。
 ###################################
 
 # 初始化任务配置文件：单目标状态，3个节点，2个边，1个agent
@@ -65,18 +66,18 @@ for i in $(seq 1 30); do
   fi
 
   # 修改任务配置并执行训练
-  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1
+  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --discover-steps $DISCOVER_STEPS
   if [ $? -gt 4 ]; then
     echo "Error during task 1, stopping the script."
     exit 1
   fi
-  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2
+  python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --discover-steps $DISCOVER_STEPS
   if [ $? -gt 4 ]; then
     echo "Error during task 2, stopping the script."
     exit 1
   fi
 
-  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3
+  python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3 --discover-steps $DISCOVER_STEPS
   if [ $? -gt 4 ]; then
     echo "Error during task 3, stopping the script."
     exit 1
