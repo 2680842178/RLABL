@@ -23,6 +23,8 @@ from model import ACModel, CNN, QNet
 from graph_test import test, ddm_decision
 from utils.anomaly import BoundaryDetector
 import math
+from utils.memory_tracker import MemoryTracker
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -90,7 +92,7 @@ parser.add_argument("--target-update", type=int, default=5,
 G = nx.DiGraph()
 args = parser.parse_args()
 test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
-
+memory_tracker = MemoryTracker(device)
 class stateNode():
     def __init__(self,
                  id,
@@ -310,6 +312,7 @@ def discover(start_env,
     print("No mutation detected or accepted.")
     return None, None, None, num_frames
 def main():
+    # memory_tracker.log_memory('start_main')
     print("args", args)
     # task_path: the path of the last task, the last folder name is "task"+task_number.
     # task_config_path: the path of the last task config(a yaml file).
@@ -374,6 +377,7 @@ def main():
         env=utils.make_env(args.env, args.seed + 10000 * i, curriculum=args.curriculum)
         initial_img, _ = env.reset()
         envs.append(env)
+    # memory_tracker.log_memory('after_env_load')
     txt_logger.info("Environments loaded\n")
     if not os.path.exists(new_task_path):
         os.makedirs(new_task_path)
@@ -415,6 +419,7 @@ def main():
             print(f"This model {i} is None. No load.")
         acmodel.to(device)
         acmodels.append(acmodel)
+        # memory_tracker.log_memory(f'after_model_load_{i}')
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodels[0]))
 
@@ -607,13 +612,18 @@ def main():
     best_model_states = None
     initial_num_frames = num_frames
     while num_frames < args.frames:
-        # Update model parameters
+        # memory_tracker.log_memory('start_training_loop')
+        
+        # 更新开始
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
         epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         # print("epsilon", epsilon)
+        # 收集经验前
+        # memory_tracker.log_memory('before_collect_experiences')
+        
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0],
                                                                            algos=algos,
@@ -628,7 +638,7 @@ def main():
                                                                        preprocess_obss=preprocess_obss,
                                                                        discover=args.discover,)
         elif args.algo == "dqn":
-            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0],
+            exps_list, logs1 = Mutiagent_collect_experiences_q(env=envs[0],
                                                                            algos=algos,
                                                                            contrast=contrast_ssim,
                                                                            G=G,
@@ -641,15 +651,21 @@ def main():
                                                                        discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
-        # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
-        # for i in range(0,len(exps_list)):
-        #     print(i, len(exps_list[i].obs))
+        print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
+        for i in range(0,len(exps_list)):
+            print(i, len(exps_list[i].obs))
         if args.algo == "ppo":
             initial_agent_num = 0
-        for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
+        for i in range(2, initial_agent_num + 2):
+            algos[i].lr = args.lr * 0.1
+
+        for i in range(2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
+                # memory_tracker.log_memory(f'before_update_agent_{i}')
                 logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
+                # memory_tracker.log_memory(f'after_update_agent_{i}')
+        del exps_list
         logs2 = {}
         if args.algo == "a2c" or args.algo == "ppo":
             entropy_list = [None] * (agent_num + 2)
@@ -660,7 +676,7 @@ def main():
 
             # 只记录新agent的日志
             for i in range(initial_agent_num + 2, agent_num + 2):
-                if len(exps_list[i].obs):
+                if len(logs2_list[i]):
                     entropy_list[i] = logs2_list[i]["entropy"]
                     value_list[i] = logs2_list[i]["value"]
                     policy_loss_list[i] = logs2_list[i]["policy_loss"]
@@ -680,7 +696,7 @@ def main():
 
             # 只记录新agent的日志
             for i in range(initial_agent_num + 2, agent_num + 2):
-                if len(exps_list[i].obs):
+                if len(logs2_list[i]):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
                     grad_norm_list[i] = logs2_list[i]["grad_norm"]
@@ -690,7 +706,6 @@ def main():
                 "q_value": q_value_list
             }
         logs = {**logs1, **logs2}
-
         # logs_list=[0]*agent_num
         # for i in range(agent_num):
         #     if len(exps_list[i].obs):
@@ -758,7 +773,9 @@ def main():
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
+            # memory_tracker.log_memory('before_test')
             test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, anomaly_detector=anomaly_detector, args=args)
+            # memory_tracker.log_memory('after_test')
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
                             .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))
             # 检查是否获得了更好的测试结果
@@ -781,16 +798,20 @@ def main():
                 }
                 utils.save_status(best_status, os.path.join(model_dir, "best_model"))
                 txt_logger.info(f"New best model saved with test return: {best_test_return:.2f}")
-
+        del logs
         # Save status
 
         if args.save_interval > 0 and update % args.save_interval == 0:
-            status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,
-                      "model_state": [acmodels[i].state_dict() for i in range(agent_num)],
-                      "optimizer_state": algo.optimizer.state_dict()}
-            # if hasattr(preprocess_obss, "vocab"):
-            #     status["vocab"] = preprocess_obss.vocab.vocab
+            # memory_tracker.log_memory('before_save_model')
+            status = {
+                "num_frames": num_frames,
+                "update": update,
+                "agent_num": agent_num,
+                "model_state": [acmodel.state_dict() for acmodel in acmodels],
+                "optimizer_state": [algo.optimizer.state_dict() for algo in algos if algo is not None]
+            }
             utils.save_status(status, model_dir)
+            # memory_tracker.log_memory('after_save_model')
             txt_logger.info("Status saved")
     # save
     # status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,

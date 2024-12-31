@@ -8,6 +8,8 @@ from torch.distributions.categorical import Categorical
 import sys
 import heapq
 import copy
+import torch_ac
+from .memory_tracker import MemoryTracker
 sys.path.append("..")
 import numpy
 import random
@@ -362,6 +364,11 @@ def Mutiagent_collect_experiences_q(env,
                                 preprocess_obss,
                                 epsilon,
                                 discover):
+    
+    # memory_tracker = MemoryTracker(device)
+    # memory_tracker.log_memory('start_collect_experiences')
+
+
     # 这里是指要不要训练异常检测器，如果节点数小于等于3，就是初始状态，训练异常检测器。
     is_add_normal_samples = False
     if len(G.nodes) <= 3 and not discover:
@@ -400,9 +407,9 @@ def Mutiagent_collect_experiences_q(env,
     env_ini_state = start_node 
     current_state=env_ini_state
     state_ini_flag=False
+    # memory_tracker.log_memory("start_collect_experiences")
 
     for _ in range(num_frames_per_proc):
-
         preprocessed_obs = preprocess_obss([obs], device=device)
 
         # t,prob_dist=obs_To_state(StateNN, pre_obs, obs)
@@ -485,6 +492,7 @@ def Mutiagent_collect_experiences_q(env,
         # 清除未使用的显存
         torch.cuda.empty_cache()
 
+    # memory_tracker.log_memory('end_collect_experiences')
     keep1 = max(done_counter,1)
     log1 = {
         "return_per_episode": log_return[-keep1:],
@@ -531,15 +539,25 @@ def Mutiagent_collect_experiences_q(env,
         exps_list[id].reward.extend(reward_trace[start_index:])
         exps_list[id].mask.extend(mask_trace[start_index:])
         exps_list[id].obs_.extend(next_obs_trace[start_index:])
+    def preimages(images):
+        # Bug of Pytorch: very slow if not first converted to numpy array
+        X=[]
+        for i in range(len(images)):
+            x = cv2.resize(images[i], (300, 300))
+            X.append(x)
 
+        images = numpy.array(X)
+        return images
     for i in range(agent_num):
         exp_len=len(exps_list[i].obs)
         if exp_len:
-            exps_list[i].obs = preprocess_obss(exps_list[i].obs, device=device)
-            exps_list[i].action = torch.tensor(exps_list[i].action, device=device, dtype=torch.int)
-            exps_list[i].reward = torch.tensor(exps_list[i].reward, device=device)
-            exps_list[i].mask = torch.tensor(exps_list[i].mask, device=device)
-            exps_list[i].obs_ = preprocess_obss(exps_list[i].obs_, device=device)
+            # exps_list[i].obs = preprocess_obss(exps_list[i].obs, device=device)
+            # exps_list[i].action = torch.tensor(exps_list[i].action, device=device, dtype=torch.int)
+            # exps_list[i].reward = torch.tensor(exps_list[i].reward, device=device)
+            # exps_list[i].mask = torch.tensor(exps_list[i].mask, device=device)
+            # exps_list[i].obs_ = preprocess_obss(exps_list[i].obs_, device=device)
+            exps_list[i].obs = torch_ac.DictList({"image": preimages([obs["image"] for obs in exps_list[i].obs])})
+            exps_list[i].obs_ = torch_ac.DictList({"image": preimages([obs["image"] for obs in exps_list[i].obs_])})
     # print([int(i.item()) for i in reward_trace])
     log_reshaped_return=[0]
     log_done_counter=0
@@ -558,33 +576,8 @@ def Mutiagent_collect_experiences_q(env,
     # print(log_reshaped_return[-keep2:])
     # print(action_trace)
     # print([i.item() for i in mask_trace])
-
-    image_trace = preprocess_obss(obs_trace, device=device).image
-
-    for i in range(len(image_trace)-1, 0, -1):
-        if mask_trace[i-1].item() == 0:
-            image_trace[i] = image_trace[i] - image_trace[i]
-        else:
-            image_trace[i]=image_trace[i]-image_trace[i-1]
-    image_trace[0] = image_trace[0] - image_trace[0]
-
-    for i in range(len(state_trace)-1, 0, -1):
-        if state_trace[i]==state_trace[i-1]:
-            state_trace[i]=0
-
-    # print("state_trace:", state_trace)
-    statenn_exps={
-                "img": image_trace,
-                "label": state_trace,
-            }
-    for i in range(len(state_trace)):
-        if state_trace[i] == 3:
-            img=image_trace[i].cpu().numpy().astype(numpy.uint8)
-            plt.imsave('trace/{i}.jpg'.format(i=3), img)
-        if state_trace[i] == 4:
-            img = image_trace[i].cpu().numpy().astype(numpy.uint8)
-            plt.imsave('trace/{i}.jpg'.format(i=4), img)
-    return exps_list, {**log1, **log2}, statenn_exps
+    # memory_tracker.log_memory('end_log_experiences')
+    return exps_list, {**log1, **log2}
 
 
 def collect_experiences_mutation(algo, 
@@ -805,10 +798,10 @@ def collect_experiences_mutation_q(algo,
     parallel_env = ParallelEnv([env])
     done = (True,)
     last_done = (True,)
-    
+    obs = parallel_env.gen_obs()
     for i in range(algo.num_frames_per_proc):
         last_done = done
-        preprocessed_obs = preprocess_obss(algo.obs, device=algo.device)
+        preprocessed_obs = preprocess_obss(obs, device=algo.device)
 
         with torch.no_grad():
             q_values = algo.acmodel(preprocessed_obs)
@@ -827,28 +820,31 @@ def collect_experiences_mutation_q(algo,
 
         the_preprocessed_obs = preprocess_obss(obs, device=algo.device)
         
-        if last_done[0]:
+        if done[0]:
             mutation = the_preprocessed_obs.image - the_preprocessed_obs.image
         else:
             mutation = the_preprocessed_obs.image - preprocessed_obs.image
         mutation = numpy.squeeze(mutation)
         mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        _, mutation_roi_list = RGB2GARY_ROI(mutation)
 
-        if get_mutation_score(mutation) > mutation_value and reward[0] == 0:
+        for mutation_roi in mutation_roi_list:
+            if get_mutation_score(mutation_roi) < mutation_value or reward[0] != 0:
+                continue
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
-                if contrast(mutation, mutation_) > 0.99:
+                if contrast(mutation_roi, mutation_) > 0.99:
                     arrived_state_buffer.append(idx)
                     reward = 1
                     done = (True,)
                     break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
-                if contrast(mutation, mutation_) > 0.99:
+                if contrast(mutation_roi, mutation_) > 0.99:
                     mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
                     is_in_buffer = True
                     break
             if not is_in_buffer:
-                mutation_buffer.append((get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
+                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))
 
         # 更新经验值
         algo.obss[i] = algo.obs

@@ -1,3 +1,4 @@
+import pdb
 import random
 from collections import deque, namedtuple
 from copy import deepcopy
@@ -14,7 +15,7 @@ from torch_ac.utils import DictList
 
 class ReplayBuffer:
 
-    def __init__(self, capacity, alpha=0.6, beta=0.4, beta_increment=0.001):
+    def __init__(self, capacity,device, alpha=0.6, beta=0.4, beta_increment=0.001):
         self.buffer = deque(maxlen=capacity)
         self.Transition = namedtuple('Transition',
                                      ['state', 'action', 'reward', 'state_', 'done'])
@@ -23,6 +24,7 @@ class ReplayBuffer:
         self.beta = beta    # 重要性采样指数
         self.beta_increment = beta_increment
         self.max_priority = 1.0
+        self.device = device
 
     def push(self, *args):
         self.buffer.append(self.Transition(*args))
@@ -51,27 +53,19 @@ class ReplayBuffer:
 
         transitions = [self.buffer[idx] for idx in indices]
         
-        states_obs = [trans.state.image for trans in transitions]
-        states_text = [trans.state.text for trans in transitions]
+        states_obs = [torch.tensor(trans.state.image, device=self.device, dtype=torch.float) for trans in transitions]
         actions = [trans.action for trans in transitions]
         rewards = [trans.reward for trans in transitions]
-        next_states_obs = [trans.state_.image for trans in transitions]
-        next_states_text = [trans.state_.text for trans in transitions]
-        dones = [trans.done for trans in transitions]
+        next_states_obs = [torch.tensor(trans.state.image, device=self.device, dtype=torch.float) for trans in transitions]
 
         state_obs_tensor = torch.stack(states_obs)
-        state_text_tensor = torch.stack(states_text)
-        state = DictList({"image": state_obs_tensor,
-                          "text": state_text_tensor})
+        state = DictList({"image": state_obs_tensor})
         action_tensor = torch.stack(actions)
         reward_tensor = torch.stack(rewards)
         next_state_obs_tensor = torch.stack(next_states_obs)
-        next_state_text_tensor = torch.stack(next_states_text)
-        next_state = DictList({"image": next_state_obs_tensor,
-                               "text": next_state_text_tensor})
-        done_tensor = torch.stack(dones)
+        next_state = DictList({"image": next_state_obs_tensor})
 
-        return state, action_tensor, reward_tensor, next_state, done_tensor, weights, indices
+        return state, action_tensor, reward_tensor, next_state, weights, indices
 
     def update_priorities(self, indices, priorities):
         for idx, priority in zip(indices, priorities):
@@ -91,7 +85,7 @@ class DQNAlgo(BaseAlgo):
         super().__init__(envs, acmodel, device, num_frames_per_proc, discount, lr,
                         0.95, 0.01, 0.5, max_grad_norm, 1, preprocess_obss, reshape_reward)
 
-        self.replay_buffer = ReplayBuffer(capacity=buffer_size)
+        self.replay_buffer = ReplayBuffer(capacity=buffer_size,device=device)
         self.epochs = epochs
         self.batch_size = batch_size
         self.target_update = target_update
@@ -123,12 +117,11 @@ class DQNAlgo(BaseAlgo):
         reward_batch = r
         next_states_batch = s_
 
-        action_batch = torch.tensor(action_batch, device=self.device, dtype=torch.int64)
-        action_batch = action_batch.unsqueeze(1)
+        action_batch = action_batch.squeeze(1)
         
         # 当前Q值
-        state_action_values = self.acmodel(state_batch).gather(1, action_batch)
-
+        state_action_values = self.acmodel(state_batch)
+        state_action_values = state_action_values.gather(1, action_batch)
         # Double DQN: 用当前网络选择动作,用目标网络评估动作
         with torch.no_grad():
             # 用当前网络选择动作
@@ -170,13 +163,9 @@ class DQNAlgo(BaseAlgo):
         for _ in range(self.epochs):
             if len(self.replay_buffer) < self.batch_size:
                 continue
-            if len(self.replay_buffer) < self.buffer_size / 4:
-                print(len(self.replay_buffer))
-                print("replay buffer is not full")
-                continue
             
 
-            s, a, r, s_, d, weights, indices = self.replay_buffer.sample(self.batch_size)
+            s, a, r, s_, weights, indices = self.replay_buffer.sample(self.batch_size)
             loss, grad_norm, q_value = self.optimize_model(s, a, r, s_, weights, indices)
             if self.steps_done % self.target_update == 0:
                 self.update_target()
