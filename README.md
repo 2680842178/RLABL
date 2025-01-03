@@ -1,8 +1,13 @@
 # RLABL 
 
-## 实验脚本：scripts/minigrid.sh
+<!-- ## 实验脚本：scripts/minigrid.sh
 
-多次调用discover_anomaly.py脚本并更改地图，进行课程学习。
+多次调用discover_anomaly.py脚本并更改地图，进行课程学习。 -->
+1. scripts/minigrid_discover.sh ABL+RL 
+2. scripts/minigrid_RL.sh RL
+3. scripts/minigrid_fullDFA.sh 已有状态机的训练
+
+注意实验脚本中参数的设置，包括实验环境名称（决定是否随机），实验步数设置，实验地图文件。使用bash运行脚本。
 
 # Minigrid
 

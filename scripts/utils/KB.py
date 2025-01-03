@@ -664,14 +664,14 @@ def collect_experiences_mutation(algo,
             if get_mutation_score(mutation_roi) < mutation_value or reward[0] != 0:
                 continue
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
-                if contrast(mutation_roi, mutation_) > 0.99:
+                if contrast(mutation_roi, mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
                     reward = 1
                     done = (True,)
                     break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
-                if contrast(mutation_roi, mutation_) > 0.99:
+                if contrast(mutation_roi, mutation_) > 0.6:
                     mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
                     is_in_buffer = True
                     break
@@ -836,14 +836,14 @@ def collect_experiences_mutation_q(algo,
 
         if get_mutation_score(mutation) > mutation_value and reward[0] == 0:
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
-                if contrast(mutation, mutation_) > 0.99:
+                if contrast(mutation, mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
                     reward = 1
                     done = (True,)
                     break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
-                if contrast(mutation, mutation_) > 0.99:
+                if contrast(mutation, mutation_) > 0.6:
                     mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
                     is_in_buffer = True
                     break
