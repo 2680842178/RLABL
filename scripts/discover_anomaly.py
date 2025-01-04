@@ -86,7 +86,7 @@ parser.add_argument("--recurrence", type=int, default=1,
                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
-parser.add_argument("--buffer-size", type=int, default=10000,
+parser.add_argument("--buffer-size", type=int, default=20000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
@@ -531,7 +531,6 @@ def main():
             algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
-        algo.optimizer.load_state_dict(status["optimizer_state"])
 
         if stop_state > min_stop_state:
             min_stop_state = stop_state
@@ -623,8 +622,8 @@ def main():
         # ini_agent
         if args.algo == "dqn":
             epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
-        # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
-        # print("epsilon", epsilon)
+        print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
+        print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0],
                                                                            algos=algos,
@@ -639,7 +638,7 @@ def main():
                                                                        preprocess_obss=preprocess_obss,
                                                                        discover=args.discover,)
         elif args.algo == "dqn":
-            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0],
+            exps_list, logs1 = Mutiagent_collect_experiences_q(env=envs[0],
                                                                            algos=algos,
                                                                            contrast=contrast_ssim,
                                                                            G=G,
@@ -652,9 +651,9 @@ def main():
                                                                        discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
-        # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
-        # for i in range(0,len(exps_list)):
-        #     print(i, len(exps_list[i].obs))
+        print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
+        for i in range(0,len(exps_list)):
+            print(i, len(exps_list[i].obs))
         if args.algo == "ppo":
             initial_agent_num = 0
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
@@ -818,7 +817,7 @@ def main():
     # 训练结束时保存最终状态和最佳状态
     model_state = [acmodel.state_dict() for acmodel in acmodels]
     optimizer_state = algo.optimizer.state_dict()
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         print("No save bad model.")
         model_state[-1] = None
         optimizer_state = None
@@ -835,7 +834,7 @@ def main():
     txt_logger.info("Final status saved")
 
     # 如果最终模型不是最佳模型,则加载最佳模型状态
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         return "fail train"
     else:
         return "successfull train"
