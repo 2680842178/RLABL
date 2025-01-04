@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ###### 每次实验都需要修改的地方 ######
+NUMS=10
 DEVICE_ID=2 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
 BASE_MODEL_NAME="20240104-ABL-PPO-easy-small" # 设置模型名称
@@ -43,7 +44,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 10 次
-for i in $(seq 1 10); do
+for i in $(seq 1 $NUMS); do
   # 生成唯一的模型名
   MODEL_NAME="$BASE_MODEL_NAME-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"
