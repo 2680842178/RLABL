@@ -5,20 +5,20 @@ import cv2
 import torch
 import torch.nn.functional as F
 
-# def contrast_ssim(img1, img2, win_size=7):
-#     if img1 is None or img2 is None:
-#         return 0
+def contrast_ssim(img1, img2, win_size=7):
+    if img1 is None or img2 is None:
+        return 0
     
-#     target_size = (max(min(img1.shape[0], img2.shape[0]), 15),
-#                     max(min(img1.shape[1], img2.shape[1]), 15))
-#     target_size = (target_size[1], target_size[0]) # cv2.resize is (width, height)
-#     if img1.shape != target_size:
-#         img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_LINEAR)
-#     if img2.shape != target_size:
-#         img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_LINEAR)
+    target_size = (max(min(img1.shape[0], img2.shape[0]), 15),
+                    max(min(img1.shape[1], img2.shape[1]), 15))
+    target_size = (target_size[1], target_size[0]) # cv2.resize is (width, height)
+    if img1.shape != target_size:
+        img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_LINEAR)
+    if img2.shape != target_size:
+        img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_LINEAR)
 
-#     # print(img1.shape, img2.shape)
-#     return ssim(img1, img2, channel_axis=-1, win_size=7)
+    # print(img1.shape, img2.shape)
+    return ssim(img1, img2, channel_axis=-1, win_size=7)
 
 def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
     if mutation1 is None or mutation2 is None:
@@ -82,24 +82,24 @@ def ssim_gpu(img1, img2, win_size=7):
     # 返回平均SSIM
     return ssim_map.mean()
 
-def contrast_ssim(img1, img2, win_size=7):
-    if img1 is None or img2 is None:
-        return 0
+# def contrast_ssim(img1, img2, win_size=7):
+#     if img1 is None or img2 is None:
+#         return 0
     
-    target_size = (max(min(img1.shape[0], img2.shape[0]), 15),
-                    max(min(img1.shape[1], img2.shape[1]), 15))
-    target_size = (target_size[1], target_size[0]) # cv2.resize is (width, height)
-    if img1.shape != target_size:
-        img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_LINEAR)
-    if img2.shape != target_size:
-        img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_LINEAR)
-    if torch.cuda.is_available():
-        # 将图像转换为CUDA张量
-        img1_tensor = torch.from_numpy(img1).cuda()
-        img2_tensor = torch.from_numpy(img2).cuda()
-        # 在GPU上进行处理
-        result = ssim_gpu(img1_tensor, img2_tensor)
-        return result.cpu().numpy()
-    # print(img1.shape, img2.shape)
-    ssim1 = ssim(img1, img2, channel_axis=-1, win_size=7)
-    return ssim1
+#     target_size = (max(min(img1.shape[0], img2.shape[0]), 15),
+#                     max(min(img1.shape[1], img2.shape[1]), 15))
+#     target_size = (target_size[1], target_size[0]) # cv2.resize is (width, height)
+#     if img1.shape != target_size:
+#         img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_LINEAR)
+#     if img2.shape != target_size:
+#         img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_LINEAR)
+#     if torch.cuda.is_available():
+#         # 将图像转换为CUDA张量
+#         img1_tensor = torch.from_numpy(img1).cuda()
+#         img2_tensor = torch.from_numpy(img2).cuda()
+#         # 在GPU上进行处理
+#         result = ssim_gpu(img1_tensor, img2_tensor)
+#         return result.cpu().numpy()
+#     # print(img1.shape, img2.shape)
+#     ssim1 = ssim(img1, img2, channel_axis=-1, win_size=7)
+#     return ssim1
