@@ -112,6 +112,10 @@ def test_once(
         episode_num_frames += 1
         
         if dones:
+            if rewards > 0:
+                current_state = 1
+            # elif rewards < 0:
+                # current_state = 0
             return episode_return, episode_num_frames, current_state, stop_env, stop_obss
     return episode_return, episode_num_frames, current_state, stop_env, stop_obss
 
@@ -218,7 +222,7 @@ def ddm_decision(
         else:
             n = len(return_mean_list[test_start_node])
             mean_return = sum(return_mean_list[test_start_node]) / float(n)
-            if n >= 3 and mean_return >= 0.8:
+            if n >= 3 and mean_return >= 0.7:
                 return False, decision_steps, None, None, None, return_per_episode
         
         total_return += episode_return
@@ -243,6 +247,7 @@ def ddm_decision(
             stop_state_index = stop_state_list.index(stop_state)
             stop_env = stop_env_list[stop_state_index]
             stop_obss = stop_obs_list[stop_state_index]
+            print("Stop state: ", stop_state)
             return True, decision_steps, stop_state, stop_env, stop_obss, return_per_episode
 
     return_per_episode = total_return / decision_steps

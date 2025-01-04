@@ -11,6 +11,7 @@ from minigrid.envs import ConfigWorldEnv, ConfigWorldEnvHavingKey
 from gymnasium import spaces
 from gymnasium.core import ObservationWrapper, Wrapper
 from configparser import ConfigParser
+from .env_taxi import TaxiEnv
 
 class TestWrapper(ObservationWrapper):
     def __init__(self, env):
@@ -102,8 +103,8 @@ class CustomMinigridEnv(MiniGridEnv):
         # 初始化父类，传入地图的宽度和高度
         super().__init__(
             mission_space=mission_space,
-            width=size,
-            height=size,
+            width=self.size,
+            height=self.size,
             max_steps=max_steps,
             # **kwargs,
         )
@@ -177,12 +178,16 @@ def make_env(env_key, seed=None,  max_steps=256, curriculum=1, fixed_map=None,re
         env = CustomMinigridEnv(config_path=config_path, random_num=5, max_steps=max_steps, curriculum=curriculum, fixed_map=fixed_map, havekey=havekey)
     elif env_key == "MiniGrid-ConfigWorld-v0":
         env = CustomMinigridEnv(config_path=config_path, random_num=1, max_steps=max_steps, curriculum=curriculum, fixed_map=fixed_map, havekey=havekey)
+    elif env_key == "Taxi-v0":
+        env = TaxiEnv(max_steps=max_steps)
         # env = gym.make(env_key, render_mode=render_mode)
     # env = TestWrapper(env)
     env.reset(seed=seed)
     return env
 
 def copy_env(copied_env, env_key, seed=None, render_mode="rgb_array", curriculum=1, **kwargs):
+    # if env_key == "Taxi-v0":
+    #     retur
     env_code = copied_env.grid.encode()
     curriculum = copied_env.curriculum
     max_steps = copied_env.max_steps

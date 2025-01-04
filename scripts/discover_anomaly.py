@@ -152,9 +152,13 @@ def obs_To_mutation(pre_obs, obs, preprocess_obss):
     # input_batch = input_tensor.unsqueeze(0).permute(0, 3, 1, 2)
     return input_tensor
 
+# def get_importance_prob(lst):
+#     total = sum(x for x in lst if x != 0)
+#     normalized_lst = [x / total if x != 0 else 0 for x in lst]
+#     return normalized_lst
 def get_importance_prob(lst):
-    total = sum(x for x in lst if x != 0)
-    normalized_lst = [x / total if x != 0 else 0 for x in lst]
+    total = sum(x * (i + 1) for i, x in enumerate(lst) if x != 0)
+    normalized_lst = [(x * (i + 1)) / total if x != 0 else 0 for i, x in enumerate(lst)]
     return normalized_lst
 
 def calculate_epsilon(num_frames, initial_num_frames, total_frames):
@@ -532,6 +536,7 @@ def main():
             algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
+        algo.optimizer.load_state_dict(status["optimizer_state"])
 
         if stop_state > min_stop_state:
             min_stop_state = stop_state
