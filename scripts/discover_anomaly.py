@@ -23,8 +23,6 @@ from model import ACModel, CNN, QNet
 from graph_test import test, ddm_decision
 from utils.anomaly import BoundaryDetector
 import math
-from utils.memory_tracker import MemoryTracker
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--task-config", required=True,
@@ -88,7 +86,7 @@ parser.add_argument("--recurrence", type=int, default=1,
                     help="number of time-steps gradient is backpropagated (default: 1). If > 1, a LSTM is added to the model to have memory.")
 parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
-parser.add_argument("--buffer-size", type=int, default=10000,
+parser.add_argument("--buffer-size", type=int, default=20000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
@@ -97,7 +95,7 @@ parser.add_argument("--target-update", type=int, default=5,
 G = nx.DiGraph()
 args = parser.parse_args()
 test_logs = {"num_frames_per_episode": [], "return_per_episode": []}
-memory_tracker = MemoryTracker(device)
+
 class stateNode():
     def __init__(self,
                  id,
@@ -321,7 +319,6 @@ def discover(start_env,
     print("No mutation detected or accepted.")
     return None, None, None, num_frames
 def main():
-    # memory_tracker.log_memory('start_main')
     print("args", args)
     # task_path: the path of the last task, the last folder name is "task"+task_number.
     # task_config_path: the path of the last task config(a yaml file).
@@ -386,7 +383,6 @@ def main():
         env=utils.make_env(args.env, args.seed + 10000 * i, curriculum=args.curriculum, config_path=args.configmap)
         initial_img, _ = env.reset()
         envs.append(env)
-    # memory_tracker.log_memory('after_env_load')
     txt_logger.info("Environments loaded\n")
     if not os.path.exists(new_task_path):
         os.makedirs(new_task_path)
@@ -428,7 +424,6 @@ def main():
             print(f"This model {i} is None. No load.")
         acmodel.to(device)
         acmodels.append(acmodel)
-        # memory_tracker.log_memory(f'after_model_load_{i}')
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodels[0]))
 
@@ -536,7 +531,6 @@ def main():
             algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
-        algo.optimizer.load_state_dict(status["optimizer_state"])
 
         if stop_state > min_stop_state:
             min_stop_state = stop_state
@@ -622,19 +616,14 @@ def main():
     best_model_states = None
     initial_num_frames = num_frames
     while num_frames < args.frames:
-        # memory_tracker.log_memory('start_training_loop')
-        
-        # 更新开始
+        # Update model parameters
         update_start_time = time.time()
         envs[0].reset()
         # ini_agent
         if args.algo == "dqn":
             epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
-        # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
-        # print("epsilon", epsilon)
-        # 收集经验前
-        # memory_tracker.log_memory('before_collect_experiences')
-        
+        print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
+        print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0],
                                                                            algos=algos,
@@ -667,16 +656,10 @@ def main():
             print(i, len(exps_list[i].obs))
         if args.algo == "ppo":
             initial_agent_num = 0
-        for i in range(2, initial_agent_num + 2):
-            algos[i].lr = args.lr * 0.1
-
-        for i in range(2, agent_num + 2):  # 只更新新添加的agent
+        for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
-                # memory_tracker.log_memory(f'before_update_agent_{i}')
                 logs2 = algos[i].update_parameters(exps_list[i])
                 logs2_list[i] = logs2
-                # memory_tracker.log_memory(f'after_update_agent_{i}')
-        del exps_list
         logs2 = {}
         if args.algo == "a2c" or args.algo == "ppo":
             entropy_list = [None] * (agent_num + 2)
@@ -687,7 +670,7 @@ def main():
 
             # 只记录新agent的日志
             for i in range(initial_agent_num + 2, agent_num + 2):
-                if len(logs2_list[i]):
+                if len(exps_list[i].obs):
                     entropy_list[i] = logs2_list[i]["entropy"]
                     value_list[i] = logs2_list[i]["value"]
                     policy_loss_list[i] = logs2_list[i]["policy_loss"]
@@ -707,7 +690,7 @@ def main():
 
             # 只记录新agent的日志
             for i in range(initial_agent_num + 2, agent_num + 2):
-                if len(logs2_list[i]):
+                if len(exps_list[i].obs):
                     loss_list[i] = logs2_list[i]["loss"]
                     q_value_list[i] = logs2_list[i]["q_value"]
                     grad_norm_list[i] = logs2_list[i]["grad_norm"]
@@ -717,6 +700,7 @@ def main():
                 "q_value": q_value_list
             }
         logs = {**logs1, **logs2}
+
         # logs_list=[0]*agent_num
         # for i in range(agent_num):
         #     if len(exps_list[i].obs):
@@ -784,9 +768,7 @@ def main():
             # for field, value in zip(header, data):
             #     tb_writer.add_scalar(field, value, num_frames)
         if args.test_interval > 0 and update % args.test_interval == 0:
-            # memory_tracker.log_memory('before_test')
             test_return_per_episode, test_num_frames_per_episode, _, _, _ = test(G, envs[0], start_node, 10, 256, args.env, preprocess_obss, anomaly_detector=anomaly_detector, args=args)
-            # memory_tracker.log_memory('after_test')
             txt_logger.info("U {} | Test reward:μσmM {:.2f} {:.2f} {:.2f} {:.2f} | Test num frames:μσmM {:.2f} {:.2f} {:.2f} {:.2f}"
                             .format(10, *(test_return_per_episode.values()), *(test_num_frames_per_episode.values())))
             # 检查是否获得了更好的测试结果
@@ -809,20 +791,16 @@ def main():
                 }
                 utils.save_status(best_status, os.path.join(model_dir, "best_model"))
                 txt_logger.info(f"New best model saved with test return: {best_test_return:.2f}")
-        del logs
+
         # Save status
 
         if args.save_interval > 0 and update % args.save_interval == 0:
-            # memory_tracker.log_memory('before_save_model')
-            status = {
-                "num_frames": num_frames,
-                "update": update,
-                "agent_num": agent_num,
-                "model_state": [acmodel.state_dict() for acmodel in acmodels],
-                "optimizer_state": [algo.optimizer.state_dict() for algo in algos if algo is not None]
-            }
+            status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,
+                      "model_state": [acmodels[i].state_dict() for i in range(agent_num)],
+                      "optimizer_state": algo.optimizer.state_dict()}
+            # if hasattr(preprocess_obss, "vocab"):
+            #     status["vocab"] = preprocess_obss.vocab.vocab
             utils.save_status(status, model_dir)
-            # memory_tracker.log_memory('after_save_model')
             txt_logger.info("Status saved")
     # save
     # status = {"num_frames": num_frames, "update": update, "agent_num": agent_num,
@@ -839,7 +817,7 @@ def main():
     # 训练结束时保存最终状态和最佳状态
     model_state = [acmodel.state_dict() for acmodel in acmodels]
     optimizer_state = algo.optimizer.state_dict()
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         print("No save bad model.")
         model_state[-1] = None
         optimizer_state = None
@@ -856,7 +834,7 @@ def main():
     txt_logger.info("Final status saved")
 
     # 如果最终模型不是最佳模型,则加载最佳模型状态
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         return "fail train"
     else:
         return "successfull train"
