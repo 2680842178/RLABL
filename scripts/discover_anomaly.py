@@ -17,11 +17,11 @@ from skimage.metrics import structural_similarity as ssim
 import utils
 from utils import *
 from utils import device
-from utils.process import contrast_ssim
+from utils.process import contrast_ssim, contrast_hist
 from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
-from utils.anomaly import BoundaryDetector
+from utils.anomaly import BoundaryDetector, BoundaryDetectorSSIM
 import math
 
 parser = argparse.ArgumentParser()
@@ -54,6 +54,7 @@ parser.add_argument("--AnomalyNN", default=None,
 parser.add_argument("--configmap", default="configmap.config", type=str,
                     help="the name of the map config file.")
 parser.add_argument("--discover-steps", type=int, default=100000, help="number of steps for discovering")
+parser.add_argument("--contrast", type=str, default="HIST", help="Contrast function: 1. SSIM 2. HIST")
 # parser.add_argument("--is-random", type=int,
 #                     default=0, help="if the env is random env")
 
@@ -126,21 +127,6 @@ def define_accept_mutation(mutation_score, mutation_times, test_turns, test_mean
     if score > 0.3:
         return True
     return False
-
-def contrast(mutation1, mutation2) -> float: # that means the similarity between two mutations
-    if mutation1 is None or mutation2 is None:
-        return 0
-    # return ssim(mutation1, mutation2, multichannel=True, channel_axis=2)
-    if mutation1.shape != mutation2.shape:
-        target_size = (min(mutation1.shape[0], mutation2.shape[0]),
-                       min(mutation1.shape[1], mutation2.shape[1]))
-        mutation1 = cv2.resize(mutation1, target_size, interpolation=cv2.INTER_AREA)
-        mutation2 = cv2.resize(mutation2, target_size, interpolation=cv2.INTER_AREA)
-    hist_1, hist_2 = cv2.calcHist([mutation1], [0], None, [256], [0, 256]), cv2.calcHist([mutation2], [0], None, [256], [0, 256])
-    hist_1, hist_2 = cv2.normalize(hist_1, hist_1).flatten(), cv2.normalize(hist_2, hist_2).flatten()
-    correlation = cv2.compareHist(hist_1, hist_2, cv2.HISTCMP_CORREL)
-    similar = abs(correlation)
-    return similar
 
 def obs_To_mutation(pre_obs, obs, preprocess_obss):
     pre_image_data=preprocess_obss([pre_obs], device=device).image
@@ -469,7 +455,15 @@ def main():
     #     # print(AnomalyNN(preprocess_obss(initial_img)))
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
-    anomaly_detector = BoundaryDetector(normal_buffer_path)
+
+    if args.contrast == "HIST":
+        anomaly_detector = BoundaryDetector(normal_buffer_path)
+        contrast_func = contrast_hist
+        contrast_value = 0.99999
+    else:
+        anomaly_detector = BoundaryDetectorSSIM(normal_buffer_path)
+        contrast_func = contrast_ssim
+        contrast_value = 0.5
 
     # load the mutations
     for node in G.nodes:
@@ -543,7 +537,7 @@ def main():
                                 algo=algo,
                                 discover_frames=args.discover_steps,
                                 txt_logger=txt_logger,
-                                mutation_value=0.5,
+                                mutation_value=contrast_value,
                                 test_turns=decision_steps,
                                 test_mean_reward=mean_return,
                                 preprocess_obss=preprocess_obss,
@@ -626,9 +620,9 @@ def main():
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         # print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
-            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences(env=envs[0],
+            exps_list, logs1, _ = Mutiagent_collect_experiences(env=envs[0],
                                                                            algos=algos,
-                                                                           contrast=contrast_ssim,
+                                                                           contrast=contrast_func,
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,
@@ -639,9 +633,9 @@ def main():
                                                                        preprocess_obss=preprocess_obss,
                                                                        discover=args.discover,)
         elif args.algo == "dqn":
-            exps_list, logs1, statenn_exps = Mutiagent_collect_experiences_q(env=envs[0],
+            exps_list, logs1, _ = Mutiagent_collect_experiences_q(env=envs[0],
                                                                            algos=algos,
-                                                                           contrast=contrast_ssim,
+                                                                           contrast=contrast_func,
                                                                            G=G,
                                                                            device=device,
                                                                            start_node=start_node,

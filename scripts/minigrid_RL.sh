@@ -2,7 +2,7 @@
 
 ###### 每次实验都需要修改的地方 ######
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="20241230-RL-ppo-easy-small" # 设置模型名称
+BASE_MODEL_NAME="20250104-RL-ppo-easy-small" # 设置模型名称
 CONFIGMAP="easy_small_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
@@ -41,7 +41,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 30 次
-for i in $(seq 1 30); do
+for i in $(seq 1 10); do
   # 生成唯一的模型名
   MODEL_NAME="$BASE_MODEL_NAME-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"

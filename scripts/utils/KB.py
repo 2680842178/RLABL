@@ -80,7 +80,7 @@ def obs_To_state(current_state,
         # print("next_state", next_state)
         # print("G.nodes[next_state]['state'].mutation", G.nodes[next_state]['state'].mutation)
         for roi in roi_list:
-            similiarity.append((next_state, contrast(roi, G.nodes[next_state]['state'].mutation)))
+            similiarity.append((next_state, anomaly_detector.contrast(roi, G.nodes[next_state]['state'].mutation)))
             # print(contrast_ssim(roi, G.nodes[next_state]['state'].mutation))
 
         # print(contrast(mutation, G.nodes[next_state]['state'].mutation))
@@ -88,7 +88,7 @@ def obs_To_state(current_state,
     output = max(similiarity, key=lambda x: x[1]) 
     # plt.imshow(mutation)
     # plt.show()
-    if output[1] < 0.5:
+    if output[1] < anomaly_detector.contrast_value:
         # print("no", output[1])
         return current_state
     # print("yes", output[0], output[1])
@@ -336,18 +336,18 @@ def Mutiagent_collect_experiences(env,
             state_trace[i]=0
 
     # print("state_trace:", state_trace)
-    statenn_exps={
-                "img": image_trace,
-                "label": state_trace,
-            }
-    for i in range(len(state_trace)):
-        if state_trace[i] == 3:
-            img=image_trace[i].cpu().numpy().astype(numpy.uint8)
-            plt.imsave('trace/{i}.jpg'.format(i=3), img)
-        if state_trace[i] == 4:
-            img = image_trace[i].cpu().numpy().astype(numpy.uint8)
-            plt.imsave('trace/{i}.jpg'.format(i=4), img)
-    return exps_list, {**log1, **log2}, statenn_exps
+    # statenn_exps={
+    #             "img": image_trace,
+    #             "label": state_trace,
+    #         }
+    # for i in range(len(state_trace)):
+    #     if state_trace[i] == 3:
+    #         img=image_trace[i].cpu().numpy().astype(numpy.uint8)
+    #         plt.imsave('trace/{i}.jpg'.format(i=3), img)
+    #     if state_trace[i] == 4:
+    #         img = image_trace[i].cpu().numpy().astype(numpy.uint8)
+    #         plt.imsave('trace/{i}.jpg'.format(i=4), img)
+    return exps_list, {**log1, **log2}, None
 
 
 
@@ -559,32 +559,7 @@ def Mutiagent_collect_experiences_q(env,
     # print(action_trace)
     # print([i.item() for i in mask_trace])
 
-    image_trace = preprocess_obss(obs_trace, device=device).image
-
-    for i in range(len(image_trace)-1, 0, -1):
-        if mask_trace[i-1].item() == 0:
-            image_trace[i] = image_trace[i] - image_trace[i]
-        else:
-            image_trace[i]=image_trace[i]-image_trace[i-1]
-    image_trace[0] = image_trace[0] - image_trace[0]
-
-    for i in range(len(state_trace)-1, 0, -1):
-        if state_trace[i]==state_trace[i-1]:
-            state_trace[i]=0
-
-    # print("state_trace:", state_trace)
-    statenn_exps={
-                "img": image_trace,
-                "label": state_trace,
-            }
-    for i in range(len(state_trace)):
-        if state_trace[i] == 3:
-            img=image_trace[i].cpu().numpy().astype(numpy.uint8)
-            plt.imsave('trace/{i}.jpg'.format(i=3), img)
-        if state_trace[i] == 4:
-            img = image_trace[i].cpu().numpy().astype(numpy.uint8)
-            plt.imsave('trace/{i}.jpg'.format(i=4), img)
-    return exps_list, {**log1, **log2}, statenn_exps
+    return exps_list, {**log1, **log2}, None
 
 
 def collect_experiences_mutation(algo, 

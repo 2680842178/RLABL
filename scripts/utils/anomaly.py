@@ -42,13 +42,14 @@ class AnomalyDetector:
     def save_model(self, model_path):
         pass
 
-class BoundaryDetector(AnomalyDetector):
+class BoundaryDetectorSSIM(AnomalyDetector):
     def __init__(self, saved_images_folder):
         super().__init__()
         self.saved_images_folder = saved_images_folder
         if not os.path.exists(self.saved_images_folder):
             os.makedirs(self.saved_images_folder)
         self.saved_images = self.load_saved_images()
+        self.contrast_value = 0.5
 
     def load_saved_images(self):
         saved_images = []
@@ -64,8 +65,11 @@ class BoundaryDetector(AnomalyDetector):
             return False
         return True
 
-    def contrast(self, img1, img2):
-        return contrast_ssim(img1, img2)
+    def contrast(self, img1, img2, return_bool=False):
+        if not return_bool:
+            return contrast_ssim(img1, img2)
+        else:
+            return contrast_ssim(img1, img2) > self.contrast_value
 
     def preprocess_RGBimage(self, image):
         gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -182,8 +186,117 @@ class ClusterAnomalyDetector:
         similarity = 1 / (1 + distance)  # 使用距离的倒数来表示相似度
         return similarity
 
+class BoundaryDetector(AnomalyDetector):
+    def __init__(self, saved_images_folder):
+        super().__init__()
+        self.saved_images_folder = saved_images_folder
+        if not os.path.exists(self.saved_images_folder):
+            os.makedirs(self.saved_images_folder)
+        self.saved_images = self.load_saved_images()
+        self.contrast_value = 0.99999
 
+    def load_saved_images(self):
+        saved_images = []
+        for filename in os.listdir(self.saved_images_folder):
+            img = cv2.imread(os.path.join(self.saved_images_folder, filename), cv2.IMREAD_GRAYSCALE)
+            if img is not None:
+                hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+                saved_images.append((filename, img, hist))
+        return saved_images
 
+    def add_normal_samples(self, image):
+        if self.is_known_image(image, add_to_buffer=True):
+            return False
+        return True
+
+    def contrast(self, img1, img2, return_bool=False):
+        if not return_bool:
+            return contrast_ssim(img1, img2)
+        else:
+            return contrast_ssim(img1, img2) > self.contrast_value
+
+    def preprocess_RGBimage(self, image):
+        gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+        _, thresh = cv2.threshold(gray_image, 1, 255, cv2.THRESH_BINARY)
+        contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        processed = []
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            roi = gray_image[y:y + h, x:x + w]
+            processed.append(roi)
+        
+        return gray_image, processed
+
+    def is_known_roi(self, roi, add_to_buffer=False):
+        is_anomaly = False
+        processed_hist = cv2.calcHist([roi], [0], None, [256], [0, 256])
+        processed_hist = cv2.normalize(processed_hist, processed_hist).flatten()
+
+        similar = 0
+        # print(len(self.saved_images))
+        for saved_image_name, saved_image, saved_hist in self.saved_images:
+            saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
+            correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
+            similar = max(similar, abs(correlation))
+            # similar = max(similar, contrast_ssim(roi, saved_image))
+            # print(similar)
+            if similar > 0.99999:
+                break
+        if similar < 0.99999 and similar >= 0:
+            is_anomaly = True
+            if add_to_buffer:
+                # print("Anomaly detected, saving image")
+                self.add_new_image(roi, is_processed=True)
+
+        return is_anomaly
+
+    def is_known_image(self, processed, add_to_buffer=False):
+        # _, processed = self.preprocess_RGBimage(image)
+        is_anomaly = False
+        for processed_image in processed:
+            processed_hist = cv2.calcHist([processed_image], [0], None, [256], [0, 256])
+            processed_hist = cv2.normalize(processed_hist, processed_hist).flatten()
+
+            similar = 0
+            # print(len(self.saved_images))
+            for saved_image_name, saved_image, saved_hist in self.saved_images:
+                saved_hist = cv2.normalize(saved_hist, saved_hist).flatten()
+                correlation = cv2.compareHist(processed_hist, saved_hist, cv2.HISTCMP_CORREL)
+                similar = max(similar, abs(correlation))
+                # similar = max(similar, contrast_ssim(processed_image, saved_image)) 
+                # print(similar)
+                if similar > 0.99999:
+                    break
+            if similar < 0.99999 and similar >= 0:
+                is_anomaly = True
+                if add_to_buffer:
+                    # print("Anomaly detected, saving image")
+                    self.add_new_image(processed_image, is_processed=True)
+            # else:
+            #     print("No anomaly detected, dont save.")
+            # elif similar >= 1:
+            #     return True
+        if is_anomaly:
+            return False
+        return True
+
+    def add_new_image(self, image, is_processed=False):
+        if not is_processed:
+            processed_image, _ = self.preprocess_RGBimage(image)
+        else:
+            processed_image = image
+        saved_image_count = len(self.saved_images)
+        new_filename = f"{saved_image_count}.bmp"
+        save_path = os.path.join(self.saved_images_folder, new_filename)
+        cv2.imwrite(save_path, processed_image)
+        processed_hist = cv2.calcHist([processed_image], [0], None, [256], [0, 256])
+        processed_hist = cv2.normalize(processed_hist, processed_hist).flatten()
+        self.saved_images.append((new_filename, processed_image, processed_hist))
+        print(f"Image saved: {new_filename}")
+
+    def detect_anomaly(self, image):
+        return not self.is_known_image(image, add_to_buffer=False)
 
 if __name__ == "__main__":
 
@@ -215,5 +328,3 @@ if __name__ == "__main__":
             print(f"Anomaly detected in {image_name}")
         else:
             print(f"No anomaly detected in {image_name}")
-
-    # 使用示例

@@ -34,7 +34,8 @@ class TaxiEnv(Env):
         "render_fps": 4,
     }
         
-    def __init__(self, render_mode: Optional[str] = "rgb_array", start_state: Optional[int] = None):
+    def __init__(self, render_mode: Optional[str] = "rgb_array", start_state: Optional[int] = None, max_steps: int = 256):
+        self.max_steps = max_steps
         self.render_mode = render_mode
         self.desc = np.asarray(MAP, dtype="c")
 
@@ -175,16 +176,21 @@ class TaxiEnv(Env):
         return mask
 
     def step(self, a):
+        self.step_count += 1
         
         state = self.s.cpu().item() if isinstance(self.s, torch.Tensor) else self.s
         transitions = self.P[state][a]
         i = categorical_sample([t[0] for t in transitions], self.np_random)
         p, s, r, t = transitions[i]
+        r = 1 - 0.9 * (self.step_count / self.max_steps)
         self.s = s
         self.lastaction = a
 
         if self.render_mode == "human":
             self.render()
+
+        if self.step_count >= self.max_steps:
+            t = True 
         # truncation=False as the time limit is handled by the `TimeLimit` wrapper added during `make`
         return self.get_observation(), r, t, False, {"prob": p, "action_mask": self.action_mask(s)}
     
@@ -206,6 +212,7 @@ class TaxiEnv(Env):
             self.s=181
         self.lastaction = None
         self.taxi_orientation = 0
+        self.step_count = 0
 
         if self.render_mode == "human":
             self.render()
