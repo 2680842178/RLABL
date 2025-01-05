@@ -620,7 +620,7 @@ def main():
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         # print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
-            exps_list, logs1, _ = Mutiagent_collect_experiences(env=envs[0],
+            exps_list, logs1 = Mutiagent_collect_experiences(env=envs[0],
                                                                            algos=algos,
                                                                            contrast=contrast_func,
                                                                            G=G,
@@ -633,7 +633,7 @@ def main():
                                                                        preprocess_obss=preprocess_obss,
                                                                        discover=args.discover,)
         elif args.algo == "dqn":
-            exps_list, logs1, _ = Mutiagent_collect_experiences_q(env=envs[0],
+            exps_list, logs1 = Mutiagent_collect_experiences_q(env=envs[0],
                                                                            algos=algos,
                                                                            contrast=contrast_func,
                                                                            G=G,

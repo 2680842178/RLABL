@@ -322,34 +322,7 @@ def Mutiagent_collect_experiences(env,
                 "reshaped_return_per_episode": log_reshaped_return[-keep2:],
             }
 
-    image_trace = preprocess_obss(obs_trace, device=device).image
-
-    for i in range(len(image_trace)-1, 0, -1):
-        if mask_trace[i-1].item() == 0:
-            image_trace[i] = image_trace[i] - image_trace[i]
-        else:
-            image_trace[i]=image_trace[i]-image_trace[i-1]
-    image_trace[0] = image_trace[0] - image_trace[0]
-
-    for i in range(len(state_trace)-1, 0, -1):
-        if state_trace[i]==state_trace[i-1]:
-            state_trace[i]=0
-
-    # print("state_trace:", state_trace)
-    # statenn_exps={
-    #             "img": image_trace,
-    #             "label": state_trace,
-    #         }
-    # for i in range(len(state_trace)):
-    #     if state_trace[i] == 3:
-    #         img=image_trace[i].cpu().numpy().astype(numpy.uint8)
-    #         plt.imsave('trace/{i}.jpg'.format(i=3), img)
-    #     if state_trace[i] == 4:
-    #         img = image_trace[i].cpu().numpy().astype(numpy.uint8)
-    #         plt.imsave('trace/{i}.jpg'.format(i=4), img)
-    return exps_list, {**log1, **log2}, None
-
-
+    return exps_list, {**log1, **log2}
 
 def Mutiagent_collect_experiences_q(env, 
                                 algos,
@@ -435,7 +408,7 @@ def Mutiagent_collect_experiences_q(env,
                 if agent.trained == False:
                     action = agent.select_action(preprocessed_obs, epsilon)
                 else:
-                    action = agent.select_action(preprocessed_obs, 0)
+                    action = agent.select_action(preprocessed_obs, epsilon/10)
         # print("output_state", current_state)
         if done:
             # print("done")
@@ -558,8 +531,8 @@ def Mutiagent_collect_experiences_q(env,
     # print(log_reshaped_return[-keep2:])
     # print(action_trace)
     # print([i.item() for i in mask_trace])
-
-    return exps_list, {**log1, **log2}, None
+    # memory_tracker.log_memory('end_log_experiences')
+    return exps_list, {**log1, **log2}
 
 
 def collect_experiences_mutation(algo, 
@@ -780,10 +753,10 @@ def collect_experiences_mutation_q(algo,
     parallel_env = ParallelEnv([env])
     done = (True,)
     last_done = (True,)
-    
+    obs = parallel_env.gen_obs()
     for i in range(algo.num_frames_per_proc):
         last_done = done
-        preprocessed_obs = preprocess_obss(algo.obs, device=algo.device)
+        preprocessed_obs = preprocess_obss(obs, device=algo.device)
 
         with torch.no_grad():
             q_values = algo.acmodel(preprocessed_obs)
@@ -802,28 +775,31 @@ def collect_experiences_mutation_q(algo,
 
         the_preprocessed_obs = preprocess_obss(obs, device=algo.device)
         
-        if last_done[0]:
+        if done[0]:
             mutation = the_preprocessed_obs.image - the_preprocessed_obs.image
         else:
             mutation = the_preprocessed_obs.image - preprocessed_obs.image
         mutation = numpy.squeeze(mutation)
         mutation = mutation.cpu().numpy().astype(numpy.uint8)
+        _, mutation_roi_list = RGB2GARY_ROI(mutation)
 
-        if get_mutation_score(mutation) > mutation_value and reward[0] == 0:
+        for mutation_roi in mutation_roi_list:
+            if get_mutation_score(mutation_roi) < mutation_value or reward[0] != 0:
+                continue
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
-                if contrast(mutation, mutation_) > 0.6:
+                if contrast(mutation_roi, mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
                     reward = 1
                     done = (True,)
                     break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
-                if contrast(mutation, mutation_) > 0.6:
+                if contrast(mutation_roi, mutation_) > 0.6:
                     mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
                     is_in_buffer = True
                     break
             if not is_in_buffer:
-                mutation_buffer.append((get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
+                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))
 
         # 更新经验值
         algo.obss[i] = algo.obs

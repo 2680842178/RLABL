@@ -170,11 +170,6 @@ class DQNAlgo(BaseAlgo):
         for _ in range(self.epochs):
             if len(self.replay_buffer) < self.batch_size:
                 continue
-            if len(self.replay_buffer) < self.buffer_size / 4:
-                print(len(self.replay_buffer))
-                print("replay buffer is not full")
-                continue
-            
 
             s, a, r, s_, d, weights, indices = self.replay_buffer.sample(self.batch_size)
             loss, grad_norm, q_value = self.optimize_model(s, a, r, s_, weights, indices)

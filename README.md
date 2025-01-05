@@ -6,6 +6,11 @@
 3. scripts/minigrid_fullDFA.sh 提前构建好状态机的训练。
 详细见脚本内部。注意每次运行脚本时要注意脚本内的参数：例如实验环境（随机/固定），实验步数（课程步数和发现步数），实验地图文件（环境的地图会从指定文件中读取）。
 
+安装本地包（RLABL/）
+```
+pip install -r requirements.txt
+```
+
 # Minigrid
 
 ## Installation
