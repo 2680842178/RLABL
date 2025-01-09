@@ -77,6 +77,44 @@ class ACModel(nn.Module, torch_ac.ACModel):
         )
 
         # Initialize parameters correctly
+
+        for m in self.image_conv.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+
+        # 初始化actor网络
+        for m in self.actor.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.orthogonal_(m.weight, gain=0.01)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+
+        # 初始化critic网络
+        for m in self.critic.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.orthogonal_(m.weight, gain=1.0)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+
+        # 如果使用text，初始化text相关层
+        if self.use_text:
+            nn.init.normal_(self.word_embedding.weight, mean=0, std=0.1)
+            for name, param in self.text_rnn.named_parameters():
+                if 'weight' in name:
+                    nn.init.orthogonal_(param)
+                elif 'bias' in name:
+                    nn.init.constant_(param, 0)
+
+        # 如果使用memory，初始化memory相关层
+        if self.use_memory:
+            for name, param in self.memory_rnn.named_parameters():
+                if 'weight' in name:
+                    nn.init.orthogonal_(param)
+                elif 'bias' in name:
+                    nn.init.constant_(param, 0)
+
         self.apply(init_params)
 
     @property

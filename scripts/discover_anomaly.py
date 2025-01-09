@@ -145,15 +145,15 @@ def get_importance_prob(lst):
     normalized_lst = [(x * (i + 1)) / total if x != 0 else 0 for i, x in enumerate(lst)]
     return normalized_lst
 
-def calculate_epsilon(num_frames, initial_num_frames, total_frames):
+def calculate_epsilon(num_frames, initial_num_frames, total_frames, max_progress, param):
     progress = (num_frames - initial_num_frames) / (total_frames - initial_num_frames)
 
     # 当进度达到90%时保持最小值
-    if progress >= 0.9:
+    if progress >= max_progress:
         progress = 0.9
 
     # 使用指数函数实现快速下降后缓慢下降
-    epsilon = 1 - progress ** 0.5
+    epsilon = 1 - progress ** param
 
     return epsilon
 
@@ -204,7 +204,7 @@ def discover(start_env,
     txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
     initial_num_frames = num_frames
     while num_frames < discover_frames:
-        epsilon = calculate_epsilon(num_frames, initial_num_frames, args.frames)
+        epsilon = calculate_epsilon(num_frames, initial_num_frames, args.frames, 0.9, 2)
         update_start_time = time.time()
         if args.algo == 'ppo' or args.algo == 'a2c':
             exps, logs1 = collect_experiences_mutation(algo,
@@ -457,10 +457,12 @@ def main():
     #     AnomalyNN = lambda x: [[1.0, 0]]
 
     if args.contrast == "HIST":
+        print("Using HIST")
         anomaly_detector = BoundaryDetector(normal_buffer_path)
         contrast_func = contrast_hist
         contrast_value = 0.99999
     else:
+        print("Using SSIM")
         anomaly_detector = BoundaryDetectorSSIM(normal_buffer_path)
         contrast_func = contrast_ssim
         contrast_value = 0.5
@@ -616,7 +618,7 @@ def main():
         envs[0].reset()
         # ini_agent
         if args.algo == "dqn":
-            epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
+            epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames, 0.9, 0.5)
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         # print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
@@ -812,7 +814,7 @@ def main():
     # 训练结束时保存最终状态和最佳状态
     model_state = [acmodel.state_dict() for acmodel in acmodels]
     optimizer_state = algo.optimizer.state_dict()
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         print("No save bad model.")
         model_state[-1] = None
         optimizer_state = None
@@ -829,7 +831,7 @@ def main():
     txt_logger.info("Final status saved")
 
     # 如果最终模型不是最佳模型,则加载最佳模型状态
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         return "fail train"
     else:
         return "successfull train"
