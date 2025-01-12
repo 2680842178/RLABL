@@ -1,18 +1,18 @@
 #!/bin/bash
 
 ###### 每次实验都需要修改的地方 ######
-NUMS=10 #跑多少轮
+NUMS=10
 DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="PPO-large" # 设置模型名称
-CONFIGMAP="easy_large_maps.config" # 设置地图文件:
+BASE_MODEL_NAME="PPO-small" # 设置模型名称
+CONFIGMAP="easy_small_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
 # 对应固定环境和随机环境：固定环境的config地图有3项，分别是课程123的地图；随机环境的config地图有15项，课程123各5种地图
 # 设置三个课程的总步数（累加关系）
-CURRICULUM_1_STEPS=300000
-CURRICULUM_2_STEPS=600000
-CURRICULUM_3_STEPS=900000
+CURRICULUM_1_STEPS=100000
+CURRICULUM_2_STEPS=200000
+CURRICULUM_3_STEPS=300000
 CONTRAST_FUNC="HIST"
 ###################################
 

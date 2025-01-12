@@ -4,7 +4,7 @@
 NUMS=10 #跑多少轮
 DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="PPO-large" # 设置模型名称
+BASE_MODEL_NAME="ABL-PPO-large" # 设置模型名称
 CONFIGMAP="easy_large_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
@@ -13,6 +13,7 @@ ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 CURRICULUM_1_STEPS=300000
 CURRICULUM_2_STEPS=600000
 CURRICULUM_3_STEPS=900000
+DISCOVER_STEPS=300000 # discover过程的最多步数，注意这步数是算在总步数里的，所以最好小于单个课程训练的步数。
 CONTRAST_FUNC="HIST"
 ###################################
 
@@ -43,7 +44,7 @@ EPOCHS=8
 BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
-# 循环执行 10 次
+# 循环执行 NUMS 次
 for i in $(seq 1 $NUMS); do
   # 生成唯一的模型名
   MODEL_NAME="$BASE_MODEL_NAME-${i}"
@@ -68,18 +69,18 @@ for i in $(seq 1 $NUMS); do
   fi
 
   # 修改任务配置并执行训练
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --contrast $CONTRAST_FUNC
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
   if [ $? -gt 4 ]; then
     echo "Error during task 1, stopping the script."
     exit 1
   fi
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --contrast $CONTRAST_FUNC
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
   if [ $? -gt 4 ]; then
     echo "Error during task 2, stopping the script."
     exit 1
   fi
 
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3 --contrast $CONTRAST_FUNC
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
   if [ $? -gt 4 ]; then
     echo "Error during task 3, stopping the script."
     exit 1
