@@ -156,26 +156,55 @@ class BoundaryDetectorSSIM(AnomalyDetector):
 
 
 class ClusterAnomalyDetector:
-    def __init__(self, image_list):
+    def __init__(self):
+        self.kmeans = None
+        self.contrast_value = 0.5
+
+    def add_samples(self, image_list):
         self.image_list = image_list
+        for image in image_list:
+            cv2.imwrite(f"taxi_mutations/{time.time()}.bmp", image)
         self.features = [self.extract_resolution_features(image) for image in image_list]  # 提取图像特征
         self.kmeans = KMeans(n_clusters=2, random_state=42)  # 使用KMeans进行聚类
         self.kmeans.fit(self.features)  # 对特征进行拟合
+        labels = self.kmeans.labels_
+        label_counts = np.bincount(labels)
+        print("labels:", labels)
+        self.anomaly_class = np.argmin(label_counts)
+        for i, label in enumerate(labels):
+            if label == self.anomaly_class:
+                return image_list[i]
+        return None
+
+    def contrast(self, img1, img2):
+        feature1 = self.extract_resolution_features(img1)
+        feature2 = self.extract_resolution_features(img2)
+        lebel1 = self.kmeans.predict([feature1])[0]
+        lebel2 = self.kmeans.predict([feature2])[0]
+        similarity = 1 if lebel1 == lebel2 else 0
+        return similarity
 
     def extract_resolution_features(self, image):# 初始化异常检测器，输入一个图像列表，内部处理并初始化KMeans模型。
         height, width = image.shape
         return np.array([width, height])
 
+    def is_known_roi(self, roi, add_to_buffer=False):
+        if self.kmeans is None:
+            return False
+        feature = self.extract_resolution_features(roi)
+        label = self.kmeans.predict([feature])[0]
+        return label == self.anomaly_class
+
     def detect_anomaly(self, image):#提取图像的分辨率特征
         feature = self.extract_resolution_features(image)
         label = self.kmeans.predict([feature])[0]  # 预测图像的类别
-        center = self.kmeans.cluster_centers_[label]  # 获得该类别的聚类中心
-        distance = np.linalg.norm(feature - center)  # 计算图像特征与聚类中心的欧氏距离
+        # center = self.kmeans.cluster_centers_[label]  # 获得该类别的聚类中心
+        # distance = np.linalg.norm(feature - center)  # 计算图像特征与聚类中心的欧氏距离
         
         # 归一化距离，最大距离对应异常概率为1
-        max_distance = np.max([np.linalg.norm(f - center) for f in self.features])
-        anomaly_probability = distance / max_distance
-        return anomaly_probability
+        # max_distance = np.max([np.linalg.norm(f - center) for f in self.features])
+        # anomaly_probability = distance / max_distance
+        return float(label == self.anomaly_class)
 
     def compare_similarity(self, image1, image2):# 识别输入图像是否为异常
         feature1 = self.extract_resolution_features(image1)

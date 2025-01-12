@@ -35,6 +35,7 @@ class TaxiEnv(Env):
     }
         
     def __init__(self, render_mode: Optional[str] = "rgb_array", start_state: Optional[int] = None, max_steps: int = 256):
+        self.env_key = "Taxi"
         self.max_steps = max_steps
         self.render_mode = render_mode
         self.desc = np.asarray(MAP, dtype="c")
@@ -182,7 +183,8 @@ class TaxiEnv(Env):
         transitions = self.P[state][a]
         i = categorical_sample([t[0] for t in transitions], self.np_random)
         p, s, r, t = transitions[i]
-        r = 1 - 0.9 * (self.step_count / self.max_steps)
+        if r > 0:
+            r = 1 - 0.9 * (self.step_count / self.max_steps)
         self.s = s
         self.lastaction = a
 
@@ -219,6 +221,7 @@ class TaxiEnv(Env):
         return self.get_observation(), {"prob": 1.0, "action_mask": self.action_mask(self.s)}
 
     def get_observation(self):
+        # print(self.render(mode="rgb_array"))
         # 使用图像渲染当前状态作为观察空间
         return self.render(mode="rgb_array")
     

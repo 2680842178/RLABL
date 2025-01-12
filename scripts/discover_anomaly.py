@@ -21,7 +21,7 @@ from utils.process import contrast_ssim, contrast_hist
 from model import ACModel, CNN, QNet
 
 from graph_test import test, ddm_decision
-from utils.anomaly import BoundaryDetector, BoundaryDetectorSSIM
+from utils.anomaly import BoundaryDetector, BoundaryDetectorSSIM, ClusterAnomalyDetector
 import math
 
 parser = argparse.ArgumentParser()
@@ -216,7 +216,8 @@ def discover(start_env,
                                                             known_mutation_buffer,
                                                             arrived_state_buffer,
                                                             preprocess_obss,
-                                                            args.env)
+                                                            args.env,
+                                                            anomaly_detector)
         elif args.algo == 'dqn':
             exps, logs1 = collect_experiences_mutation_q(algo,
                                                     start_env,
@@ -228,7 +229,8 @@ def discover(start_env,
                                                             arrived_state_buffer,
                                                             preprocess_obss,
                                                             args.env,
-                                                            epsilon)
+                                                            epsilon,
+                                                            anomaly_detector)
         logs2 = algo.update_parameters(exps)
 
         logs = {**logs1, **logs2}
@@ -456,7 +458,11 @@ def main():
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
 
-    if args.contrast == "HIST":
+    if args.env == "Taxi-v0":
+        anomaly_detector = ClusterAnomalyDetector()
+        contrast_func = contrast_ssim
+        contrast_value = 0.5
+    elif args.contrast == "HIST":
         anomaly_detector = BoundaryDetector(normal_buffer_path)
         contrast_func = contrast_hist
         contrast_value = 0.99999
@@ -468,10 +474,10 @@ def main():
     # load the mutations
     for node in G.nodes:
         if list(G.predecessors(node)):
-            if node != 0 and node != 1:
+            if node != 0 and node != 1 and args.env != "Taxi-v0":
                 # G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
                 G.nodes[node]['state'].mutation = cv2.imread(task_path + "/mutation" + str(node) + ".bmp", cv2.IMREAD_GRAYSCALE)
-        if node != 0 and node != 1:
+        if node != 0 and node != 1 and args.env != "Taxi-v0":
             G.nodes[node]['state'].env_image = plt.imread(state_img_path + "/state" + str(node) + ".bmp")
 
     print(G.nodes)
@@ -482,6 +488,9 @@ def main():
         for node, data in G.nodes(data=True):
             if data['state'].env_image is not None:
                 node_probability_list[node] = contrast_ssim(data['state'].env_image, initial_img)
+
+        if args.env == "Taxi-v0":
+            node_probability_list[2] = 1.0
         node_probability_list = get_importance_prob(node_probability_list)
         min_stop_state = 0
         ######
@@ -510,7 +519,8 @@ def main():
             new_acmodel= ACModel(obs_space, envs[0].action_space, args.text)
         elif args.algo == "dqn":
             new_acmodel = QNet(obs_space, envs[0].action_space, args.text)
-        new_acmodel.load_state_dict(status["model_state"][stop_state - 2])
+        if args.env != "Taxi-v0":
+            new_acmodel.load_state_dict(status["model_state"][stop_state - 2])
         new_acmodel.to(device)
 
         if args.algo == "ppo":
@@ -525,7 +535,8 @@ def main():
             algo = torch_ac.DQNAlgo(envs, new_acmodel, device, args.frames_per_proc, args.discount, args.lr,
                                     args.max_grad_norm,
                                     args.optim_eps, args.epochs, args.buffer_size, args.batch_size, args.target_update, preprocess_obss)
-        algo.optimizer.load_state_dict(status["optimizer_state"])
+        if "optimizer_state" in status and status["optimizer_state"] is not None:
+            algo.optimizer.load_state_dict(status["optimizer_state"])
 
         if stop_state > min_stop_state:
             min_stop_state = stop_state
@@ -547,7 +558,9 @@ def main():
 
         if new_mutation is not None:
             new_node_id = len(G.nodes)
-            G.add_node(new_node_id, state=stateNode(new_node_id, None, None, stop_env.gen_obs()['image']))
+            new_obs = stop_env.gen_obs()
+            new_obs = new_obs['image'] if isinstance(new_obs, dict) else new_obs
+            G.add_node(new_node_id, state=stateNode(new_node_id, None, None, new_obs))
             if min_stop_state == start_node:
                 G.add_edge(new_node_id, start_node)
                 G.nodes[start_node]['state'].mutation = new_mutation
