@@ -10,9 +10,9 @@ ENV="MiniGrid-ConfigWorld-Random" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
 # 对应固定环境和随机环境：固定环境的config地图有3项，分别是课程123的地图；随机环境的config地图有15项，课程123各5种地图
 # 设置三个课程的总步数（累加关系）
-CURRICULUM_1_STEPS=600000
-CURRICULUM_2_STEPS=1200000
-CURRICULUM_3_STEPS=1800000
+CURRICULUM_1_STEPS=400000
+CURRICULUM_2_STEPS=800000
+CURRICULUM_3_STEPS=1200000
 DISCOVER_STEPS=400000 # discover过程的最多步数，注意这步数是算在总步数里的，所以最好小于单个课程训练的步数。
 CONTRAST_FUNC="SSIM"
 ###################################
