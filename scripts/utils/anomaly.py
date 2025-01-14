@@ -418,8 +418,8 @@ class ClusterAnomalyDetector:
         anomaly_image = self.dataset.images[np.argmin(y_pred)]
         self.min_anomaly_decision = np.min(y_pred)
         
-        for i in range(len(self.dataset.images)):
-            cv2.imwrite(f"taxi_mutations/taxi-mutation/{y_pred[i]}-{time.time()}.bmp", self.dataset.images[i]) 
+        # for i in range(len(self.dataset.images)):
+        #     cv2.imwrite(f"taxi_mutations/taxi-mutation/{y_pred[i]}-{time.time()}.bmp", self.dataset.images[i]) 
         return anomaly_image
         
         # KMeans聚类
@@ -489,12 +489,19 @@ class ClusterAnomalyDetector:
     def extract_features(self, image):# 初始化异常检测器，输入一个图像列表，内部处理并初始化KMeans模型。
         image_shape = image.shape
         image_shape = np.array(image_shape, dtype=np.float32)
+        image_shape = np.array([image_shape])
+        image_shape = image_shape.astype(np.float32)
+        # original_sizes = np.array([self.dataset.images[i].shape for i in range(len(self.dataset.images))])
+        # original_sizes = original_sizes.astype(np.float32)
         processed_image = self.preprocess_image(image)
         processed_image = [processed_image]
         processed_image = np.array(processed_image, dtype=np.float32) / 255.0
         # processed_image = processed_image.astype(np.float32) / 255.0
         processed_image = np.expand_dims(processed_image, axis=1)
-        features = self.vae.encode(torch.tensor(processed_image).to(self.device)).cpu().numpy()
+        # features = self.vae.encode(torch.tensor(processed_image).to(self.device)).cpu().numpy()
+        with torch.no_grad():
+            mu, _ = self.vae.encode(torch.tensor(processed_image).to(self.device))
+            features = mu.cpu().numpy()
         features = np.hstack((features, image_shape))
         features = self.scaler.transform(features)
         return features
