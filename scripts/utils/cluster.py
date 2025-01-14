@@ -3,171 +3,175 @@ import numpy as np
 import cv2
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
-from tensorflow.keras import layers, Model
-from sklearn.cluster import DBSCAN
+import torch
+from torch import nn
+from torch.utils.data import DataLoader, Dataset
+import torch.optim as optim
 import shutil
-folder_path = './taxi-mutation'
-# if os.path.exists(folder_path):
-#     print(f"Folder exists: {folder_path}")
-# else:
-#     print(f"Folder does not exist: {folder_path}")
-# 定义VAE模型
-class VAE(Model):
+
+# 定义 PyTorch VAE 模型
+class VAE(nn.Module):
     def __init__(self, latent_dim):
         super(VAE, self).__init__()
-        self.encoder = tf.keras.Sequential([
-            layers.InputLayer(input_shape=(32, 32, 1)),
-            layers.Conv2D(32, (3, 3), activation='relu', strides=2, padding='same'),
-            layers.Conv2D(64, (3, 3), activation='relu', strides=2, padding='same'),
-            layers.Flatten(),
-            layers.Dense(latent_dim + latent_dim)  # 包含均值和log(方差)
-        ])
-
-        self.decoder = tf.keras.Sequential([
-            layers.InputLayer(input_shape=(latent_dim,)),
-            layers.Dense(8 * 8 * 64, activation='relu'),
-            layers.Reshape((8, 8, 64)),
-            layers.Conv2DTranspose(64, (3, 3), activation='relu', strides=2, padding='same'),
-            layers.Conv2DTranspose(32, (3, 3), activation='relu', strides=2, padding='same'),
-            layers.Conv2DTranspose(1, (3, 3), activation='sigmoid', padding='same')
-        ])
+        self.latent_dim = latent_dim
+        
+        # 编码器
+        self.encoder = nn.Sequential(
+            nn.Conv2d(1, 32, kernel_size=3, stride=2, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1),
+            nn.ReLU()
+        )
+        self.fc_mu = nn.Linear(64 * 8 * 8, latent_dim)
+        self.fc_logvar = nn.Linear(64 * 8 * 8, latent_dim)
+        
+        # 解码器
+        self.decoder_fc = nn.Linear(latent_dim, 64 * 8 * 8)
+        self.decoder = nn.Sequential(
+            nn.ConvTranspose2d(64, 64, kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ReLU(),
+            nn.ConvTranspose2d(64, 32, kernel_size=3, stride=2, padding=1, output_padding=1),
+            nn.ReLU(),
+            nn.ConvTranspose2d(32, 1, kernel_size=3, padding=1),
+            nn.Sigmoid()
+        )
 
     def encode(self, x):
-        mean, log_var = tf.split(self.encoder(x), num_or_size_splits=2, axis=1)
-        return mean, log_var
+        x = self.encoder(x)
+        x = x.view(x.size(0), -1)
+        mu = self.fc_mu(x)
+        logvar = self.fc_logvar(x)
+        return mu, logvar
 
-    def reparameterize(self, mean, log_var):
-        batch_size = tf.shape(mean)[0]  # 动态获取 batch size
-        latent_dim = mean.shape[1]     # 获取 latent dim
-        eps = tf.random.normal(shape=(batch_size, latent_dim))  # 生成正态分布
-        return mean + tf.exp(0.5 * log_var) * eps
+    def reparameterize(self, mu, logvar):
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return mu + eps * std
 
-    def decode(self, z, apply_sigmoid=False):
-        logits = self.decoder(z)
-        if apply_sigmoid:
-            probs = tf.sigmoid(logits)
-            return probs
-        return logits
+    def decode(self, z):
+        x = self.decoder_fc(z)
+        x = x.view(x.size(0), 64, 8, 8)
+        x = self.decoder(x)
+        return x
 
-    def call(self, x):
-        mean, log_var = self.encode(x)
-        z = self.reparameterize(mean, log_var)
+    def forward(self, x):
+        mu, logvar = self.encode(x)
+        z = self.reparameterize(mu, logvar)
         reconstructed = self.decode(z)
-        return reconstructed
+        return reconstructed, mu, logvar
 
-# 数据预处理
-image_dir = "taxi-mutation"
-latent_dim = 16
-images = []
+# 自定义数据集
+class ImageDataset(Dataset):
+    def __init__(self, image_dir, target_size=(32, 32)):
+        self.image_dir = image_dir
+        self.target_size = target_size
+        self.file_names = [f for f in os.listdir(image_dir) if f.endswith(".bmp")]
+        self.images = []
+        for file_name in self.file_names:
+            image_path = os.path.join(image_dir, file_name)
+            image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
 
-# for file_name in os.listdir(image_dir):
-#     if file_name.endswith(".bmp"):
-#         image_path = os.path.join(image_dir, file_name)
-#         image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-#         image = cv2.resize(image, (64, 64))  # 调整图像大小
-#         images.append(image)
+            # 轮廓处理
+            _, binary_image = cv2.threshold(image, 10, 255, cv2.THRESH_BINARY)
+            contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            contour_image = np.zeros_like(image, dtype=np.uint8)
+            cv2.drawContours(contour_image, contours, -1, 255, thickness=1)
+            image = contour_image
 
-images = []  # 用于存储处理后的图像
-target_size = (32, 32)  # 目标图像大小
+            # 图像缩放和填充
+            h, w = image.shape
+            if h > target_size[0] or w > target_size[1]:
+                image = cv2.resize(image, target_size, interpolation=cv2.INTER_AREA)
+                h, w = target_size
+            padded_image = np.zeros(target_size, dtype=np.uint8)
+            start_y = (target_size[0] - h) // 2
+            start_x = (target_size[1] - w) // 2
+            padded_image[start_y:start_y + h, start_x:start_x + w] = image
+            self.images.append(padded_image)
 
-for file_name in os.listdir(image_dir):
-    if file_name.endswith(".bmp"):
-        image_path = os.path.join(image_dir, file_name)
-        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
-        
+        self.images = np.array(self.images, dtype=np.float32) / 255.0  # 归一化
+        self.images = np.expand_dims(self.images, axis=1)  # 添加通道维度
 
-        _, binary_image = cv2.threshold(image, 10, 255, cv2.THRESH_BINARY)  # 二值化
-        contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        
-        # 创建一个空白图像来绘制轮廓
-        contour_image = np.zeros_like(image, dtype=np.uint8)
-        cv2.drawContours(contour_image, contours, -1, 255, thickness=1)  # 将轮廓绘制到空白图像
-        
-        image = contour_image
-    
-        # 获取原始图像尺寸
-        h, w = image.shape
-        
-        # 如果图像超过目标大小，缩放到目标大小
-        if h > target_size[0] or w > target_size[1]:
-            image = cv2.resize(image, target_size, interpolation=cv2.INTER_AREA)
-            h, w = target_size  # 更新尺寸信息为缩放后的
-        
-        # 创建一个目标大小的黑色背景
-        padded_image = np.zeros(target_size, dtype=np.uint8)
-        
-        # 计算放置原始图像的起始位置
-        start_y = (target_size[0] - h) // 2
-        start_x = (target_size[1] - w) // 2
-        
-        # 将图像放入黑色背景中
-        padded_image[start_y:start_y + h, start_x:start_x + w] = image
-        
-        images.append(padded_image)
+    def __len__(self):
+        return len(self.images)
 
-images = np.array(images, dtype=np.float32) / 255.0  # 归一化
-images = np.expand_dims(images, axis=-1)  # 添加通道维度
+    def __getitem__(self, idx):
+        return self.images[idx]
 
-# 训练VAE
-vae = VAE(latent_dim)
-vae.compile(optimizer=tf.keras.optimizers.Adam(), loss=tf.keras.losses.MeanSquaredError())
-vae.fit(images, images, epochs=30, batch_size=16)
+# 定义训练过程
+def train_vae(vae, dataloader, optimizer, epochs, device):
+    vae.train()
+    for epoch in range(epochs):
+        total_loss = 0
+        for images in dataloader:
+            images = images.to(device)
+            optimizer.zero_grad()
+            reconstructed, mu, logvar = vae(images)
 
-# 使用VAE降维
-mean, log_var = vae.encode(images)
-z = vae.reparameterize(mean, log_var)
+            # 计算损失
+            recon_loss = nn.functional.mse_loss(reconstructed, images, reduction='sum')
+            kl_loss = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
+            loss = recon_loss + kl_loss
 
-# 获取原始图像的尺寸作为附加特征
-original_sizes = np.array([cv2.imread(os.path.join(image_dir, file_name), cv2.IMREAD_GRAYSCALE).shape for file_name in os.listdir(image_dir) if file_name.endswith(".bmp")])
-original_sizes = original_sizes.astype(np.float32)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+        print(f"Epoch {epoch + 1}/{epochs}, Loss: {total_loss:.4f}")
 
-# 将长宽信息与VAE降维后的特征合并
-features = np.hstack((z, original_sizes))  # 将VAE的降维特征与长宽信息连接起来
+# 聚类和保存结果
+def cluster_and_save(vae, dataset, output_dir, clu_num, device):
+    vae.eval()
+    images = torch.tensor(dataset.images).to(device)
+    with torch.no_grad():
+        mu, _ = vae.encode(images)
+        z = mu.cpu().numpy()
 
-# 标准化特征
-scaler = StandardScaler()
-features = scaler.fit_transform(features)
+    # 获取图像原始尺寸
+    original_sizes = np.array([cv2.imread(os.path.join(dataset.image_dir, f), cv2.IMREAD_GRAYSCALE).shape for f in dataset.file_names])
+    original_sizes = original_sizes.astype(np.float32)
 
-# KMeans聚类
-clu_num = 2
-kmeans = KMeans(n_clusters=clu_num, random_state=0)
-labels = kmeans.fit_predict(features)
+    # 合并特征
+    features = np.hstack((z, original_sizes))
+    scaler = StandardScaler()
+    features = scaler.fit_transform(features)
 
+    # KMeans聚类
+    kmeans = KMeans(n_clusters=clu_num, random_state=0)
+    labels = kmeans.fit_predict(features)
 
-# # Kmaens聚类
-# kmeans = KMeans(n_clusters=clu_num, random_state=0)
-# labels = kmeans.fit_predict(z)
+    # 创建分类文件夹
+    cluster_dirs = [os.path.join(output_dir, f"cluster_{i}") for i in range(clu_num)]
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    for cluster_dir in cluster_dirs:
+        if not os.path.exists(cluster_dir):
+            os.makedirs(cluster_dir)
 
-# #DBS
-# dbscan = DBSCAN(eps=0.5, min_samples=5)
-# labels = dbscan.fit_predict(z)
+    # 保存图像
+    for i, (label, image) in enumerate(zip(labels, dataset.images)):
+        image = (image * 255).astype(np.uint8).squeeze(0)  # 恢复图像
+        output_path = os.path.join(cluster_dirs[label], f"image_{i}.bmp")
+        cv2.imwrite(output_path, image)
+    print(f"Images have been saved to {output_dir} by cluster.")
 
-# 输出结果
-for i, label in enumerate(labels):
-    print(f"Image {i} -> Cluster {label}")
+# 主程序
+if __name__ == "__main__":
+    image_dir = "./taxi-mutation"
+    output_dir = "./clustered_images"
+    latent_dim = 16
+    clu_num = 2
+    batch_size = 16
+    epochs = 30
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# 创建分类文件夹
-output_dir = "clustered_images"
-cluster_dirs = [os.path.join(output_dir, f"cluster_{i}") for i in range(clu_num)]
+    dataset = ImageDataset(image_dir)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
-# 确保输出目录存在
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
+    vae = VAE(latent_dim).to(device)
+    optimizer = optim.Adam(vae.parameters(), lr=1e-3)
 
-# 为每个聚类创建子文件夹
-for cluster_dir in cluster_dirs:
-    if not os.path.exists(cluster_dir):
-        os.makedirs(cluster_dir)
+    # 训练VAE
+    train_vae(vae, dataloader, optimizer, epochs, device)
 
-# 保存图像到对应的聚类文件夹
-for i, (label, image) in enumerate(zip(labels, images)):
-    # 恢复图像的像素值范围（0-255）
-    image = (image * 255).astype(np.uint8)
-    # 转换为2D图像（去掉单通道维度）
-    image = np.squeeze(image, axis=-1)
-    # 保存到对应的文件夹
-    output_path = os.path.join(cluster_dirs[label], f"image_{i}.bmp")
-    cv2.imwrite(output_path, image)
-
-print(f"Images have been saved to {output_dir} by cluster.")
+    # 聚类并保存图像
+    cluster_and_save(vae, dataset, output_dir, clu_num, device)

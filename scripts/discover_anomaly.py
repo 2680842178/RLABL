@@ -174,8 +174,11 @@ def discover(start_env,
         # anomaly_score = anomalyNN(mutation).detach().cpu().numpy()
         # is_anomaly = anomaly_detector.detect_anomaly(mutation)
         if numpy.any(numpy.asarray(processed_mutation_roi.shape) < 5):
+            print("too small")
             return 0
+        # print(anomaly_detector)
         is_anomaly = anomaly_detector.is_known_roi(processed_mutation_roi, add_to_buffer=False)
+        # print("is_anomaly", is_anomaly)
         if is_anomaly:
             return 1
         return 0
@@ -356,7 +359,7 @@ def main():
 
     utils.seed(args.seed)
     print("Seed:", args.seed)
-    print("Seed:", args.seed)
+    # print("Seed:", args.seed)
 
     # Set device
 
@@ -634,29 +637,29 @@ def main():
         # print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
             exps_list, logs1 = Mutiagent_collect_experiences(env=envs[0],
-                                                                           algos=algos,
-                                                                           contrast=contrast_func,
-                                                                           G=G,
-                                                                           device=device,
-                                                                           start_node=start_node,
-                                                                           anomaly_detector=anomaly_detector,
-                                                                       num_frames_per_proc=args.frames_per_proc * agent_num,
-                                                                       discount=args.discount,
-                                                                       gae_lambda=args.gae_lambda,
-                                                                       preprocess_obss=preprocess_obss,
-                                                                       discover=args.discover,)
+                                                            algos=algos,
+                                                            contrast=contrast_func,
+                                                            G=G,
+                                                            device=device,
+                                                            start_node=start_node,
+                                                            anomaly_detector=anomaly_detector,
+                                                            num_frames_per_proc=args.frames_per_proc * agent_num,
+                                                            discount=args.discount,
+                                                            gae_lambda=args.gae_lambda,
+                                                            preprocess_obss=preprocess_obss,
+                                                            discover=args.discover,)
         elif args.algo == "dqn":
             exps_list, logs1 = Mutiagent_collect_experiences_q(env=envs[0],
-                                                                           algos=algos,
-                                                                           contrast=contrast_func,
-                                                                           G=G,
-                                                                           device=device,
-                                                                           start_node=start_node,
-                                                                           anomaly_detector=anomaly_detector,
-                                                                       num_frames_per_proc=args.frames_per_proc * agent_num,
-                                                                       preprocess_obss=preprocess_obss,
-                                                                       epsilon=epsilon,
-                                                                       discover=args.discover)
+                                                            algos=algos,
+                                                            contrast=contrast_func,
+                                                            G=G,
+                                                            device=device,
+                                                            start_node=start_node,
+                                                            anomaly_detector=anomaly_detector,
+                                                            num_frames_per_proc=args.frames_per_proc * agent_num,
+                                                            preprocess_obss=preprocess_obss,
+                                                            epsilon=epsilon,
+                                                            discover=args.discover)
         # #每个algo更新
         logs2_list = [None] * (agent_num + 2)
         # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)

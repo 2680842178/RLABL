@@ -570,6 +570,7 @@ def collect_experiences_mutation(algo,
     parallel_env = ParallelEnv([env])
     done = (True,)
     last_done = (True,)
+    episode_return = 0
     obs = parallel_env.gen_obs()
     for i in range(algo.num_frames_per_proc):
         # Do one agent-environment interaction
@@ -617,7 +618,7 @@ def collect_experiences_mutation(algo,
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
                 if contrast(mutation_roi, mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
-                    reward = 1
+                    reward = (1, )
                     done = (True,)
                     break
             is_in_buffer = False
@@ -631,15 +632,17 @@ def collect_experiences_mutation(algo,
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
                 mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, algo.env))
 
+        episode_return += reward[0]
         if env_name == "Taxi-v0":
             if not done[0]:
                 trace_roi_buffer.extend(mutation_roi_list)
             else:
-                if reward[0] > 0:
+                if reward[0] > 0 and episode_return > 0:
                     print("Reward", reward)
                     anomaly_roi = anomaly_detector.add_samples(trace_roi_buffer)
                     mutation_buffer.append((get_mutation_score(anomaly_roi), anomaly_roi, 1, algo.env))
                 trace_roi_buffer = []
+        episode_return *= 1 - done[0]
 
         algo.obss[i] = algo.obs
         algo.obs = obs
