@@ -80,6 +80,7 @@ class CustomMinigridEnv(MiniGridEnv):
     """
 
     def __init__(self, size=8, random_num = 1, config_path='random_maps.config', max_steps: int | None = 256, curriculum = 1, fixed_map = None, havekey = False, **kwargs):
+        self.env_key = "MiniGrid"
         self.size=size
         # 设置最大步数
         # if max_steps is None:
@@ -186,8 +187,9 @@ def make_env(env_key, seed=None,  max_steps=256, curriculum=1, fixed_map=None,re
     return env
 
 def copy_env(copied_env, env_key, seed=None, render_mode="rgb_array", curriculum=1, **kwargs):
-    # if env_key == "Taxi-v0":
-    #     retur
+    if env_key == "Taxi-v0":
+        copied_env.reset()
+        return copied_env
     env_code = copied_env.grid.encode()
     curriculum = copied_env.curriculum
     max_steps = copied_env.max_steps

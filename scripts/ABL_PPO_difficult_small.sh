@@ -2,9 +2,9 @@
 
 ###### 每次实验都需要修改的地方 ######
 NUMS=10
-DEVICE_ID=1 # 用哪张卡
+DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="20240104-ABL-PPO-difficult-small" # 设置模型名称
+BASE_MODEL_NAME="20240113-ABL-PPO-difficult-small" # 设置模型名称
 CONFIGMAP="difficult_small_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
@@ -68,16 +68,16 @@ for i in $(seq 1 $NUMS); do
   fi
 
   # 修改任务配置并执行训练
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --discover-steps $DISCOVER_STEPS
-  if [ $? -gt 4 ]; then
-    echo "Error during task 1, stopping the script."
-    exit 1
-  fi
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --discover-steps $DISCOVER_STEPS
-  if [ $? -gt 4 ]; then
-    echo "Error during task 2, stopping the script."
-    exit 1
-  fi
+  # CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --discover-steps $DISCOVER_STEPS
+  # if [ $? -gt 4 ]; then
+  #   echo "Error during task 1, stopping the script."
+  #   exit 1
+  # fi
+  # CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --discover-steps $DISCOVER_STEPS
+  # if [ $? -gt 4 ]; then
+  #   echo "Error during task 2, stopping the script."
+  #   exit 1
+  # fi
 
   CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3 --discover-steps $DISCOVER_STEPS
   if [ $? -gt 4 ]; then

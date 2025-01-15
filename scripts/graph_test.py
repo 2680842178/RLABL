@@ -105,7 +105,7 @@ def test_once(
                 dist, _ = G.nodes[current_state]['state'].agent.acmodel(preprocessed_obss)
             actions = dist.sample()
         pre_obss = obss
-        obss, rewards, terminateds, truncateds, infos = env.step(actions)
+        obss, rewards, terminateds, truncateds, infos = env.step(actions if isinstance(actions, int) else actions.item())
         dones = terminateds | truncateds
         
         episode_return += rewards

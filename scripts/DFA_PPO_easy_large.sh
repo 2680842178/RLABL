@@ -2,7 +2,7 @@
 
 ###### 每次实验都需要修改的地方 ######
 NUMS=10
-DEVICE_ID=1 # 用哪张卡
+DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
 BASE_MODEL_NAME="20240104-DFA-PPO-easy-large" # 设置模型名称
 CONFIGMAP="easy_large_maps.config" # 设置地图文件:
@@ -48,7 +48,7 @@ for i in $(seq 1 $NUMS); do
   fi
 
   # 复制预购建的状态机配置文件夹
-  cp -r ./config/full_DFA_config_minigrid/* ./config/$MODEL_NAME
+  cp -r ./config/full_DFA_config_easy_large/* ./config/$MODEL_NAME
 
   CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3
   if [ $? -gt 4 ]; then

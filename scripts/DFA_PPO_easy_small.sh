@@ -1,8 +1,7 @@
 #!/bin/bash
-
 ###### 每次实验都需要修改的地方 ######
 NUMS=10
-DEVICE_ID=1 # 用哪张卡
+DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
 BASE_MODEL_NAME="20240104-DFA-PPO-easy-small" # 设置模型名称
 CONFIGMAP="easy_small_maps.config" # 设置地图文件:
@@ -14,7 +13,6 @@ CURRICULUM_1_STEPS=100000
 CURRICULUM_2_STEPS=200000
 CURRICULUM_3_STEPS=300000
 ###################################
-
 ### 各种超参数
 ALGO=ppo
 LR=0.00006
@@ -22,7 +20,6 @@ DISCOUNT=0.995
 EPOCHS=8
 BATCH_SIZE=128
 FRAMES_PER_PROC=512
-
 # 循环执行 10 次
 for i in $(seq 1 $NUMS); do
   # 生成唯一的模型名

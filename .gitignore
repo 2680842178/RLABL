@@ -10,6 +10,7 @@ prolog/
 */.idea/
 */.vscode/
 storage/
+scripts/taxi_mutations/
 scripts/storage/
 scripts/config/
 algo1.drawio
@@ -17,5 +18,6 @@ algo2.drawio
 algo2.png
 algorithm.drawio
 algorithm.png
+scripts/taxi_mutations/
 
 yolov8n.pt

@@ -1,4 +1,6 @@
 
+#5*5，不与乘客重合，无随机
+
 from contextlib import closing
 from io import StringIO
 from os import path
@@ -16,16 +18,17 @@ import torch
 
 
 MAP = [
-    "+-----+",
-    "|R:G: |",
-    "| : : |",
-    "| ::B |",
-    "|Y::: |",
-    "+-----+",
+    "+---------+",
+    "|R: | : :G|",
+    "| : | : : |",
+    "| : : : : |",
+    "| | : | : |",
+    "|Y| : |B: |",
+    "+---------+",
 ]
 
 
-WINDOW_SIZE = (450, 300)
+WINDOW_SIZE = (550,350)
 
 class TaxiEnv(Env):
         
@@ -35,24 +38,25 @@ class TaxiEnv(Env):
     }
         
     def __init__(self, render_mode: Optional[str] = "rgb_array", start_state: Optional[int] = None, max_steps: int = 256):
-        self.max_steps = max_steps
         self.render_mode = render_mode
+        self.max_steps = max_steps
         self.desc = np.asarray(MAP, dtype="c")
 
         # Updated location coordinates and colors
-        self.locs = [(0, 0), (0, 2), (3, 0), (2, 2)]
+        self.locs = [(0, 0), (0, 4), (4, 0), (4, 3)]
         self.locs_colors = [(255, 0, 0), (0, 255, 0), (255, 255, 0), (0, 0, 255)]
 
         # Updated grid size and number of states
-        num_states = 288
-        num_rows = 4
-        num_columns = 3
+        num_states = 500
+        num_rows = 5
+        num_columns = 5
         max_row = num_rows - 1
         max_col = num_columns - 1
         num_states = num_rows * num_columns * (len(self.locs) + 1) * len(self.locs)
 
         self.initial_state_distrib = np.zeros(num_states)
         num_actions = 6
+        a = 1.005
 
         # Transition probabilities
         fixed_states = [181]
@@ -81,7 +85,8 @@ class TaxiEnv(Env):
                             elif action == 3 and self.desc[1 + row, 2 * col] == b":":
                                 new_col = max(col - 1, 0)
                             elif action == 4:  # Pickup
-                                if pass_idx < len(self.locs) and taxi_loc == self.locs[pass_idx]:
+                                # print(self.locs, taxi_loc)
+                                if pass_idx < len(self.locs) and abs(taxi_loc[0] - self.locs[pass_idx][0]) + abs(taxi_loc[1] - self.locs[pass_idx][1]) == 1:#这里决定是否渲染乘客
                                     new_pass_idx = len(self.locs)  # Pickup passenger
                                     reward = 0
                                 else:
@@ -90,6 +95,7 @@ class TaxiEnv(Env):
                                 if taxi_loc == self.locs[dest_idx] and pass_idx == len(self.locs):
                                     new_pass_idx = dest_idx
                                     terminated = True
+                                    # reward = 1 - (np.power(a, self.steps) - np.power(a, -self.steps)) / (np.power(a, self.steps) + np.power(a, -self.steps))
                                     reward = 1
                                 elif taxi_loc in self.locs and pass_idx == len(self.locs):
                                     new_pass_idx = self.locs.index(taxi_loc)
@@ -116,83 +122,76 @@ class TaxiEnv(Env):
         self.background_img = None
 
     def encode(self, taxi_row, taxi_col, pass_loc, dest_idx):
-        # Updated encoding for 4 rows, 3 columns, 3 pickup/dropoff points
+        # (5) 5, 5, 4
         i = taxi_row
-        i *= 3
+        i *= 5
         i += taxi_col
-        i *= (len(self.locs) + 1)
+        i *= 5
         i += pass_loc
-        i *= len(self.locs)
+        i *= 4
         i += dest_idx
         return i
 
     def decode(self, i):
         out = []
-        out.append(i % len(self.locs))
-        i //= len(self.locs)
-        out.append(i % (len(self.locs) + 1))
-        i //= (len(self.locs) + 1)
-        out.append(i % 3)
-        i //= 3
+        out.append(i % 4)
+        i = i // 4
+        out.append(i % 5)
+        i = i // 5
+        out.append(i % 5)
+        i = i // 5
         out.append(i)
+        assert 0 <= i < 5
         return reversed(out)
 
 
-    def action_mask(self, state: int):
-        #mask[0下，1上，2右，3左，4拿，5放]
+    def action_mask(self, state: int): #下上右左、接客、送客
         """Computes an action mask for the action space using the state information."""
         mask = np.zeros(6, dtype=np.int8)
         taxi_row, taxi_col, pass_loc, dest_idx = self.decode(state)
-
-        if taxi_row < 3:
+        if taxi_row < 4:
             mask[0] = 1
         if taxi_row > 0:
             mask[1] = 1
-        if taxi_col < 3 and self.desc[taxi_row + 1, 2 * taxi_col + 2] == b":":
+        if taxi_col < 4 and self.desc[taxi_row + 1, 2 * taxi_col + 2] == b":":
             mask[2] = 1
         if taxi_col > 0 and self.desc[taxi_row + 1, 2 * taxi_col] == b":":
             mask[3] = 1
-        '''
-        if pass_loc < 3 and (taxi_row, taxi_col) == self.locs[pass_loc]:
+        if pass_loc < 4 and (taxi_row, taxi_col+1) == self.locs[pass_loc]:
             mask[4] = 1
-        if taxi_col == 0 and taxi_row == 2:
-            mask[2] = 0
-        if taxi_col == 0 and taxi_row == 3:
-            mask[2] = 0
-        if taxi_col == 2 and taxi_row == 2:
-            mask[3] = 0
-        if taxi_col == 2 and taxi_row == 3:
-            mask[3] = 0
-        if taxi_col == 1 and taxi_row == 1:
-            mask[0] = 0
-        '''
-        
+        if pass_loc < 4 and (taxi_row, taxi_col-1) == self.locs[pass_loc]:
+            mask[4] = 1
+        if pass_loc < 4 and (taxi_row+1, taxi_col) == self.locs[pass_loc]:
+            mask[4] = 1
+        if pass_loc < 4 and (taxi_row-1, taxi_col) == self.locs[pass_loc]:
+            mask[4] = 1
         if pass_loc == 4 and (
             (taxi_row, taxi_col) == self.locs[dest_idx]
             or (taxi_row, taxi_col) in self.locs
         ):
             mask[5] = 1
-
         return mask
 
     def step(self, a):
-        self.step_count += 1
         
         state = self.s.cpu().item() if isinstance(self.s, torch.Tensor) else self.s
         transitions = self.P[state][a]
         i = categorical_sample([t[0] for t in transitions], self.np_random)
         p, s, r, t = transitions[i]
-        r = 1 - 0.9 * (self.step_count / self.max_steps)
         self.s = s
         self.lastaction = a
+        self.step_count += 1
+        if r > 0:
+            r = 1 - 0.9 * (self.step_count / self.max_steps)
+        truncated = False
+        if self.step_count >= self.max_steps:
+            truncated = True
+        # self.steps += 1
 
         if self.render_mode == "human":
             self.render()
-
-        if self.step_count >= self.max_steps:
-            t = True 
         # truncation=False as the time limit is handled by the `TimeLimit` wrapper added during `make`
-        return self.get_observation(), r, t, False, {"prob": p, "action_mask": self.action_mask(s)}
+        return self.get_observation(), r, t, truncated, {"prob": p, "action_mask": self.action_mask(s)}
     
     def gen_obs(self):
         return self.get_observation()
@@ -205,6 +204,7 @@ class TaxiEnv(Env):
         state: Optional[int] = None  # 新增参数，用于接收自定义的起始状态
     ):
         super().reset(seed=seed)
+        self.step_count = 0
         if state is not None:
             self.s = state  # 如果传入了状态，使用该状态
         else:
@@ -212,7 +212,6 @@ class TaxiEnv(Env):
             self.s=181
         self.lastaction = None
         self.taxi_orientation = 0
-        self.step_count = 0
 
         if self.render_mode == "human":
             self.render()

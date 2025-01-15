@@ -9,9 +9,9 @@ ALGO=ppo
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
 # 对应固定环境和随机环境：固定环境的config地图有3项，分别是课程123的地图；随机环境的config地图有15项，课程123各5种地图
 # 设置三个课程的总步数（累加关系）
-CURRICULUM_1_STEPS=30000
-CURRICULUM_2_STEPS=40000
-CURRICULUM_3_STEPS=100000
+CURRICULUM_1_STEPS=100000
+CURRICULUM_2_STEPS=200000
+CURRICULUM_3_STEPS=300000
 ###################################
 
 ### 各种超参数
@@ -22,7 +22,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 30 次
-for i in $(seq 1 30); do
+for i in $(seq 1 10); do
   # 生成唯一的模型名
   MODEL_NAME="$BASE_MODEL_NAME-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"

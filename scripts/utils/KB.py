@@ -197,7 +197,7 @@ def Mutiagent_collect_experiences(env,
             truncated=0
             state_ini_flag=True
         else:
-            next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
+            next_obs, reward, terminated, truncated, _ = env.step(int(action.cpu().numpy()))
 
         state_trace.append(current_state)
         mask_trace.append(mask)
@@ -544,7 +544,8 @@ def collect_experiences_mutation(algo,
                                     known_mutation_buffer,
                                     arrived_state_buffer,
                                     preprocess_obss,
-                                    env_name):
+                                    env_name,
+                                    anomaly_detector,):
     """Collects rollouts and computes advantages.
 
     Runs several environments concurrently. The next actions are computed
@@ -565,9 +566,11 @@ def collect_experiences_mutation(algo,
         reward, policy loss, value loss, etc.
     """
     env = copy_env(start_env, env_name)
+    trace_roi_buffer = []
     parallel_env = ParallelEnv([env])
     done = (True,)
     last_done = (True,)
+    episode_return = 0
     obs = parallel_env.gen_obs()
     for i in range(algo.num_frames_per_proc):
         # Do one agent-environment interaction
@@ -589,7 +592,8 @@ def collect_experiences_mutation(algo,
             arrived_state_buffer.append(1)
         done = tuple(a | b for a, b in zip(terminated, truncated))
         if done[0]:
-            env = copy_env(start_env, env_name)
+            # env = copy_env(start_env, env_name)
+            env.reset()
             parallel_env = ParallelEnv([env])
             obs = parallel_env.gen_obs()
 
@@ -610,30 +614,37 @@ def collect_experiences_mutation(algo,
         # print(mutation.shape)
         for mutation_roi in mutation_roi_list:
             if get_mutation_score(mutation_roi) < mutation_value or reward[0] != 0:
-                continue
+            # if reward[0] != 0:
+                break
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
                 if contrast(mutation_roi, mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
-                    reward = 1
+                    reward = (1, )
                     done = (True,)
                     break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
                 if contrast(mutation_roi, mutation_) > 0.6:
-                    mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
+                    mutation_buffer[idx] = (score_, mutation_, times_ + 1, algo.env)
                     is_in_buffer = True
                     break
             if not is_in_buffer:
-                # print(last_done, done)
-                # plt.imshow(mutation)
-                # plt.show()
-                # plt.imshow(mutation)
-                # plt.show()
-                # plt.imshow(mutation_roi)
-                # plt.show()
                 #print(get_mutation_score(mutation).dtype)
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
-                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))
+                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, algo.env))
+
+        episode_return += reward[0]
+        if env_name == "Taxi-v0":
+            if not done[0]:
+                trace_roi_buffer.extend(mutation_roi_list)
+            else:
+                print("Episode return: ", episode_return)
+                if reward[0] > 0 and episode_return > 0:
+                    print("Reward", reward)
+                    anomaly_roi = anomaly_detector.add_samples(trace_roi_buffer)
+                    mutation_buffer.append((get_mutation_score(anomaly_roi), anomaly_roi, 1, algo.env))
+                trace_roi_buffer = []
+        episode_return *= 1 - done[0]
 
         algo.obss[i] = algo.obs
         algo.obs = obs
@@ -743,7 +754,8 @@ def collect_experiences_mutation_q(algo,
                                 arrived_state_buffer,
                                 preprocess_obss,
                                 env_name,
-                                epsilon):
+                                epsilon,
+                                anomaly_detector,):
     """为DQN收集经验的版本。
     主要区别:
     1. 使用epsilon-greedy策略选择动作
@@ -753,6 +765,8 @@ def collect_experiences_mutation_q(algo,
     parallel_env = ParallelEnv([env])
     done = (True,)
     last_done = (True,)
+    trace_roi_buffer = []
+    episode_return = 0
     obs = parallel_env.gen_obs()
     for i in range(algo.num_frames_per_proc):
         last_done = done
@@ -789,7 +803,7 @@ def collect_experiences_mutation_q(algo,
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
                 if contrast(mutation_roi, mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
-                    reward = 1
+                    reward = (1, )
                     done = (True,)
                     break
             is_in_buffer = False
@@ -800,6 +814,19 @@ def collect_experiences_mutation_q(algo,
                     break
             if not is_in_buffer:
                 mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))
+
+        episode_return += reward[0]
+        if env_name == "Taxi-v0":
+            if not done[0]:
+                trace_roi_buffer.extend(mutation_roi_list)
+            else:
+                print("Episode return: ", episode_return)
+                if reward[0] > 0 and episode_return > 0:
+                    print("Reward", reward)
+                    anomaly_roi = anomaly_detector.add_samples(trace_roi_buffer)
+                    mutation_buffer.append((get_mutation_score(anomaly_roi), anomaly_roi, 1, algo.env))
+                trace_roi_buffer = []
+        episode_return *= 1 - done[0]
 
         # 更新经验值
         algo.obss[i] = algo.obs
