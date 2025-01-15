@@ -91,6 +91,9 @@ parser.add_argument("--buffer-size", type=int, default=10000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
+parser.add_argument("--fixed", type=int, default=1,
+                    help="if the trained env is fixed")
+
 
 
 G = nx.DiGraph()
@@ -651,7 +654,8 @@ def main():
         # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
         # for i in range(0,len(exps_list)):
         #     print(i, len(exps_list[i].obs))
-        if args.algo == "ppo":
+        print("args.fixed", args.fixed)
+        if args.algo == "ppo" or args.fixed == 0:
             initial_agent_num = 0
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
