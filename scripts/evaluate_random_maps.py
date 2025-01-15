@@ -190,7 +190,7 @@ def main():
     log_episode_return = torch.zeros(1, device=device)
     log_episode_num_frames = torch.zeros(1, device=device) 
     log_done_counter = 0
-    csv_writer.writerow(["env_num", "episode_num", "return", "num_frames"])
+    csv_writer.writerow(["env_num", "episode_num", "return", "num_frames", "current_state"])
     for i in range(test_maps_num):
         envs[0].fixed_map = i
         for j in range(single_test_num):
@@ -200,14 +200,14 @@ def main():
                 # print(stateNode['state'].agent)
                 if state['state'].mutation is not None:
                     mutation_buffer.append((node, state['state'].mutation))
-            episode_return, episode_num_frames, current_state, stop_env, stop_obss = test_once(G, envs[0], mutation_buffer, start_node, max_steps=256, env_key="MiniGrid-ConfigWorld-v0", anomaly_detector=anomaly_detector, preprocess_obss=preprocess_obss, args=args)
-            print("Env_num: ", i, "Return: ", episode_return, "Num_frames: ", episode_num_frames)
+            episode_return, episode_num_frames, current_state, stop_env, stop_obss = test_once(G, envs[0], mutation_buffer, start_node, max_steps=512, env_key="MiniGrid-ConfigWorld-v0", anomaly_detector=anomaly_detector, preprocess_obss=preprocess_obss, args=args)
+            print("Env_num: ", i, "Return: ", episode_return, "Num_frames: ", episode_num_frames, "Current state: ", current_state)
             test_logs["num_frames_per_episode"].append(episode_num_frames)
             test_logs["return_per_episode"].append(episode_return)
             log_episode_return += episode_return
             log_episode_num_frames += episode_num_frames
             log_done_counter += 1
-            csv_writer.writerow([i, j, episode_return, episode_num_frames])
+            csv_writer.writerow([i, j, episode_return, episode_num_frames, current_state])
 
 if __name__ == "__main__":
     main()

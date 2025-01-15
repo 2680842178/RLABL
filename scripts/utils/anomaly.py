@@ -504,6 +504,8 @@ class ClusterAnomalyDetector:
             features = mu.cpu().numpy()
         features = np.hstack((features, image_shape))
         features = self.scaler.transform(features)
+        # if len(features.shape) > 2:
+        #     features = features.reshape(features.shape[0], -1) 
         return features
 
     def is_known_roi(self, roi, add_to_buffer=False):
@@ -511,9 +513,10 @@ class ClusterAnomalyDetector:
             return False
         feature = self.extract_features(roi)
         # label = self.kmeans.predict([feature])[0]
-        y_pred = self.iforest.predict([feature])
+        y_pred = self.iforest.predict(feature)
+        y_pred = y_pred[0]
         # return y_pred < 0
-        print("y_pred:", y_pred, "minimum:", self.min_anomaly_decision)
+        # print("y_pred:", y_pred, "minimum:", self.min_anomaly_decision)
         return y_pred <= self.min_anomaly_decision
 
     def detect_anomaly(self, image):#提取图像的分辨率特征

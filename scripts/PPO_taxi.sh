@@ -2,7 +2,7 @@
 
 ###### 每次实验都需要修改的地方 ######
 DELETE_OLD_MODELS=1 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="20250112-ABL-PPO-taxi" # 设置模型名称
+BASE_MODEL_NAME="ABL-PPO-taxi-test" # 设置模型名称
 # CONFIGMAP="easy_small_maps.config" # 设置地图文件:
 ENV="Taxi-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random

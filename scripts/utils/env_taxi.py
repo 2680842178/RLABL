@@ -183,12 +183,15 @@ class TaxiEnv(Env):
         self.step_count += 1
         if r > 0:
             r = 1 - 0.9 * (self.step_count / self.max_steps)
+        truncated = False
+        if self.step_count >= self.max_steps:
+            truncated = True
         # self.steps += 1
 
         if self.render_mode == "human":
             self.render()
         # truncation=False as the time limit is handled by the `TimeLimit` wrapper added during `make`
-        return self.get_observation(), r, t, False, {"prob": p, "action_mask": self.action_mask(s)}
+        return self.get_observation(), r, t, truncated, {"prob": p, "action_mask": self.action_mask(s)}
     
     def gen_obs(self):
         return self.get_observation()
