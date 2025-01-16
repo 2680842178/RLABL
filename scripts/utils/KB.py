@@ -423,7 +423,7 @@ def Mutiagent_collect_experiences_q(env,
             truncated=0
             state_ini_flag=True
         else:
-            next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
+            next_obs, reward, terminated, truncated, _ = env.step(int(action.cpu().numpy()))
         # print("reward", reward)
         # print("terminated", terminated)
         # print("truncated", truncated)
@@ -783,7 +783,7 @@ def collect_experiences_mutation_q(algo,
             
         done = tuple(a | b for a, b in zip(terminated, truncated))
         if done[0]:
-            env = copy_env(start_env, env_name)
+            env.reset()
             parallel_env = ParallelEnv([env])
             obs = parallel_env.gen_obs()
 
@@ -809,11 +809,11 @@ def collect_experiences_mutation_q(algo,
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
                 if contrast(mutation_roi, mutation_) > 0.6:
-                    mutation_buffer[idx] = (score_, mutation_, times_ + 1, copy.deepcopy(algo.env))
+                    mutation_buffer[idx] = (score_, mutation_, times_ + 1, algo.env)
                     is_in_buffer = True
                     break
             if not is_in_buffer:
-                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, copy.deepcopy(algo.env)))
+                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, algo.env))
 
         episode_return += reward[0]
         if env_name == "Taxi-v0":
@@ -827,7 +827,6 @@ def collect_experiences_mutation_q(algo,
                     mutation_buffer.append((get_mutation_score(anomaly_roi), anomaly_roi, 1, algo.env))
                 trace_roi_buffer = []
         episode_return *= 1 - done[0]
-
         # 更新经验值
         algo.obss[i] = algo.obs
         algo.obs = obs
