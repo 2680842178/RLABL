@@ -106,7 +106,8 @@ def Mutiagent_collect_experiences(env,
                                 discount, 
                                 gae_lambda, 
                                 preprocess_obss,
-                                discover):
+                                discover,
+                                reward_queue=None,):
 
     # 这里是指要不要训练异常检测器，如果节点数小于等于3，就是初始状态，训练异常检测器。
     is_add_normal_samples = False
@@ -151,7 +152,7 @@ def Mutiagent_collect_experiences(env,
     current_state=env_ini_state
     state_ini_flag=False
 
-    for _ in range(num_frames_per_proc):
+    for step_num in range(num_frames_per_proc):
 
         preprocessed_obs = preprocess_obss([obs], device=device)
 
@@ -188,6 +189,9 @@ def Mutiagent_collect_experiences(env,
                 current_state = 1
             if reward < 0:
                 current_state = 0
+            ######
+            if reward_queue is not None:
+                reward_queue.update_reward(reward, step_num, current_state)
             env.reset()
             next_obs=env.gen_obs()
             # plt.imshow(next_obs['image'].astype(numpy.uint8))
@@ -230,6 +234,9 @@ def Mutiagent_collect_experiences(env,
         log_episode_num_frames *= mask
 
         torch.cuda.empty_cache()
+
+    if reward_queue is not None:
+        reward_queue.update_base_steps(num_frames_per_proc)
 
     keep1 = max(done_counter,1)
     log1 = {
