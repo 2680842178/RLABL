@@ -477,7 +477,7 @@ def main():
     # load the mutations
     for node in G.nodes:
         if list(G.predecessors(node)):
-            if node != 0 and node != 1 and args.env != "Taxi-v0":
+            if node != 0 and node != 1:
                 # G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
                 G.nodes[node]['state'].mutation = cv2.imread(task_path + "/mutation" + str(node) + ".bmp", cv2.IMREAD_GRAYSCALE)
         if node != 0 and node != 1 and args.env != "Taxi-v0":
