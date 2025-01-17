@@ -1,8 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-RL_model_name = "20250112-RL-PPO-taxi"
-ABL_model_name = "ABL-PPO-taxi-test"
+RL_model_name = "PPO-taxi"
+ABL_model_name = "ABL-PPO-taxi"
 total_test_time = 1
 fig_name = "test_taxi"
 

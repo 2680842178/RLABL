@@ -83,6 +83,7 @@ def test_once(
             for node_num, node_mutation in mutation_buffer:
                 if anomaly_detector.contrast(node_mutation, mutation_roi, return_bool=True):
                     current_state = node_num
+                    print(current_state)
                     stop_env = copy_env(env, env_key)
                     stop_obss = copy.deepcopy(obss)
                     break

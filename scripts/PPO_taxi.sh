@@ -1,8 +1,9 @@
 #!/bin/bash
 
 ###### 每次实验都需要修改的地方 ######
+NUMS=10
 DELETE_OLD_MODELS=1 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="ABL-PPO-taxi-test" # 设置模型名称
+BASE_MODEL_NAME="PPO-taxi" # 设置模型名称
 # CONFIGMAP="easy_small_maps.config" # 设置地图文件:
 ENV="Taxi-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
@@ -42,7 +43,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 30 次
-for i in $(seq 1 1); do
+for i in $(seq 1 $NUMS); do
   # 生成唯一的模型名
   MODEL_NAME="$BASE_MODEL_NAME-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"
@@ -66,7 +67,7 @@ for i in $(seq 1 1); do
   fi
 
   # 修改任务配置并执行训练
-  python discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $TOTAL_STEPS --seed $i --curriculum 1 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
+  python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $TOTAL_STEPS --seed $i --curriculum 1 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
 done
 
 # # 替换配置文件中的地图
