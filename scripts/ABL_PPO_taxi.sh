@@ -12,7 +12,7 @@ ENV="Taxi-v0" # 设置环境名称
 # 设置三个课程的总步数（累加关系）
 # 例子：CURRICULUM_1_STEPS=30000，CURRICULUM_2_STEPS=40000，CURRICULUM_3_STEPS=100000，表示第一个课程训练0-30000步，第二个课程训练30000-40000步，第三个课程训练40000-100000步
 DISCOVER_STEPS=80000 # discover过程的最多步数，注意这步数是算在总步数里的，所以最好小于单个课程训练的步数。
-TOTAL_STEPS=100000
+TOTAL_STEPS=200000
 CONTRAST_FUNC="HIST"
 ###################################
 

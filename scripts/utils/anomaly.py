@@ -112,7 +112,7 @@ class BoundaryDetectorSSIM(AnomalyDetector):
         if not os.path.exists(self.saved_images_folder):
             os.makedirs(self.saved_images_folder)
         self.saved_images = self.load_saved_images()
-        self.contrast_value = 0.5
+        self.contrast_value = 0.4
 
     def load_saved_images(self):
         saved_images = []
@@ -160,9 +160,9 @@ class BoundaryDetectorSSIM(AnomalyDetector):
             # similar = max(similar, abs(correlation))
             similar = max(similar, contrast_ssim(roi, saved_image))
             # print(similar)
-            if similar > 0.6:
+            if similar > self.contrast_value:
                 break
-        if similar < 0.6 and similar >= 0:
+        if similar < self.contrast_value and similar >= 0:
             is_anomaly = True
             if add_to_buffer:
                 # print("Anomaly detected, saving image")
@@ -185,9 +185,9 @@ class BoundaryDetectorSSIM(AnomalyDetector):
                 # similar = max(similar, abs(correlation))
                 similar = max(similar, contrast_ssim(processed_image, saved_image)) 
                 # print(similar)
-                if similar > 0.7:
+                if similar > self.contrast_value:
                     break
-            if similar < 0.7 and similar >= 0:
+            if similar < self.contrast_value and similar >= 0:
                 is_anomaly = True
                 if add_to_buffer:
                     # print("Anomaly detected, saving image")

@@ -1,8 +1,8 @@
 #!/bin/bash
 ###### 每次实验都需要修改的地方 ######
-NUMS=10
+NUMS=1
 DEVICE_ID=0 # 用哪张卡
-DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
+DELETE_OLD_MODELS=1 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
 BASE_MODEL_NAME="20240104-DFA-PPO-easy-small" # 设置模型名称
 CONFIGMAP="easy_small_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
@@ -47,7 +47,7 @@ for i in $(seq 1 $NUMS); do
   # 复制预购建的状态机配置文件夹
   cp -r ./config/full_DFA_config_minigrid/* ./config/$MODEL_NAME
 
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID /home/sporeking/miniconda3/envs/py312/bin/python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3
   if [ $? -gt 4 ]; then
     echo "Error during task 3, stopping the script."
     exit 1
