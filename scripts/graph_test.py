@@ -84,6 +84,10 @@ def test_once(
                 if anomaly_detector.contrast(node_mutation, mutation_roi, return_bool=True):
                     current_state = node_num
                     print(current_state)
+                    # plt.imshow(mutation)
+                    # plt.show()
+                    # plt.imshow(mutation_roi, cmap='gray')
+                    # plt.show()
                     stop_env = copy_env(env, env_key)
                     stop_obss = copy.deepcopy(obss)
                     break

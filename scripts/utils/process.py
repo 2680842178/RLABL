@@ -20,6 +20,20 @@ def contrast_ssim(img1, img2, win_size=7):
     # print(img1.shape, img2.shape)
     return ssim(img1, img2, channel_axis=-1, win_size=7)
 
+def contrast_ssim_resize(img1, img2, win_size=7):
+    if img1 is None or img2 is None:
+        return 0
+
+    if (img1.shape[0] < 10 and img1.shape[1] < 10) or (img2.shape[0] < 10 and img2.shape[1] < 10):
+        return 0
+    
+    target_size = (30, 30)
+    img1 = cv2.resize(img1, target_size, interpolation=cv2.INTER_LINEAR)
+    img2 = cv2.resize(img2, target_size, interpolation=cv2.INTER_LINEAR)
+
+    # print(img1.shape, img2.shape)
+    return ssim(img1, img2, channel_axis=-1, win_size=7)
+
 def contrast_hist(mutation1, mutation2) -> float: # that means the similarity between two mutations
     if mutation1 is None or mutation2 is None:
         return 0

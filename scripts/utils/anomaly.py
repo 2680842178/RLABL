@@ -4,7 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
 from sklearn.metrics import mean_squared_error
 from abc import abstractmethod
-from .process import contrast_ssim
+from .process import contrast_ssim, contrast_ssim_resize
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
@@ -378,22 +378,36 @@ class ImageDataset(Dataset):
         return self.processed_images[idx]
 
 class ClusterAnomalyDetector:
-    def __init__(self):
+    def __init__(self, saved_images_folder):
         # self.kmeans = None
-        self.contrast_value = 0.5
+        self.contrast_value = 0.7
         self.inited = False
 
         self.latent_dim = 16
         self.clu_num = 2
-        self.batch_size = 16
-        self.epochs = 30
+        self.batch_size = 64
+        self.epochs = 100
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self.vae = VAE(self.latent_dim).to(self.device)
         self.optimizer = torch.optim.Adam(self.vae.parameters())
 
         self.scaler = StandardScaler()
-        self.iforest = IsolationForest(contamination=0.1, n_estimators=100, random_state=42)
+        self.iforest = IsolationForest(contamination=0.1, n_estimators=300, random_state=42)
+
+        self.saved_images_folder = saved_images_folder
+        if not os.path.exists(self.saved_images_folder):
+            os.makedirs(self.saved_images_folder)
+        self.saved_images = self.load_saved_images()
+
+    def load_saved_images(self):
+        saved_images = []
+        for filename in os.listdir(self.saved_images_folder):
+            img = cv2.imread(os.path.join(self.saved_images_folder, filename), cv2.IMREAD_GRAYSCALE)
+            if img is not None:
+                hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+                saved_images.append((filename, img, hist))
+        return saved_images
 
     def add_samples(self, image_list):
         self.inited = True
@@ -415,11 +429,26 @@ class ClusterAnomalyDetector:
         
         self.iforest.fit(features)
         y_pred = self.iforest.decision_function(features)
-        anomaly_image = self.dataset.images[np.argmin(y_pred)]
-        self.min_anomaly_decision = np.min(y_pred)
+        # anomaly_image = self.dataset.images[np.argmin(y_pred)]
+        # self.min_anomaly_decision = np.min(y_pred)
+        anomaly_indices = np.where(y_pred < 0.04)[0]  # 获取满足条件的索引
+        anomaly_images = [self.dataset.images[i] for i in anomaly_indices] 
+        for i in range(len(anomaly_images)):
+            is_anomaly = True
+            if anomaly_images[i].shape[0] < 16 and anomaly_images[i].shape[1] < 16:
+                # 排除尺寸过小的残影的影响
+                is_anomaly = False
+                continue
+            for j in range(len(self.saved_images)):
+                if self.contrast(anomaly_images[i], self.saved_images[j][1]) > 0.4:
+                    # anomaly_image = anomaly_images[i]
+                    is_anomaly = False
+                    break
+            if is_anomaly:
+                anomaly_image = anomaly_images[i]
         
-        # for i in range(len(self.dataset.images)):
-        #     cv2.imwrite(f"taxi_mutations/taxi-mutation/{y_pred[i]}-{time.time()}.bmp", self.dataset.images[i]) 
+        for i in range(len(self.dataset.images)):
+            cv2.imwrite(f"taxi_mutations/{y_pred[i]}-{time.time()}.bmp", self.dataset.images[i]) 
         return anomaly_image
         
         # KMeans聚类
@@ -482,9 +511,9 @@ class ClusterAnomalyDetector:
     #     return similarity
     def contrast(self, img1, img2, return_bool=False):
         if not return_bool:
-            return contrast_ssim(img1, img2)
+            return contrast_ssim_resize(img1, img2)
         else:
-            return contrast_ssim(img1, img2) > self.contrast_value
+            return contrast_ssim_resize(img1, img2) > self.contrast_value
 
     def extract_features(self, image):# 初始化异常检测器，输入一个图像列表，内部处理并初始化KMeans模型。
         image_shape = image.shape
@@ -509,6 +538,16 @@ class ClusterAnomalyDetector:
         return features
 
     def is_known_roi(self, roi, add_to_buffer=False):
+        if add_to_buffer:
+            similar = 0
+            for saved_image_name, saved_image, saved_hist in self.saved_images:
+                similar = max(similar, self.contrast(roi, saved_image))
+                if similar > self.contrast_value:
+                    break
+            if similar < self.contrast_value:
+                self.add_new_image(roi, is_processed=True)
+                return True
+
         if not self.inited:
             return False
         feature = self.extract_features(roi)
@@ -517,7 +556,21 @@ class ClusterAnomalyDetector:
         y_pred = y_pred[0]
         # return y_pred < 0
         # print("y_pred:", y_pred, "minimum:", self.min_anomaly_decision)
-        return y_pred <= self.min_anomaly_decision
+        return y_pred < 0
+
+    def add_new_image(self, image, is_processed=False):
+        if not is_processed:
+            processed_image, _ = self.preprocess_RGBimage(image)
+        else:
+            processed_image = image
+        saved_image_count = len(self.saved_images)
+        new_filename = f"{saved_image_count}.bmp"
+        save_path = os.path.join(self.saved_images_folder, new_filename)
+        cv2.imwrite(save_path, processed_image)
+        processed_hist = cv2.calcHist([processed_image], [0], None, [256], [0, 256])
+        processed_hist = cv2.normalize(processed_hist, processed_hist).flatten()
+        self.saved_images.append((new_filename, processed_image, processed_hist))
+        print(f"Image saved: {new_filename}")
 
     def detect_anomaly(self, image):#提取图像的分辨率特征
         feature = self.extract_resolution_features(image)
