@@ -461,6 +461,10 @@ def main():
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
 
+    if args.contrast == "HIST000":
+        anomaly_detector = BoundaryDetector(normal_buffer_path, contrast_value=0)
+        contrast_func = contrast_hist
+        contrast_value = 0
     if args.env == "Taxi-v0" or args.env == "MiniGrid-ConfigWorld-Random":
         anomaly_detector = ClusterAnomalyDetector(normal_buffer_path)
         contrast_func = contrast_ssim
@@ -840,7 +844,8 @@ def main():
         "optimizer_state": algo.optimizer.state_dict(),
         "best_test_return": best_test_return
     }
-    last_model_dir = utils.get_model_dir(last_saved_model_name)
+    # last_model_dir = utils.get_model_dir(last_saved_model_name)
+    last_model_dir = os.path.join(model_dir, last_saved_model_name)
     utils.save_status(last_status, last_model_dir)
 
     for i, acmodel in enumerate(acmodels):
