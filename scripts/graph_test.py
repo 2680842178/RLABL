@@ -78,12 +78,16 @@ def test_once(
         # anomaly_mutation = transforms.ToTensor()(mutation).cuda().unsqueeze(0)
         # if anomaly_detector(anomaly_mutation)[0, 0] < anomaly_detector(anomaly_mutation)[0, 1]:
         for mutation_roi in mutation_roi_list:
-            if not anomaly_detector.is_known_roi(mutation_roi, add_to_buffer=False):
-                continue
+            # if not anomaly_detector.is_known_roi(mutation_roi, add_to_buffer=False):
+            #     continue
             for node_num, node_mutation in mutation_buffer:
                 if anomaly_detector.contrast(node_mutation, mutation_roi, return_bool=True):
                     current_state = node_num
                     print(current_state)
+                    # plt.imshow(mutation)
+                    # plt.show()
+                    # plt.imshow(mutation_roi, cmap='gray')
+                    # plt.show()
                     stop_env = copy_env(env, env_key)
                     stop_obss = copy.deepcopy(obss)
                     break

@@ -101,6 +101,9 @@ def obs_To_state(current_state,
         return current_state
     # print("yes", output[0], output[1])
     output = output[0]
+    print(output)
+    # plt.imshow(mutation)
+    # plt.show()
     return output
 
 def Mutiagent_collect_experiences(env, 
@@ -627,29 +630,35 @@ def collect_experiences_mutation(algo,
         _, mutation_roi_list = RGB2GARY_ROI(mutation)
         ### 检查突变是否与已知的突变相同
         # print(mutation.shape)
-        for mutation_roi in mutation_roi_list:
-            if get_mutation_score(mutation_roi) < mutation_value or reward[0] != 0:
-            # if reward[0] != 0:
-                break
+        deleted_roi_index = []
+        for index in range(len(mutation_roi_list)):
             for _, (idx, mutation_) in enumerate(known_mutation_buffer):
-                if contrast(mutation_roi, mutation_) > 0.6:
+                if contrast(mutation_roi_list[index], mutation_) > 0.6:
                     arrived_state_buffer.append(idx)
                     reward = (1, )
                     done = (True,)
                     break
+            if mutation_roi_list[index].shape[0] < 8 or mutation_roi_list[index].shape[1] < 8:
+                deleted_roi_index.append(index)
+                continue
+            if get_mutation_score(mutation_roi_list[index]) < mutation_value or reward[0] != 0:
+            # if reward[0] != 0:
+                break
             is_in_buffer = False
             for idx, (score_, mutation_, times_, env_) in enumerate(mutation_buffer):
-                if contrast(mutation_roi, mutation_) > 0.6:
+                if contrast(mutation_roi_list[index], mutation_) > 0.6:
                     mutation_buffer[idx] = (score_, mutation_, times_ + 1, algo.env)
                     is_in_buffer = True
                     break
             if not is_in_buffer:
                 #print(get_mutation_score(mutation).dtype)
                 # heapq.heappush(mutation_buffer, (get_mutation_score(mutation), mutation, 1, copy.deepcopy(algo.env)))
-                mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, algo.env))
+                mutation_buffer.append((get_mutation_score(mutation_roi_list[index]), mutation_roi_list[index], 1, algo.env))
+            
+        mutation_roi_list = [mutation_roi_list[index] for index in range(len(mutation_roi_list)) if index not in deleted_roi_index]
 
         episode_return += reward[0]
-        if env_name == "Taxi-v0":
+        if env_name == "Taxi-v0" or env_name == "MiniGrid-ConfigWorld-Random":
             if not done[0]:
                 trace_roi_buffer.extend(mutation_roi_list)
             else:
@@ -831,7 +840,7 @@ def collect_experiences_mutation_q(algo,
                 mutation_buffer.append((get_mutation_score(mutation_roi), mutation_roi, 1, algo.env))
 
         episode_return += reward[0]
-        if env_name == "Taxi-v0":
+        if env_name == "Taxi-v0" or env_name == "MiniGrid-ConfigWorld-Random":
             if not done[0]:
                 trace_roi_buffer.extend(mutation_roi_list)
             else:

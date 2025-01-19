@@ -1,21 +1,20 @@
 #!/bin/bash
 
 ###### 每次实验都需要修改的地方 ######
-PYTHON=/home/sporeking/miniconda3/envs/py312/bin/python
-NUMS=10
+NUMS=5
 DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-BASE_MODEL_NAME="ramdom-ABL-PPO-large-real" # 设置模型名称
-CONFIGMAP="random_easy_large_maps.config" # 设置地图文件:
+BASE_MODEL_NAME="ramdom-PPO-small" # 设置模型名称
+CONFIGMAP="random_easy_small_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-Random" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
 # 对应固定环境和随机环境：固定环境的config地图有3项，分别是课程123的地图；随机环境的config地图有15项，课程123各5种地图
 # 设置三个课程的总步数（累加关系）
-CURRICULUM_1_STEPS=400000
-CURRICULUM_2_STEPS=800000
-CURRICULUM_3_STEPS=1200000
-DISCOVER_STEPS=400000 # discover过程的最多步数，注意这步数是算在总步数里的，所以最好小于单个课程训练的步数。
-CONTRAST_FUNC="SSIM"
+CURRICULUM_1_STEPS=300000
+CURRICULUM_2_STEPS=600000
+CURRICULUM_3_STEPS=900000
+DISCOVER_STEPS=200000 # discover过程的最多步数，注意这步数是算在总步数里的，所以最好小于单个课程训练的步数。
+CONTRAST_FUNC="HIST000"
 ###################################
 
 # 初始化任务配置文件：单目标状态，3个节点，2个边，1个agent
@@ -46,7 +45,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 10 次
-for i in $(seq 10 $NUMS); do
+for i in $(seq 1 $NUMS); do
   # 生成唯一的模型名
   MODEL_NAME="$BASE_MODEL_NAME-${i}"
   MODEL_CONFIG_FOLDER="config/$MODEL_NAME"
@@ -70,18 +69,18 @@ for i in $(seq 10 $NUMS); do
   fi
 
   # 修改任务配置并执行训练
-  # CUDA_VISIBLE_DEVICES=$DEVICE_ID $PYTHON discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --contrast $CONTRAST_FUNC
-  # if [ $? -gt 4 ]; then
-  #   echo "Error during task 1, stopping the script."
-  #   exit 1
-  # fi
-  # CUDA_VISIBLE_DEVICES=$DEVICE_ID $PYTHON discover_anomaly.py --task-config task1 --discover 1 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --contrast $CONTRAST_FUNC
-  # if [ $? -gt 4 ]; then
-  #   echo "Error during task 2, stopping the script."
-  #   exit 1
-  # fi
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_1_STEPS --seed $i --configmap $CONFIGMAP --curriculum 1 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
+  if [ $? -gt 4 ]; then
+    echo "Error during task 1, stopping the script."
+    exit 1
+  fi
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR  --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_2_STEPS --seed $i --configmap $CONFIGMAP --curriculum 2 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
+  if [ $? -gt 4 ]; then
+    echo "Error during task 2, stopping the script."
+    exit 1
+  fi
 
-  CUDA_VISIBLE_DEVICES=$DEVICE_ID $PYTHON discover_anomaly.py --task-config task2 --discover 1 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3 --contrast $CONTRAST_FUNC
+  CUDA_VISIBLE_DEVICES=$DEVICE_ID python discover_anomaly.py --task-config task1 --discover 0 --algo $ALGO --env $ENV --lr $LR --model $MODEL_NAME --discount $DISCOUNT --epochs $EPOCHS --frames-per-proc $FRAMES_PER_PROC --frames $CURRICULUM_3_STEPS --seed $i --configmap $CONFIGMAP --curriculum 3 --discover-steps $DISCOVER_STEPS --contrast $CONTRAST_FUNC
   if [ $? -gt 4 ]; then
     echo "Error during task 3, stopping the script."
     exit 1

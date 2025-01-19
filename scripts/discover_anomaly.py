@@ -464,8 +464,12 @@ def main():
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
 
-    if args.env == "Taxi-v0":
-        anomaly_detector = ClusterAnomalyDetector()
+    if args.contrast == "HIST000":
+        anomaly_detector = BoundaryDetector(normal_buffer_path, contrast_value=0)
+        contrast_func = contrast_hist
+        contrast_value = 0
+    if args.env == "Taxi-v0" or args.env == "MiniGrid-ConfigWorld-Random":
+        anomaly_detector = ClusterAnomalyDetector(normal_buffer_path)
         contrast_func = contrast_ssim
         contrast_value = 0.5
     elif args.contrast == "HIST":
@@ -484,6 +488,14 @@ def main():
             if node != 0 and node != 1:
                 # G.nodes[node]['state'].mutation = plt.imread(task_path + "/mutation" + str(node) + ".bmp")
                 G.nodes[node]['state'].mutation = cv2.imread(task_path + "/mutation" + str(node) + ".bmp", cv2.IMREAD_GRAYSCALE)
+                image = G.nodes[node]['state'].mutation
+                black_pixels = numpy.sum(image == 0)
+                # 计算总像素数
+                total_pixels = image.size
+                # 计算比例
+                black_ratio = black_pixels / total_pixels
+                print("mutation black ratio: ", black_ratio)
+
         if node != 0 and node != 1 and args.env != "Taxi-v0":
             G.nodes[node]['state'].env_image = plt.imread(state_img_path + "/state" + str(node) + ".bmp")
 
@@ -826,6 +838,20 @@ def main():
     # #     status["vocab"] = preprocess_obss.vocab.vocab
     # utils.save_status(status, model_dir)
     # txt_logger.info("Status saved")
+
+    last_saved_model_name = f"Curriculum{args.curriculum}_last_model"
+    last_model_state = [acmodel.state_dict() for acmodel in acmodels]
+    last_status = {
+        "num_frames": num_frames,
+        "update": update,
+        "agent_num": agent_num,
+        "model_state": last_model_state,
+        "optimizer_state": algo.optimizer.state_dict(),
+        "best_test_return": best_test_return
+    }
+    # last_model_dir = utils.get_model_dir(last_saved_model_name)
+    last_model_dir = os.path.join(model_dir, last_saved_model_name)
+    utils.save_status(last_status, last_model_dir)
 
     for i, acmodel in enumerate(acmodels):
         acmodel.load_state_dict(best_model_states[i])
