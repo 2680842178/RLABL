@@ -286,8 +286,8 @@ def main():
     # except OSError:
     #     AnomalyNN = lambda x: [[1.0, 0]]
 
-    if args.env == "Taxi-v0":
-        anomaly_detector = ClusterAnomalyDetector()
+    if args.env == "Taxi-v0" or args.configmap == "test_random_big_maps.config":
+        anomaly_detector = ClusterAnomalyDetector(normal_buffer_path)
         contrast_func = contrast_ssim
         contrast_value = 0.5
     elif args.contrast == "HIST":

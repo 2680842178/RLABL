@@ -174,9 +174,14 @@ def main():
         algos.append(algo)
         G.nodes[i + 2]['state'].agent = algo
 
-    anomaly_detector = BoundaryDetectorSSIM(normal_buffer_path)
-    contrast_func = contrast_ssim
-    contrast_value = 0.5
+    if args.env == "MiniGrid-ConfigWorld-v0":
+        anomaly_detector = BoundaryDetectorSSIM(normal_buffer_path)
+        contrast_func = contrast_ssim
+        contrast_value = 0.5
+    elif args.env == "MiniGrid-ConfigWorld-Random":
+        anomaly_detector = ClusterAnomalyDetector(normal_buffer_path)
+        contrast_func = contrast_ssim
+        contrast_value = 0.5
 
     for node in G.nodes:
         if list(G.predecessors(node)):

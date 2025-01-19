@@ -5,7 +5,7 @@ PYTHON=/home/sporeking/miniconda3/envs/py312/bin/python
 NUMS=50 #跑多少轮
 DEVICE_ID=0 # 用哪张卡
 DELETE_OLD_MODELS=0 # 0表示不删除旧模型和配置，1表示删除旧模型和配置
-MODEL_NAME="ramdom-ABL-PPO-large-222-5" # 设置模型名称
+MODEL_NAME="ramdom-ABL-PPO-large-real-1" # 设置模型名称
 CONFIGMAP="test_random_big_maps.config" # 设置地图文件:
 ENV="MiniGrid-ConfigWorld-v0" # 设置环境名称
 # 可选环境：MiniGrid-ConfigWorld-v0, MiniGrid-ConfigWorld-Random
@@ -24,7 +24,7 @@ BATCH_SIZE=128
 FRAMES_PER_PROC=512
 
 # 循环执行 10 次
-for FIXED_MAP in $(seq 10 $NUMS); do
+for FIXED_MAP in $(seq 1 $NUMS); do
   # 生成唯一的模型名
   # if [ "$DELETE_OLD_MODELS" == "1" ]; then
   #   echo "Warning: Deleting old model and config..."
