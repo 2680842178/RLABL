@@ -468,7 +468,7 @@ def main():
         anomaly_detector = BoundaryDetector(normal_buffer_path, contrast_value=0)
         contrast_func = contrast_hist
         contrast_value = 0
-    if args.env == "Taxi-v0" or args.env == "MiniGrid-ConfigWorld-Random":
+    elif args.env == "Taxi-v0" or args.env == "MiniGrid-ConfigWorld-Random":
         anomaly_detector = ClusterAnomalyDetector(normal_buffer_path)
         contrast_func = contrast_ssim
         contrast_value = 0.5
