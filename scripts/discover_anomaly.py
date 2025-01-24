@@ -91,6 +91,9 @@ parser.add_argument("--buffer-size", type=int, default=10000,
                     help="buffer size for dqn")
 parser.add_argument("--target-update", type=int, default=5,
                     help="frequency to update target net")
+parser.add_argument("--fixed", type=int, default=1,
+                    help="if the trained env is fixed")
+
 
 
 G = nx.DiGraph()
@@ -145,15 +148,15 @@ def get_importance_prob(lst):
     normalized_lst = [(x * (i + 1)) / total if x != 0 else 0 for i, x in enumerate(lst)]
     return normalized_lst
 
-def calculate_epsilon(num_frames, initial_num_frames, total_frames):
+def calculate_epsilon(num_frames, initial_num_frames, total_frames, max_progress, param):
     progress = (num_frames - initial_num_frames) / (total_frames - initial_num_frames)
 
     # 当进度达到90%时保持最小值
-    if progress >= 0.9:
+    if progress >= max_progress:
         progress = 0.9
 
     # 使用指数函数实现快速下降后缓慢下降
-    epsilon = 1 - progress ** 0.5
+    epsilon = 1 - progress ** param
 
     return epsilon
 
@@ -207,7 +210,7 @@ def discover(start_env,
     txt_logger.info("Start discovering in {} steps.\n".format(discover_frames))
     initial_num_frames = num_frames
     while num_frames < discover_frames:
-        epsilon = calculate_epsilon(num_frames, initial_num_frames, args.frames)
+        epsilon = calculate_epsilon(num_frames, initial_num_frames, args.frames, 0.9, 2)
         update_start_time = time.time()
         if args.algo == 'ppo' or args.algo == 'a2c':
             exps, logs1 = collect_experiences_mutation(algo,
@@ -474,6 +477,7 @@ def main():
         contrast_func = contrast_hist
         contrast_value = 0.99999
     else:
+        print("Using SSIM")
         anomaly_detector = BoundaryDetectorSSIM(normal_buffer_path)
         contrast_func = contrast_ssim
         contrast_value = 0.5
@@ -644,7 +648,7 @@ def main():
         envs[0].reset()
         # ini_agent
         if args.algo == "dqn":
-            epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames)
+            epsilon =  calculate_epsilon(num_frames, initial_num_frames, args.frames, 0.9, 0.5)
         # print("num_frames", num_frames, "initial_num_frames", initial_num_frames, "args.frames", args.frames)
         # print("epsilon", epsilon)
         if args.algo == "a2c" or args.algo == "ppo":
@@ -668,7 +672,7 @@ def main():
                                                             device=device,
                                                             start_node=start_node,
                                                             anomaly_detector=anomaly_detector,
-                                                            num_frames_per_proc=args.frames_per_proc * agent_num,
+                                                            num_frames_per_proc=args.frames_per_proc,
                                                             preprocess_obss=preprocess_obss,
                                                             epsilon=epsilon,
                                                             discover=args.discover)
@@ -677,7 +681,8 @@ def main():
         # print("initial_agent_num", initial_agent_num,"agent_num", agent_num)
         # for i in range(0,len(exps_list)):
         #     print(i, len(exps_list[i].obs))
-        if args.algo == "ppo":
+        print("args.fixed", args.fixed)
+        if args.algo == "ppo" or args.fixed == 0:
             initial_agent_num = 0
         for i in range(initial_agent_num + 2, agent_num + 2):  # 只更新新添加的agent
             if len(exps_list[i].obs):
@@ -854,7 +859,7 @@ def main():
     # 训练结束时保存最终状态和最佳状态
     model_state = [acmodel.state_dict() for acmodel in acmodels]
     optimizer_state = algo.optimizer.state_dict()
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         print("No save bad model.")
         model_state[-1] = None
         optimizer_state = None
@@ -871,7 +876,7 @@ def main():
     txt_logger.info("Final status saved")
 
     # 如果最终模型不是最佳模型,则加载最佳模型状态
-    if return_per_episode['mean'] <= 0.5:
+    if best_test_return <= 0.5:
         return "fail train"
     else:
         return "successfull train"

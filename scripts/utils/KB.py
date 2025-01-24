@@ -441,7 +441,7 @@ def Mutiagent_collect_experiences_q(env,
             truncated=0
             state_ini_flag=True
         else:
-            next_obs, reward, terminated, truncated, _ = env.step(action.cpu().numpy())
+            next_obs, reward, terminated, truncated, _ = env.step(int(action.cpu().numpy()))
         # print("reward", reward)
         # print("terminated", terminated)
         # print("truncated", truncated)
@@ -807,7 +807,7 @@ def collect_experiences_mutation_q(algo,
             
         done = tuple(a | b for a, b in zip(terminated, truncated))
         if done[0]:
-            env = copy_env(start_env, env_name)
+            env.reset()
             parallel_env = ParallelEnv([env])
             obs = parallel_env.gen_obs()
 
@@ -859,7 +859,6 @@ def collect_experiences_mutation_q(algo,
                     mutation_buffer.append((get_mutation_score(anomaly_roi), anomaly_roi, 1, algo.env))
                 trace_roi_buffer = []
         episode_return *= 1 - done[0]
-
         # 更新经验值
         algo.obss[i] = algo.obs
         algo.obs = obs

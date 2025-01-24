@@ -173,6 +173,9 @@ class TaxiEnv(Env):
         return mask
 
     def step(self, a):
+        # 确保动作是标量值
+        if isinstance(a, np.ndarray):
+            a = a.item()
         
         state = self.s.cpu().item() if isinstance(self.s, torch.Tensor) else self.s
         transitions = self.P[state][a]
